@@ -1,0 +1,401 @@
+{
+  "test_dagen": "28-34",
+  "trainingsgroottes": [
+    10,
+    17,
+    24,
+    27
+  ],
+  "tijdafspraak_min": 15,
+  "leercurve": {
+    "gemiddelde dag | 10": {
+      "nRMSE_%": 19.1817,
+      "laag_%": 17.0947,
+      "hoog_%": 20.861,
+      "dagfout_%": 28.7195,
+      "bias_%": 9.5437,
+      "nMAE_%": 13.8714,
+      "R2": 0.4387
+    },
+    "smart persistence (geen weer) | 10": {
+      "nRMSE_%": 14.074,
+      "laag_%": 11.3552,
+      "hoog_%": 16.4866,
+      "dagfout_%": 16.4027,
+      "bias_%": 0.6848,
+      "nMAE_%": 9.885,
+      "R2": 0.6978
+    },
+    "LR GHI | 10": {
+      "nRMSE_%": 16.331,
+      "laag_%": 15.3791,
+      "hoog_%": 17.2371,
+      "dagfout_%": 21.1687,
+      "bias_%": -7.8871,
+      "nMAE_%": 12.1931,
+      "R2": 0.5931
+    },
+    "LR POA | 10": {
+      "nRMSE_%": 15.7876,
+      "laag_%": 14.8498,
+      "hoog_%": 16.6181,
+      "dagfout_%": 19.0294,
+      "bias_%": -7.09,
+      "nMAE_%": 11.8614,
+      "R2": 0.6197
+    },
+    "e5 | 10": {
+      "nRMSE_%": 14.1557,
+      "laag_%": 12.9905,
+      "hoog_%": 15.1779,
+      "dagfout_%": 17.4422,
+      "bias_%": 5.5948,
+      "nMAE_%": 10.3491,
+      "R2": 0.6943
+    },
+    "e6 | 10": {
+      "nRMSE_%": 13.3258,
+      "laag_%": 12.21,
+      "hoog_%": 14.3643,
+      "dagfout_%": 7.8993,
+      "bias_%": -2.7167,
+      "nMAE_%": 9.7602,
+      "R2": 0.7291
+    },
+    "Ridge e6 | 10": {
+      "nRMSE_%": 13.342,
+      "laag_%": 12.2331,
+      "hoog_%": 14.3757,
+      "dagfout_%": 7.9951,
+      "bias_%": -2.7629,
+      "nMAE_%": 9.773,
+      "R2": 0.7284
+    },
+    "gemiddelde dag | 17": {
+      "nRMSE_%": 19.1706,
+      "laag_%": 16.9495,
+      "hoog_%": 20.9754,
+      "dagfout_%": 29.5805,
+      "bias_%": 10.0637,
+      "nMAE_%": 13.8703,
+      "R2": 0.4393
+    },
+    "smart persistence (geen weer) | 17": {
+      "nRMSE_%": 14.074,
+      "laag_%": 11.3552,
+      "hoog_%": 16.4866,
+      "dagfout_%": 16.4027,
+      "bias_%": 0.6848,
+      "nMAE_%": 9.885,
+      "R2": 0.6978
+    },
+    "LR GHI | 17": {
+      "nRMSE_%": 16.0933,
+      "laag_%": 15.0711,
+      "hoog_%": 17.0128,
+      "dagfout_%": 20.1092,
+      "bias_%": -7.4924,
+      "nMAE_%": 11.9842,
+      "R2": 0.6049
+    },
+    "LR POA | 17": {
+      "nRMSE_%": 15.4654,
+      "laag_%": 14.5,
+      "hoog_%": 16.3423,
+      "dagfout_%": 17.5156,
+      "bias_%": -6.5261,
+      "nMAE_%": 11.5811,
+      "R2": 0.6351
+    },
+    "e5 | 17": {
+      "nRMSE_%": 13.1853,
+      "laag_%": 12.0426,
+      "hoog_%": 14.3429,
+      "dagfout_%": 13.8332,
+      "bias_%": 4.3619,
+      "nMAE_%": 9.4731,
+      "R2": 0.7348
+    },
+    "e6 | 17": {
+      "nRMSE_%": 13.5155,
+      "laag_%": 12.3686,
+      "hoog_%": 14.6307,
+      "dagfout_%": 7.9241,
+      "bias_%": -2.5716,
+      "nMAE_%": 9.8594,
+      "R2": 0.7213
+    },
+    "Ridge e6 | 17": {
+      "nRMSE_%": 13.525,
+      "laag_%": 12.3784,
+      "hoog_%": 14.6389,
+      "dagfout_%": 7.9788,
+      "bias_%": -2.5979,
+      "nMAE_%": 9.8669,
+      "R2": 0.7209
+    },
+    "gemiddelde dag | 24": {
+      "nRMSE_%": 17.8259,
+      "laag_%": 15.7645,
+      "hoog_%": 19.5199,
+      "dagfout_%": 26.6827,
+      "bias_%": 8.9653,
+      "nMAE_%": 12.9839,
+      "R2": 0.5152
+    },
+    "smart persistence (geen weer) | 24": {
+      "nRMSE_%": 14.074,
+      "laag_%": 11.3552,
+      "hoog_%": 16.4866,
+      "dagfout_%": 16.4027,
+      "bias_%": 0.6848,
+      "nMAE_%": 9.885,
+      "R2": 0.6978
+    },
+    "LR GHI | 24": {
+      "nRMSE_%": 15.7709,
+      "laag_%": 14.793,
+      "hoog_%": 16.6913,
+      "dagfout_%": 17.9694,
+      "bias_%": -6.6951,
+      "nMAE_%": 11.7947,
+      "R2": 0.6206
+    },
+    "LR POA | 24": {
+      "nRMSE_%": 15.2299,
+      "laag_%": 14.2605,
+      "hoog_%": 16.1171,
+      "dagfout_%": 15.711,
+      "bias_%": -5.8537,
+      "nMAE_%": 11.5038,
+      "R2": 0.6461
+    },
+    "e5 | 24": {
+      "nRMSE_%": 12.4088,
+      "laag_%": 11.1668,
+      "hoog_%": 13.6089,
+      "dagfout_%": 9.3342,
+      "bias_%": 2.3864,
+      "nMAE_%": 8.9093,
+      "R2": 0.7651
+    },
+    "e6 | 24": {
+      "nRMSE_%": 13.1279,
+      "laag_%": 11.9373,
+      "hoog_%": 14.2203,
+      "dagfout_%": 6.2851,
+      "bias_%": -1.9042,
+      "nMAE_%": 9.5717,
+      "R2": 0.7371
+    },
+    "Ridge e6 | 24": {
+      "nRMSE_%": 13.133,
+      "laag_%": 11.9449,
+      "hoog_%": 14.2261,
+      "dagfout_%": 6.3239,
+      "bias_%": -1.9227,
+      "nMAE_%": 9.5764,
+      "R2": 0.7369
+    },
+    "gemiddelde dag | 27": {
+      "nRMSE_%": 17.7643,
+      "laag_%": 15.7081,
+      "hoog_%": 19.4773,
+      "dagfout_%": 26.7473,
+      "bias_%": 9.0144,
+      "nMAE_%": 12.9526,
+      "R2": 0.5186
+    },
+    "smart persistence (geen weer) | 27": {
+      "nRMSE_%": 14.074,
+      "laag_%": 11.3552,
+      "hoog_%": 16.4866,
+      "dagfout_%": 16.4027,
+      "bias_%": 0.6848,
+      "nMAE_%": 9.885,
+      "R2": 0.6978
+    },
+    "LR GHI | 27": {
+      "nRMSE_%": 15.6497,
+      "laag_%": 14.6548,
+      "hoog_%": 16.5817,
+      "dagfout_%": 17.213,
+      "bias_%": -6.4133,
+      "nMAE_%": 11.7176,
+      "R2": 0.6264
+    },
+    "LR POA | 27": {
+      "nRMSE_%": 15.1182,
+      "laag_%": 14.1441,
+      "hoog_%": 16.0017,
+      "dagfout_%": 14.9735,
+      "bias_%": -5.5789,
+      "nMAE_%": 11.4382,
+      "R2": 0.6513
+    },
+    "e5 | 27": {
+      "nRMSE_%": 12.2888,
+      "laag_%": 10.9805,
+      "hoog_%": 13.5212,
+      "dagfout_%": 8.2089,
+      "bias_%": 2.0179,
+      "nMAE_%": 8.8257,
+      "R2": 0.7696
+    },
+    "e6 | 27": {
+      "nRMSE_%": 13.159,
+      "laag_%": 11.9769,
+      "hoog_%": 14.253,
+      "dagfout_%": 6.5097,
+      "bias_%": -2.0101,
+      "nMAE_%": 9.6001,
+      "R2": 0.7358
+    },
+    "Ridge e6 | 27": {
+      "nRMSE_%": 13.1636,
+      "laag_%": 11.9818,
+      "hoog_%": 14.2548,
+      "dagfout_%": 6.5423,
+      "bias_%": -2.0257,
+      "nMAE_%": 9.6042,
+      "R2": 0.7356
+    }
+  },
+  "verschillen": {
+    "gemiddelde dag | 27 - gemiddelde dag | 24": {
+      "verschil_pp": -0.0616,
+      "laag_pp": -0.1153,
+      "hoog_pp": -0.0156,
+      "aantoonbaar": true
+    },
+    "smart persistence (geen weer) | 27 - smart persistence (geen weer) | 24": {
+      "verschil_pp": 0.0,
+      "laag_pp": 0.0,
+      "hoog_pp": 0.0,
+      "aantoonbaar": false
+    },
+    "LR GHI | 27 - LR GHI | 24": {
+      "verschil_pp": -0.1212,
+      "laag_pp": -0.1462,
+      "hoog_pp": -0.0977,
+      "aantoonbaar": true
+    },
+    "LR POA | 27 - LR POA | 24": {
+      "verschil_pp": -0.1117,
+      "laag_pp": -0.1356,
+      "hoog_pp": -0.0891,
+      "aantoonbaar": true
+    },
+    "e5 | 27 - e5 | 24": {
+      "verschil_pp": -0.12,
+      "laag_pp": -0.2218,
+      "hoog_pp": -0.0338,
+      "aantoonbaar": true
+    },
+    "e6 | 27 - e6 | 24": {
+      "verschil_pp": 0.0312,
+      "laag_pp": 0.0153,
+      "hoog_pp": 0.0481,
+      "aantoonbaar": true
+    },
+    "Ridge e6 | 27 - Ridge e6 | 24": {
+      "verschil_pp": 0.0306,
+      "laag_pp": 0.0151,
+      "hoog_pp": 0.047,
+      "aantoonbaar": true
+    },
+    "gemiddelde dag | 24 - gemiddelde dag | 10": {
+      "verschil_pp": -1.3558,
+      "laag_pp": -1.5836,
+      "hoog_pp": -1.145,
+      "aantoonbaar": true
+    },
+    "smart persistence (geen weer) | 24 - smart persistence (geen weer) | 10": {
+      "verschil_pp": 0.0,
+      "laag_pp": -0.0,
+      "hoog_pp": 0.0,
+      "aantoonbaar": false
+    },
+    "LR GHI | 24 - LR GHI | 10": {
+      "verschil_pp": -0.5601,
+      "laag_pp": -0.6631,
+      "hoog_pp": -0.4616,
+      "aantoonbaar": true
+    },
+    "LR POA | 24 - LR POA | 10": {
+      "verschil_pp": -0.5577,
+      "laag_pp": -0.6605,
+      "hoog_pp": -0.4563,
+      "aantoonbaar": true
+    },
+    "e5 | 24 - e5 | 10": {
+      "verschil_pp": -1.7469,
+      "laag_pp": -2.7514,
+      "hoog_pp": -0.8471,
+      "aantoonbaar": true
+    },
+    "e6 | 24 - e6 | 10": {
+      "verschil_pp": -0.1979,
+      "laag_pp": -0.3078,
+      "hoog_pp": -0.093,
+      "aantoonbaar": true
+    },
+    "Ridge e6 | 24 - Ridge e6 | 10": {
+      "verschil_pp": -0.209,
+      "laag_pp": -0.3236,
+      "hoog_pp": -0.1004,
+      "aantoonbaar": true
+    }
+  },
+  "coefficienten_e6": [
+    {
+      "trainingsdagen": 10,
+      "model": "e6",
+      "a": 0.0016294473727206345,
+      "b": -0.00047114449193502624
+    },
+    {
+      "trainingsdagen": 10,
+      "model": "Ridge e6",
+      "a": 0.0016235287097771892,
+      "b": -0.0004647689678857295
+    },
+    {
+      "trainingsdagen": 17,
+      "model": "e6",
+      "a": 0.0015611412372298185,
+      "b": -0.0003587105868874388
+    },
+    {
+      "trainingsdagen": 17,
+      "model": "Ridge e6",
+      "a": 0.001557727008550096,
+      "b": -0.0003550102553767983
+    },
+    {
+      "trainingsdagen": 24,
+      "model": "e6",
+      "a": 0.0017095436214979102,
+      "b": -0.0005512579950556668
+    },
+    {
+      "trainingsdagen": 24,
+      "model": "Ridge e6",
+      "a": 0.0017070535957309353,
+      "b": -0.0005485166909662844
+    },
+    {
+      "trainingsdagen": 27,
+      "model": "e6",
+      "a": 0.001695683109810422,
+      "b": -0.0005352316362203237
+    },
+    {
+      "trainingsdagen": 27,
+      "model": "Ridge e6",
+      "a": 0.001693576957385936,
+      "b": -0.0005329081906691632
+    }
+  ],
+  "opmerking": "geen nieuwe keuze; alle fouten op dezelfde schaal (capaciteit uit de grootste training, 27 dagen)"
+}

@@ -1,0 +1,6 @@
+model,nRMSE per kwartier_%,nRMSE per uur_%,nRMSE per dag_%
+gemiddelde dag,16.771,14.205,9.166
+smart persistence (geen weer),14.976,12.314,7.485
+LR GHI (ERA5) - eindmodel,15.034,12.263,6.423
+e6 (ERA5),14.148,11.251,5.182
+sensor (bovengrens),5.456,4.111,1.549

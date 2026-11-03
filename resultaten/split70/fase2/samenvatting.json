@@ -1,0 +1,292 @@
+{
+  "fase": 2,
+  "run": "split70",
+  "vraag": "echt vooruit voorspellen met alleen Kaggle-data",
+  "opzet_dagen": "1-24",
+  "horizons": {
+    "+15 min": "1 kwartier(en)",
+    "+1 uur": "4 kwartier(en)",
+    "+3 uur": "12 kwartier(en)",
+    "day-ahead (21:00)": "morgen, gemaakt om 21:00"
+  },
+  "keuze_per_horizon": {
+    "+15 min": {
+      "model": "LR op eerdere K",
+      "motivatie": "laagste nRMSE: 'Random Forest' (11.48 %); 'Random Forest' (complex) is maar 0.15 pp beter dan 'LR op eerdere K' en niet op alle vouwen beter -> geen complex model. Binnen 0.5 pp: ['LR op eerdere K', 'Ridge (K + sensor + tijd)'] -> eenvoudigste: 'LR op eerdere K' (11.64 %)"
+    },
+    "+1 uur": {
+      "model": "LR op eerdere K",
+      "motivatie": "laagste nRMSE: 'LR op eerdere K' (14.75 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR op eerdere K', 'Ridge (K + sensor + tijd)'] -> eenvoudigste: 'LR op eerdere K' (14.75 %)"
+    },
+    "+3 uur": {
+      "model": "LR op eerdere K",
+      "motivatie": "laagste nRMSE: 'LR op eerdere K' (15.80 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR op eerdere K', 'Ridge (K + sensor + tijd)'] -> eenvoudigste: 'LR op eerdere K' (15.80 %)"
+    },
+    "day-ahead (21:00)": {
+      "model": "LR op eerdere K",
+      "motivatie": "laagste nRMSE: 'LR op eerdere K' (15.78 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR op eerdere K', 'Ridge (K + sensor + tijd)'] -> eenvoudigste: 'LR op eerdere K' (15.78 %)"
+    }
+  },
+  "validatie": {
+    "+15 min": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 16.9884,
+        "nMAE_%": 12.1426,
+        "R2": 0.649,
+        "dagfout_%": 14.5425,
+        "nRMSE_% train 1-14 -> val 15-17": 14.7489,
+        "nRMSE_% train 1-17 -> val 18-20": 21.6102,
+        "nRMSE_% train 1-20 -> val 21-24": 14.606
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 14.3934,
+        "nMAE_%": 9.264,
+        "R2": 0.7594,
+        "dagfout_%": 1.3617,
+        "nRMSE_% train 1-14 -> val 15-17": 11.9784,
+        "nRMSE_% train 1-17 -> val 18-20": 15.7291,
+        "nRMSE_% train 1-20 -> val 21-24": 15.4728
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 12.5316,
+        "nMAE_%": 7.9202,
+        "R2": 0.8206,
+        "dagfout_%": 1.528,
+        "nRMSE_% train 1-14 -> val 15-17": 11.1469,
+        "nRMSE_% train 1-17 -> val 18-20": 12.3137,
+        "nRMSE_% train 1-20 -> val 21-24": 14.1343
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 11.6357,
+        "nMAE_%": 7.6106,
+        "R2": 0.8449,
+        "dagfout_%": 3.2276,
+        "nRMSE_% train 1-14 -> val 15-17": 10.1907,
+        "nRMSE_% train 1-17 -> val 18-20": 11.707,
+        "nRMSE_% train 1-20 -> val 21-24": 13.0094
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 11.6945,
+        "nMAE_%": 7.6441,
+        "R2": 0.8433,
+        "dagfout_%": 3.2285,
+        "nRMSE_% train 1-14 -> val 15-17": 10.2267,
+        "nRMSE_% train 1-17 -> val 18-20": 11.8369,
+        "nRMSE_% train 1-20 -> val 21-24": 13.0198
+      },
+      "Random Forest": {
+        "nRMSE_%": 11.4813,
+        "nMAE_%": 7.7206,
+        "R2": 0.8487,
+        "dagfout_%": 3.3676,
+        "nRMSE_% train 1-14 -> val 15-17": 10.0227,
+        "nRMSE_% train 1-17 -> val 18-20": 11.7813,
+        "nRMSE_% train 1-20 -> val 21-24": 12.6398
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 11.7842,
+        "nMAE_%": 8.0452,
+        "R2": 0.841,
+        "dagfout_%": 4.1657,
+        "nRMSE_% train 1-14 -> val 15-17": 10.6226,
+        "nRMSE_% train 1-17 -> val 18-20": 12.1326,
+        "nRMSE_% train 1-20 -> val 21-24": 12.5973
+      }
+    },
+    "+1 uur": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 16.9884,
+        "nMAE_%": 12.1426,
+        "R2": 0.649,
+        "dagfout_%": 14.5425,
+        "nRMSE_% train 1-14 -> val 15-17": 14.7489,
+        "nRMSE_% train 1-17 -> val 18-20": 21.6102,
+        "nRMSE_% train 1-20 -> val 21-24": 14.606
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 22.6168,
+        "nMAE_%": 17.3726,
+        "R2": 0.4088,
+        "dagfout_%": 2.7752,
+        "nRMSE_% train 1-14 -> val 15-17": 19.8088,
+        "nRMSE_% train 1-17 -> val 18-20": 24.6112,
+        "nRMSE_% train 1-20 -> val 21-24": 23.4304
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 17.3119,
+        "nMAE_%": 11.7515,
+        "R2": 0.6522,
+        "dagfout_%": 4.762,
+        "nRMSE_% train 1-14 -> val 15-17": 14.6989,
+        "nRMSE_% train 1-17 -> val 18-20": 19.0335,
+        "nRMSE_% train 1-20 -> val 21-24": 18.2032
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 14.7484,
+        "nMAE_%": 10.5235,
+        "R2": 0.7446,
+        "dagfout_%": 7.9799,
+        "nRMSE_% train 1-14 -> val 15-17": 12.2976,
+        "nRMSE_% train 1-17 -> val 18-20": 17.0084,
+        "nRMSE_% train 1-20 -> val 21-24": 14.9392
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 15.0657,
+        "nMAE_%": 10.5838,
+        "R2": 0.7326,
+        "dagfout_%": 7.969,
+        "nRMSE_% train 1-14 -> val 15-17": 12.374,
+        "nRMSE_% train 1-17 -> val 18-20": 17.5426,
+        "nRMSE_% train 1-20 -> val 21-24": 15.2806
+      },
+      "Random Forest": {
+        "nRMSE_%": 14.8692,
+        "nMAE_%": 10.6263,
+        "R2": 0.741,
+        "dagfout_%": 8.2787,
+        "nRMSE_% train 1-14 -> val 15-17": 12.7295,
+        "nRMSE_% train 1-17 -> val 18-20": 17.0978,
+        "nRMSE_% train 1-20 -> val 21-24": 14.7802
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 16.2051,
+        "nMAE_%": 11.4899,
+        "R2": 0.6937,
+        "dagfout_%": 10.4366,
+        "nRMSE_% train 1-14 -> val 15-17": 14.007,
+        "nRMSE_% train 1-17 -> val 18-20": 18.3522,
+        "nRMSE_% train 1-20 -> val 21-24": 16.2563
+      }
+    },
+    "+3 uur": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 16.9884,
+        "nMAE_%": 12.1426,
+        "R2": 0.649,
+        "dagfout_%": 14.5425,
+        "nRMSE_% train 1-14 -> val 15-17": 14.7489,
+        "nRMSE_% train 1-17 -> val 18-20": 21.6102,
+        "nRMSE_% train 1-20 -> val 21-24": 14.606
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 39.2676,
+        "nMAE_%": 33.0094,
+        "R2": -0.7477,
+        "dagfout_%": 13.3355,
+        "nRMSE_% train 1-14 -> val 15-17": 39.8349,
+        "nRMSE_% train 1-17 -> val 18-20": 37.2038,
+        "nRMSE_% train 1-20 -> val 21-24": 40.7643
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 20.3972,
+        "nMAE_%": 14.5136,
+        "R2": 0.525,
+        "dagfout_%": 9.8994,
+        "nRMSE_% train 1-14 -> val 15-17": 20.3029,
+        "nRMSE_% train 1-17 -> val 18-20": 20.8392,
+        "nRMSE_% train 1-20 -> val 21-24": 20.0495
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 15.7969,
+        "nMAE_%": 11.8001,
+        "R2": 0.7075,
+        "dagfout_%": 11.7666,
+        "nRMSE_% train 1-14 -> val 15-17": 13.9207,
+        "nRMSE_% train 1-17 -> val 18-20": 18.2671,
+        "nRMSE_% train 1-20 -> val 21-24": 15.2029
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 16.1309,
+        "nMAE_%": 11.7209,
+        "R2": 0.693,
+        "dagfout_%": 11.4908,
+        "nRMSE_% train 1-14 -> val 15-17": 13.9474,
+        "nRMSE_% train 1-17 -> val 18-20": 19.0362,
+        "nRMSE_% train 1-20 -> val 21-24": 15.4091
+      },
+      "Random Forest": {
+        "nRMSE_%": 16.1343,
+        "nMAE_%": 11.8324,
+        "R2": 0.6936,
+        "dagfout_%": 12.7291,
+        "nRMSE_% train 1-14 -> val 15-17": 14.4024,
+        "nRMSE_% train 1-17 -> val 18-20": 18.9145,
+        "nRMSE_% train 1-20 -> val 21-24": 15.0861
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 17.4074,
+        "nMAE_%": 12.6195,
+        "R2": 0.6452,
+        "dagfout_%": 15.1151,
+        "nRMSE_% train 1-14 -> val 15-17": 15.7683,
+        "nRMSE_% train 1-17 -> val 18-20": 20.0658,
+        "nRMSE_% train 1-20 -> val 21-24": 16.3883
+      }
+    },
+    "day-ahead (21:00)": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 16.9884,
+        "nMAE_%": 12.1426,
+        "R2": 0.649,
+        "dagfout_%": 14.5425,
+        "nRMSE_% train 1-14 -> val 15-17": 14.7489,
+        "nRMSE_% train 1-17 -> val 18-20": 21.6102,
+        "nRMSE_% train 1-20 -> val 21-24": 14.606
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 22.3211,
+        "nMAE_%": 15.4293,
+        "R2": 0.4063,
+        "dagfout_%": 15.1227,
+        "nRMSE_% train 1-14 -> val 15-17": 19.6967,
+        "nRMSE_% train 1-17 -> val 18-20": 27.086,
+        "nRMSE_% train 1-20 -> val 21-24": 20.1806
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 16.5145,
+        "nMAE_%": 12.38,
+        "R2": 0.6765,
+        "dagfout_%": 14.8454,
+        "nRMSE_% train 1-14 -> val 15-17": 14.1708,
+        "nRMSE_% train 1-17 -> val 18-20": 19.7782,
+        "nRMSE_% train 1-20 -> val 21-24": 15.5944
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 15.7833,
+        "nMAE_%": 11.8173,
+        "R2": 0.7053,
+        "dagfout_%": 12.2783,
+        "nRMSE_% train 1-14 -> val 15-17": 13.8081,
+        "nRMSE_% train 1-17 -> val 18-20": 18.7869,
+        "nRMSE_% train 1-20 -> val 21-24": 14.755
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 16.1243,
+        "nMAE_%": 11.8015,
+        "R2": 0.69,
+        "dagfout_%": 12.5629,
+        "nRMSE_% train 1-14 -> val 15-17": 13.918,
+        "nRMSE_% train 1-17 -> val 18-20": 19.6052,
+        "nRMSE_% train 1-20 -> val 21-24": 14.8497
+      },
+      "Random Forest": {
+        "nRMSE_%": 17.1651,
+        "nMAE_%": 12.447,
+        "R2": 0.6571,
+        "dagfout_%": 14.9461,
+        "nRMSE_% train 1-14 -> val 15-17": 15.6452,
+        "nRMSE_% train 1-17 -> val 18-20": 19.3814,
+        "nRMSE_% train 1-20 -> val 21-24": 16.4685
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 18.1494,
+        "nMAE_%": 13.1276,
+        "R2": 0.6144,
+        "dagfout_%": 18.0764,
+        "nRMSE_% train 1-14 -> val 15-17": 15.7195,
+        "nRMSE_% train 1-17 -> val 18-20": 20.8614,
+        "nRMSE_% train 1-20 -> val 21-24": 17.8673
+      }
+    }
+  }
+}

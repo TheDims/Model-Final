@@ -1,0 +1,6 @@
+model,nRMSE_%,bias_%,deel_bias_%,deel_dagniveau_%,deel_binnen_dag_%,fout_dagniveau_%,fout_binnen_dag_%
+gemiddelde dag,16.606,6.147,13.703,25.515,60.782,8.388,12.946
+smart persistence (geen weer),14.215,1.513,1.133,27.983,70.884,7.52,11.968
+LR POA (ERA5) - eindmodel,14.312,-4.96,12.008,5.441,82.551,3.339,13.004
+e6 (ERA5),12.657,-1.628,1.654,5.616,92.73,2.999,12.188
+sensor (bovengrens),5.211,-1.187,5.188,4.822,89.991,1.144,4.943

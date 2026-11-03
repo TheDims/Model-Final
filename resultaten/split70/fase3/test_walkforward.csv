@@ -1,0 +1,14 @@
+,nRMSE_%,nMAE_%,RMSE_kW,MAE_kW,R2,dagfout_%
+Baseline: gemiddelde dag,16.104,11.6605,0.8052,0.583,0.6506,20.3927
+Baseline: persistence (gisteren),18.7687,13.0633,0.9384,0.6532,0.5254,15.5477
+Fase 2: smart persistence (geen weer),14.229,9.9816,0.7115,0.4991,0.7272,15.8945
+"Fase 1: LR straling (sensor, bovengrens)",5.1726,3.4399,0.2586,0.172,0.964,3.4419
+LR GHI (ERA5),14.4348,10.7919,0.7217,0.5396,0.7193,12.8272
+LR POA (straling op het paneel),14.1018,10.6879,0.7051,0.5344,0.7321,11.7048
+"LR EFF_T (POA + reflectie, spectrum, stof, temp.)",13.4116,10.0657,0.6706,0.5033,0.7577,7.9217
+"e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)",12.0454,8.7843,0.6023,0.4392,0.8045,7.2432
+"e6: EFF_T x (a + b KT_POA), zonder intercept",12.5976,9.2073,0.6299,0.4604,0.7862,6.051
+Ridge e6 (zonder intercept),12.5994,9.2088,0.63,0.4604,0.7861,6.0601
+"Ridge e6 + bewolking, regen, vochtigheid",12.6235,9.3903,0.6312,0.4695,0.7853,7.2305
+Random Forest (e6 + extra),12.4797,9.0462,0.624,0.4523,0.7902,7.4709
+Gradient Boosting (e6 + extra),12.629,9.2007,0.6315,0.46,0.7851,7.6049

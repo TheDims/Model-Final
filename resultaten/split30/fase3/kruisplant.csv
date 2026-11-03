@@ -1,0 +1,13 @@
+model,P1 -> P2,P2 -> P1
+Baseline: gemiddelde dag,16.8927,15.5616
+Baseline: persistence (gisteren),20.3835,19.369
+Fase 2: smart persistence (geen weer),14.9235,15.0282
+"Fase 1: LR straling (sensor, bovengrens)",6.6577,4.6769
+LR GHI (ERA5),14.8554,15.2962
+LR POA (straling op het paneel),14.8412,14.9835
+"LR EFF_T (POA + reflectie, spectrum, stof, temp.)",15.6541,14.8126
+"e6: EFF_T x (a + b KT_POA), zonder intercept",15.1306,14.9969
+Ridge e6 (zonder intercept),15.1334,14.9808
+"Ridge e6 + bewolking, regen, vochtigheid",16.7741,16.6806
+Random Forest (e6 + extra),16.7697,15.4752
+Gradient Boosting (e6 + extra),17.6669,16.5706

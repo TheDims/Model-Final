@@ -1,0 +1,9 @@
+model,input,nRMSE_%,nMAE_%,RMSE_kW,MAE_kW,R2,dagfout_%,skill_gemdag
+Baseline: gemiddelde dag,geen,16.6056,11.9868,0.8303,0.5993,0.6279,21.6868,0.0
+Baseline: persistence (gisteren),geen,18.7528,13.0521,0.9376,0.6526,0.5254,15.5473,-0.1293
+"Fase 2: smart persistence (day-ahead, geen weer)",eigen opwek,14.2155,9.9727,0.7108,0.4986,0.7273,15.8941,0.1439
+Fase 3: LR POA (straling op het paneel) – EINDMODEL,ERA5-weer,14.3122,10.7597,0.7156,0.538,0.7236,13.3172,0.1381
+Fase 3: LR GHI (ERA5) (vergelijking),ERA5-weer,14.7009,10.8912,0.735,0.5446,0.7084,14.6741,0.1147
+"Fase 3: e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept) (vergelijking)",ERA5-weer,12.1551,8.8195,0.6078,0.441,0.8006,8.5369,0.268
+"Fase 3: e6: EFF_T x (a + b KT_POA), zonder intercept (vergelijking)",ERA5-weer,12.657,9.274,0.6329,0.4637,0.7838,6.4216,0.2378
+"Fase 1: LR straling (sensor, bovengrens)",plant-sensor,5.211,3.4928,0.2605,0.1746,0.9634,3.6128,0.6862

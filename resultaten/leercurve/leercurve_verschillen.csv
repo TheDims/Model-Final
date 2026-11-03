@@ -1,0 +1,15 @@
+,verschil_pp,laag_pp,hoog_pp,aantoonbaar
+gemiddelde dag | 27 - gemiddelde dag | 24,-0.0616,-0.1153,-0.0156,True
+smart persistence (geen weer) | 27 - smart persistence (geen weer) | 24,0.0,0.0,0.0,False
+LR GHI | 27 - LR GHI | 24,-0.1212,-0.1462,-0.0977,True
+LR POA | 27 - LR POA | 24,-0.1117,-0.1356,-0.0891,True
+e5 | 27 - e5 | 24,-0.12,-0.2218,-0.0338,True
+e6 | 27 - e6 | 24,0.0312,0.0153,0.0481,True
+Ridge e6 | 27 - Ridge e6 | 24,0.0306,0.0151,0.047,True
+gemiddelde dag | 24 - gemiddelde dag | 10,-1.3558,-1.5836,-1.145,True
+smart persistence (geen weer) | 24 - smart persistence (geen weer) | 10,0.0,-0.0,0.0,False
+LR GHI | 24 - LR GHI | 10,-0.5601,-0.6631,-0.4616,True
+LR POA | 24 - LR POA | 10,-0.5577,-0.6605,-0.4563,True
+e5 | 24 - e5 | 10,-1.7469,-2.7514,-0.8471,True
+e6 | 24 - e6 | 10,-0.1979,-0.3078,-0.093,True
+Ridge e6 | 24 - Ridge e6 | 10,-0.209,-0.3236,-0.1004,True

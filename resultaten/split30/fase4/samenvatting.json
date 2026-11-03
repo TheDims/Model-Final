@@ -1,0 +1,162 @@
+{
+  "fase": 4,
+  "model": "LR GHI (ERA5)",
+  "inputs": [
+    "GHI_W"
+  ],
+  "type": "Linear Regression (StandardScaler + OLS), nacht = 0",
+  "formule_FRAC": {
+    "intercept": 0.045862136430060596,
+    "GHI_W_m2": 0.0009023182861472949
+  },
+  "keuze": {
+    "regel": "laagste gemiddelde nRMSE op de validatievouwen binnen dag 1-10; < 0,5 pp -> eenvoudigste; complex alleen bij >= 1 pp en op beide vouwen beter (BESLISSINGEN #2)",
+    "motivatie": "laagste nRMSE: 'LR GHI (ERA5)' (11.24 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR GHI (ERA5)', 'LR POA (straling op het paneel)'] -> eenvoudigste: 'LR GHI (ERA5)' (11.24 %)",
+    "na_de_test": "Op de testdagen was e6 beter (14,1 tegen 15,0 % nRMSE). Volgens het protocol verandert de test de keuze niet; Dimme koos optie 1 (regel volgen). BESLISSINGEN #14.",
+    "alternatief": {
+      "model": "e6: EFF_T x (a + b KT_POA), zonder intercept",
+      "waarom": "beter op de test, in walk-forward en bij weerfouten; heeft meer trainingsdagen nodig (onstabiel met 6-8 dagen)"
+    }
+  },
+  "data": {
+    "opzet_dagen": "1-10",
+    "test_dagen": "11-34",
+    "eindmodel_getraind_op": "1-34",
+    "periode": "15 mei - 17 juni 2020",
+    "plants": "Kaggle Plant 1 + 2 (India), samen getraind",
+    "weggelaten": "omvormer-uitval en 29 plant-brede dips (Plant 2)"
+  },
+  "test_bevroren": {
+    "model": "LR GHI (ERA5)",
+    "plant": "samen",
+    "nRMSE_%": 15.0337,
+    "nMAE_%": 11.0651,
+    "RMSE_kW": 0.7517,
+    "MAE_kW": 0.5533,
+    "R2": 0.741,
+    "dagfout_%": 12.7568,
+    "skill_pers": 0.244,
+    "skill_gemdag": 0.1036,
+    "per_plant_nRMSE_%": {
+      "Plant 1": 15.3779,
+      "Plant 2": 14.6841
+    }
+  },
+  "test_walkforward_nRMSE_%": 14.6693,
+  "band": {
+    "methode": "per bewolkingsklasse (ERA5-helderheid KT_W)",
+    "kt_bins": [
+      0,
+      0.45,
+      0.75,
+      9
+    ],
+    "per_klasse": {
+      "0": [
+        0.6565158775586352,
+        2.517492974234759
+      ],
+      "1": [
+        0.626363394223725,
+        1.5994104303265422
+      ],
+      "2": [
+        0.5478268525997542,
+        1.3023057282674233
+      ]
+    },
+    "dekking_check_%": 80.49180327868852,
+    "check": "kalibratie dag 11-22, dekking dag 23-34",
+    "dekking_kalibratiedagen_%": 76.63512957630604,
+    "dagband_dekking_%": 100.0
+  },
+  "naar_een_huis": {
+    "formule": "kW = FRAC x kWp x factor x verliesfactor, begrensd op de omvormer; nacht = 0",
+    "factor_kW_per_kWp": 0.6636981040875356,
+    "factor_per_plant": {
+      "1": 0.6842554239768731,
+      "2": 0.643140784198198
+    }
+  },
+  "tijdafspraak_ERA5_min": 15,
+  "aannames": [
+    "factor = 99e percentiel van de pvlib-opwek (kW/kWp, V5-parameters) overdag op de geschatte plantlocaties, gemiddeld over beide plants (FRAC 1 = 99e percentiel van de opwek).",
+    "Plantlocaties geschat (ERA5-correlatie); opstelling plants: vast, hoek = breedtegraad, zuid.",
+    "ERA5 (weer achteraf) als stand-in voor een weersvoorspelling: scores zijn een bovengrens.",
+    "LR GHI gebruikt horizontale straling: dakhoek en richting van een huis tellen NIET mee in de voorspelling (alleen via kWp en de verliesfactor). e6 zou dat wel doen."
+  ],
+  "beperkingen": [
+    "34 dagen in mei-juni (begin moesson), 2 plants, 10 opzetdagen",
+    "gevoelig voor fouten in de weersvoorspelling (bij ~12 % fout slechter dan de gemiddelde dag)"
+  ],
+  "eindtabel": {
+    "Baseline: gemiddelde dag": {
+      "input": "geen",
+      "nRMSE_%": 16.7709,
+      "nMAE_%": 11.8987,
+      "RMSE_kW": 0.8385,
+      "MAE_kW": 0.5949,
+      "R2": 0.6777,
+      "dagfout_%": 16.3754,
+      "skill_gemdag": 0.0
+    },
+    "Baseline: persistence (gisteren)": {
+      "input": "geen",
+      "nRMSE_%": 19.8846,
+      "nMAE_%": 13.2769,
+      "RMSE_kW": 0.9942,
+      "MAE_kW": 0.6638,
+      "R2": 0.5469,
+      "dagfout_%": 13.9896,
+      "skill_gemdag": -0.1857
+    },
+    "Fase 2: smart persistence (day-ahead, geen weer)": {
+      "input": "eigen opwek",
+      "nRMSE_%": 14.9758,
+      "nMAE_%": 10.6516,
+      "RMSE_kW": 0.7488,
+      "MAE_kW": 0.5326,
+      "R2": 0.743,
+      "dagfout_%": 13.9429,
+      "skill_gemdag": 0.107
+    },
+    "Fase 3: LR GHI (ERA5) – EINDMODEL": {
+      "input": "ERA5-weer",
+      "nRMSE_%": 15.0337,
+      "nMAE_%": 11.0651,
+      "RMSE_kW": 0.7517,
+      "MAE_kW": 0.5533,
+      "R2": 0.741,
+      "dagfout_%": 12.7568,
+      "skill_gemdag": 0.1036
+    },
+    "Fase 3: e6: EFF_T x (a + b KT_POA), zonder intercept (alternatief)": {
+      "input": "ERA5-weer + pvlib",
+      "nRMSE_%": 14.1479,
+      "nMAE_%": 10.4315,
+      "RMSE_kW": 0.7074,
+      "MAE_kW": 0.5216,
+      "R2": 0.7706,
+      "dagfout_%": 9.5557,
+      "skill_gemdag": 0.1564
+    },
+    "Fase 1: LR straling (sensor, bovengrens)": {
+      "input": "plant-sensor",
+      "nRMSE_%": 5.4555,
+      "nMAE_%": 3.5024,
+      "RMSE_kW": 0.2728,
+      "MAE_kW": 0.1751,
+      "R2": 0.9659,
+      "dagfout_%": 2.8701,
+      "skill_gemdag": 0.6747
+    }
+  },
+  "fase1_bovengrens": "LR straling",
+  "fase2_dayahead": "Smart persistence (K blijft gelijk)",
+  "bronnen": [
+    "Kaggle Solar Power Generation Data (anikannal)",
+    "Open-Meteo Historical API / ERA5 (CC BY 4.0)",
+    "pvlib (Ineichen, Perez, Faiman, Kimber, PVWatts)",
+    "scikit-learn"
+  ]
+}

@@ -1,0 +1,10 @@
+model,P1 -> P2,P2 -> P1
+Baseline: gemiddelde dag,17.3714,14.6582
+Baseline: persistence (gisteren),18.9278,18.0528
+LR straling,6.2821,4.2828
+LR straling + moduletemp.,6.2679,4.6091
+LR fysisch: straling x (1 + γ(T-25)),6.2935,3.316
+Ridge (alle sensor-inputs + tijd),6.0056,5.8787
+"Polynoom gr. 2 + Ridge (straling, moduletemp.)",6.0802,3.7062
+Random Forest (alle),5.9801,4.9376
+Gradient Boosting (alle),6.0324,5.1928

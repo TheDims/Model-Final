@@ -1,0 +1,307 @@
+{
+  "fase": 0,
+  "bestand": "data\\clean\\plant_15min.csv",
+  "rijen": 6528,
+  "split": {
+    "n_dagen": 34,
+    "opzet_dagen": "dag 1-10",
+    "opzet_datums": [
+      "2020-05-15",
+      "2020-05-24"
+    ],
+    "test_dagen": "dag 11-34",
+    "test_datums": [
+      "2020-05-25",
+      "2020-06-17"
+    ]
+  },
+  "per_plant": {
+    "Plant 1": {
+      "rijen_generation": 68778,
+      "omvormers": 22,
+      "tijdstempels_generation": 3158,
+      "uitval_rijen": 63,
+      "uitval_%_van_zonnige_omvormer_kwartieren": 0.19036683386716627,
+      "kwartieren_rooster": 3264,
+      "kwartieren_zonder_generation": 106,
+      "kwartieren_minder_dan_8_omvormers": 2,
+      "kwartieren_met_uitval": 28,
+      "sensor_gaten_voor": {
+        "IRRADIATION": 82,
+        "MODULE_TEMPERATURE": 82,
+        "AMBIENT_TEMPERATURE": 82
+      },
+      "sensor_gaten_na_interpolatie": {
+        "IRRADIATION": 57,
+        "MODULE_TEMPERATURE": 57,
+        "AMBIENT_TEMPERATURE": 57
+      },
+      "AC_KW_NaN": 108,
+      "IRRADIATION_max_kW_m2": 1.2216518466666668,
+      "dip_kwartieren": 0,
+      "dip_verhouding_AC_per_IRR": 1332.657666971332,
+      "DC/AC_na_fix_mediaan": 1.0226490212026396,
+      "DC/AC_voor_fix": 10.225464808423482
+    },
+    "Plant 2": {
+      "rijen_generation": 67698,
+      "omvormers": 22,
+      "tijdstempels_generation": 3259,
+      "uitval_rijen": 3365,
+      "uitval_%_van_zonnige_omvormer_kwartieren": 10.813676971527734,
+      "kwartieren_rooster": 3264,
+      "kwartieren_zonder_generation": 5,
+      "kwartieren_minder_dan_8_omvormers": 0,
+      "kwartieren_met_uitval": 594,
+      "sensor_gaten_voor": {
+        "IRRADIATION": 5,
+        "MODULE_TEMPERATURE": 5,
+        "AMBIENT_TEMPERATURE": 5
+      },
+      "sensor_gaten_na_interpolatie": {
+        "IRRADIATION": 0,
+        "MODULE_TEMPERATURE": 0,
+        "AMBIENT_TEMPERATURE": 0
+      },
+      "AC_KW_NaN": 5,
+      "IRRADIATION_max_kW_m2": 1.0987660434482758,
+      "dip_kwartieren": 29,
+      "dip_verhouding_AC_per_IRR": 1300.289888077331,
+      "DC/AC_na_fix_mediaan": 1.0226846302342545,
+      "DC/AC_voor_fix": 1.0224808710970579
+    }
+  },
+  "checks_ruwe_bestanden": {
+    "Plant 1 generation": {
+      "bestand": "Plant 1 generation",
+      "rijen": 68778,
+      "kolommen": 7,
+      "types": {
+        "DATE_TIME": "datetime64[ns]",
+        "PLANT_ID": "int64",
+        "SOURCE_KEY": "object",
+        "DC_POWER": "float64",
+        "AC_POWER": "float64",
+        "DAILY_YIELD": "float64",
+        "TOTAL_YIELD": "float64"
+      },
+      "NA": {
+        "DATE_TIME": 0,
+        "PLANT_ID": 0,
+        "SOURCE_KEY": 0,
+        "DC_POWER": 0,
+        "AC_POWER": 0,
+        "DAILY_YIELD": 0,
+        "TOTAL_YIELD": 0
+      },
+      "dubbele_rijen": 0,
+      "van_tot": [
+        "2020-05-15 00:00:00",
+        "2020-06-17 23:45:00"
+      ],
+      "kwantielen": {
+        "PLANT_ID": {
+          "0.05": 4135001.0,
+          "0.5": 4135001.0,
+          "0.95": 4135001.0,
+          "0.99": 4135001.0
+        },
+        "DC_POWER": {
+          "0.05": 0.0,
+          "0.5": 42.9,
+          "0.95": 1133.274,
+          "0.99": 1290.035
+        },
+        "AC_POWER": {
+          "0.05": 0.0,
+          "0.5": 41.494,
+          "0.95": 1106.256,
+          "0.99": 1258.065
+        },
+        "DAILY_YIELD": {
+          "0.05": 0.0,
+          "0.5": 2658.714,
+          "0.95": 8242.0,
+          "0.99": 8802.0
+        },
+        "TOTAL_YIELD": {
+          "0.05": 6295121.0,
+          "0.5": 7146685.0,
+          "0.95": 7437055.0,
+          "0.99": 7801091.0
+        }
+      },
+      "DC/AC_voor_fix": 10.225464808423482
+    },
+    "Plant 1 sensor": {
+      "bestand": "Plant 1 sensor",
+      "rijen": 3182,
+      "kolommen": 6,
+      "types": {
+        "DATE_TIME": "datetime64[ns]",
+        "PLANT_ID": "int64",
+        "SOURCE_KEY": "object",
+        "AMBIENT_TEMPERATURE": "float64",
+        "MODULE_TEMPERATURE": "float64",
+        "IRRADIATION": "float64"
+      },
+      "NA": {
+        "DATE_TIME": 0,
+        "PLANT_ID": 0,
+        "SOURCE_KEY": 0,
+        "AMBIENT_TEMPERATURE": 0,
+        "MODULE_TEMPERATURE": 0,
+        "IRRADIATION": 0
+      },
+      "dubbele_rijen": 0,
+      "van_tot": [
+        "2020-05-15 00:00:00",
+        "2020-06-17 23:45:00"
+      ],
+      "kwantielen": {
+        "PLANT_ID": {
+          "0.05": 4135001.0,
+          "0.5": 4135001.0,
+          "0.95": 4135001.0,
+          "0.99": 4135001.0
+        },
+        "AMBIENT_TEMPERATURE": {
+          "0.05": 21.47,
+          "0.5": 24.614,
+          "0.95": 32.157,
+          "0.99": 33.758
+        },
+        "MODULE_TEMPERATURE": {
+          "0.05": 19.693,
+          "0.5": 24.618,
+          "0.95": 54.854,
+          "0.99": 60.272
+        },
+        "IRRADIATION": {
+          "0.05": 0.0,
+          "0.5": 0.025,
+          "0.95": 0.851,
+          "0.99": 0.999
+        }
+      }
+    },
+    "Plant 2 generation": {
+      "bestand": "Plant 2 generation",
+      "rijen": 67698,
+      "kolommen": 7,
+      "types": {
+        "DATE_TIME": "datetime64[ns]",
+        "PLANT_ID": "int64",
+        "SOURCE_KEY": "object",
+        "DC_POWER": "float64",
+        "AC_POWER": "float64",
+        "DAILY_YIELD": "float64",
+        "TOTAL_YIELD": "float64"
+      },
+      "NA": {
+        "DATE_TIME": 0,
+        "PLANT_ID": 0,
+        "SOURCE_KEY": 0,
+        "DC_POWER": 0,
+        "AC_POWER": 0,
+        "DAILY_YIELD": 0,
+        "TOTAL_YIELD": 0
+      },
+      "dubbele_rijen": 0,
+      "van_tot": [
+        "2020-05-15 00:00:00",
+        "2020-06-17 23:45:00"
+      ],
+      "kwantielen": {
+        "PLANT_ID": {
+          "0.05": 4136001.0,
+          "0.5": 4136001.0,
+          "0.95": 4136001.0,
+          "0.99": 4136001.0
+        },
+        "DC_POWER": {
+          "0.05": 0.0,
+          "0.5": 0.0,
+          "0.95": 1095.958,
+          "0.99": 1274.263
+        },
+        "AC_POWER": {
+          "0.05": 0.0,
+          "0.5": 0.0,
+          "0.95": 1070.672,
+          "0.99": 1242.41
+        },
+        "DAILY_YIELD": {
+          "0.05": 0.0,
+          "0.5": 2911.0,
+          "0.95": 8792.487,
+          "0.99": 9454.0
+        },
+        "TOTAL_YIELD": {
+          "0.05": 491396.0,
+          "0.5": 282627587.0,
+          "0.95": 1795106704.0,
+          "0.99": 2247881684.0
+        }
+      },
+      "DC/AC_voor_fix": 1.0224808710970579
+    },
+    "Plant 2 sensor": {
+      "bestand": "Plant 2 sensor",
+      "rijen": 3259,
+      "kolommen": 6,
+      "types": {
+        "DATE_TIME": "datetime64[ns]",
+        "PLANT_ID": "int64",
+        "SOURCE_KEY": "object",
+        "AMBIENT_TEMPERATURE": "float64",
+        "MODULE_TEMPERATURE": "float64",
+        "IRRADIATION": "float64"
+      },
+      "NA": {
+        "DATE_TIME": 0,
+        "PLANT_ID": 0,
+        "SOURCE_KEY": 0,
+        "AMBIENT_TEMPERATURE": 0,
+        "MODULE_TEMPERATURE": 0,
+        "IRRADIATION": 0
+      },
+      "dubbele_rijen": 0,
+      "van_tot": [
+        "2020-05-15 00:00:00",
+        "2020-06-17 23:45:00"
+      ],
+      "kwantielen": {
+        "PLANT_ID": {
+          "0.05": 4136001.0,
+          "0.5": 4136001.0,
+          "0.95": 4136001.0,
+          "0.99": 4136001.0
+        },
+        "AMBIENT_TEMPERATURE": {
+          "0.05": 23.214,
+          "0.5": 26.981,
+          "0.95": 35.9,
+          "0.99": 37.347
+        },
+        "MODULE_TEMPERATURE": {
+          "0.05": 21.931,
+          "0.5": 27.535,
+          "0.95": 55.509,
+          "0.99": 59.898
+        },
+        "IRRADIATION": {
+          "0.05": 0.0,
+          "0.5": 0.019,
+          "0.95": 0.892,
+          "0.99": 0.957
+        }
+      }
+    }
+  },
+  "eenheden": {
+    "AC_KW": "kW per actieve omvormer",
+    "IRRADIATION": "kW/m² (Kaggle; ERA5 is W/m²)",
+    "temperaturen": "°C"
+  }
+}

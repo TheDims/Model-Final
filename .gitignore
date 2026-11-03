@@ -1,0 +1,36 @@
+# ---------- Data ----------
+# Ruwe Kaggle-data gaat NIET mee (licentie niet bevestigd) -> zie data/README.md om te downloaden
+data/Plant_*_Generation_Data.csv
+data/Plant_*_Weather_Sensor_Data.csv
+# Opgeschoonde data is afgeleid van de Kaggle-data; fase0_data.py maakt hem lokaal opnieuw
+data/clean/
+
+# ---------- Resultaten ----------
+# Run 1 staat in resultaten/split30/. De losse mappen hieronder zijn exacte kopieën daarvan.
+/resultaten/fase0/
+/resultaten/fase1/
+/resultaten/fase2/
+/resultaten/fase3/
+/resultaten/fase4/
+/resultaten/heatmaps/
+/resultaten/diagnose/
+/resultaten/model_info.json
+# Regressietest (alleen ter controle)
+resultaten/split30_check/
+data/clean/split30_check/
+
+# ---------- Lokale AI-werkbestanden (AGENTS.md gaat wel mee) ----------
+CLAUDE.md
+PROMPT_*.md
+
+# ---------- Python, editors, besturingssysteem ----------
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.spyproject/
+.vscode/
+.idea/
+.env
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,6 @@
+model,nRMSE per kwartier_%,nRMSE per uur_%,nRMSE per dag_%
+gemiddelde dag,16.606,14.588,10.422
+smart persistence (geen weer),14.215,11.854,7.686
+LR POA (ERA5) - eindmodel,14.312,11.794,5.973
+e6 (ERA5),12.657,9.868,3.418
+sensor (bovengrens),5.211,4.102,1.651

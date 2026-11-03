@@ -1,0 +1,597 @@
+{
+  "fase": 1,
+  "vraag": "regressie op de plant-sensor (bovengrens, geen echte voorspelling)",
+  "opzet_dagen": "1-10",
+  "validatievouwen": [
+    "train 1-6 -> val 7-8",
+    "train 1-8 -> val 9-10"
+  ],
+  "keuze": "LR straling",
+  "inputs": [
+    "IRRADIATION"
+  ],
+  "motivatie": "laagste nRMSE: 'Ridge (alle sensor-inputs + tijd)' (6.22 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR straling', 'LR straling + moduletemp.', 'Ridge (alle sensor-inputs + tijd)', 'Polynoom gr. 2 + Ridge (straling, moduletemp.)'] -> eenvoudigste: 'LR straling' (6.45 %)",
+  "gamma_aanname": -0.004,
+  "validatie": {
+    "Baseline: gemiddelde dag": {
+      "nRMSE_%": 13.1951,
+      "nMAE_%": 10.3999,
+      "RMSE_kW": 0.6598,
+      "MAE_kW": 0.52,
+      "R2": 0.8251,
+      "dagfout_%": 13.4286,
+      "nRMSE_% train 1-6 -> val 7-8": 13.9622,
+      "nRMSE_% train 1-8 -> val 9-10": 12.4281,
+      "skill_pers": 0.3367,
+      "skill_gemdag": 0.0
+    },
+    "Baseline: persistence (gisteren)": {
+      "nRMSE_%": 19.8933,
+      "nMAE_%": 11.9879,
+      "RMSE_kW": 0.9947,
+      "MAE_kW": 0.5994,
+      "R2": 0.5702,
+      "dagfout_%": 13.5742,
+      "nRMSE_% train 1-6 -> val 7-8": 26.277,
+      "nRMSE_% train 1-8 -> val 9-10": 13.5097,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.5076
+    },
+    "LR straling": {
+      "nRMSE_%": 6.4516,
+      "nMAE_%": 3.5801,
+      "RMSE_kW": 0.3226,
+      "MAE_kW": 0.179,
+      "R2": 0.9576,
+      "dagfout_%": 1.8589,
+      "nRMSE_% train 1-6 -> val 7-8": 5.8624,
+      "nRMSE_% train 1-8 -> val 9-10": 7.0408,
+      "skill_pers": 0.6757,
+      "skill_gemdag": 0.5111
+    },
+    "LR straling + moduletemp.": {
+      "nRMSE_%": 6.2739,
+      "nMAE_%": 3.3187,
+      "RMSE_kW": 0.3137,
+      "MAE_kW": 0.1659,
+      "R2": 0.9596,
+      "dagfout_%": 1.6165,
+      "nRMSE_% train 1-6 -> val 7-8": 5.5478,
+      "nRMSE_% train 1-8 -> val 9-10": 7.0001,
+      "skill_pers": 0.6846,
+      "skill_gemdag": 0.5245
+    },
+    "LR fysisch: straling x (1 + γ(T-25))": {
+      "nRMSE_%": 6.7374,
+      "nMAE_%": 3.9314,
+      "RMSE_kW": 0.3369,
+      "MAE_kW": 0.1966,
+      "R2": 0.9542,
+      "dagfout_%": 2.4517,
+      "nRMSE_% train 1-6 -> val 7-8": 6.4523,
+      "nRMSE_% train 1-8 -> val 9-10": 7.0225,
+      "skill_pers": 0.6613,
+      "skill_gemdag": 0.4894
+    },
+    "Ridge (alle sensor-inputs + tijd)": {
+      "nRMSE_%": 6.2239,
+      "nMAE_%": 3.228,
+      "RMSE_kW": 0.3112,
+      "MAE_kW": 0.1614,
+      "R2": 0.9604,
+      "dagfout_%": 2.1754,
+      "nRMSE_% train 1-6 -> val 7-8": 5.599,
+      "nRMSE_% train 1-8 -> val 9-10": 6.8487,
+      "skill_pers": 0.6871,
+      "skill_gemdag": 0.5283
+    },
+    "Polynoom gr. 2 + Ridge (straling, moduletemp.)": {
+      "nRMSE_%": 6.3663,
+      "nMAE_%": 3.3834,
+      "RMSE_kW": 0.3183,
+      "MAE_kW": 0.1692,
+      "R2": 0.9588,
+      "dagfout_%": 2.0748,
+      "nRMSE_% train 1-6 -> val 7-8": 5.8939,
+      "nRMSE_% train 1-8 -> val 9-10": 6.8388,
+      "skill_pers": 0.68,
+      "skill_gemdag": 0.5175
+    },
+    "Random Forest (alle)": {
+      "nRMSE_%": 6.5872,
+      "nMAE_%": 3.3904,
+      "RMSE_kW": 0.3294,
+      "MAE_kW": 0.1695,
+      "R2": 0.9551,
+      "dagfout_%": 2.1952,
+      "nRMSE_% train 1-6 -> val 7-8": 5.6558,
+      "nRMSE_% train 1-8 -> val 9-10": 7.5187,
+      "skill_pers": 0.6689,
+      "skill_gemdag": 0.5008
+    },
+    "Gradient Boosting (alle)": {
+      "nRMSE_%": 7.1366,
+      "nMAE_%": 3.7577,
+      "RMSE_kW": 0.3568,
+      "MAE_kW": 0.1879,
+      "R2": 0.9471,
+      "dagfout_%": 1.8531,
+      "nRMSE_% train 1-6 -> val 7-8": 6.0358,
+      "nRMSE_% train 1-8 -> val 9-10": 8.2373,
+      "skill_pers": 0.6413,
+      "skill_gemdag": 0.4592
+    }
+  },
+  "test_dagen": "11-34",
+  "bevroren": [
+    {
+      "model": "Baseline: gemiddelde dag",
+      "plant": "samen",
+      "nRMSE_%": 16.7709,
+      "nMAE_%": 11.8987,
+      "RMSE_kW": 0.8385,
+      "MAE_kW": 0.5949,
+      "R2": 0.6777,
+      "dagfout_%": 16.3754,
+      "skill_pers": 0.1491,
+      "skill_gemdag": 0.0
+    },
+    {
+      "model": "Baseline: persistence (gisteren)",
+      "plant": "samen",
+      "nRMSE_%": 19.71,
+      "nMAE_%": 13.2136,
+      "RMSE_kW": 0.9855,
+      "MAE_kW": 0.6607,
+      "R2": 0.5549,
+      "dagfout_%": 13.9284,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.1753
+    },
+    {
+      "model": "LR straling",
+      "plant": "samen",
+      "nRMSE_%": 5.4555,
+      "nMAE_%": 3.5024,
+      "RMSE_kW": 0.2728,
+      "MAE_kW": 0.1751,
+      "R2": 0.9659,
+      "dagfout_%": 2.8701,
+      "skill_pers": 0.7232,
+      "skill_gemdag": 0.6747
+    },
+    {
+      "model": "LR straling + moduletemp.",
+      "plant": "samen",
+      "nRMSE_%": 5.5785,
+      "nMAE_%": 3.5669,
+      "RMSE_kW": 0.2789,
+      "MAE_kW": 0.1783,
+      "R2": 0.9643,
+      "dagfout_%": 3.66,
+      "skill_pers": 0.717,
+      "skill_gemdag": 0.6674
+    },
+    {
+      "model": "LR fysisch: straling x (1 + γ(T-25))",
+      "plant": "samen",
+      "nRMSE_%": 5.1483,
+      "nMAE_%": 2.98,
+      "RMSE_kW": 0.2574,
+      "MAE_kW": 0.149,
+      "R2": 0.9696,
+      "dagfout_%": 2.3794,
+      "skill_pers": 0.7388,
+      "skill_gemdag": 0.693
+    },
+    {
+      "model": "Ridge (alle sensor-inputs + tijd)",
+      "plant": "samen",
+      "nRMSE_%": 5.229,
+      "nMAE_%": 3.0858,
+      "RMSE_kW": 0.2614,
+      "MAE_kW": 0.1543,
+      "R2": 0.9687,
+      "dagfout_%": 2.8314,
+      "skill_pers": 0.7347,
+      "skill_gemdag": 0.6882
+    },
+    {
+      "model": "Polynoom gr. 2 + Ridge (straling, moduletemp.)",
+      "plant": "samen",
+      "nRMSE_%": 5.1955,
+      "nMAE_%": 2.9212,
+      "RMSE_kW": 0.2598,
+      "MAE_kW": 0.1461,
+      "R2": 0.9691,
+      "dagfout_%": 3.1046,
+      "skill_pers": 0.7364,
+      "skill_gemdag": 0.6902
+    },
+    {
+      "model": "Random Forest (alle)",
+      "plant": "samen",
+      "nRMSE_%": 5.6872,
+      "nMAE_%": 3.1412,
+      "RMSE_kW": 0.2844,
+      "MAE_kW": 0.1571,
+      "R2": 0.9629,
+      "dagfout_%": 3.3654,
+      "skill_pers": 0.7115,
+      "skill_gemdag": 0.6609
+    },
+    {
+      "model": "Gradient Boosting (alle)",
+      "plant": "samen",
+      "nRMSE_%": 5.8991,
+      "nMAE_%": 2.8952,
+      "RMSE_kW": 0.295,
+      "MAE_kW": 0.1448,
+      "R2": 0.9601,
+      "dagfout_%": 2.3534,
+      "skill_pers": 0.7007,
+      "skill_gemdag": 0.6483
+    },
+    {
+      "model": "Baseline: gemiddelde dag",
+      "plant": "Plant 1",
+      "nRMSE_%": 14.9715,
+      "nMAE_%": 11.044,
+      "RMSE_kW": 0.7486,
+      "MAE_kW": 0.5522,
+      "R2": 0.7409,
+      "dagfout_%": 12.0693,
+      "skill_pers": 0.227,
+      "skill_gemdag": 0.0
+    },
+    {
+      "model": "Baseline: persistence (gisteren)",
+      "plant": "Plant 1",
+      "nRMSE_%": 19.369,
+      "nMAE_%": 13.6176,
+      "RMSE_kW": 0.9685,
+      "MAE_kW": 0.6809,
+      "R2": 0.5664,
+      "dagfout_%": 12.3708,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.2937
+    },
+    {
+      "model": "LR straling",
+      "plant": "Plant 1",
+      "nRMSE_%": 4.0577,
+      "nMAE_%": 3.1462,
+      "RMSE_kW": 0.2029,
+      "MAE_kW": 0.1573,
+      "R2": 0.981,
+      "dagfout_%": 3.2867,
+      "skill_pers": 0.7905,
+      "skill_gemdag": 0.729
+    },
+    {
+      "model": "LR straling + moduletemp.",
+      "plant": "Plant 1",
+      "nRMSE_%": 4.3208,
+      "nMAE_%": 3.2411,
+      "RMSE_kW": 0.216,
+      "MAE_kW": 0.1621,
+      "R2": 0.9784,
+      "dagfout_%": 4.3594,
+      "skill_pers": 0.7769,
+      "skill_gemdag": 0.7114
+    },
+    {
+      "model": "LR fysisch: straling x (1 + γ(T-25))",
+      "plant": "Plant 1",
+      "nRMSE_%": 3.4183,
+      "nMAE_%": 2.5074,
+      "RMSE_kW": 0.1709,
+      "MAE_kW": 0.1254,
+      "R2": 0.9865,
+      "dagfout_%": 2.3612,
+      "skill_pers": 0.8235,
+      "skill_gemdag": 0.7717
+    },
+    {
+      "model": "Ridge (alle sensor-inputs + tijd)",
+      "plant": "Plant 1",
+      "nRMSE_%": 3.6805,
+      "nMAE_%": 2.667,
+      "RMSE_kW": 0.184,
+      "MAE_kW": 0.1333,
+      "R2": 0.9843,
+      "dagfout_%": 2.9499,
+      "skill_pers": 0.81,
+      "skill_gemdag": 0.7542
+    },
+    {
+      "model": "Polynoom gr. 2 + Ridge (straling, moduletemp.)",
+      "plant": "Plant 1",
+      "nRMSE_%": 3.8552,
+      "nMAE_%": 2.6397,
+      "RMSE_kW": 0.1928,
+      "MAE_kW": 0.132,
+      "R2": 0.9828,
+      "dagfout_%": 3.6084,
+      "skill_pers": 0.801,
+      "skill_gemdag": 0.7425
+    },
+    {
+      "model": "Random Forest (alle)",
+      "plant": "Plant 1",
+      "nRMSE_%": 4.2704,
+      "nMAE_%": 2.697,
+      "RMSE_kW": 0.2135,
+      "MAE_kW": 0.1348,
+      "R2": 0.9789,
+      "dagfout_%": 3.6123,
+      "skill_pers": 0.7795,
+      "skill_gemdag": 0.7148
+    },
+    {
+      "model": "Gradient Boosting (alle)",
+      "plant": "Plant 1",
+      "nRMSE_%": 3.8514,
+      "nMAE_%": 2.2921,
+      "RMSE_kW": 0.1926,
+      "MAE_kW": 0.1146,
+      "R2": 0.9829,
+      "dagfout_%": 1.8603,
+      "skill_pers": 0.8012,
+      "skill_gemdag": 0.7428
+    },
+    {
+      "model": "Baseline: gemiddelde dag",
+      "plant": "Plant 2",
+      "nRMSE_%": 18.3836,
+      "nMAE_%": 12.7471,
+      "RMSE_kW": 0.9192,
+      "MAE_kW": 0.6374,
+      "R2": 0.6132,
+      "dagfout_%": 21.0132,
+      "skill_pers": 0.0828,
+      "skill_gemdag": 0.0
+    },
+    {
+      "model": "Baseline: persistence (gisteren)",
+      "plant": "Plant 2",
+      "nRMSE_%": 20.0428,
+      "nMAE_%": 12.8125,
+      "RMSE_kW": 1.0021,
+      "MAE_kW": 0.6406,
+      "R2": 0.5403,
+      "dagfout_%": 15.6059,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.0903
+    },
+    {
+      "model": "LR straling",
+      "plant": "Plant 2",
+      "nRMSE_%": 6.5545,
+      "nMAE_%": 3.8559,
+      "RMSE_kW": 0.3277,
+      "MAE_kW": 0.1928,
+      "R2": 0.9508,
+      "dagfout_%": 2.4214,
+      "skill_pers": 0.673,
+      "skill_gemdag": 0.6435
+    },
+    {
+      "model": "LR straling + moduletemp.",
+      "plant": "Plant 2",
+      "nRMSE_%": 6.5937,
+      "nMAE_%": 3.8903,
+      "RMSE_kW": 0.3297,
+      "MAE_kW": 0.1945,
+      "R2": 0.9502,
+      "dagfout_%": 2.9068,
+      "skill_pers": 0.671,
+      "skill_gemdag": 0.6413
+    },
+    {
+      "model": "LR fysisch: straling x (1 + γ(T-25))",
+      "plant": "Plant 2",
+      "nRMSE_%": 6.42,
+      "nMAE_%": 3.4491,
+      "RMSE_kW": 0.321,
+      "MAE_kW": 0.1725,
+      "R2": 0.9528,
+      "dagfout_%": 2.399,
+      "skill_pers": 0.6797,
+      "skill_gemdag": 0.6508
+    },
+    {
+      "model": "Ridge (alle sensor-inputs + tijd)",
+      "plant": "Plant 2",
+      "nRMSE_%": 6.406,
+      "nMAE_%": 3.5015,
+      "RMSE_kW": 0.3203,
+      "MAE_kW": 0.1751,
+      "R2": 0.953,
+      "dagfout_%": 2.7039,
+      "skill_pers": 0.6804,
+      "skill_gemdag": 0.6515
+    },
+    {
+      "model": "Polynoom gr. 2 + Ridge (straling, moduletemp.)",
+      "plant": "Plant 2",
+      "nRMSE_%": 6.2478,
+      "nMAE_%": 3.2006,
+      "RMSE_kW": 0.3124,
+      "MAE_kW": 0.16,
+      "R2": 0.9553,
+      "dagfout_%": 2.5621,
+      "skill_pers": 0.6883,
+      "skill_gemdag": 0.6601
+    },
+    {
+      "model": "Random Forest (alle)",
+      "plant": "Plant 2",
+      "nRMSE_%": 6.808,
+      "nMAE_%": 3.5822,
+      "RMSE_kW": 0.3404,
+      "MAE_kW": 0.1791,
+      "R2": 0.947,
+      "dagfout_%": 3.0995,
+      "skill_pers": 0.6603,
+      "skill_gemdag": 0.6297
+    },
+    {
+      "model": "Gradient Boosting (alle)",
+      "plant": "Plant 2",
+      "nRMSE_%": 7.3904,
+      "nMAE_%": 3.4939,
+      "RMSE_kW": 0.3695,
+      "MAE_kW": 0.1747,
+      "R2": 0.9375,
+      "dagfout_%": 2.8846,
+      "skill_pers": 0.6313,
+      "skill_gemdag": 0.598
+    }
+  ],
+  "walkforward": {
+    "Baseline: gemiddelde dag": {
+      "nRMSE_%": 15.9346,
+      "nMAE_%": 11.3318,
+      "RMSE_kW": 0.7967,
+      "MAE_kW": 0.5666,
+      "R2": 0.7088,
+      "dagfout_%": 15.2748
+    },
+    "Baseline: persistence (gisteren)": {
+      "nRMSE_%": 19.7027,
+      "nMAE_%": 13.2068,
+      "RMSE_kW": 0.9851,
+      "MAE_kW": 0.6603,
+      "R2": 0.5547,
+      "dagfout_%": 13.9329
+    },
+    "LR straling": {
+      "nRMSE_%": 5.3776,
+      "nMAE_%": 3.3706,
+      "RMSE_kW": 0.2689,
+      "MAE_kW": 0.1685,
+      "R2": 0.9668,
+      "dagfout_%": 2.5065
+    },
+    "LR straling + moduletemp.": {
+      "nRMSE_%": 5.4004,
+      "nMAE_%": 3.3542,
+      "RMSE_kW": 0.27,
+      "MAE_kW": 0.1677,
+      "R2": 0.9665,
+      "dagfout_%": 2.8686
+    },
+    "LR fysisch: straling x (1 + γ(T-25))": {
+      "nRMSE_%": 5.1233,
+      "nMAE_%": 2.8958,
+      "RMSE_kW": 0.2562,
+      "MAE_kW": 0.1448,
+      "R2": 0.9699,
+      "dagfout_%": 2.2179
+    },
+    "Ridge (alle sensor-inputs + tijd)": {
+      "nRMSE_%": 5.0845,
+      "nMAE_%": 2.8795,
+      "RMSE_kW": 0.2542,
+      "MAE_kW": 0.144,
+      "R2": 0.9703,
+      "dagfout_%": 2.2889
+    },
+    "Polynoom gr. 2 + Ridge (straling, moduletemp.)": {
+      "nRMSE_%": 5.002,
+      "nMAE_%": 2.6895,
+      "RMSE_kW": 0.2501,
+      "MAE_kW": 0.1345,
+      "R2": 0.9713,
+      "dagfout_%": 2.4771
+    },
+    "Random Forest (alle)": {
+      "nRMSE_%": 5.1506,
+      "nMAE_%": 2.6671,
+      "RMSE_kW": 0.2575,
+      "MAE_kW": 0.1334,
+      "R2": 0.9696,
+      "dagfout_%": 2.4247
+    },
+    "Gradient Boosting (alle)": {
+      "nRMSE_%": 5.4028,
+      "nMAE_%": 2.5996,
+      "RMSE_kW": 0.2701,
+      "MAE_kW": 0.13,
+      "R2": 0.9665,
+      "dagfout_%": 2.1005
+    }
+  },
+  "kruisplant_nRMSE": {
+    "P1 -> P2": {
+      "Baseline: gemiddelde dag": 16.8927,
+      "Baseline: persistence (gisteren)": 20.0428,
+      "LR straling": 6.6577,
+      "LR straling + moduletemp.": 6.6086,
+      "LR fysisch: straling x (1 + γ(T-25))": 6.6529,
+      "Ridge (alle sensor-inputs + tijd)": 6.5951,
+      "Polynoom gr. 2 + Ridge (straling, moduletemp.)": 6.3626,
+      "Random Forest (alle)": 6.4998,
+      "Gradient Boosting (alle)": 6.2643
+    },
+    "P2 -> P1": {
+      "Baseline: gemiddelde dag": 15.5616,
+      "Baseline: persistence (gisteren)": 19.369,
+      "LR straling": 4.6769,
+      "LR straling + moduletemp.": 5.0518,
+      "LR fysisch: straling x (1 + γ(T-25))": 4.0084,
+      "Ridge (alle sensor-inputs + tijd)": 5.5499,
+      "Polynoom gr. 2 + Ridge (straling, moduletemp.)": 4.4926,
+      "Random Forest (alle)": 5.5638,
+      "Gradient Boosting (alle)": 6.293
+    }
+  },
+  "stabiliteit": {
+    "Baseline: gemiddelde dag": {
+      "mean": 15.8858,
+      "std": 5.4575,
+      "CV": 0.3435
+    },
+    "Baseline: persistence (gisteren)": {
+      "mean": 19.0262,
+      "std": 5.3473,
+      "CV": 0.2811
+    },
+    "LR straling": {
+      "mean": 4.9992,
+      "std": 2.2272,
+      "CV": 0.4455
+    },
+    "LR straling + moduletemp.": {
+      "mean": 5.1342,
+      "std": 2.2256,
+      "CV": 0.4335
+    },
+    "LR fysisch: straling x (1 + γ(T-25))": {
+      "mean": 4.614,
+      "std": 2.3229,
+      "CV": 0.5034
+    },
+    "Ridge (alle sensor-inputs + tijd)": {
+      "mean": 4.7125,
+      "std": 2.3108,
+      "CV": 0.4903
+    },
+    "Polynoom gr. 2 + Ridge (straling, moduletemp.)": {
+      "mean": 4.7006,
+      "std": 2.2551,
+      "CV": 0.4798
+    },
+    "Random Forest (alle)": {
+      "mean": 5.2158,
+      "std": 2.2968,
+      "CV": 0.4404
+    },
+    "Gradient Boosting (alle)": {
+      "mean": 5.2252,
+      "std": 2.7616,
+      "CV": 0.5285
+    }
+  }
+}

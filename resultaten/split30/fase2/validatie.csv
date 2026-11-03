@@ -1,0 +1,29 @@
+,model,nRMSE_%,nMAE_%,R2,dagfout_%,nRMSE_% train 1-6 -> val 7-8,nRMSE_% train 1-8 -> val 9-10
++15 min,Baseline: gemiddelde dag,13.1951,10.3999,0.8251,13.4286,13.9622,12.4281
++15 min,Baseline: persistence,10.606,7.0778,0.8855,0.3328,12.216,8.996
++15 min,Smart persistence (K blijft gelijk),8.9042,5.0976,0.9201,0.6516,9.7357,8.0727
++15 min,LR op eerdere K,8.5998,5.5195,0.9256,3.3528,9.3266,7.8731
++15 min,Ridge (K + sensor + tijd),8.383,5.4008,0.9293,2.767,9.0324,7.7335
++15 min,Random Forest,8.5304,5.588,0.9268,3.4016,9.2194,7.8414
++15 min,Gradient Boosting,9.1581,6.1172,0.9152,4.4837,10.2877,8.0284
++1 uur,Baseline: gemiddelde dag,13.1951,10.3999,0.8251,13.4286,13.9622,12.4281
++1 uur,Baseline: persistence,20.8266,17.2953,0.5646,1.3526,21.4243,20.2289
++1 uur,Smart persistence (K blijft gelijk),12.9687,8.2131,0.831,2.3849,13.0036,12.9337
++1 uur,LR op eerdere K,12.0603,9.1875,0.854,9.8443,12.5737,11.5469
++1 uur,Ridge (K + sensor + tijd),11.0703,8.3907,0.877,7.9521,11.3469,10.7936
++1 uur,Random Forest,11.2873,8.2818,0.8721,7.6557,11.6867,10.8879
++1 uur,Gradient Boosting,11.6248,8.5594,0.8641,7.862,12.5737,10.6758
++3 uur,Baseline: gemiddelde dag,13.1951,10.3999,0.8251,13.4286,13.9622,12.4281
++3 uur,Baseline: persistence,43.7897,38.3923,-0.9248,11.9413,45.0007,42.5787
++3 uur,Smart persistence (K blijft gelijk),14.1754,9.3844,0.7981,5.1755,15.0806,13.2701
++3 uur,LR op eerdere K,14.1425,11.1999,0.7973,15.8632,16.0379,12.247
++3 uur,Ridge (K + sensor + tijd),12.5522,10.0475,0.8409,13.2242,13.983,11.1214
++3 uur,Random Forest,13.1762,10.1324,0.8227,12.863,15.374,10.9784
++3 uur,Gradient Boosting,15.5743,11.9649,0.7468,16.5957,19.235,11.9137
+day-ahead (21:00),Baseline: gemiddelde dag,13.1951,10.3999,0.8251,13.4286,13.9622,12.4281
+day-ahead (21:00),Baseline: persistence,20.9096,12.4077,0.5164,14.3553,28.3095,13.5097
+day-ahead (21:00),Smart persistence (K blijft gelijk),11.4041,7.9424,0.8694,10.4334,12.048,10.7603
+day-ahead (21:00),LR op eerdere K,14.9049,11.9128,0.7765,18.0617,16.1224,13.6874
+day-ahead (21:00),Ridge (K + sensor + tijd),15.7281,12.6766,0.7447,18.797,18.9179,12.5383
+day-ahead (21:00),Random Forest,14.8361,11.8322,0.7762,17.3293,17.0297,12.6426
+day-ahead (21:00),Gradient Boosting,16.8519,12.5018,0.7131,17.3916,18.7933,14.9104

@@ -1,0 +1,8 @@
+,Plant 1,Plant 2,samen
+gemiddelde dag,14.143,18.739,16.606
+persistence (gisteren),18.053,19.425,18.753
+smart persistence (geen weer),14.542,13.882,14.215
+EINDMODEL: LR POA,15.198,13.372,14.312
+e6 (ERA5 + pvlib),13.013,12.292,12.657
+LR GHI (ERA5),15.684,13.652,14.701
+sensor (bovengrens),3.802,6.309,5.211

@@ -1,0 +1,5 @@
+DATE_TIME,Baseline: gemiddelde dag,Baseline: persistence (gisteren),LR straling,LR straling + moduletemp.,LR fysisch: straling x (1 + γ(T-25)),Ridge (alle sensor-inputs + tijd),"Polynoom gr. 2 + Ridge (straling, moduletemp.)",Random Forest (alle),Gradient Boosting (alle)
+2020-05-25/2020-05-31,13.468,17.46,5.506,5.438,5.486,5.322,5.162,5.556,6.193
+2020-06-01/2020-06-07,18.083,23.176,5.566,5.682,5.163,5.461,5.364,5.679,5.47
+2020-06-08/2020-06-14,16.673,18.38,5.557,5.761,5.187,5.235,5.341,6.163,6.553
+2020-06-15/2020-06-21,20.359,18.887,4.8,5.213,4.109,4.378,4.483,4.774,4.338

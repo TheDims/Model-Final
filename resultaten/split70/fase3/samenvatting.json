@@ -1,0 +1,950 @@
+{
+  "fase": 3,
+  "run": "split70",
+  "vraag": "ERA5-weermodel als input (bovengrens voor een echte voorspelling)",
+  "opzet_dagen": "1-24",
+  "tijdafspraak_min": 15,
+  "tijdafspraak_r": {
+    "1": {
+      "-60": 0.7359,
+      "-45": 0.7665,
+      "-30": 0.7962,
+      "-15": 0.8242,
+      "0": 0.8439,
+      "15": 0.85,
+      "30": 0.8421,
+      "45": 0.8249,
+      "60": 0.801
+    },
+    "2": {
+      "-60": 0.8196,
+      "-45": 0.8424,
+      "-30": 0.8659,
+      "-15": 0.8869,
+      "0": 0.9005,
+      "15": 0.9015,
+      "30": 0.8912,
+      "45": 0.8736,
+      "60": 0.8506
+    }
+  },
+  "keuze": "LR POA (straling op het paneel)",
+  "inputs": [
+    "POA"
+  ],
+  "motivatie": "laagste nRMSE: 'e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)' (15.53 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR GHI (ERA5)', 'LR POA (straling op het paneel)', 'LR EFF_T (POA + reflectie, spectrum, stof, temp.)', 'e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)', 'e6: EFF_T x (a + b KT_POA), zonder intercept', 'Ridge e6 (zonder intercept)'] -> eenvoudigste: 'LR POA (straling op het paneel)' (15.56 %)",
+  "opstelling_plants": "vast, hoek = breedtegraad, zuid (AANNAME uit V3-V5)",
+  "validatie": {
+    "Baseline: gemiddelde dag": {
+      "nRMSE_%": 16.9884,
+      "nMAE_%": 12.1426,
+      "RMSE_kW": 0.8494,
+      "MAE_kW": 0.6071,
+      "R2": 0.649,
+      "dagfout_%": 14.5425,
+      "nRMSE_% train 1-14 -> val 15-17": 14.7489,
+      "nRMSE_% train 1-17 -> val 18-20": 21.6102,
+      "nRMSE_% train 1-20 -> val 21-24": 14.606,
+      "skill_pers": 0.2389,
+      "skill_gemdag": 0.0
+    },
+    "Baseline: persistence (gisteren)": {
+      "nRMSE_%": 22.3211,
+      "nMAE_%": 15.4293,
+      "RMSE_kW": 1.1161,
+      "MAE_kW": 0.7715,
+      "R2": 0.4063,
+      "dagfout_%": 15.1227,
+      "nRMSE_% train 1-14 -> val 15-17": 19.6967,
+      "nRMSE_% train 1-17 -> val 18-20": 27.086,
+      "nRMSE_% train 1-20 -> val 21-24": 20.1806,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.3139
+    },
+    "Fase 2: smart persistence (geen weer)": {
+      "nRMSE_%": 16.5145,
+      "nMAE_%": 12.38,
+      "RMSE_kW": 0.8257,
+      "MAE_kW": 0.619,
+      "R2": 0.6765,
+      "dagfout_%": 14.8454,
+      "nRMSE_% train 1-14 -> val 15-17": 14.1708,
+      "nRMSE_% train 1-17 -> val 18-20": 19.7782,
+      "nRMSE_% train 1-20 -> val 21-24": 15.5944,
+      "skill_pers": 0.2601,
+      "skill_gemdag": 0.0279
+    },
+    "Fase 1: LR straling (sensor, bovengrens)": {
+      "nRMSE_%": 5.0276,
+      "nMAE_%": 3.2896,
+      "RMSE_kW": 0.2514,
+      "MAE_kW": 0.1645,
+      "R2": 0.9696,
+      "dagfout_%": 1.9563,
+      "nRMSE_% train 1-14 -> val 15-17": 3.9124,
+      "nRMSE_% train 1-17 -> val 18-20": 6.1729,
+      "nRMSE_% train 1-20 -> val 21-24": 4.9975,
+      "skill_pers": 0.7748,
+      "skill_gemdag": 0.7041
+    },
+    "LR GHI (ERA5)": {
+      "nRMSE_%": 15.6922,
+      "nMAE_%": 11.6935,
+      "RMSE_kW": 0.7846,
+      "MAE_kW": 0.5847,
+      "R2": 0.703,
+      "dagfout_%": 9.878,
+      "nRMSE_% train 1-14 -> val 15-17": 12.6801,
+      "nRMSE_% train 1-17 -> val 18-20": 19.5542,
+      "nRMSE_% train 1-20 -> val 21-24": 14.8424,
+      "skill_pers": 0.297,
+      "skill_gemdag": 0.0763
+    },
+    "LR POA (straling op het paneel)": {
+      "nRMSE_%": 15.557,
+      "nMAE_%": 11.6914,
+      "RMSE_kW": 0.7779,
+      "MAE_kW": 0.5846,
+      "R2": 0.7091,
+      "dagfout_%": 9.3779,
+      "nRMSE_% train 1-14 -> val 15-17": 12.664,
+      "nRMSE_% train 1-17 -> val 18-20": 19.2349,
+      "nRMSE_% train 1-20 -> val 21-24": 14.7722,
+      "skill_pers": 0.303,
+      "skill_gemdag": 0.0843
+    },
+    "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": {
+      "nRMSE_%": 15.7217,
+      "nMAE_%": 11.5743,
+      "RMSE_kW": 0.7861,
+      "MAE_kW": 0.5787,
+      "R2": 0.7057,
+      "dagfout_%": 9.7839,
+      "nRMSE_% train 1-14 -> val 15-17": 13.1054,
+      "nRMSE_% train 1-17 -> val 18-20": 18.9976,
+      "nRMSE_% train 1-20 -> val 21-24": 15.0622,
+      "skill_pers": 0.2957,
+      "skill_gemdag": 0.0746
+    },
+    "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": {
+      "nRMSE_%": 15.5252,
+      "nMAE_%": 11.5002,
+      "RMSE_kW": 0.7763,
+      "MAE_kW": 0.575,
+      "R2": 0.7167,
+      "dagfout_%": 10.9919,
+      "nRMSE_% train 1-14 -> val 15-17": 13.8507,
+      "nRMSE_% train 1-17 -> val 18-20": 18.1188,
+      "nRMSE_% train 1-20 -> val 21-24": 14.6061,
+      "skill_pers": 0.3045,
+      "skill_gemdag": 0.0861
+    },
+    "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+      "nRMSE_%": 15.6797,
+      "nMAE_%": 11.5009,
+      "RMSE_kW": 0.784,
+      "MAE_kW": 0.575,
+      "R2": 0.7081,
+      "dagfout_%": 9.4623,
+      "nRMSE_% train 1-14 -> val 15-17": 13.1175,
+      "nRMSE_% train 1-17 -> val 18-20": 18.7939,
+      "nRMSE_% train 1-20 -> val 21-24": 15.1276,
+      "skill_pers": 0.2975,
+      "skill_gemdag": 0.077
+    },
+    "Ridge e6 (zonder intercept)": {
+      "nRMSE_%": 15.6806,
+      "nMAE_%": 11.5012,
+      "RMSE_kW": 0.784,
+      "MAE_kW": 0.5751,
+      "R2": 0.708,
+      "dagfout_%": 9.4693,
+      "nRMSE_% train 1-14 -> val 15-17": 13.1161,
+      "nRMSE_% train 1-17 -> val 18-20": 18.7985,
+      "nRMSE_% train 1-20 -> val 21-24": 15.1273,
+      "skill_pers": 0.2975,
+      "skill_gemdag": 0.077
+    },
+    "Ridge e6 + bewolking, regen, vochtigheid": {
+      "nRMSE_%": 16.1374,
+      "nMAE_%": 12.103,
+      "RMSE_kW": 0.8069,
+      "MAE_kW": 0.6052,
+      "R2": 0.6838,
+      "dagfout_%": 9.9291,
+      "nRMSE_% train 1-14 -> val 15-17": 12.7249,
+      "nRMSE_% train 1-17 -> val 18-20": 20.3875,
+      "nRMSE_% train 1-20 -> val 21-24": 15.2999,
+      "skill_pers": 0.277,
+      "skill_gemdag": 0.0501
+    },
+    "Random Forest (e6 + extra)": {
+      "nRMSE_%": 16.4106,
+      "nMAE_%": 12.1006,
+      "RMSE_kW": 0.8205,
+      "MAE_kW": 0.605,
+      "R2": 0.6788,
+      "dagfout_%": 11.1933,
+      "nRMSE_% train 1-14 -> val 15-17": 13.2755,
+      "nRMSE_% train 1-17 -> val 18-20": 19.8278,
+      "nRMSE_% train 1-20 -> val 21-24": 16.1285,
+      "skill_pers": 0.2648,
+      "skill_gemdag": 0.034
+    },
+    "Gradient Boosting (e6 + extra)": {
+      "nRMSE_%": 16.6936,
+      "nMAE_%": 12.3356,
+      "RMSE_kW": 0.8347,
+      "MAE_kW": 0.6168,
+      "R2": 0.6696,
+      "dagfout_%": 11.4859,
+      "nRMSE_% train 1-14 -> val 15-17": 13.4451,
+      "nRMSE_% train 1-17 -> val 18-20": 19.7801,
+      "nRMSE_% train 1-20 -> val 21-24": 16.8555,
+      "skill_pers": 0.2521,
+      "skill_gemdag": 0.0174
+    }
+  },
+  "coefficienten": [
+    {
+      "model": "e6: EFF_T x (a + b KT_POA), zonder intercept",
+      "vouw": "train 1-14 -> val 15-17",
+      "a": 0.0016000197525822303,
+      "b": -0.00039990389785162184
+    },
+    {
+      "model": "Ridge e6 (zonder intercept)",
+      "vouw": "train 1-14 -> val 15-17",
+      "a": 0.001595328935246145,
+      "b": -0.0003948593300223566
+    },
+    {
+      "model": "e6: EFF_T x (a + b KT_POA), zonder intercept",
+      "vouw": "train 1-17 -> val 18-20",
+      "a": 0.0015611412372298185,
+      "b": -0.0003587105868874388
+    },
+    {
+      "model": "Ridge e6 (zonder intercept)",
+      "vouw": "train 1-17 -> val 18-20",
+      "a": 0.001557727008550096,
+      "b": -0.0003550102553767983
+    },
+    {
+      "model": "e6: EFF_T x (a + b KT_POA), zonder intercept",
+      "vouw": "train 1-20 -> val 21-24",
+      "a": 0.0017264789174118926,
+      "b": -0.000551535534651771
+    },
+    {
+      "model": "Ridge e6 (zonder intercept)",
+      "vouw": "train 1-20 -> val 21-24",
+      "a": 0.001723807211377398,
+      "b": -0.000548605764192407
+    }
+  ],
+  "test_dagen": "25-34",
+  "bevroren": [
+    {
+      "model": "Baseline: gemiddelde dag",
+      "plant": "samen",
+      "nRMSE_%": 16.6056,
+      "nMAE_%": 11.9868,
+      "RMSE_kW": 0.8303,
+      "MAE_kW": 0.5993,
+      "R2": 0.6279,
+      "dagfout_%": 21.6868,
+      "skill_pers": 0.1145,
+      "skill_gemdag": 0.0
+    },
+    {
+      "model": "Baseline: persistence (gisteren)",
+      "plant": "samen",
+      "nRMSE_%": 18.7528,
+      "nMAE_%": 13.0521,
+      "RMSE_kW": 0.9376,
+      "MAE_kW": 0.6526,
+      "R2": 0.5254,
+      "dagfout_%": 15.5473,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.1293
+    },
+    {
+      "model": "Fase 2: smart persistence (geen weer)",
+      "plant": "samen",
+      "nRMSE_%": 14.2155,
+      "nMAE_%": 9.9727,
+      "RMSE_kW": 0.7108,
+      "MAE_kW": 0.4986,
+      "R2": 0.7273,
+      "dagfout_%": 15.8941,
+      "skill_pers": 0.242,
+      "skill_gemdag": 0.1439
+    },
+    {
+      "model": "Fase 1: LR straling (sensor, bovengrens)",
+      "plant": "samen",
+      "nRMSE_%": 5.211,
+      "nMAE_%": 3.4928,
+      "RMSE_kW": 0.2605,
+      "MAE_kW": 0.1746,
+      "R2": 0.9634,
+      "dagfout_%": 3.6128,
+      "skill_pers": 0.7221,
+      "skill_gemdag": 0.6862
+    },
+    {
+      "model": "LR GHI (ERA5)",
+      "plant": "samen",
+      "nRMSE_%": 14.7009,
+      "nMAE_%": 10.8912,
+      "RMSE_kW": 0.735,
+      "MAE_kW": 0.5446,
+      "R2": 0.7084,
+      "dagfout_%": 14.6741,
+      "skill_pers": 0.2161,
+      "skill_gemdag": 0.1147
+    },
+    {
+      "model": "LR POA (straling op het paneel)",
+      "plant": "samen",
+      "nRMSE_%": 14.3122,
+      "nMAE_%": 10.7597,
+      "RMSE_kW": 0.7156,
+      "MAE_kW": 0.538,
+      "R2": 0.7236,
+      "dagfout_%": 13.3172,
+      "skill_pers": 0.2368,
+      "skill_gemdag": 0.1381
+    },
+    {
+      "model": "LR EFF_T (POA + reflectie, spectrum, stof, temp.)",
+      "plant": "samen",
+      "nRMSE_%": 13.459,
+      "nMAE_%": 10.048,
+      "RMSE_kW": 0.673,
+      "MAE_kW": 0.5024,
+      "R2": 0.7555,
+      "dagfout_%": 8.4768,
+      "skill_pers": 0.2823,
+      "skill_gemdag": 0.1895
+    },
+    {
+      "model": "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)",
+      "plant": "samen",
+      "nRMSE_%": 12.1551,
+      "nMAE_%": 8.8195,
+      "RMSE_kW": 0.6078,
+      "MAE_kW": 0.441,
+      "R2": 0.8006,
+      "dagfout_%": 8.5369,
+      "skill_pers": 0.3518,
+      "skill_gemdag": 0.268
+    },
+    {
+      "model": "e6: EFF_T x (a + b KT_POA), zonder intercept",
+      "plant": "samen",
+      "nRMSE_%": 12.657,
+      "nMAE_%": 9.274,
+      "RMSE_kW": 0.6329,
+      "MAE_kW": 0.4637,
+      "R2": 0.7838,
+      "dagfout_%": 6.4216,
+      "skill_pers": 0.3251,
+      "skill_gemdag": 0.2378
+    },
+    {
+      "model": "Ridge e6 (zonder intercept)",
+      "plant": "samen",
+      "nRMSE_%": 12.6606,
+      "nMAE_%": 9.277,
+      "RMSE_kW": 0.633,
+      "MAE_kW": 0.4639,
+      "R2": 0.7837,
+      "dagfout_%": 6.4476,
+      "skill_pers": 0.3249,
+      "skill_gemdag": 0.2376
+    },
+    {
+      "model": "Ridge e6 + bewolking, regen, vochtigheid",
+      "plant": "samen",
+      "nRMSE_%": 12.8326,
+      "nMAE_%": 9.6513,
+      "RMSE_kW": 0.6416,
+      "MAE_kW": 0.4826,
+      "R2": 0.7778,
+      "dagfout_%": 9.103,
+      "skill_pers": 0.3157,
+      "skill_gemdag": 0.2272
+    },
+    {
+      "model": "Random Forest (e6 + extra)",
+      "plant": "samen",
+      "nRMSE_%": 12.5907,
+      "nMAE_%": 9.1884,
+      "RMSE_kW": 0.6295,
+      "MAE_kW": 0.4594,
+      "R2": 0.7861,
+      "dagfout_%": 7.6646,
+      "skill_pers": 0.3286,
+      "skill_gemdag": 0.2418
+    },
+    {
+      "model": "Gradient Boosting (e6 + extra)",
+      "plant": "samen",
+      "nRMSE_%": 12.7947,
+      "nMAE_%": 9.3333,
+      "RMSE_kW": 0.6397,
+      "MAE_kW": 0.4667,
+      "R2": 0.7791,
+      "dagfout_%": 8.2204,
+      "skill_pers": 0.3177,
+      "skill_gemdag": 0.2295
+    },
+    {
+      "model": "Baseline: gemiddelde dag",
+      "plant": "Plant 1",
+      "nRMSE_%": 14.1433,
+      "nMAE_%": 10.2776,
+      "RMSE_kW": 0.7072,
+      "MAE_kW": 0.5139,
+      "R2": 0.7449,
+      "dagfout_%": 14.6544,
+      "skill_pers": 0.2166,
+      "skill_gemdag": 0.0
+    },
+    {
+      "model": "Baseline: persistence (gisteren)",
+      "plant": "Plant 1",
+      "nRMSE_%": 18.0528,
+      "nMAE_%": 12.7924,
+      "RMSE_kW": 0.9026,
+      "MAE_kW": 0.6396,
+      "R2": 0.5844,
+      "dagfout_%": 11.9782,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.2764
+    },
+    {
+      "model": "Fase 2: smart persistence (geen weer)",
+      "plant": "Plant 1",
+      "nRMSE_%": 14.5421,
+      "nMAE_%": 10.0092,
+      "RMSE_kW": 0.7271,
+      "MAE_kW": 0.5005,
+      "R2": 0.7303,
+      "dagfout_%": 12.8546,
+      "skill_pers": 0.1945,
+      "skill_gemdag": -0.0282
+    },
+    {
+      "model": "Fase 1: LR straling (sensor, bovengrens)",
+      "plant": "Plant 1",
+      "nRMSE_%": 3.802,
+      "nMAE_%": 3.1092,
+      "RMSE_kW": 0.1901,
+      "MAE_kW": 0.1555,
+      "R2": 0.9816,
+      "dagfout_%": 3.9317,
+      "skill_pers": 0.7894,
+      "skill_gemdag": 0.7312
+    },
+    {
+      "model": "LR GHI (ERA5)",
+      "plant": "Plant 1",
+      "nRMSE_%": 15.6835,
+      "nMAE_%": 11.8083,
+      "RMSE_kW": 0.7842,
+      "MAE_kW": 0.5904,
+      "R2": 0.6863,
+      "dagfout_%": 15.1324,
+      "skill_pers": 0.1312,
+      "skill_gemdag": -0.1089
+    },
+    {
+      "model": "LR POA (straling op het paneel)",
+      "plant": "Plant 1",
+      "nRMSE_%": 15.198,
+      "nMAE_%": 11.5192,
+      "RMSE_kW": 0.7599,
+      "MAE_kW": 0.576,
+      "R2": 0.7055,
+      "dagfout_%": 13.621,
+      "skill_pers": 0.1581,
+      "skill_gemdag": -0.0746
+    },
+    {
+      "model": "LR EFF_T (POA + reflectie, spectrum, stof, temp.)",
+      "plant": "Plant 1",
+      "nRMSE_%": 14.0774,
+      "nMAE_%": 10.401,
+      "RMSE_kW": 0.7039,
+      "MAE_kW": 0.5201,
+      "R2": 0.7473,
+      "dagfout_%": 7.6847,
+      "skill_pers": 0.2202,
+      "skill_gemdag": 0.0047
+    },
+    {
+      "model": "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)",
+      "plant": "Plant 1",
+      "nRMSE_%": 12.1501,
+      "nMAE_%": 8.7628,
+      "RMSE_kW": 0.6075,
+      "MAE_kW": 0.4381,
+      "R2": 0.8118,
+      "dagfout_%": 5.2527,
+      "skill_pers": 0.327,
+      "skill_gemdag": 0.1409
+    },
+    {
+      "model": "e6: EFF_T x (a + b KT_POA), zonder intercept",
+      "plant": "Plant 1",
+      "nRMSE_%": 13.0127,
+      "nMAE_%": 9.3477,
+      "RMSE_kW": 0.6506,
+      "MAE_kW": 0.4674,
+      "R2": 0.7841,
+      "dagfout_%": 5.5069,
+      "skill_pers": 0.2792,
+      "skill_gemdag": 0.0799
+    },
+    {
+      "model": "Ridge e6 (zonder intercept)",
+      "plant": "Plant 1",
+      "nRMSE_%": 13.0179,
+      "nMAE_%": 9.3525,
+      "RMSE_kW": 0.6509,
+      "MAE_kW": 0.4676,
+      "R2": 0.7839,
+      "dagfout_%": 5.5318,
+      "skill_pers": 0.2789,
+      "skill_gemdag": 0.0796
+    },
+    {
+      "model": "Ridge e6 + bewolking, regen, vochtigheid",
+      "plant": "Plant 1",
+      "nRMSE_%": 13.1964,
+      "nMAE_%": 9.8487,
+      "RMSE_kW": 0.6598,
+      "MAE_kW": 0.4924,
+      "R2": 0.7779,
+      "dagfout_%": 8.4727,
+      "skill_pers": 0.269,
+      "skill_gemdag": 0.0669
+    },
+    {
+      "model": "Random Forest (e6 + extra)",
+      "plant": "Plant 1",
+      "nRMSE_%": 13.2268,
+      "nMAE_%": 9.4622,
+      "RMSE_kW": 0.6613,
+      "MAE_kW": 0.4731,
+      "R2": 0.7769,
+      "dagfout_%": 7.3576,
+      "skill_pers": 0.2673,
+      "skill_gemdag": 0.0648
+    },
+    {
+      "model": "Gradient Boosting (e6 + extra)",
+      "plant": "Plant 1",
+      "nRMSE_%": 13.0499,
+      "nMAE_%": 9.4138,
+      "RMSE_kW": 0.6525,
+      "MAE_kW": 0.4707,
+      "R2": 0.7828,
+      "dagfout_%": 6.4051,
+      "skill_pers": 0.2771,
+      "skill_gemdag": 0.0773
+    },
+    {
+      "model": "Baseline: gemiddelde dag",
+      "plant": "Plant 2",
+      "nRMSE_%": 18.7393,
+      "nMAE_%": 13.6894,
+      "RMSE_kW": 0.937,
+      "MAE_kW": 0.6845,
+      "R2": 0.4829,
+      "dagfout_%": 29.8603,
+      "skill_pers": 0.0353,
+      "skill_gemdag": 0.0
+    },
+    {
+      "model": "Baseline: persistence (gisteren)",
+      "plant": "Plant 2",
+      "nRMSE_%": 19.425,
+      "nMAE_%": 13.3108,
+      "RMSE_kW": 0.9712,
+      "MAE_kW": 0.6655,
+      "R2": 0.4443,
+      "dagfout_%": 19.6956,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.0366
+    },
+    {
+      "model": "Fase 2: smart persistence (geen weer)",
+      "plant": "Plant 2",
+      "nRMSE_%": 13.8824,
+      "nMAE_%": 9.9364,
+      "RMSE_kW": 0.6941,
+      "MAE_kW": 0.4968,
+      "R2": 0.7162,
+      "dagfout_%": 19.4268,
+      "skill_pers": 0.2853,
+      "skill_gemdag": 0.2592
+    },
+    {
+      "model": "Fase 1: LR straling (sensor, bovengrens)",
+      "plant": "Plant 2",
+      "nRMSE_%": 6.309,
+      "nMAE_%": 3.8749,
+      "RMSE_kW": 0.3154,
+      "MAE_kW": 0.1937,
+      "R2": 0.9414,
+      "dagfout_%": 3.2421,
+      "skill_pers": 0.6752,
+      "skill_gemdag": 0.6633
+    },
+    {
+      "model": "LR GHI (ERA5)",
+      "plant": "Plant 2",
+      "nRMSE_%": 13.6519,
+      "nMAE_%": 9.9777,
+      "RMSE_kW": 0.6826,
+      "MAE_kW": 0.4989,
+      "R2": 0.7255,
+      "dagfout_%": 14.1414,
+      "skill_pers": 0.2972,
+      "skill_gemdag": 0.2715
+    },
+    {
+      "model": "LR POA (straling op het paneel)",
+      "plant": "Plant 2",
+      "nRMSE_%": 13.3717,
+      "nMAE_%": 10.0032,
+      "RMSE_kW": 0.6686,
+      "MAE_kW": 0.5002,
+      "R2": 0.7367,
+      "dagfout_%": 12.964,
+      "skill_pers": 0.3116,
+      "skill_gemdag": 0.2864
+    },
+    {
+      "model": "LR EFF_T (POA + reflectie, spectrum, stof, temp.)",
+      "plant": "Plant 2",
+      "nRMSE_%": 12.8134,
+      "nMAE_%": 9.6965,
+      "RMSE_kW": 0.6407,
+      "MAE_kW": 0.4848,
+      "R2": 0.7582,
+      "dagfout_%": 9.3975,
+      "skill_pers": 0.3404,
+      "skill_gemdag": 0.3162
+    },
+    {
+      "model": "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)",
+      "plant": "Plant 2",
+      "nRMSE_%": 12.1601,
+      "nMAE_%": 8.8759,
+      "RMSE_kW": 0.608,
+      "MAE_kW": 0.4438,
+      "R2": 0.7822,
+      "dagfout_%": 12.354,
+      "skill_pers": 0.374,
+      "skill_gemdag": 0.3511
+    },
+    {
+      "model": "e6: EFF_T x (a + b KT_POA), zonder intercept",
+      "plant": "Plant 2",
+      "nRMSE_%": 12.2925,
+      "nMAE_%": 9.2006,
+      "RMSE_kW": 0.6146,
+      "MAE_kW": 0.46,
+      "R2": 0.7775,
+      "dagfout_%": 7.4848,
+      "skill_pers": 0.3672,
+      "skill_gemdag": 0.344
+    },
+    {
+      "model": "Ridge e6 (zonder intercept)",
+      "plant": "Plant 2",
+      "nRMSE_%": 12.2944,
+      "nMAE_%": 9.2019,
+      "RMSE_kW": 0.6147,
+      "MAE_kW": 0.4601,
+      "R2": 0.7774,
+      "dagfout_%": 7.512,
+      "skill_pers": 0.3671,
+      "skill_gemdag": 0.3439
+    },
+    {
+      "model": "Ridge e6 + bewolking, regen, vochtigheid",
+      "plant": "Plant 2",
+      "nRMSE_%": 12.4598,
+      "nMAE_%": 9.4547,
+      "RMSE_kW": 0.623,
+      "MAE_kW": 0.4727,
+      "R2": 0.7714,
+      "dagfout_%": 9.8356,
+      "skill_pers": 0.3586,
+      "skill_gemdag": 0.3351
+    },
+    {
+      "model": "Random Forest (e6 + extra)",
+      "plant": "Plant 2",
+      "nRMSE_%": 11.9235,
+      "nMAE_%": 8.9157,
+      "RMSE_kW": 0.5962,
+      "MAE_kW": 0.4458,
+      "R2": 0.7906,
+      "dagfout_%": 8.0214,
+      "skill_pers": 0.3862,
+      "skill_gemdag": 0.3637
+    },
+    {
+      "model": "Gradient Boosting (e6 + extra)",
+      "plant": "Plant 2",
+      "nRMSE_%": 12.5353,
+      "nMAE_%": 9.2531,
+      "RMSE_kW": 0.6268,
+      "MAE_kW": 0.4627,
+      "R2": 0.7686,
+      "dagfout_%": 10.3302,
+      "skill_pers": 0.3547,
+      "skill_gemdag": 0.3311
+    }
+  ],
+  "walkforward": {
+    "Baseline: gemiddelde dag": {
+      "nRMSE_%": 16.104,
+      "nMAE_%": 11.6605,
+      "RMSE_kW": 0.8052,
+      "MAE_kW": 0.583,
+      "R2": 0.6506,
+      "dagfout_%": 20.3927
+    },
+    "Baseline: persistence (gisteren)": {
+      "nRMSE_%": 18.7687,
+      "nMAE_%": 13.0633,
+      "RMSE_kW": 0.9384,
+      "MAE_kW": 0.6532,
+      "R2": 0.5254,
+      "dagfout_%": 15.5477
+    },
+    "Fase 2: smart persistence (geen weer)": {
+      "nRMSE_%": 14.229,
+      "nMAE_%": 9.9816,
+      "RMSE_kW": 0.7115,
+      "MAE_kW": 0.4991,
+      "R2": 0.7272,
+      "dagfout_%": 15.8945
+    },
+    "Fase 1: LR straling (sensor, bovengrens)": {
+      "nRMSE_%": 5.1726,
+      "nMAE_%": 3.4399,
+      "RMSE_kW": 0.2586,
+      "MAE_kW": 0.172,
+      "R2": 0.964,
+      "dagfout_%": 3.4419
+    },
+    "LR GHI (ERA5)": {
+      "nRMSE_%": 14.4348,
+      "nMAE_%": 10.7919,
+      "RMSE_kW": 0.7217,
+      "MAE_kW": 0.5396,
+      "R2": 0.7193,
+      "dagfout_%": 12.8272
+    },
+    "LR POA (straling op het paneel)": {
+      "nRMSE_%": 14.1018,
+      "nMAE_%": 10.6879,
+      "RMSE_kW": 0.7051,
+      "MAE_kW": 0.5344,
+      "R2": 0.7321,
+      "dagfout_%": 11.7048
+    },
+    "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": {
+      "nRMSE_%": 13.4116,
+      "nMAE_%": 10.0657,
+      "RMSE_kW": 0.6706,
+      "MAE_kW": 0.5033,
+      "R2": 0.7577,
+      "dagfout_%": 7.9217
+    },
+    "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": {
+      "nRMSE_%": 12.0454,
+      "nMAE_%": 8.7843,
+      "RMSE_kW": 0.6023,
+      "MAE_kW": 0.4392,
+      "R2": 0.8045,
+      "dagfout_%": 7.2432
+    },
+    "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+      "nRMSE_%": 12.5976,
+      "nMAE_%": 9.2073,
+      "RMSE_kW": 0.6299,
+      "MAE_kW": 0.4604,
+      "R2": 0.7862,
+      "dagfout_%": 6.051
+    },
+    "Ridge e6 (zonder intercept)": {
+      "nRMSE_%": 12.5994,
+      "nMAE_%": 9.2088,
+      "RMSE_kW": 0.63,
+      "MAE_kW": 0.4604,
+      "R2": 0.7861,
+      "dagfout_%": 6.0601
+    },
+    "Ridge e6 + bewolking, regen, vochtigheid": {
+      "nRMSE_%": 12.6235,
+      "nMAE_%": 9.3903,
+      "RMSE_kW": 0.6312,
+      "MAE_kW": 0.4695,
+      "R2": 0.7853,
+      "dagfout_%": 7.2305
+    },
+    "Random Forest (e6 + extra)": {
+      "nRMSE_%": 12.4797,
+      "nMAE_%": 9.0462,
+      "RMSE_kW": 0.624,
+      "MAE_kW": 0.4523,
+      "R2": 0.7902,
+      "dagfout_%": 7.4709
+    },
+    "Gradient Boosting (e6 + extra)": {
+      "nRMSE_%": 12.629,
+      "nMAE_%": 9.2007,
+      "RMSE_kW": 0.6315,
+      "MAE_kW": 0.46,
+      "R2": 0.7851,
+      "dagfout_%": 7.6049
+    }
+  },
+  "kruisplant": {
+    "P1 -> P2": {
+      "Baseline: gemiddelde dag": 17.3714,
+      "Baseline: persistence (gisteren)": 19.425,
+      "Fase 2: smart persistence (geen weer)": 13.8824,
+      "Fase 1: LR straling (sensor, bovengrens)": 6.2821,
+      "LR GHI (ERA5)": 13.7401,
+      "LR POA (straling op het paneel)": 13.5693,
+      "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": 13.3154,
+      "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": 11.8886,
+      "e6: EFF_T x (a + b KT_POA), zonder intercept": 12.325,
+      "Ridge e6 (zonder intercept)": 12.3303,
+      "Ridge e6 + bewolking, regen, vochtigheid": 12.3576,
+      "Random Forest (e6 + extra)": 13.5547,
+      "Gradient Boosting (e6 + extra)": 13.2654
+    },
+    "P2 -> P1": {
+      "Baseline: gemiddelde dag": 14.6582,
+      "Baseline: persistence (gisteren)": 18.0528,
+      "Fase 2: smart persistence (geen weer)": 14.5421,
+      "Fase 1: LR straling (sensor, bovengrens)": 4.2828,
+      "LR GHI (ERA5)": 15.5401,
+      "LR POA (straling op het paneel)": 14.9432,
+      "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": 13.9372,
+      "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": 12.4554,
+      "e6: EFF_T x (a + b KT_POA), zonder intercept": 13.3366,
+      "Ridge e6 (zonder intercept)": 13.338,
+      "Ridge e6 + bewolking, regen, vochtigheid": 13.3949,
+      "Random Forest (e6 + extra)": 13.9494,
+      "Gradient Boosting (e6 + extra)": 14.2727
+    }
+  },
+  "stabiliteit": {
+    "Baseline: gemiddelde dag": {
+      "mean": 16.0223,
+      "std": 4.5421,
+      "CV": 0.2835
+    },
+    "Baseline: persistence (gisteren)": {
+      "mean": 18.4432,
+      "std": 3.4942,
+      "CV": 0.1895
+    },
+    "Fase 2: smart persistence (geen weer)": {
+      "mean": 13.6454,
+      "std": 4.1271,
+      "CV": 0.3025
+    },
+    "Fase 1: LR straling (sensor, bovengrens)": {
+      "mean": 4.8773,
+      "std": 1.9023,
+      "CV": 0.39
+    },
+    "LR GHI (ERA5)": {
+      "mean": 14.3967,
+      "std": 3.1284,
+      "CV": 0.2173
+    },
+    "LR POA (straling op het paneel)": {
+      "mean": 14.0618,
+      "std": 2.8061,
+      "CV": 0.1996
+    },
+    "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": {
+      "mean": 13.2125,
+      "std": 2.7271,
+      "CV": 0.2064
+    },
+    "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": {
+      "mean": 11.9628,
+      "std": 2.2722,
+      "CV": 0.1899
+    },
+    "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+      "mean": 12.4633,
+      "std": 2.3491,
+      "CV": 0.1885
+    },
+    "Ridge e6 (zonder intercept)": {
+      "mean": 12.4667,
+      "std": 2.35,
+      "CV": 0.1885
+    },
+    "Ridge e6 + bewolking, regen, vochtigheid": {
+      "mean": 12.6644,
+      "std": 2.1916,
+      "CV": 0.173
+    },
+    "Random Forest (e6 + extra)": {
+      "mean": 12.369,
+      "std": 2.4892,
+      "CV": 0.2012
+    },
+    "Gradient Boosting (e6 + extra)": {
+      "mean": 12.5476,
+      "std": 2.6342,
+      "CV": 0.2099
+    }
+  },
+  "coef_bevroren": {
+    "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+      "a": 0.0017095436214979102,
+      "b": -0.0005512579950556668
+    },
+    "Ridge e6 (zonder intercept)": {
+      "a": 0.0017070535957309353,
+      "b": -0.0005485166909662844
+    }
+  },
+  "weerfout": {
+    "LR GHI (ERA5) | 0%": 14.701,
+    "LR GHI (ERA5) | 10%": 15.231,
+    "LR GHI (ERA5) | 20%": 17.355,
+    "LR GHI (ERA5) | 30%": 20.178,
+    "LR POA (straling op het paneel) | 0%": 14.312,
+    "LR POA (straling op het paneel) | 10%": 14.823,
+    "LR POA (straling op het paneel) | 20%": 16.865,
+    "LR POA (straling op het paneel) | 30%": 19.549,
+    "Ridge e6 + bewolking, regen, vochtigheid | 0%": 12.833,
+    "Ridge e6 + bewolking, regen, vochtigheid | 10%": 13.004,
+    "Ridge e6 + bewolking, regen, vochtigheid | 20%": 14.309,
+    "Ridge e6 + bewolking, regen, vochtigheid | 30%": 16.417,
+    "e6: EFF_T x (a + b KT_POA), zonder intercept | 0%": 12.657,
+    "e6: EFF_T x (a + b KT_POA), zonder intercept | 10%": 13.046,
+    "e6: EFF_T x (a + b KT_POA), zonder intercept | 20%": 14.656,
+    "e6: EFF_T x (a + b KT_POA), zonder intercept | 30%": 17.06
+  }
+}

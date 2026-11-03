@@ -1,0 +1,5 @@
+model,vouw,a,b
+"e6: EFF_T x (a + b KT_POA), zonder intercept",train 1-6 -> val 7-8,0.0021939138685368375,-0.0011781226666456497
+Ridge e6 (zonder intercept),train 1-6 -> val 7-8,0.002178532164409264,-0.0011609811785129782
+"e6: EFF_T x (a + b KT_POA), zonder intercept",train 1-8 -> val 9-10,0.0016673012293947755,-0.0005529513143891362
+Ridge e6 (zonder intercept),train 1-8 -> val 9-10,0.0016597980860941428,-0.0005448178563035546

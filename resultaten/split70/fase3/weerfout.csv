@@ -1,0 +1,19 @@
+,,nRMSE_%,nRMSE_%,dagfout_%,dagfout_%
+,,mean,std,mean,std
+model,fout_%,,,,
+LR GHI (ERA5),0,14.701,,14.674,
+LR GHI (ERA5),10,15.231,0.63,14.32,2.344
+LR GHI (ERA5),20,17.355,1.137,18.931,2.794
+LR GHI (ERA5),30,20.178,1.779,24.889,5.608
+LR POA (straling op het paneel),0,14.312,,13.317,
+LR POA (straling op het paneel),10,14.823,0.608,12.778,2.308
+LR POA (straling op het paneel),20,16.865,1.084,17.505,2.682
+LR POA (straling op het paneel),30,19.549,1.737,23.027,5.24
+"Ridge e6 + bewolking, regen, vochtigheid",0,12.833,,9.103,
+"Ridge e6 + bewolking, regen, vochtigheid",10,13.004,0.302,8.966,1.325
+"Ridge e6 + bewolking, regen, vochtigheid",20,14.309,0.646,12.84,1.608
+"Ridge e6 + bewolking, regen, vochtigheid",30,16.417,1.579,17.586,4.134
+"e6: EFF_T x (a + b KT_POA), zonder intercept",0,12.657,,6.422,
+"e6: EFF_T x (a + b KT_POA), zonder intercept",10,13.046,0.367,7.495,1.918
+"e6: EFF_T x (a + b KT_POA), zonder intercept",20,14.656,0.76,12.773,1.595
+"e6: EFF_T x (a + b KT_POA), zonder intercept",30,17.06,1.559,17.665,4.054

@@ -1,0 +1,759 @@
+{
+  "fase": 2,
+  "vraag": "echt vooruit voorspellen met alleen Kaggle-data",
+  "opzet_dagen": "1-10",
+  "horizons": {
+    "+15 min": "1 kwartier(en)",
+    "+1 uur": "4 kwartier(en)",
+    "+3 uur": "12 kwartier(en)",
+    "day-ahead (21:00)": "morgen, gemaakt om 21:00"
+  },
+  "keuze_per_horizon": {
+    "+15 min": {
+      "model": "LR op eerdere K",
+      "motivatie": "laagste nRMSE: 'Ridge (K + sensor + tijd)' (8.38 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR op eerdere K', 'Ridge (K + sensor + tijd)'] -> eenvoudigste: 'LR op eerdere K' (8.60 %)"
+    },
+    "+1 uur": {
+      "model": "Ridge (K + sensor + tijd)",
+      "motivatie": "laagste nRMSE: 'Ridge (K + sensor + tijd)' (11.07 %); het beste model is geen complex model. Binnen 0.5 pp: ['Ridge (K + sensor + tijd)'] -> eenvoudigste: 'Ridge (K + sensor + tijd)' (11.07 %)"
+    },
+    "+3 uur": {
+      "model": "Ridge (K + sensor + tijd)",
+      "motivatie": "laagste nRMSE: 'Ridge (K + sensor + tijd)' (12.55 %); het beste model is geen complex model. Binnen 0.5 pp: ['Ridge (K + sensor + tijd)'] -> eenvoudigste: 'Ridge (K + sensor + tijd)' (12.55 %)"
+    },
+    "day-ahead (21:00)": {
+      "model": "Smart persistence (K blijft gelijk)",
+      "motivatie": "laagste nRMSE: 'Smart persistence (K blijft gelijk)' (11.40 %); het beste model is geen complex model. Binnen 0.5 pp: ['Smart persistence (K blijft gelijk)'] -> eenvoudigste: 'Smart persistence (K blijft gelijk)' (11.40 %)"
+    }
+  },
+  "validatie": {
+    "+15 min": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 13.1951,
+        "nMAE_%": 10.3999,
+        "R2": 0.8251,
+        "dagfout_%": 13.4286,
+        "nRMSE_% train 1-6 -> val 7-8": 13.9622,
+        "nRMSE_% train 1-8 -> val 9-10": 12.4281
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 10.606,
+        "nMAE_%": 7.0778,
+        "R2": 0.8855,
+        "dagfout_%": 0.3328,
+        "nRMSE_% train 1-6 -> val 7-8": 12.216,
+        "nRMSE_% train 1-8 -> val 9-10": 8.996
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 8.9042,
+        "nMAE_%": 5.0976,
+        "R2": 0.9201,
+        "dagfout_%": 0.6516,
+        "nRMSE_% train 1-6 -> val 7-8": 9.7357,
+        "nRMSE_% train 1-8 -> val 9-10": 8.0727
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 8.5998,
+        "nMAE_%": 5.5195,
+        "R2": 0.9256,
+        "dagfout_%": 3.3528,
+        "nRMSE_% train 1-6 -> val 7-8": 9.3266,
+        "nRMSE_% train 1-8 -> val 9-10": 7.8731
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 8.383,
+        "nMAE_%": 5.4008,
+        "R2": 0.9293,
+        "dagfout_%": 2.767,
+        "nRMSE_% train 1-6 -> val 7-8": 9.0324,
+        "nRMSE_% train 1-8 -> val 9-10": 7.7335
+      },
+      "Random Forest": {
+        "nRMSE_%": 8.5304,
+        "nMAE_%": 5.588,
+        "R2": 0.9268,
+        "dagfout_%": 3.4016,
+        "nRMSE_% train 1-6 -> val 7-8": 9.2194,
+        "nRMSE_% train 1-8 -> val 9-10": 7.8414
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 9.1581,
+        "nMAE_%": 6.1172,
+        "R2": 0.9152,
+        "dagfout_%": 4.4837,
+        "nRMSE_% train 1-6 -> val 7-8": 10.2877,
+        "nRMSE_% train 1-8 -> val 9-10": 8.0284
+      }
+    },
+    "+1 uur": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 13.1951,
+        "nMAE_%": 10.3999,
+        "R2": 0.8251,
+        "dagfout_%": 13.4286,
+        "nRMSE_% train 1-6 -> val 7-8": 13.9622,
+        "nRMSE_% train 1-8 -> val 9-10": 12.4281
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 20.8266,
+        "nMAE_%": 17.2953,
+        "R2": 0.5646,
+        "dagfout_%": 1.3526,
+        "nRMSE_% train 1-6 -> val 7-8": 21.4243,
+        "nRMSE_% train 1-8 -> val 9-10": 20.2289
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 12.9687,
+        "nMAE_%": 8.2131,
+        "R2": 0.831,
+        "dagfout_%": 2.3849,
+        "nRMSE_% train 1-6 -> val 7-8": 13.0036,
+        "nRMSE_% train 1-8 -> val 9-10": 12.9337
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 12.0603,
+        "nMAE_%": 9.1875,
+        "R2": 0.854,
+        "dagfout_%": 9.8443,
+        "nRMSE_% train 1-6 -> val 7-8": 12.5737,
+        "nRMSE_% train 1-8 -> val 9-10": 11.5469
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 11.0703,
+        "nMAE_%": 8.3907,
+        "R2": 0.877,
+        "dagfout_%": 7.9521,
+        "nRMSE_% train 1-6 -> val 7-8": 11.3469,
+        "nRMSE_% train 1-8 -> val 9-10": 10.7936
+      },
+      "Random Forest": {
+        "nRMSE_%": 11.2873,
+        "nMAE_%": 8.2818,
+        "R2": 0.8721,
+        "dagfout_%": 7.6557,
+        "nRMSE_% train 1-6 -> val 7-8": 11.6867,
+        "nRMSE_% train 1-8 -> val 9-10": 10.8879
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 11.6248,
+        "nMAE_%": 8.5594,
+        "R2": 0.8641,
+        "dagfout_%": 7.862,
+        "nRMSE_% train 1-6 -> val 7-8": 12.5737,
+        "nRMSE_% train 1-8 -> val 9-10": 10.6758
+      }
+    },
+    "+3 uur": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 13.1951,
+        "nMAE_%": 10.3999,
+        "R2": 0.8251,
+        "dagfout_%": 13.4286,
+        "nRMSE_% train 1-6 -> val 7-8": 13.9622,
+        "nRMSE_% train 1-8 -> val 9-10": 12.4281
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 43.7897,
+        "nMAE_%": 38.3923,
+        "R2": -0.9248,
+        "dagfout_%": 11.9413,
+        "nRMSE_% train 1-6 -> val 7-8": 45.0007,
+        "nRMSE_% train 1-8 -> val 9-10": 42.5787
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 14.1754,
+        "nMAE_%": 9.3844,
+        "R2": 0.7981,
+        "dagfout_%": 5.1755,
+        "nRMSE_% train 1-6 -> val 7-8": 15.0806,
+        "nRMSE_% train 1-8 -> val 9-10": 13.2701
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 14.1425,
+        "nMAE_%": 11.1999,
+        "R2": 0.7973,
+        "dagfout_%": 15.8632,
+        "nRMSE_% train 1-6 -> val 7-8": 16.0379,
+        "nRMSE_% train 1-8 -> val 9-10": 12.247
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 12.5522,
+        "nMAE_%": 10.0475,
+        "R2": 0.8409,
+        "dagfout_%": 13.2242,
+        "nRMSE_% train 1-6 -> val 7-8": 13.983,
+        "nRMSE_% train 1-8 -> val 9-10": 11.1214
+      },
+      "Random Forest": {
+        "nRMSE_%": 13.1762,
+        "nMAE_%": 10.1324,
+        "R2": 0.8227,
+        "dagfout_%": 12.863,
+        "nRMSE_% train 1-6 -> val 7-8": 15.374,
+        "nRMSE_% train 1-8 -> val 9-10": 10.9784
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 15.5743,
+        "nMAE_%": 11.9649,
+        "R2": 0.7468,
+        "dagfout_%": 16.5957,
+        "nRMSE_% train 1-6 -> val 7-8": 19.235,
+        "nRMSE_% train 1-8 -> val 9-10": 11.9137
+      }
+    },
+    "day-ahead (21:00)": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 13.1951,
+        "nMAE_%": 10.3999,
+        "R2": 0.8251,
+        "dagfout_%": 13.4286,
+        "nRMSE_% train 1-6 -> val 7-8": 13.9622,
+        "nRMSE_% train 1-8 -> val 9-10": 12.4281
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 20.9096,
+        "nMAE_%": 12.4077,
+        "R2": 0.5164,
+        "dagfout_%": 14.3553,
+        "nRMSE_% train 1-6 -> val 7-8": 28.3095,
+        "nRMSE_% train 1-8 -> val 9-10": 13.5097
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 11.4041,
+        "nMAE_%": 7.9424,
+        "R2": 0.8694,
+        "dagfout_%": 10.4334,
+        "nRMSE_% train 1-6 -> val 7-8": 12.048,
+        "nRMSE_% train 1-8 -> val 9-10": 10.7603
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 14.9049,
+        "nMAE_%": 11.9128,
+        "R2": 0.7765,
+        "dagfout_%": 18.0617,
+        "nRMSE_% train 1-6 -> val 7-8": 16.1224,
+        "nRMSE_% train 1-8 -> val 9-10": 13.6874
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 15.7281,
+        "nMAE_%": 12.6766,
+        "R2": 0.7447,
+        "dagfout_%": 18.797,
+        "nRMSE_% train 1-6 -> val 7-8": 18.9179,
+        "nRMSE_% train 1-8 -> val 9-10": 12.5383
+      },
+      "Random Forest": {
+        "nRMSE_%": 14.8361,
+        "nMAE_%": 11.8322,
+        "R2": 0.7762,
+        "dagfout_%": 17.3293,
+        "nRMSE_% train 1-6 -> val 7-8": 17.0297,
+        "nRMSE_% train 1-8 -> val 9-10": 12.6426
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 16.8519,
+        "nMAE_%": 12.5018,
+        "R2": 0.7131,
+        "dagfout_%": 17.3916,
+        "nRMSE_% train 1-6 -> val 7-8": 18.7933,
+        "nRMSE_% train 1-8 -> val 9-10": 14.9104
+      }
+    }
+  },
+  "test_dagen": "11-34",
+  "bovengrens_fase1_nRMSE_%": 5.4555,
+  "test_bevroren": {
+    "+15 min": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 16.7709,
+        "nMAE_%": 11.8987,
+        "RMSE_kW": 0.8385,
+        "MAE_kW": 0.5949,
+        "R2": 0.6777,
+        "dagfout_%": 16.3754
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 12.823,
+        "nMAE_%": 8.4646,
+        "RMSE_kW": 0.6411,
+        "MAE_kW": 0.4232,
+        "R2": 0.8116,
+        "dagfout_%": 0.9411
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 11.5984,
+        "nMAE_%": 7.2287,
+        "RMSE_kW": 0.5799,
+        "MAE_kW": 0.3614,
+        "R2": 0.8459,
+        "dagfout_%": 1.0824
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 10.7771,
+        "nMAE_%": 6.8976,
+        "RMSE_kW": 0.5389,
+        "MAE_kW": 0.3449,
+        "R2": 0.8669,
+        "dagfout_%": 2.5824
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 10.7906,
+        "nMAE_%": 6.8963,
+        "RMSE_kW": 0.5395,
+        "MAE_kW": 0.3448,
+        "R2": 0.8666,
+        "dagfout_%": 2.5292
+      },
+      "Random Forest": {
+        "nRMSE_%": 10.7341,
+        "nMAE_%": 6.9999,
+        "RMSE_kW": 0.5367,
+        "MAE_kW": 0.35,
+        "R2": 0.868,
+        "dagfout_%": 3.5873
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 11.3354,
+        "nMAE_%": 7.5566,
+        "RMSE_kW": 0.5668,
+        "MAE_kW": 0.3778,
+        "R2": 0.8528,
+        "dagfout_%": 4.7444
+      }
+    },
+    "+1 uur": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 16.7709,
+        "nMAE_%": 11.8987,
+        "RMSE_kW": 0.8385,
+        "MAE_kW": 0.5949,
+        "R2": 0.6777,
+        "dagfout_%": 16.3754
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 21.2226,
+        "nMAE_%": 16.6695,
+        "RMSE_kW": 1.0611,
+        "MAE_kW": 0.8335,
+        "R2": 0.4839,
+        "dagfout_%": 2.1755
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 15.5964,
+        "nMAE_%": 10.4085,
+        "RMSE_kW": 0.7798,
+        "MAE_kW": 0.5204,
+        "R2": 0.7213,
+        "dagfout_%": 3.3553
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 13.3437,
+        "nMAE_%": 9.3737,
+        "RMSE_kW": 0.6672,
+        "MAE_kW": 0.4687,
+        "R2": 0.796,
+        "dagfout_%": 7.319
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 13.5874,
+        "nMAE_%": 9.3824,
+        "RMSE_kW": 0.6794,
+        "MAE_kW": 0.4691,
+        "R2": 0.7885,
+        "dagfout_%": 7.609
+      },
+      "Random Forest": {
+        "nRMSE_%": 13.8204,
+        "nMAE_%": 9.6338,
+        "RMSE_kW": 0.691,
+        "MAE_kW": 0.4817,
+        "R2": 0.7811,
+        "dagfout_%": 8.7815
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 15.1005,
+        "nMAE_%": 10.5007,
+        "RMSE_kW": 0.755,
+        "MAE_kW": 0.525,
+        "R2": 0.7387,
+        "dagfout_%": 10.425
+      }
+    },
+    "+3 uur": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 16.7709,
+        "nMAE_%": 11.8987,
+        "RMSE_kW": 0.8385,
+        "MAE_kW": 0.5949,
+        "R2": 0.6777,
+        "dagfout_%": 16.3754
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 38.3502,
+        "nMAE_%": 32.0758,
+        "RMSE_kW": 1.9175,
+        "MAE_kW": 1.6038,
+        "R2": -0.6852,
+        "dagfout_%": 12.6522
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 17.8184,
+        "nMAE_%": 12.2602,
+        "RMSE_kW": 0.8909,
+        "MAE_kW": 0.613,
+        "R2": 0.6362,
+        "dagfout_%": 7.9387
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 14.4995,
+        "nMAE_%": 10.7176,
+        "RMSE_kW": 0.725,
+        "MAE_kW": 0.5359,
+        "R2": 0.7591,
+        "dagfout_%": 12.3504
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 14.8818,
+        "nMAE_%": 10.7149,
+        "RMSE_kW": 0.7441,
+        "MAE_kW": 0.5357,
+        "R2": 0.7462,
+        "dagfout_%": 12.2211
+      },
+      "Random Forest": {
+        "nRMSE_%": 14.9971,
+        "nMAE_%": 10.7639,
+        "RMSE_kW": 0.7499,
+        "MAE_kW": 0.5382,
+        "R2": 0.7423,
+        "dagfout_%": 12.3351
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 16.1511,
+        "nMAE_%": 11.408,
+        "RMSE_kW": 0.8076,
+        "MAE_kW": 0.5704,
+        "R2": 0.7011,
+        "dagfout_%": 14.094
+      }
+    },
+    "day-ahead (21:00)": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 16.7709,
+        "nMAE_%": 11.8987,
+        "RMSE_kW": 0.8385,
+        "MAE_kW": 0.5949,
+        "R2": 0.6777,
+        "dagfout_%": 16.3754
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 19.8846,
+        "nMAE_%": 13.2769,
+        "RMSE_kW": 0.9942,
+        "MAE_kW": 0.6638,
+        "R2": 0.5469,
+        "dagfout_%": 13.9896
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 14.9758,
+        "nMAE_%": 10.6516,
+        "RMSE_kW": 0.7488,
+        "MAE_kW": 0.5326,
+        "R2": 0.743,
+        "dagfout_%": 13.9429
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 14.7182,
+        "nMAE_%": 10.9235,
+        "RMSE_kW": 0.7359,
+        "MAE_kW": 0.5462,
+        "R2": 0.7518,
+        "dagfout_%": 13.104
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 14.9638,
+        "nMAE_%": 10.8378,
+        "RMSE_kW": 0.7482,
+        "MAE_kW": 0.5419,
+        "R2": 0.7434,
+        "dagfout_%": 12.8537
+      },
+      "Random Forest": {
+        "nRMSE_%": 16.0911,
+        "nMAE_%": 11.3928,
+        "RMSE_kW": 0.8046,
+        "MAE_kW": 0.5696,
+        "R2": 0.7033,
+        "dagfout_%": 14.9287
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 17.5667,
+        "nMAE_%": 12.4031,
+        "RMSE_kW": 0.8783,
+        "MAE_kW": 0.6202,
+        "R2": 0.6464,
+        "dagfout_%": 17.3086
+      }
+    }
+  },
+  "test_walkforward": {
+    "+15 min": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 15.9346,
+        "nMAE_%": 11.3318,
+        "RMSE_kW": 0.7967,
+        "MAE_kW": 0.5666,
+        "R2": 0.7088,
+        "dagfout_%": 15.2748
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 12.8185,
+        "nMAE_%": 8.4604,
+        "RMSE_kW": 0.6409,
+        "MAE_kW": 0.423,
+        "R2": 0.8115,
+        "dagfout_%": 0.9422
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 11.5932,
+        "nMAE_%": 7.2247,
+        "RMSE_kW": 0.5797,
+        "MAE_kW": 0.3612,
+        "R2": 0.8458,
+        "dagfout_%": 1.0814
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 10.7299,
+        "nMAE_%": 6.8815,
+        "RMSE_kW": 0.5365,
+        "MAE_kW": 0.3441,
+        "R2": 0.8679,
+        "dagfout_%": 2.8406
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 10.7531,
+        "nMAE_%": 6.8925,
+        "RMSE_kW": 0.5377,
+        "MAE_kW": 0.3446,
+        "R2": 0.8674,
+        "dagfout_%": 2.7755
+      },
+      "Random Forest": {
+        "nRMSE_%": 10.5807,
+        "nMAE_%": 6.9409,
+        "RMSE_kW": 0.529,
+        "MAE_kW": 0.347,
+        "R2": 0.8716,
+        "dagfout_%": 3.4378
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 10.9035,
+        "nMAE_%": 7.2444,
+        "RMSE_kW": 0.5452,
+        "MAE_kW": 0.3622,
+        "R2": 0.8636,
+        "dagfout_%": 4.2596
+      }
+    },
+    "+1 uur": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 15.9346,
+        "nMAE_%": 11.3318,
+        "RMSE_kW": 0.7967,
+        "MAE_kW": 0.5666,
+        "R2": 0.7088,
+        "dagfout_%": 15.2748
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 21.2134,
+        "nMAE_%": 16.6611,
+        "RMSE_kW": 1.0607,
+        "MAE_kW": 0.8331,
+        "R2": 0.4838,
+        "dagfout_%": 2.177
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 15.5889,
+        "nMAE_%": 10.4029,
+        "RMSE_kW": 0.7794,
+        "MAE_kW": 0.5201,
+        "R2": 0.7213,
+        "dagfout_%": 3.3555
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 13.3363,
+        "nMAE_%": 9.3526,
+        "RMSE_kW": 0.6668,
+        "MAE_kW": 0.4676,
+        "R2": 0.796,
+        "dagfout_%": 7.5352
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 13.5186,
+        "nMAE_%": 9.3014,
+        "RMSE_kW": 0.6759,
+        "MAE_kW": 0.4651,
+        "R2": 0.7904,
+        "dagfout_%": 7.4039
+      },
+      "Random Forest": {
+        "nRMSE_%": 13.4836,
+        "nMAE_%": 9.3736,
+        "RMSE_kW": 0.6742,
+        "MAE_kW": 0.4687,
+        "R2": 0.7915,
+        "dagfout_%": 8.0719
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 14.6262,
+        "nMAE_%": 10.1745,
+        "RMSE_kW": 0.7313,
+        "MAE_kW": 0.5087,
+        "R2": 0.7546,
+        "dagfout_%": 10.1177
+      }
+    },
+    "+3 uur": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 15.9346,
+        "nMAE_%": 11.3318,
+        "RMSE_kW": 0.7967,
+        "MAE_kW": 0.5666,
+        "R2": 0.7088,
+        "dagfout_%": 15.2748
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 38.329,
+        "nMAE_%": 32.0587,
+        "RMSE_kW": 1.9165,
+        "MAE_kW": 1.6029,
+        "R2": -0.6851,
+        "dagfout_%": 12.6545
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 17.8092,
+        "nMAE_%": 12.2538,
+        "RMSE_kW": 0.8905,
+        "MAE_kW": 0.6127,
+        "R2": 0.6362,
+        "dagfout_%": 7.9384
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 14.4407,
+        "nMAE_%": 10.5839,
+        "RMSE_kW": 0.722,
+        "MAE_kW": 0.5292,
+        "R2": 0.7608,
+        "dagfout_%": 12.0846
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 14.6743,
+        "nMAE_%": 10.4846,
+        "RMSE_kW": 0.7337,
+        "MAE_kW": 0.5242,
+        "R2": 0.753,
+        "dagfout_%": 11.778
+      },
+      "Random Forest": {
+        "nRMSE_%": 15.1906,
+        "nMAE_%": 10.8389,
+        "RMSE_kW": 0.7595,
+        "MAE_kW": 0.5419,
+        "R2": 0.7353,
+        "dagfout_%": 13.7848
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 16.4119,
+        "nMAE_%": 11.5733,
+        "RMSE_kW": 0.8206,
+        "MAE_kW": 0.5787,
+        "R2": 0.691,
+        "dagfout_%": 15.6099
+      }
+    },
+    "day-ahead (21:00)": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 15.9346,
+        "nMAE_%": 11.3318,
+        "RMSE_kW": 0.7967,
+        "MAE_kW": 0.5666,
+        "R2": 0.7088,
+        "dagfout_%": 15.2748
+      },
+      "Baseline: persistence": {
+        "nRMSE_%": 19.8776,
+        "nMAE_%": 13.2702,
+        "RMSE_kW": 0.9939,
+        "MAE_kW": 0.6635,
+        "R2": 0.5468,
+        "dagfout_%": 13.9942
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 14.9698,
+        "nMAE_%": 10.6469,
+        "RMSE_kW": 0.7485,
+        "MAE_kW": 0.5323,
+        "R2": 0.743,
+        "dagfout_%": 13.9451
+      },
+      "LR op eerdere K": {
+        "nRMSE_%": 14.775,
+        "nMAE_%": 10.8778,
+        "RMSE_kW": 0.7387,
+        "MAE_kW": 0.5439,
+        "R2": 0.7496,
+        "dagfout_%": 13.3906
+      },
+      "Ridge (K + sensor + tijd)": {
+        "nRMSE_%": 14.9067,
+        "nMAE_%": 10.7383,
+        "RMSE_kW": 0.7453,
+        "MAE_kW": 0.5369,
+        "R2": 0.7451,
+        "dagfout_%": 13.1074
+      },
+      "Random Forest": {
+        "nRMSE_%": 16.4226,
+        "nMAE_%": 11.6662,
+        "RMSE_kW": 0.8211,
+        "MAE_kW": 0.5833,
+        "R2": 0.6906,
+        "dagfout_%": 16.2369
+      },
+      "Gradient Boosting": {
+        "nRMSE_%": 17.3277,
+        "nMAE_%": 12.3451,
+        "RMSE_kW": 0.8664,
+        "MAE_kW": 0.6173,
+        "R2": 0.6556,
+        "dagfout_%": 17.8074
+      }
+    }
+  },
+  "stabiliteit": {
+    "+15 min": {
+      "model": "LR op eerdere K",
+      "mean": 10.343114026201944,
+      "std": 3.0563606092150355,
+      "CV": 0.29549713959185175
+    },
+    "+1 uur": {
+      "model": "Ridge (K + sensor + tijd)",
+      "mean": 13.056511463704275,
+      "std": 3.8184581081550104,
+      "CV": 0.2924562291213791
+    },
+    "+3 uur": {
+      "model": "Ridge (K + sensor + tijd)",
+      "mean": 14.295235699236889,
+      "std": 4.207677868896072,
+      "CV": 0.2943412726745518
+    },
+    "day-ahead (21:00)": {
+      "model": "Smart persistence (K blijft gelijk)",
+      "mean": 14.293395268820197,
+      "std": 4.581192805338986,
+      "CV": 0.32051116751332426
+    }
+  }
+}

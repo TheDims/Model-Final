@@ -1,0 +1,6 @@
+model,nRMSE_%,bias_%,deel_bias_%,deel_dagniveau_%,deel_binnen_dag_%,fout_dagniveau_%,fout_binnen_dag_%
+gemiddelde dag,16.771,3.405,4.122,25.689,70.189,8.5,14.05
+smart persistence (geen weer),14.976,0.52,0.12,24.642,75.238,7.434,12.99
+LR GHI (ERA5) - eindmodel,15.034,-4.115,7.491,10.785,81.723,4.937,13.591
+e6 (ERA5),14.148,-1.989,1.976,11.43,86.594,4.783,13.165
+sensor (bovengrens),5.456,-0.909,2.773,5.288,91.938,1.255,5.231

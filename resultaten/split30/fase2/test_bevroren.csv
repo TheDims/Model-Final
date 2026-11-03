@@ -1,0 +1,29 @@
+,,nRMSE_%,nMAE_%,RMSE_kW,MAE_kW,R2,dagfout_%
++15 min,Baseline: gemiddelde dag,16.7709,11.8987,0.8385,0.5949,0.6777,16.3754
++15 min,Baseline: persistence,12.823,8.4646,0.6411,0.4232,0.8116,0.9411
++15 min,Smart persistence (K blijft gelijk),11.5984,7.2287,0.5799,0.3614,0.8459,1.0824
++15 min,LR op eerdere K,10.7771,6.8976,0.5389,0.3449,0.8669,2.5824
++15 min,Ridge (K + sensor + tijd),10.7906,6.8963,0.5395,0.3448,0.8666,2.5292
++15 min,Random Forest,10.7341,6.9999,0.5367,0.35,0.868,3.5873
++15 min,Gradient Boosting,11.3354,7.5566,0.5668,0.3778,0.8528,4.7444
++1 uur,Baseline: gemiddelde dag,16.7709,11.8987,0.8385,0.5949,0.6777,16.3754
++1 uur,Baseline: persistence,21.2226,16.6695,1.0611,0.8335,0.4839,2.1755
++1 uur,Smart persistence (K blijft gelijk),15.5964,10.4085,0.7798,0.5204,0.7213,3.3553
++1 uur,LR op eerdere K,13.3437,9.3737,0.6672,0.4687,0.796,7.319
++1 uur,Ridge (K + sensor + tijd),13.5874,9.3824,0.6794,0.4691,0.7885,7.609
++1 uur,Random Forest,13.8204,9.6338,0.691,0.4817,0.7811,8.7815
++1 uur,Gradient Boosting,15.1005,10.5007,0.755,0.525,0.7387,10.425
++3 uur,Baseline: gemiddelde dag,16.7709,11.8987,0.8385,0.5949,0.6777,16.3754
++3 uur,Baseline: persistence,38.3502,32.0758,1.9175,1.6038,-0.6852,12.6522
++3 uur,Smart persistence (K blijft gelijk),17.8184,12.2602,0.8909,0.613,0.6362,7.9387
++3 uur,LR op eerdere K,14.4995,10.7176,0.725,0.5359,0.7591,12.3504
++3 uur,Ridge (K + sensor + tijd),14.8818,10.7149,0.7441,0.5357,0.7462,12.2211
++3 uur,Random Forest,14.9971,10.7639,0.7499,0.5382,0.7423,12.3351
++3 uur,Gradient Boosting,16.1511,11.408,0.8076,0.5704,0.7011,14.094
+day-ahead (21:00),Baseline: gemiddelde dag,16.7709,11.8987,0.8385,0.5949,0.6777,16.3754
+day-ahead (21:00),Baseline: persistence,19.8846,13.2769,0.9942,0.6638,0.5469,13.9896
+day-ahead (21:00),Smart persistence (K blijft gelijk),14.9758,10.6516,0.7488,0.5326,0.743,13.9429
+day-ahead (21:00),LR op eerdere K,14.7182,10.9235,0.7359,0.5462,0.7518,13.104
+day-ahead (21:00),Ridge (K + sensor + tijd),14.9638,10.8378,0.7482,0.5419,0.7434,12.8537
+day-ahead (21:00),Random Forest,16.0911,11.3928,0.8046,0.5696,0.7033,14.9287
+day-ahead (21:00),Gradient Boosting,17.5667,12.4031,0.8783,0.6202,0.6464,17.3086

@@ -1,0 +1,10 @@
+model,nRMSE_%,nMAE_%,RMSE_kW,MAE_kW,R2,dagfout_%
+Baseline: gemiddelde dag,16.104,11.6605,0.8052,0.583,0.6506,20.3927
+Baseline: persistence (gisteren),18.5122,12.9867,0.9256,0.6493,0.5383,15.4114
+LR straling,5.1726,3.4399,0.2586,0.172,0.964,3.4419
+LR straling + moduletemp.,5.2389,3.4777,0.2619,0.1739,0.963,4.0357
+LR fysisch: straling x (1 + γ(T-25)),4.8319,2.7091,0.2416,0.1355,0.9685,2.6501
+Ridge (alle sensor-inputs + tijd),4.7013,2.6605,0.2351,0.133,0.9702,2.4917
+"Polynoom gr. 2 + Ridge (straling, moduletemp.)",4.7399,2.5819,0.237,0.1291,0.9697,3.2474
+Random Forest (alle),4.7961,2.3695,0.2398,0.1185,0.969,2.6808
+Gradient Boosting (alle),4.915,2.2242,0.2457,0.1112,0.9675,2.1298
