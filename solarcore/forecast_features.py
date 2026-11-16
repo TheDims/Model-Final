@@ -10,7 +10,6 @@ Features om ECHT vooruit te voorspellen (fase 2): alleen informatie van vóór h
 Alle lags met shift(+n) binnen één plant op een volledig kwartier-rooster: nooit toekomst (geen shift(-1),
 geen center=True). Ontbrekende lags (nacht, gaten) -> gemiddelde K van de vorige dag (op t0 bekend).
 """
-import numpy as np
 import pandas as pd
 
 K_MIN_CS = 50.0          # W/m²: onder deze heldere-hemelstraling is K niet zinvol (schemer)

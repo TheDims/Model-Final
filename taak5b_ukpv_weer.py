@@ -17,7 +17,6 @@ from pathlib import Path
 import json
 import sys
 import time
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -27,8 +26,7 @@ except NameError:          # Spyder/interactief
     ROOT = Path.cwd()
 sys.path.insert(0, str(ROOT))
 from solarcore.config import (UKPV_CLEAN, UKPV_RESULTS, UKPV_PERIOD, UKPV_WEATHER, UKPV_DA_MODEL,  # noqa: E402
-                              UKPV_HZ_MODEL, UKPV_HZ_RUNS, BLUE, ORANGE, GREY)
-from solarcore.ukpv import read_metadata   # noqa: E402
+                              UKPV_HZ_MODEL, UKPV_HZ_RUNS)
 from solarcore.weather import load_era5   # noqa: E402
 from solarcore.forecast_api import previous_runs, single_run   # noqa: E402
 from solarcore.plots import style, save   # noqa: E402

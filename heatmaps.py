@@ -29,7 +29,7 @@ try:
 except NameError:          # Spyder/interactief
     ROOT = Path.cwd()
 sys.path.insert(0, str(ROOT))
-from solarcore.config import RESULTS, PLANTS, MIN_COSZ, BLUE, ORANGE, INK, INK2   # noqa: E402
+from solarcore.config import RESULTS, PLANTS, BLUE, ORANGE, INK   # noqa: E402
 from solarcore.dataset import weather_frame   # noqa: E402
 from solarcore.features import capacity, add_target   # noqa: E402
 from solarcore.forecast_features import add_clear, add_daily, dayahead   # noqa: E402

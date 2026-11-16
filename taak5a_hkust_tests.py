@@ -23,7 +23,6 @@ import warnings
 import joblib
 import numpy as np
 import pandas as pd
-import pvlib
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
@@ -37,8 +36,7 @@ from solarcore.config import (HKUST_RESULTS, HKUST_LOCATION, HKUST_STATIONS, HKU
                               BLUE, ORANGE, GREY, INK, INK2)
 from solarcore.forecast_features import add_clear, add_daily, dayahead   # noqa: E402
 from solarcore.physics import hourly_to_15min, PARAMS   # noqa: E402
-from solarcore.hkust import (load_clean, load_era5_hk, add_era5, capacity, mean_day, pvlib_ac_kw,  # noqa: E402
-                             WEATHER_COLS)
+from solarcore.hkust import (load_clean, load_era5_hk, add_era5, capacity, mean_day, pvlib_ac_kw)  # noqa: E402
 from solarcore.models import LADDER_FASE3, LADDER_FASE1, E6, _ridge   # noqa: E402
 from solarcore.evaluate import metrics, choose, bootstrap_days   # noqa: E402
 from solarcore.plots import style, save   # noqa: E402

@@ -1,0 +1,5 @@
+# Zelfde regeleindes voor iedereen (Windows en Mac): tekst in de repo met LF
+* text=auto
+*.png binary
+*.joblib binary
+*.parquet binary

@@ -18,7 +18,6 @@ Nog GEEN model. Runnen: F5 in Spyder of in VS Code (met de Anaconda-Python). Duu
 from pathlib import Path
 import json
 import sys
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap

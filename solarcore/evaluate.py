@@ -86,6 +86,30 @@ def bootstrap_days(te, preds, pairs=(), n=None, seed=None, level=0.90):
     return models, diffs
 
 
+KT_BINS = [0, 0.45, 0.75, 9]                 # bewolkt | half bewolkt | (bijna) helder (zoals V3-V5)
+
+
+def fit_band(cal, kt_col="KT_W", bins=KT_BINS):
+    """Band P10-P90 per bewolkingsklasse (fase 4): kwantielen van gemeten / voorspeld op out-of-sample-rijen.
+    cal heeft FRAC, pred en de helderheidskolom kt_col."""
+    ok = cal.pred > 0.05
+    r = pd.DataFrame({"r": cal.FRAC.values[ok] / cal.pred.values[ok],
+                      "k": np.digitize(cal[kt_col].values[ok], bins) - 1})
+    return {str(int(k)): (float(g.r.quantile(0.10)), float(g.r.quantile(0.90))) for k, g in r.groupby("k")}
+
+
+def apply_band(band, df, kt_col="KT_W", bins=KT_BINS):
+    """(P10, P90) = voorspelling x (ondergrens, bovengrens) van de klasse; onbekende klasse -> 0,8-1,2."""
+    k = (np.digitize(df[kt_col].values, bins) - 1).astype(int).astype(str)
+    lo = np.array([band.get(x, (0.8, 1.2))[0] for x in k]); hi = np.array([band.get(x, (0.8, 1.2))[1] for x in k])
+    return df.pred.values * lo, df.pred.values * hi
+
+
+def coverage(df, p10, p90):
+    """Dekking (%) = deel van de kwartieren met de gemeten waarde binnen de band."""
+    return float(np.mean((df.FRAC.values >= p10) & (df.FRAC.values <= p90)) * 100)
+
+
 def mean_day(train, test):
     """Baseline: gemiddelde FRAC per kwartier en plant over de trainingsdagen (klimatologie)."""
     prof = train.groupby(["PLANT", "SLOT"]).FRAC.mean()

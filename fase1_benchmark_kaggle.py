@@ -32,7 +32,7 @@ except NameError:          # Spyder/interactief
     ROOT = Path.cwd()
 sys.path.insert(0, str(ROOT))
 from solarcore.config import (RESULTS, CLEAN_FILE, PLANTS, MIN_COSZ, TIE_PP, COMPLEX_PP, GAMMA_PDC,  # noqa: E402
-                              PLANT_COLORS, BLUE, ORANGE, GREY, INK, INK2, HOUSE_KWP, RUN_NAME, toon_test)
+                              PLANT_COLORS, BLUE, GREY, INK, INK2, HOUSE_KWP, RUN_NAME, toon_test)
 from solarcore.features import add_time, add_solar, add_clearsky, add_physical, capacity, add_target  # noqa: E402
 from solarcore.models import LADDER_FASE1, BASELINES, ALL_SENSOR   # noqa: E402
 from solarcore.evaluate import metrics, mean_day, persistence   # noqa: E402

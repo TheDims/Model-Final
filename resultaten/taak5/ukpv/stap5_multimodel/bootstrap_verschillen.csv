@@ -1,0 +1,5 @@
+,verschil_pp,laag_pp,hoog_pp,aantoonbaar
+LR POA ICON - LR POA ECMWF (stap 3),1.0088,0.7923,1.2115,True
+LR POA GFS - LR POA ECMWF (stap 3),2.7474,2.4381,3.0783,True
+LR gemiddelde POA (3 modellen) - LR POA ECMWF (stap 3),0.2528,0.0916,0.4111,True
+LR op 3 POA's - LR POA ECMWF (stap 3),-0.1924,-0.2914,-0.0996,True

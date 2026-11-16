@@ -1,0 +1,89 @@
+{
+  "taak": "5b stap 5 - meerdere weermodellen (BESLISSINGEN #52)",
+  "keuze": "LR gemiddelde POA (3 modellen)",
+  "motivatie": "laagste nRMSE: 'LR op 3 POA's' (16.13 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR gemiddelde POA (3 modellen)', \"LR op 3 POA's\"] -> eenvoudigste: 'LR gemiddelde POA (3 modellen)' (16.34 %)",
+  "validatie": {
+    "LR POA ECMWF (stap 3)": {
+      "nRMSE_%": 16.6387,
+      "nMAE_%": 11.6685,
+      "R2": 0.6868,
+      "dagfout_%": 19.0974,
+      "nRMSE_% 03-06..04-30 -> 05": 16.5829,
+      "nRMSE_% 03-06..05-31 -> 06": 16.6944
+    },
+    "LR POA ICON": {
+      "nRMSE_%": 17.2814,
+      "nMAE_%": 12.0477,
+      "R2": 0.6619,
+      "dagfout_%": 19.18,
+      "nRMSE_% 03-06..04-30 -> 05": 16.8901,
+      "nRMSE_% 03-06..05-31 -> 06": 17.6727
+    },
+    "LR POA GFS": {
+      "nRMSE_%": 18.6437,
+      "nMAE_%": 13.518,
+      "R2": 0.6067,
+      "dagfout_%": 21.2213,
+      "nRMSE_% 03-06..04-30 -> 05": 18.818,
+      "nRMSE_% 03-06..05-31 -> 06": 18.4694
+    },
+    "LR gemiddelde POA (3 modellen)": {
+      "nRMSE_%": 16.3367,
+      "nMAE_%": 11.3953,
+      "R2": 0.698,
+      "dagfout_%": 17.8598,
+      "nRMSE_% 03-06..04-30 -> 05": 16.1467,
+      "nRMSE_% 03-06..05-31 -> 06": 16.5267
+    },
+    "LR op 3 POA's": {
+      "nRMSE_%": 16.1283,
+      "nMAE_%": 11.1932,
+      "R2": 0.7056,
+      "dagfout_%": 17.6982,
+      "nRMSE_% 03-06..04-30 -> 05": 15.9085,
+      "nRMSE_% 03-06..05-31 -> 06": 16.3481
+    }
+  },
+  "test": {
+    "LR POA ECMWF (stap 3)": {
+      "nRMSE_%": 14.5764,
+      "nMAE_%": 10.3213,
+      "RMSE_kW": 0.7288,
+      "MAE_kW": 0.5161,
+      "R2": 0.6793,
+      "dagfout_%": 27.152
+    },
+    "LR POA ICON": {
+      "nRMSE_%": 15.5852,
+      "nMAE_%": 11.2608,
+      "RMSE_kW": 0.7793,
+      "MAE_kW": 0.563,
+      "R2": 0.6334,
+      "dagfout_%": 30.1036
+    },
+    "LR POA GFS": {
+      "nRMSE_%": 17.3237,
+      "nMAE_%": 13.2014,
+      "RMSE_kW": 0.8662,
+      "MAE_kW": 0.6601,
+      "R2": 0.547,
+      "dagfout_%": 36.3194
+    },
+    "LR gemiddelde POA (3 modellen)": {
+      "nRMSE_%": 14.8291,
+      "nMAE_%": 10.7322,
+      "RMSE_kW": 0.7415,
+      "MAE_kW": 0.5366,
+      "R2": 0.6681,
+      "dagfout_%": 28.4545
+    },
+    "LR op 3 POA's": {
+      "nRMSE_%": 14.384,
+      "nMAE_%": 10.2488,
+      "RMSE_kW": 0.7192,
+      "MAE_kW": 0.5124,
+      "R2": 0.6877,
+      "dagfout_%": 26.7926
+    }
+  }
+}

@@ -1,0 +1,300 @@
+{
+  "taak": "5b stap 6 - band met echte voorspellingen (BESLISSINGEN #51)",
+  "band_dag1": {
+    "0": [
+      0.3402825940398618,
+      1.984887961195037
+    ],
+    "1": [
+      0.3567805466039999,
+      1.7276158073735246
+    ],
+    "2": [
+      0.35256978163351366,
+      1.4845135840921695
+    ]
+  },
+  "dekking_dag1_%": 63.44329388140597,
+  "breedte_dag1_%": 30.61878286965477,
+  "per_seizoen": {
+    "herfst": 55.859661604820246,
+    "voorjaar": 69.73169368362213,
+    "winter": 51.658619066710834,
+    "zomer": 71.48607881943776
+  },
+  "per_klasse": {
+    "bewolkt": 62.38458806818182,
+    "half bewolkt": 63.43699502028164,
+    "helder": 63.815016389387104
+  },
+  "band_per_dag": {
+    "1": {
+      "0": [
+        0.36724418663796665,
+        2.089742226674055
+      ],
+      "1": [
+        0.3474022000235652,
+        1.6317602662962556
+      ],
+      "2": [
+        0.4155108383947224,
+        1.5479251604439632
+      ]
+    },
+    "2": {
+      "0": [
+        0.3875267135453854,
+        2.5931530562433345
+      ],
+      "1": [
+        0.3333155182782989,
+        1.7229540325498158
+      ],
+      "2": [
+        0.34326379243545874,
+        1.5469168130160165
+      ]
+    },
+    "3": {
+      "0": [
+        0.37513496116308814,
+        2.829711840351872
+      ],
+      "1": [
+        0.3194072590327022,
+        1.7469657370410778
+      ],
+      "2": [
+        0.33596449540815804,
+        1.5387021775502536
+      ]
+    },
+    "4": {
+      "0": [
+        0.3732318598915587,
+        2.6364852010276683
+      ],
+      "1": [
+        0.3343605882555983,
+        1.8314309848079833
+      ],
+      "2": [
+        0.3395221065117915,
+        1.5397060422662647
+      ]
+    },
+    "5": {
+      "0": [
+        0.45186125273851857,
+        3.7564215168345254
+      ],
+      "1": [
+        0.32452907003317744,
+        1.9005486695508074
+      ],
+      "2": [
+        0.2524888965630522,
+        1.5435911438392227
+      ]
+    },
+    "6": {
+      "0": [
+        0.5269588598647239,
+        4.010363882480391
+      ],
+      "1": [
+        0.27674489374576156,
+        1.8414680495319933
+      ],
+      "2": [
+        0.1813390614367712,
+        1.5530179688180887
+      ]
+    },
+    "7": {
+      "0": [
+        0.37087028978083686,
+        3.651834631191708
+      ],
+      "1": [
+        0.2677909256778651,
+        1.8800211444045363
+      ],
+      "2": [
+        0.246836122517412,
+        1.5834829037992861
+      ]
+    },
+    "8": {
+      "0": [
+        0.4360859609384385,
+        5.164206460330769
+      ],
+      "1": [
+        0.27717557781953267,
+        1.9279537989377855
+      ],
+      "2": [
+        0.14161479975384883,
+        1.4550457558280285
+      ]
+    },
+    "9": {
+      "0": [
+        0.45645917165929195,
+        4.355856503273928
+      ],
+      "1": [
+        0.31827886562210267,
+        1.9222360760674804
+      ],
+      "2": [
+        0.22915162147891377,
+        1.5732697043121415
+      ]
+    },
+    "10": {
+      "0": [
+        0.46918572517545076,
+        3.456807411478887
+      ],
+      "1": [
+        0.2839794875283525,
+        1.901777505995833
+      ],
+      "2": [
+        0.18043268245320085,
+        1.5357846761854526
+      ]
+    }
+  },
+  "horizon": {
+    "1": {
+      "dekking dag-1-band %": 64.003,
+      "dekking band per dag %": 62.58,
+      "breedte band per dag (% cap.)": 30.574,
+      "band uit training": true
+    },
+    "2": {
+      "dekking dag-1-band %": 63.882,
+      "dekking band per dag %": 66.087,
+      "breedte band per dag (% cap.)": 35.133,
+      "band uit training": true
+    },
+    "3": {
+      "dekking dag-1-band %": 59.407,
+      "dekking band per dag %": 62.728,
+      "breedte band per dag (% cap.)": 35.97,
+      "band uit training": true
+    },
+    "4": {
+      "dekking dag-1-band %": 58.405,
+      "dekking band per dag %": 61.979,
+      "breedte band per dag (% cap.)": 35.914,
+      "band uit training": true
+    },
+    "5": {
+      "dekking dag-1-band %": 55.428,
+      "dekking band per dag %": 62.231,
+      "breedte band per dag (% cap.)": 41.191,
+      "band uit training": true
+    },
+    "6": {
+      "dekking dag-1-band %": 54.642,
+      "dekking band per dag %": 65.532,
+      "breedte band per dag (% cap.)": 43.685,
+      "band uit training": true
+    },
+    "7": {
+      "dekking dag-1-band %": 48.822,
+      "dekking band per dag %": 59.983,
+      "breedte band per dag (% cap.)": 41.8,
+      "band uit training": true
+    },
+    "8": {
+      "dekking dag-1-band %": 51.102,
+      "dekking band per dag %": 66.978,
+      "breedte band per dag (% cap.)": 46.312,
+      "band uit training": true
+    },
+    "9": {
+      "dekking dag-1-band %": 49.388,
+      "dekking band per dag %": 60.514,
+      "breedte band per dag (% cap.)": 45.15,
+      "band uit training": true
+    },
+    "10": {
+      "dekking dag-1-band %": 48.706,
+      "dekking band per dag %": 62.041,
+      "breedte band per dag (% cap.)": 41.327,
+      "band uit training": true
+    },
+    "11": {
+      "dekking dag-1-band %": 45.039,
+      "dekking band per dag %": 56.247,
+      "breedte band per dag (% cap.)": 39.473,
+      "band uit training": false
+    },
+    "12": {
+      "dekking dag-1-band %": 47.446,
+      "dekking band per dag %": 60.736,
+      "breedte band per dag (% cap.)": 41.497,
+      "band uit training": false
+    },
+    "13": {
+      "dekking dag-1-band %": 46.889,
+      "dekking band per dag %": 59.302,
+      "breedte band per dag (% cap.)": 40.97,
+      "band uit training": false
+    },
+    "14": {
+      "dekking dag-1-band %": 45.851,
+      "dekking band per dag %": 59.845,
+      "breedte band per dag (% cap.)": 40.513,
+      "band uit training": false
+    },
+    "15": {
+      "dekking dag-1-band %": 43.724,
+      "dekking band per dag %": 56.424,
+      "breedte band per dag (% cap.)": 41.017,
+      "band uit training": false
+    }
+  },
+  "regel": {
+    "dag 1": false,
+    "band per dag (alle dagen)": false
+  },
+  "verbetering_54": {
+    "dekking": {
+      "A factor": 72.79263488389903,
+      "B optellen": 79.38516255839085
+    },
+    "per_seizoen": {
+      "herfst": {
+        "A factor": 68.84407586099563,
+        "B optellen": 78.75136180714587
+      },
+      "voorjaar": {
+        "A factor": 76.00265511458916,
+        "B optellen": 78.25251537171604
+      },
+      "winter": {
+        "A factor": 77.56724249132778,
+        "B optellen": 80.20813359596981
+      },
+      "zomer": {
+        "A factor": 70.98457045135753,
+        "B optellen": 79.51693791672271
+      }
+    },
+    "breedte_%": {
+      "A factor": 32.76831510604024,
+      "B optellen": 29.776759613537212
+    },
+    "regel": {
+      "A factor": false,
+      "B optellen": true
+    }
+  }
+}
