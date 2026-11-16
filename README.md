@@ -11,6 +11,7 @@ De pipeline is twee keer gedraaid (zie **"Run 2 – 70/30"** onderaan):
 | Run 1 `split30` | dag 1–10 kiezen, dag 11–34 testen | `resultaten/split30/` | `modellen/model_final_split30.joblib` (= `model_final.joblib`): LR GHI | ✅ archief |
 | **Run 2 `split70`** | **dag 1–24 trainen, dag 25–34 testen** | `resultaten/split70/` | `modellen/model_final_split70.joblib`: LR POA | ✅ hoofdrun |
 | Leercurve | 10 / 17 / 24 / 27 trainingsdagen, test dag 28–34 | `resultaten/leercurve/` | – (alleen meten) | ✅ |
+| **Eindmodel v2** | geen training nodig; getest op UK PV (jul 2024 – mrt 2025) | `resultaten/taak5/ukpv/eindmodel_v2/` | `modellen/model_final_v2.joblib`: pvlib × factor (4 weken) + mengen + band | ✅ voorstel (keuze: team) |
 
 | Fase | Script |
 |---|---|
@@ -21,7 +22,25 @@ De pipeline is twee keer gedraaid (zie **"Run 2 – 70/30"** onderaan):
 | 4 – eindmodel kiezen en opslaan | `fase4_eindmodel.py` |
 | extra – leercurve, heatmaps, diagnose | `leercurve.py`, `heatmaps.py`, `diagnose_era5.py` |
 
-**Runnen:** met de Anaconda-Python (`C:\Users\dimme\anaconda3\python.exe`), F5 in Spyder of in VS Code.
+| Taak (externe validatie en verbeteren) | Scripts (in deze volgorde) | Resultaten |
+|---|---|---|
+| 5a – HKUST Hong Kong 2021–2023 | `taak5a_hkust_stations.py` → `_data.py` → `_tests.py` → `_kalibratie.py` (→ `_satelliet.py`) | `resultaten/taak5/hkust/` |
+| 5b – UK PV 2024–2025: dag-vooruit en horizon | `taak5b_ukpv_systemen.py` → `_weer.py` → `_tests.py` → `_horizon_mix.py`, `_multimodel.py`, `_band.py` | `resultaten/taak5/ukpv/` |
+| 6 – Faiman-fit | `taak6_faiman.py` | `resultaten/taak6/` |
+| Eindmodel v2 | `eindmodel_v2.py` (na de 5b-scripts) | `resultaten/taak5/ukpv/eindmodel_v2/`, `modellen/model_final_v2.joblib` |
+
+| `solarcore/` | Wat |
+|---|---|
+| `config.py` | alle instellingen (paden, splits, drempels, kleuren) |
+| `data_prep.py`, `features.py`, `split.py`, `dataset.py` | Kaggle: inlezen, opschonen, features, split op tijd |
+| `physics.py`, `weather.py` | pvlib-natuurkunde, ERA5 (Open-Meteo) |
+| `models.py`, `evaluate.py`, `forecast_features.py` | modelladders, metrics/keuzeregel/bootstrap/band, features voor vooruit voorspellen |
+| `hkust.py`, `ukpv.py`, `forecast_api.py` | externe datasets en archief-weersvoorspellingen / satelliet |
+| `model_v2.py` | eindmodel v2: kalibratie, mengen, band (ook voor de app) |
+| `plots.py` | vaste grafiekstijl |
+
+**Runnen:** met de Anaconda-Python (Python 3.13, zie `requirements.txt`), F5 in Spyder of in VS Code.
+Data die niet in de repo staat (Kaggle, HKUST, UK PV) en de benodigde accounts: zie `data/README.md`.
 Standaard draait de hoofdrun `split70`. Een andere run: in PowerShell eerst `$env:SOLAR_RUN = "split30_check"`
 (de regressietest; `split30` zelf is archief en kan niet opnieuw draaien). Welke testdagen al bekeken mogen worden,
 staat per run in `solarcore/config.py` (`TEST_VRIJGEGEVEN`).
@@ -836,3 +855,62 @@ een huis normaal werkt (storingen opsporen). Voor **morgen** blijft de weersvoor
 **Status (16 nov 2026):** het satelliet-/wolkenspoor is op verzoek van Dimme gestopt (BESLISSINGEN #50). De
 controle in India is niet gedaan (Open-Meteo heeft voor India pas satellietdata vanaf 2025). Het HKUST-resultaat
 blijft staan als bevinding: satelliet zit veel dichter bij het dak dan ERA5, maar is geen voorspelling voor morgen.
+
+---
+
+# Model verbeteren (16 nov 2026; BESLISSINGEN #51–#57)
+
+**1. Regressietest Kaggle (#55):** na de wijzigingen voor TAAK 5 (tijdzone-parameter, verhuisde bandfuncties) geeft
+de controle-run (`SOLAR_RUN=split30_check`, fase 2–4) exact dezelfde getallen als het archief van run 1.
+
+**2. Band P10–P90 met echte voorspellingen (UK, `taak5b_ukpv_band.py` → `resultaten/taak5/ukpv/stap6_band/`)**
+
+| Band | Dekking test (doel 80 %) | Winter / zomer | Breedte (% cap.) |
+|---|---|---|---|
+| Fase-4-methode (factor per bewolkingsklasse, mei–juni gekalibreerd) | 63,4 % | 51,7 / 71,5 | 30,6 |
+| A: factor, elke week op de laatste 4 weken | 72,8 % | 77,6 / 71,0 | 32,8 |
+| **B: optellen per voorspelklasse, elke week op de laatste 4 weken** | **79,4 %** | **80,2 / 79,5** | **29,8** |
+
+Waarom de oude band faalde: bij weinig zon is "factor × voorspelling" bijna 0 breed (dekking 24 %), en de band was
+alleen op mei–juni ingesteld (in herfst/winter levert een huis vaak bijna niets terwijl er zon voorspeld is). Met
+dagen vooruit wordt de oude band nog slechter (44–64 %). **Variant B gaat in het eindmodel v2.**
+
+**3. Eindmodel v2 – "nieuw huis" (`eindmodel_v2.py`, `solarcore/model_v2.py` → `modellen/model_final_v2.joblib`)**
+pvlib (kWp, dakhoek, richting) × factor uit de laatste 4 weken, gemengd met de gemiddelde dag (ook uit de laatste
+4 weken), band variant B. **Geen trainingsperiode nodig**: na 4 weken eigen meetdata is het model compleet.
+
+| UK-test jul 2024 – mrt 2025 (40 huizen) | nRMSE % | R² | dagfout % |
+|---|---|---|---|
+| LR POA (stap 3; heeft mrt–jun 2024 als training nodig) | 14,58 | 0,68 | 27,2 |
+| **v2: pvlib × f, gemengd (w = 0,87)** | **14,32** | 0,69 | 25,2 |
+| v2: pvlib × f, zonder mengen | 14,33 | 0,69 | 24,0 |
+| v2: alleen gemiddelde dag | 19,33 | 0,44 | 44,7 |
+
+- v2 is aantoonbaar iets beter dan LR POA (−0,25 pp; 90 %: −0,35…−0,15) en heeft geen training nodig.
+- Band v2: 79,3 % dekking (alle seizoenen 78,6–79,9 %).
+- Horizon (gemengd per dag): dag 1 14,0 · dag 2 15,1 · dag 4 17,3 · dag 7 19,7 · dag 10 20,0 · dag 15 20,8 %.
+- HKUST (Hong Kong) liet hetzelfde zien: doorlopend kalibreren 18,1 % ≈ 2 jaar historie (#43).
+- **Aannames:** pvlib-parameters (PARAMS, DC/AC 1,1), menggewichten uit de UK-trainingsperiode, band in fractie van kWp.
+- Compatibel met de app: zelfde sleutels als `model_v5.joblib` (`model, features, factor, band_method, band, kt_bins,
+  params, rad_shift_min, min_cosz`) + een `v2`-blok met de nieuwe onderdelen.
+
+**4. Meerdere weermodellen voor morgen (UK, `taak5b_ukpv_multimodel.py` → `resultaten/taak5/ukpv/stap5_multimodel/`, #52/#58)**
+
+| Test jul 2024 – mrt 2025 (dag 1) | nRMSE % | t.o.v. ECMWF |
+|---|---|---|
+| **ECMWF IFS alleen (huidig)** | **14,58** | – |
+| DWD ICON alleen | 15,59 | +1,0 pp |
+| NOAA GFS alleen | 17,32 | +2,8 pp |
+| Gemiddelde van de 3 (gekozen met regel #17) | 14,83 | +0,25 pp (slechter) |
+| LR op de 3 modellen | 14,38 | −0,19 pp |
+
+→ Geen relevante winst (≤ 0,2 pp, en het volgens de regel gekozen model is op de test zelfs slechter). ECMWF alleen
+blijft; dat is ook wat eindmodel v2 gebruikt.
+
+## Samenvatting "model verbeteren"
+| Wat | Uitkomst | Gevolg |
+|---|---|---|
+| Regressietest Kaggle | identiek aan run 1 | Kaggle-resultaten blijven geldig |
+| Band met echte voorspellingen | oude band 63 %, nieuwe band (B) 79 % | band B in v2 |
+| Eindmodel v2 | 14,3 % zonder training (LR POA 14,6 % met training) | voorstel voor de app |
+| Meerdere weermodellen | ≤ 0,2 pp | niet doen |
