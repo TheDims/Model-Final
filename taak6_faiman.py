@@ -62,7 +62,7 @@ G, TA, TM, WS = m.IRRADIATION * 1000, m.AMBIENT_TEMPERATURE, m.MODULE_TEMPERATUR
 tr, te = m.DAY.isin(TRAIN).values, m.DAY.isin(TEST).values
 fit_w = least_squares(lambda u: faiman_t(G[tr], TA[tr], WS[tr], *u) - TM[tr], [U0, U1], bounds=([1, 0], [100, 50])).x
 fit_0 = least_squares(lambda u: faiman_t(G[tr], TA[tr], WS[tr], u[0], 0) - TM[tr], [U0], bounds=([1], [100])).x
-VARIANTS = {"standaard (u0 25, u1 6,84)": (U0, U1), f"gefit met ERA5-wind": tuple(fit_w),
+VARIANTS = {"standaard (u0 25, u1 6,84)": (U0, U1), "gefit met ERA5-wind": tuple(fit_w),
             "gefit zonder wind (u1 = 0)": (fit_0[0], 0.0)}
 rows = []
 for name, (u0, u1) in VARIANTS.items():

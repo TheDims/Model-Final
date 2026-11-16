@@ -40,6 +40,7 @@ from solarcore.dataset import weather_frame   # noqa: E402
 from solarcore.features import capacity, add_target   # noqa: E402
 from solarcore.models import LADDER_FASE3   # noqa: E402
 from solarcore.physics import PARAMS   # noqa: E402
+from solarcore.evaluate import KT_BINS, fit_band, apply_band, coverage   # noqa: E402  (band: verhuisd, zelfde code)
 from solarcore.plots import style, save   # noqa: E402
 
 warnings.filterwarnings("ignore")
@@ -47,7 +48,6 @@ OUT = RESULTS / "fase4"
 OUT.mkdir(parents=True, exist_ok=True)
 MODELS.mkdir(exist_ok=True)
 pd.set_option("display.width", 200)
-KT_BINS = [0, 0.45, 0.75, 9]                 # bewolkt | half bewolkt | (bijna) helder (zoals V3-V5)
 f3 = json.loads((RESULTS / "fase3" / "samenvatting.json").read_text(encoding="utf-8"))
 CHOICE = f3["keuze"]
 RAD_SHIFT = int(f3["tijdafspraak_min"])
@@ -76,23 +76,6 @@ def walk_forward(days):
         te, y, _ = fit_predict(range(1, D), [D])
         out.append(te[["DATE_TIME", "PLANT", "DAY", "FRAC", "KT_W"]].assign(pred=y))
     return pd.concat(out)
-
-
-def fit_band(cal):
-    ok = cal.pred > 0.05
-    r = pd.DataFrame({"r": cal.FRAC.values[ok] / cal.pred.values[ok],
-                      "k": np.digitize(cal.KT_W.values[ok], KT_BINS) - 1})
-    return {str(int(k)): (float(g.r.quantile(0.10)), float(g.r.quantile(0.90))) for k, g in r.groupby("k")}
-
-
-def apply_band(band, df):
-    k = (np.digitize(df.KT_W.values, KT_BINS) - 1).astype(int).astype(str)
-    lo = np.array([band.get(x, (0.8, 1.2))[0] for x in k]); hi = np.array([band.get(x, (0.8, 1.2))[1] for x in k])
-    return df.pred.values * lo, df.pred.values * hi
-
-
-def coverage(df, p10, p90):
-    return float(np.mean((df.FRAC.values >= p10) & (df.FRAC.values <= p90)) * 100)
 
 
 if N_SETUP >= BAND_CAL_START:                                # run 2: kalibratie binnen de training
