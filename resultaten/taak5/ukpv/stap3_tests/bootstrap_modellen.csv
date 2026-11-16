@@ -1,0 +1,12 @@
+,nRMSE_%,laag_%,hoog_%
+Baseline: gemiddelde dag (K x heldere hemel),20.3302,19.6939,20.9358
+Baseline: persistence (gisteren),24.2119,23.4835,24.8937
+Smart persistence (K blijft gelijk),21.8087,21.1025,22.4864
+"Zero-shot pvlib (kWp, dakhoek, richting)",17.493,17.1257,17.863
+LR POA,14.5764,14.2692,14.8714
+e6 (zonder intercept),14.6722,14.3629,14.9741
+"Ridge e6 + bewolking, temp., wind",14.7085,14.3972,15.0067
+Gradient Boosting (e6 + extra),14.8798,14.567,15.1813
+LR POA getraind op ERA5,14.6322,14.3304,14.923
+LR POA met voorspelling dag 2,15.5268,15.2156,15.8263
+Bovengrens: LR POA met ERA5 (perfect weer),14.3436,14.0497,14.6375

@@ -1,0 +1,116 @@
+{
+  "taak": "5a stap 4 - kalibratietest nieuw huis (ACHTERAF, BESLISSINGEN #31)",
+  "tijdverschuiving_min": -30,
+  "installatiedata": [
+    "2023-01-01",
+    "2023-02-01",
+    "2023-03-01",
+    "2023-04-01",
+    "2023-05-01",
+    "2023-06-01"
+  ],
+  "evaluatie_weken": [
+    13,
+    26
+  ],
+  "kalibratie_weken": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    13
+  ],
+  "gemiddelde_nRMSE": {
+    "Gemiddelde dag (2021-2022)": {
+      "0": 22.73,
+      "1": 22.73,
+      "2": 22.73,
+      "4": 22.73,
+      "8": 22.73,
+      "13": 22.73
+    },
+    "Kaggle-eindmodel x f": {
+      "0": 26.8,
+      "1": 21.81,
+      "2": 20.38,
+      "4": 19.73,
+      "8": 19.67,
+      "13": 19.24
+    },
+    "LR GHI alleen op de eerste N weken": {
+      "0": NaN,
+      "1": 20.81,
+      "2": 19.72,
+      "4": 18.89,
+      "8": 18.77,
+      "13": 18.39
+    },
+    "LR GHI op 2021 + 2022 (stap 3)": {
+      "0": 18.17,
+      "1": 18.17,
+      "2": 18.17,
+      "4": 18.17,
+      "8": 18.17,
+      "13": 18.17
+    },
+    "Persistence": {
+      "0": 25.23,
+      "1": 25.23,
+      "2": 25.23,
+      "4": 25.23,
+      "8": 25.23,
+      "13": 25.23
+    },
+    "Smart persistence": {
+      "0": 20.22,
+      "1": 20.22,
+      "2": 20.22,
+      "4": 20.22,
+      "8": 20.22,
+      "13": 20.22
+    },
+    "pvlib x f": {
+      "0": 19.77,
+      "1": 21.96,
+      "2": 20.22,
+      "4": 19.44,
+      "8": 19.37,
+      "13": 18.92
+    },
+    "pvlib x orakel-f": {
+      "0": 17.8,
+      "1": 17.8,
+      "2": 17.8,
+      "4": 17.8,
+      "8": 17.8,
+      "13": 17.8
+    }
+  },
+  "orakel_nRMSE": 17.8,
+  "genoeg_weken": {
+    "pvlib x f": null,
+    "Kaggle-eindmodel x f": null,
+    "LR GHI alleen op de eerste N weken": null
+  },
+  "doorlopend_achteraf": {
+    "gemiddelde_nRMSE": {
+      "pvlib x f, doorlopend (laatste 2 wk)": 18.412,
+      "pvlib x f, doorlopend (laatste 4 wk)": 18.093,
+      "pvlib x f, doorlopend (laatste 8 wk)": 18.285,
+      "pvlib x f, doorlopend (alles sinds installatie)": 18.462
+    },
+    "referenties": {
+      "vaste f uit 13 weken": 18.92,
+      "orakel-f": 17.8,
+      "LR GHI op 2021 + 2022 (stap 3)": 18.17,
+      "pvlib zonder kalibratie": 19.77
+    },
+    "werkt": {
+      "pvlib x f, doorlopend (laatste 2 wk)": true,
+      "pvlib x f, doorlopend (laatste 4 wk)": true,
+      "pvlib x f, doorlopend (laatste 8 wk)": true,
+      "pvlib x f, doorlopend (alles sinds installatie)": true
+    }
+  }
+}

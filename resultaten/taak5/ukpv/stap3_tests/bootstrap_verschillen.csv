@@ -1,0 +1,6 @@
+,verschil_pp,laag_pp,hoog_pp,aantoonbaar
+LR POA - Baseline: gemiddelde dag (K x heldere hemel),-5.7538,-6.2393,-5.2381,True
+LR POA - Smart persistence (K blijft gelijk),-7.2323,-7.8345,-6.5839,True
+"LR POA - Zero-shot pvlib (kWp, dakhoek, richting)",-2.9167,-3.089,-2.7612,True
+LR POA - LR POA met voorspelling dag 2,-0.9505,-1.0993,-0.7846,True
+LR POA - Bovengrens: LR POA met ERA5 (perfect weer),0.2327,0.1181,0.3651,True

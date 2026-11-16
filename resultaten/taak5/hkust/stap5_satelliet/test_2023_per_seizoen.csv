@@ -1,0 +1,4 @@
+,droog (okt-apr),moesson (mei-sep)
+LR GHI (ERA5),14.5404,19.0724
+LR GHI (satelliet),8.249,13.7989
+Ridge (satelliet + ERA5),8.3231,13.6024

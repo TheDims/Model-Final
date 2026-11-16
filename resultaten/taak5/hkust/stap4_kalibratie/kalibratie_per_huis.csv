@@ -1,0 +1,1408 @@
+station,installatie,n_eval,weken,model,nRMSE_%,f,n_kalibratie
+SQ_Apartment37_48,2023-01-01,4024,0,LR GHI op 2021 + 2022 (stap 3),20.9007,,
+SQ_Apartment37_48,2023-01-01,4024,1,LR GHI op 2021 + 2022 (stap 3),20.9007,,
+SQ_Apartment37_48,2023-01-01,4024,2,LR GHI op 2021 + 2022 (stap 3),20.9007,,
+SQ_Apartment37_48,2023-01-01,4024,4,LR GHI op 2021 + 2022 (stap 3),20.9007,,
+SQ_Apartment37_48,2023-01-01,4024,8,LR GHI op 2021 + 2022 (stap 3),20.9007,,
+SQ_Apartment37_48,2023-01-01,4024,13,LR GHI op 2021 + 2022 (stap 3),20.9007,,
+SQ_Apartment37_48,2023-01-01,4024,0,Smart persistence,21.3531,,
+SQ_Apartment37_48,2023-01-01,4024,1,Smart persistence,21.3531,,
+SQ_Apartment37_48,2023-01-01,4024,2,Smart persistence,21.3531,,
+SQ_Apartment37_48,2023-01-01,4024,4,Smart persistence,21.3531,,
+SQ_Apartment37_48,2023-01-01,4024,8,Smart persistence,21.3531,,
+SQ_Apartment37_48,2023-01-01,4024,13,Smart persistence,21.3531,,
+SQ_Apartment37_48,2023-01-01,4024,0,Persistence,25.9115,,
+SQ_Apartment37_48,2023-01-01,4024,1,Persistence,25.9115,,
+SQ_Apartment37_48,2023-01-01,4024,2,Persistence,25.9115,,
+SQ_Apartment37_48,2023-01-01,4024,4,Persistence,25.9115,,
+SQ_Apartment37_48,2023-01-01,4024,8,Persistence,25.9115,,
+SQ_Apartment37_48,2023-01-01,4024,13,Persistence,25.9115,,
+SQ_Apartment37_48,2023-01-01,4024,0,Gemiddelde dag (2021-2022),24.3637,,
+SQ_Apartment37_48,2023-01-01,4024,1,Gemiddelde dag (2021-2022),24.3637,,
+SQ_Apartment37_48,2023-01-01,4024,2,Gemiddelde dag (2021-2022),24.3637,,
+SQ_Apartment37_48,2023-01-01,4024,4,Gemiddelde dag (2021-2022),24.3637,,
+SQ_Apartment37_48,2023-01-01,4024,8,Gemiddelde dag (2021-2022),24.3637,,
+SQ_Apartment37_48,2023-01-01,4024,13,Gemiddelde dag (2021-2022),24.3637,,
+SQ_Apartment37_48,2023-01-01,4024,0,pvlib x orakel-f,19.0107,,
+SQ_Apartment37_48,2023-01-01,4024,1,pvlib x orakel-f,19.0107,,
+SQ_Apartment37_48,2023-01-01,4024,2,pvlib x orakel-f,19.0107,,
+SQ_Apartment37_48,2023-01-01,4024,4,pvlib x orakel-f,19.0107,,
+SQ_Apartment37_48,2023-01-01,4024,8,pvlib x orakel-f,19.0107,,
+SQ_Apartment37_48,2023-01-01,4024,13,pvlib x orakel-f,19.0107,,
+SQ_Apartment37_48,2023-01-01,4024,0,pvlib x f,23.9589,1.0,0.0
+SQ_Apartment37_48,2023-01-01,4024,0,Kaggle-eindmodel x f,39.4754,1.0,0.0
+SQ_Apartment37_48,2023-01-01,4024,1,pvlib x f,25.032,1.0353,287.0
+SQ_Apartment37_48,2023-01-01,4024,1,Kaggle-eindmodel x f,22.9419,0.6801,287.0
+SQ_Apartment37_48,2023-01-01,4024,1,LR GHI alleen op de eerste N weken,21.7491,,287.0
+SQ_Apartment37_48,2023-01-01,4024,2,pvlib x f,19.8606,0.8177,525.0
+SQ_Apartment37_48,2023-01-01,4024,2,Kaggle-eindmodel x f,19.213,0.5302,525.0
+SQ_Apartment37_48,2023-01-01,4024,2,LR GHI alleen op de eerste N weken,19.2836,,525.0
+SQ_Apartment37_48,2023-01-01,4024,4,pvlib x f,19.4678,0.7861,1112.0
+SQ_Apartment37_48,2023-01-01,4024,4,Kaggle-eindmodel x f,19.2684,0.5358,1112.0
+SQ_Apartment37_48,2023-01-01,4024,4,LR GHI alleen op de eerste N weken,19.4387,,1112.0
+SQ_Apartment37_48,2023-01-01,4024,8,pvlib x f,19.3382,0.7731,2248.0
+SQ_Apartment37_48,2023-01-01,4024,8,Kaggle-eindmodel x f,19.2104,0.5299,2248.0
+SQ_Apartment37_48,2023-01-01,4024,8,LR GHI alleen op de eerste N weken,19.4156,,2248.0
+SQ_Apartment37_48,2023-01-01,4024,13,pvlib x f,19.2274,0.76,3703.0
+SQ_Apartment37_48,2023-01-01,4024,13,Kaggle-eindmodel x f,19.12,0.5183,3703.0
+SQ_Apartment37_48,2023-01-01,4024,13,LR GHI alleen op de eerste N weken,19.3768,,3703.0
+SQ_Apartment37_48,2023-02-01,4121,0,LR GHI op 2021 + 2022 (stap 3),19.7458,,
+SQ_Apartment37_48,2023-02-01,4121,1,LR GHI op 2021 + 2022 (stap 3),19.7458,,
+SQ_Apartment37_48,2023-02-01,4121,2,LR GHI op 2021 + 2022 (stap 3),19.7458,,
+SQ_Apartment37_48,2023-02-01,4121,4,LR GHI op 2021 + 2022 (stap 3),19.7458,,
+SQ_Apartment37_48,2023-02-01,4121,8,LR GHI op 2021 + 2022 (stap 3),19.7458,,
+SQ_Apartment37_48,2023-02-01,4121,13,LR GHI op 2021 + 2022 (stap 3),19.7458,,
+SQ_Apartment37_48,2023-02-01,4121,0,Smart persistence,21.3154,,
+SQ_Apartment37_48,2023-02-01,4121,1,Smart persistence,21.3154,,
+SQ_Apartment37_48,2023-02-01,4121,2,Smart persistence,21.3154,,
+SQ_Apartment37_48,2023-02-01,4121,4,Smart persistence,21.3154,,
+SQ_Apartment37_48,2023-02-01,4121,8,Smart persistence,21.3154,,
+SQ_Apartment37_48,2023-02-01,4121,13,Smart persistence,21.3154,,
+SQ_Apartment37_48,2023-02-01,4121,0,Persistence,26.1806,,
+SQ_Apartment37_48,2023-02-01,4121,1,Persistence,26.1806,,
+SQ_Apartment37_48,2023-02-01,4121,2,Persistence,26.1806,,
+SQ_Apartment37_48,2023-02-01,4121,4,Persistence,26.1806,,
+SQ_Apartment37_48,2023-02-01,4121,8,Persistence,26.1806,,
+SQ_Apartment37_48,2023-02-01,4121,13,Persistence,26.1806,,
+SQ_Apartment37_48,2023-02-01,4121,0,Gemiddelde dag (2021-2022),22.1595,,
+SQ_Apartment37_48,2023-02-01,4121,1,Gemiddelde dag (2021-2022),22.1595,,
+SQ_Apartment37_48,2023-02-01,4121,2,Gemiddelde dag (2021-2022),22.1595,,
+SQ_Apartment37_48,2023-02-01,4121,4,Gemiddelde dag (2021-2022),22.1595,,
+SQ_Apartment37_48,2023-02-01,4121,8,Gemiddelde dag (2021-2022),22.1595,,
+SQ_Apartment37_48,2023-02-01,4121,13,Gemiddelde dag (2021-2022),22.1595,,
+SQ_Apartment37_48,2023-02-01,4121,0,pvlib x orakel-f,19.1809,,
+SQ_Apartment37_48,2023-02-01,4121,1,pvlib x orakel-f,19.1809,,
+SQ_Apartment37_48,2023-02-01,4121,2,pvlib x orakel-f,19.1809,,
+SQ_Apartment37_48,2023-02-01,4121,4,pvlib x orakel-f,19.1809,,
+SQ_Apartment37_48,2023-02-01,4121,8,pvlib x orakel-f,19.1809,,
+SQ_Apartment37_48,2023-02-01,4121,13,pvlib x orakel-f,19.1809,,
+SQ_Apartment37_48,2023-02-01,4121,0,pvlib x f,21.7977,1.0,0.0
+SQ_Apartment37_48,2023-02-01,4121,0,Kaggle-eindmodel x f,37.0086,1.0,0.0
+SQ_Apartment37_48,2023-02-01,4121,1,pvlib x f,20.7374,0.6347,292.0
+SQ_Apartment37_48,2023-02-01,4121,1,Kaggle-eindmodel x f,21.3574,0.4265,292.0
+SQ_Apartment37_48,2023-02-01,4121,1,LR GHI alleen op de eerste N weken,20.7031,,292.0
+SQ_Apartment37_48,2023-02-01,4121,2,pvlib x f,22.6962,0.55,536.0
+SQ_Apartment37_48,2023-02-01,4121,2,Kaggle-eindmodel x f,23.4224,0.3691,536.0
+SQ_Apartment37_48,2023-02-01,4121,2,LR GHI alleen op de eerste N weken,22.1995,,536.0
+SQ_Apartment37_48,2023-02-01,4121,4,pvlib x f,19.1773,0.7799,1138.0
+SQ_Apartment37_48,2023-02-01,4121,4,Kaggle-eindmodel x f,19.3034,0.5348,1138.0
+SQ_Apartment37_48,2023-02-01,4121,4,LR GHI alleen op de eerste N weken,19.1085,,1138.0
+SQ_Apartment37_48,2023-02-01,4121,8,pvlib x f,19.2153,0.7654,2297.0
+SQ_Apartment37_48,2023-02-01,4121,8,Kaggle-eindmodel x f,19.4029,0.5215,2297.0
+SQ_Apartment37_48,2023-02-01,4121,8,LR GHI alleen op de eerste N weken,19.0834,,2297.0
+SQ_Apartment37_48,2023-02-01,4121,13,pvlib x f,20.1167,0.6707,3782.0
+SQ_Apartment37_48,2023-02-01,4121,13,Kaggle-eindmodel x f,20.4332,0.46,3782.0
+SQ_Apartment37_48,2023-02-01,4121,13,LR GHI alleen op de eerste N weken,19.2059,,3782.0
+SQ_Apartment37_48,2023-03-01,4107,0,LR GHI op 2021 + 2022 (stap 3),19.5531,,
+SQ_Apartment37_48,2023-03-01,4107,1,LR GHI op 2021 + 2022 (stap 3),19.5531,,
+SQ_Apartment37_48,2023-03-01,4107,2,LR GHI op 2021 + 2022 (stap 3),19.5531,,
+SQ_Apartment37_48,2023-03-01,4107,4,LR GHI op 2021 + 2022 (stap 3),19.5531,,
+SQ_Apartment37_48,2023-03-01,4107,8,LR GHI op 2021 + 2022 (stap 3),19.5531,,
+SQ_Apartment37_48,2023-03-01,4107,13,LR GHI op 2021 + 2022 (stap 3),19.5531,,
+SQ_Apartment37_48,2023-03-01,4107,0,Smart persistence,20.5563,,
+SQ_Apartment37_48,2023-03-01,4107,1,Smart persistence,20.5563,,
+SQ_Apartment37_48,2023-03-01,4107,2,Smart persistence,20.5563,,
+SQ_Apartment37_48,2023-03-01,4107,4,Smart persistence,20.5563,,
+SQ_Apartment37_48,2023-03-01,4107,8,Smart persistence,20.5563,,
+SQ_Apartment37_48,2023-03-01,4107,13,Smart persistence,20.5563,,
+SQ_Apartment37_48,2023-03-01,4107,0,Persistence,26.2544,,
+SQ_Apartment37_48,2023-03-01,4107,1,Persistence,26.2544,,
+SQ_Apartment37_48,2023-03-01,4107,2,Persistence,26.2544,,
+SQ_Apartment37_48,2023-03-01,4107,4,Persistence,26.2544,,
+SQ_Apartment37_48,2023-03-01,4107,8,Persistence,26.2544,,
+SQ_Apartment37_48,2023-03-01,4107,13,Persistence,26.2544,,
+SQ_Apartment37_48,2023-03-01,4107,0,Gemiddelde dag (2021-2022),21.6887,,
+SQ_Apartment37_48,2023-03-01,4107,1,Gemiddelde dag (2021-2022),21.6887,,
+SQ_Apartment37_48,2023-03-01,4107,2,Gemiddelde dag (2021-2022),21.6887,,
+SQ_Apartment37_48,2023-03-01,4107,4,Gemiddelde dag (2021-2022),21.6887,,
+SQ_Apartment37_48,2023-03-01,4107,8,Gemiddelde dag (2021-2022),21.6887,,
+SQ_Apartment37_48,2023-03-01,4107,13,Gemiddelde dag (2021-2022),21.6887,,
+SQ_Apartment37_48,2023-03-01,4107,0,pvlib x orakel-f,18.9572,,
+SQ_Apartment37_48,2023-03-01,4107,1,pvlib x orakel-f,18.9572,,
+SQ_Apartment37_48,2023-03-01,4107,2,pvlib x orakel-f,18.9572,,
+SQ_Apartment37_48,2023-03-01,4107,4,pvlib x orakel-f,18.9572,,
+SQ_Apartment37_48,2023-03-01,4107,8,pvlib x orakel-f,18.9572,,
+SQ_Apartment37_48,2023-03-01,4107,13,pvlib x orakel-f,18.9572,,
+SQ_Apartment37_48,2023-03-01,4107,0,pvlib x f,21.3258,1.0,0.0
+SQ_Apartment37_48,2023-03-01,4107,0,Kaggle-eindmodel x f,36.9437,1.0,0.0
+SQ_Apartment37_48,2023-03-01,4107,1,pvlib x f,19.928,0.9291,305.0
+SQ_Apartment37_48,2023-03-01,4107,1,Kaggle-eindmodel x f,19.7608,0.6346,305.0
+SQ_Apartment37_48,2023-03-01,4107,1,LR GHI alleen op de eerste N weken,19.9335,,305.0
+SQ_Apartment37_48,2023-03-01,4107,2,pvlib x f,19.5609,0.9033,563.0
+SQ_Apartment37_48,2023-03-01,4107,2,Kaggle-eindmodel x f,19.3615,0.6085,563.0
+SQ_Apartment37_48,2023-03-01,4107,2,LR GHI alleen op de eerste N weken,19.986,,563.0
+SQ_Apartment37_48,2023-03-01,4107,4,pvlib x f,19.171,0.7505,1159.0
+SQ_Apartment37_48,2023-03-01,4107,4,Kaggle-eindmodel x f,19.5474,0.508,1159.0
+SQ_Apartment37_48,2023-03-01,4107,4,LR GHI alleen op de eerste N weken,18.9963,,1159.0
+SQ_Apartment37_48,2023-03-01,4107,8,pvlib x f,20.9891,0.6306,2327.0
+SQ_Apartment37_48,2023-03-01,4107,8,Kaggle-eindmodel x f,21.4781,0.43,2327.0
+SQ_Apartment37_48,2023-03-01,4107,8,LR GHI alleen op de eerste N weken,19.5182,,2327.0
+SQ_Apartment37_48,2023-03-01,4107,13,pvlib x f,20.6475,0.6468,3896.0
+SQ_Apartment37_48,2023-03-01,4107,13,Kaggle-eindmodel x f,21.0685,0.4428,3896.0
+SQ_Apartment37_48,2023-03-01,4107,13,LR GHI alleen op de eerste N weken,19.5931,,3896.0
+SQ_Apartment37_48,2023-04-01,4045,0,LR GHI op 2021 + 2022 (stap 3),18.445,,
+SQ_Apartment37_48,2023-04-01,4045,1,LR GHI op 2021 + 2022 (stap 3),18.445,,
+SQ_Apartment37_48,2023-04-01,4045,2,LR GHI op 2021 + 2022 (stap 3),18.445,,
+SQ_Apartment37_48,2023-04-01,4045,4,LR GHI op 2021 + 2022 (stap 3),18.445,,
+SQ_Apartment37_48,2023-04-01,4045,8,LR GHI op 2021 + 2022 (stap 3),18.445,,
+SQ_Apartment37_48,2023-04-01,4045,13,LR GHI op 2021 + 2022 (stap 3),18.445,,
+SQ_Apartment37_48,2023-04-01,4045,0,Smart persistence,20.0927,,
+SQ_Apartment37_48,2023-04-01,4045,1,Smart persistence,20.0927,,
+SQ_Apartment37_48,2023-04-01,4045,2,Smart persistence,20.0927,,
+SQ_Apartment37_48,2023-04-01,4045,4,Smart persistence,20.0927,,
+SQ_Apartment37_48,2023-04-01,4045,8,Smart persistence,20.0927,,
+SQ_Apartment37_48,2023-04-01,4045,13,Smart persistence,20.0927,,
+SQ_Apartment37_48,2023-04-01,4045,0,Persistence,24.2514,,
+SQ_Apartment37_48,2023-04-01,4045,1,Persistence,24.2514,,
+SQ_Apartment37_48,2023-04-01,4045,2,Persistence,24.2514,,
+SQ_Apartment37_48,2023-04-01,4045,4,Persistence,24.2514,,
+SQ_Apartment37_48,2023-04-01,4045,8,Persistence,24.2514,,
+SQ_Apartment37_48,2023-04-01,4045,13,Persistence,24.2514,,
+SQ_Apartment37_48,2023-04-01,4045,0,Gemiddelde dag (2021-2022),22.7839,,
+SQ_Apartment37_48,2023-04-01,4045,1,Gemiddelde dag (2021-2022),22.7839,,
+SQ_Apartment37_48,2023-04-01,4045,2,Gemiddelde dag (2021-2022),22.7839,,
+SQ_Apartment37_48,2023-04-01,4045,4,Gemiddelde dag (2021-2022),22.7839,,
+SQ_Apartment37_48,2023-04-01,4045,8,Gemiddelde dag (2021-2022),22.7839,,
+SQ_Apartment37_48,2023-04-01,4045,13,Gemiddelde dag (2021-2022),22.7839,,
+SQ_Apartment37_48,2023-04-01,4045,0,pvlib x orakel-f,17.8279,,
+SQ_Apartment37_48,2023-04-01,4045,1,pvlib x orakel-f,17.8279,,
+SQ_Apartment37_48,2023-04-01,4045,2,pvlib x orakel-f,17.8279,,
+SQ_Apartment37_48,2023-04-01,4045,4,pvlib x orakel-f,17.8279,,
+SQ_Apartment37_48,2023-04-01,4045,8,pvlib x orakel-f,17.8279,,
+SQ_Apartment37_48,2023-04-01,4045,13,pvlib x orakel-f,17.8279,,
+SQ_Apartment37_48,2023-04-01,4045,0,pvlib x f,20.322,1.0,0.0
+SQ_Apartment37_48,2023-04-01,4045,0,Kaggle-eindmodel x f,36.0848,1.0,0.0
+SQ_Apartment37_48,2023-04-01,4045,1,pvlib x f,27.8681,0.3758,291.0
+SQ_Apartment37_48,2023-04-01,4045,1,Kaggle-eindmodel x f,28.0773,0.2605,291.0
+SQ_Apartment37_48,2023-04-01,4045,1,LR GHI alleen op de eerste N weken,25.8889,,291.0
+SQ_Apartment37_48,2023-04-01,4045,2,pvlib x f,23.1204,0.5096,559.0
+SQ_Apartment37_48,2023-04-01,4045,2,Kaggle-eindmodel x f,23.2398,0.3566,559.0
+SQ_Apartment37_48,2023-04-01,4045,2,LR GHI alleen op de eerste N weken,20.9657,,559.0
+SQ_Apartment37_48,2023-04-01,4045,4,pvlib x f,22.1825,0.5399,1177.0
+SQ_Apartment37_48,2023-04-01,4045,4,Kaggle-eindmodel x f,22.455,0.3745,1177.0
+SQ_Apartment37_48,2023-04-01,4045,4,LR GHI alleen op de eerste N weken,19.8256,,1177.0
+SQ_Apartment37_48,2023-04-01,4045,8,pvlib x f,21.006,0.5817,2421.0
+SQ_Apartment37_48,2023-04-01,4045,8,Kaggle-eindmodel x f,21.3988,0.4005,2421.0
+SQ_Apartment37_48,2023-04-01,4045,8,LR GHI alleen op de eerste N weken,19.818,,2421.0
+SQ_Apartment37_48,2023-04-01,4045,13,pvlib x f,18.9912,0.6726,4017.0
+SQ_Apartment37_48,2023-04-01,4045,13,Kaggle-eindmodel x f,19.408,0.4612,4017.0
+SQ_Apartment37_48,2023-04-01,4045,13,LR GHI alleen op de eerste N weken,18.2743,,4017.0
+SQ_Apartment37_48,2023-05-01,3920,0,LR GHI op 2021 + 2022 (stap 3),17.401,,
+SQ_Apartment37_48,2023-05-01,3920,1,LR GHI op 2021 + 2022 (stap 3),17.401,,
+SQ_Apartment37_48,2023-05-01,3920,2,LR GHI op 2021 + 2022 (stap 3),17.401,,
+SQ_Apartment37_48,2023-05-01,3920,4,LR GHI op 2021 + 2022 (stap 3),17.401,,
+SQ_Apartment37_48,2023-05-01,3920,8,LR GHI op 2021 + 2022 (stap 3),17.401,,
+SQ_Apartment37_48,2023-05-01,3920,13,LR GHI op 2021 + 2022 (stap 3),17.401,,
+SQ_Apartment37_48,2023-05-01,3920,0,Smart persistence,18.6456,,
+SQ_Apartment37_48,2023-05-01,3920,1,Smart persistence,18.6456,,
+SQ_Apartment37_48,2023-05-01,3920,2,Smart persistence,18.6456,,
+SQ_Apartment37_48,2023-05-01,3920,4,Smart persistence,18.6456,,
+SQ_Apartment37_48,2023-05-01,3920,8,Smart persistence,18.6456,,
+SQ_Apartment37_48,2023-05-01,3920,13,Smart persistence,18.6456,,
+SQ_Apartment37_48,2023-05-01,3920,0,Persistence,22.519,,
+SQ_Apartment37_48,2023-05-01,3920,1,Persistence,22.519,,
+SQ_Apartment37_48,2023-05-01,3920,2,Persistence,22.519,,
+SQ_Apartment37_48,2023-05-01,3920,4,Persistence,22.519,,
+SQ_Apartment37_48,2023-05-01,3920,8,Persistence,22.519,,
+SQ_Apartment37_48,2023-05-01,3920,13,Persistence,22.519,,
+SQ_Apartment37_48,2023-05-01,3920,0,Gemiddelde dag (2021-2022),22.0621,,
+SQ_Apartment37_48,2023-05-01,3920,1,Gemiddelde dag (2021-2022),22.0621,,
+SQ_Apartment37_48,2023-05-01,3920,2,Gemiddelde dag (2021-2022),22.0621,,
+SQ_Apartment37_48,2023-05-01,3920,4,Gemiddelde dag (2021-2022),22.0621,,
+SQ_Apartment37_48,2023-05-01,3920,8,Gemiddelde dag (2021-2022),22.0621,,
+SQ_Apartment37_48,2023-05-01,3920,13,Gemiddelde dag (2021-2022),22.0621,,
+SQ_Apartment37_48,2023-05-01,3920,0,pvlib x orakel-f,16.3244,,
+SQ_Apartment37_48,2023-05-01,3920,1,pvlib x orakel-f,16.3244,,
+SQ_Apartment37_48,2023-05-01,3920,2,pvlib x orakel-f,16.3244,,
+SQ_Apartment37_48,2023-05-01,3920,4,pvlib x orakel-f,16.3244,,
+SQ_Apartment37_48,2023-05-01,3920,8,pvlib x orakel-f,16.3244,,
+SQ_Apartment37_48,2023-05-01,3920,13,pvlib x orakel-f,16.3244,,
+SQ_Apartment37_48,2023-05-01,3920,0,pvlib x f,19.6097,1.0,0.0
+SQ_Apartment37_48,2023-05-01,3920,0,Kaggle-eindmodel x f,34.972,1.0,0.0
+SQ_Apartment37_48,2023-05-01,3920,1,pvlib x f,17.4047,0.6328,317.0
+SQ_Apartment37_48,2023-05-01,3920,1,Kaggle-eindmodel x f,17.6188,0.4419,317.0
+SQ_Apartment37_48,2023-05-01,3920,1,LR GHI alleen op de eerste N weken,16.8997,,317.0
+SQ_Apartment37_48,2023-05-01,3920,2,pvlib x f,17.108,0.6525,590.0
+SQ_Apartment37_48,2023-05-01,3920,2,Kaggle-eindmodel x f,17.6624,0.44,590.0
+SQ_Apartment37_48,2023-05-01,3920,2,LR GHI alleen op de eerste N weken,17.2706,,590.0
+SQ_Apartment37_48,2023-05-01,3920,4,pvlib x f,17.2771,0.6409,1245.0
+SQ_Apartment37_48,2023-05-01,3920,4,Kaggle-eindmodel x f,17.6717,0.4396,1245.0
+SQ_Apartment37_48,2023-05-01,3920,4,LR GHI alleen op de eerste N weken,17.1758,,1245.0
+SQ_Apartment37_48,2023-05-01,3920,8,pvlib x f,16.4385,0.7197,2509.0
+SQ_Apartment37_48,2023-05-01,3920,8,Kaggle-eindmodel x f,16.7882,0.4909,2509.0
+SQ_Apartment37_48,2023-05-01,3920,8,LR GHI alleen op de eerste N weken,16.2984,,2509.0
+SQ_Apartment37_48,2023-05-01,3920,13,pvlib x f,16.3092,0.7617,4116.0
+SQ_Apartment37_48,2023-05-01,3920,13,Kaggle-eindmodel x f,16.5739,0.521,4116.0
+SQ_Apartment37_48,2023-05-01,3920,13,LR GHI alleen op de eerste N weken,16.2102,,4116.0
+SQ_Apartment37_48,2023-06-01,3797,0,LR GHI op 2021 + 2022 (stap 3),14.6024,,
+SQ_Apartment37_48,2023-06-01,3797,1,LR GHI op 2021 + 2022 (stap 3),14.6024,,
+SQ_Apartment37_48,2023-06-01,3797,2,LR GHI op 2021 + 2022 (stap 3),14.6024,,
+SQ_Apartment37_48,2023-06-01,3797,4,LR GHI op 2021 + 2022 (stap 3),14.6024,,
+SQ_Apartment37_48,2023-06-01,3797,8,LR GHI op 2021 + 2022 (stap 3),14.6024,,
+SQ_Apartment37_48,2023-06-01,3797,13,LR GHI op 2021 + 2022 (stap 3),14.6024,,
+SQ_Apartment37_48,2023-06-01,3797,0,Smart persistence,16.2512,,
+SQ_Apartment37_48,2023-06-01,3797,1,Smart persistence,16.2512,,
+SQ_Apartment37_48,2023-06-01,3797,2,Smart persistence,16.2512,,
+SQ_Apartment37_48,2023-06-01,3797,4,Smart persistence,16.2512,,
+SQ_Apartment37_48,2023-06-01,3797,8,Smart persistence,16.2512,,
+SQ_Apartment37_48,2023-06-01,3797,13,Smart persistence,16.2512,,
+SQ_Apartment37_48,2023-06-01,3797,0,Persistence,18.3571,,
+SQ_Apartment37_48,2023-06-01,3797,1,Persistence,18.3571,,
+SQ_Apartment37_48,2023-06-01,3797,2,Persistence,18.3571,,
+SQ_Apartment37_48,2023-06-01,3797,4,Persistence,18.3571,,
+SQ_Apartment37_48,2023-06-01,3797,8,Persistence,18.3571,,
+SQ_Apartment37_48,2023-06-01,3797,13,Persistence,18.3571,,
+SQ_Apartment37_48,2023-06-01,3797,0,Gemiddelde dag (2021-2022),20.1573,,
+SQ_Apartment37_48,2023-06-01,3797,1,Gemiddelde dag (2021-2022),20.1573,,
+SQ_Apartment37_48,2023-06-01,3797,2,Gemiddelde dag (2021-2022),20.1573,,
+SQ_Apartment37_48,2023-06-01,3797,4,Gemiddelde dag (2021-2022),20.1573,,
+SQ_Apartment37_48,2023-06-01,3797,8,Gemiddelde dag (2021-2022),20.1573,,
+SQ_Apartment37_48,2023-06-01,3797,13,Gemiddelde dag (2021-2022),20.1573,,
+SQ_Apartment37_48,2023-06-01,3797,0,pvlib x orakel-f,12.8999,,
+SQ_Apartment37_48,2023-06-01,3797,1,pvlib x orakel-f,12.8999,,
+SQ_Apartment37_48,2023-06-01,3797,2,pvlib x orakel-f,12.8999,,
+SQ_Apartment37_48,2023-06-01,3797,4,pvlib x orakel-f,12.8999,,
+SQ_Apartment37_48,2023-06-01,3797,8,pvlib x orakel-f,12.8999,,
+SQ_Apartment37_48,2023-06-01,3797,13,pvlib x orakel-f,12.8999,,
+SQ_Apartment37_48,2023-06-01,3797,0,pvlib x f,17.8694,1.0,0.0
+SQ_Apartment37_48,2023-06-01,3797,0,Kaggle-eindmodel x f,34.1185,1.0,0.0
+SQ_Apartment37_48,2023-06-01,3797,1,pvlib x f,13.1966,0.7926,322.0
+SQ_Apartment37_48,2023-06-01,3797,1,Kaggle-eindmodel x f,13.4864,0.5464,322.0
+SQ_Apartment37_48,2023-06-01,3797,1,LR GHI alleen op de eerste N weken,12.8533,,322.0
+SQ_Apartment37_48,2023-06-01,3797,2,pvlib x f,13.3405,0.8052,608.0
+SQ_Apartment37_48,2023-06-01,3797,2,Kaggle-eindmodel x f,13.5217,0.5494,608.0
+SQ_Apartment37_48,2023-06-01,3797,2,LR GHI alleen op de eerste N weken,13.1593,,608.0
+SQ_Apartment37_48,2023-06-01,3797,4,pvlib x f,13.0285,0.774,1262.0
+SQ_Apartment37_48,2023-06-01,3797,4,Kaggle-eindmodel x f,13.3205,0.5265,1262.0
+SQ_Apartment37_48,2023-06-01,3797,4,LR GHI alleen op de eerste N weken,12.7997,,1262.0
+SQ_Apartment37_48,2023-06-01,3797,8,pvlib x f,13.3106,0.8028,2541.0
+SQ_Apartment37_48,2023-06-01,3797,8,Kaggle-eindmodel x f,13.5223,0.5495,2541.0
+SQ_Apartment37_48,2023-06-01,3797,8,LR GHI alleen op de eerste N weken,12.9952,,2541.0
+SQ_Apartment37_48,2023-06-01,3797,13,pvlib x f,13.2702,0.7993,4105.0
+SQ_Apartment37_48,2023-06-01,3797,13,Kaggle-eindmodel x f,13.4777,0.5457,4105.0
+SQ_Apartment37_48,2023-06-01,3797,13,LR GHI alleen op de eerste N weken,12.9535,,4105.0
+LSK_South,2023-01-01,4180,0,LR GHI op 2021 + 2022 (stap 3),20.0367,,
+LSK_South,2023-01-01,4180,1,LR GHI op 2021 + 2022 (stap 3),20.0367,,
+LSK_South,2023-01-01,4180,2,LR GHI op 2021 + 2022 (stap 3),20.0367,,
+LSK_South,2023-01-01,4180,4,LR GHI op 2021 + 2022 (stap 3),20.0367,,
+LSK_South,2023-01-01,4180,8,LR GHI op 2021 + 2022 (stap 3),20.0367,,
+LSK_South,2023-01-01,4180,13,LR GHI op 2021 + 2022 (stap 3),20.0367,,
+LSK_South,2023-01-01,4180,0,Smart persistence,21.5257,,
+LSK_South,2023-01-01,4180,1,Smart persistence,21.5257,,
+LSK_South,2023-01-01,4180,2,Smart persistence,21.5257,,
+LSK_South,2023-01-01,4180,4,Smart persistence,21.5257,,
+LSK_South,2023-01-01,4180,8,Smart persistence,21.5257,,
+LSK_South,2023-01-01,4180,13,Smart persistence,21.5257,,
+LSK_South,2023-01-01,4180,0,Persistence,26.1839,,
+LSK_South,2023-01-01,4180,1,Persistence,26.1839,,
+LSK_South,2023-01-01,4180,2,Persistence,26.1839,,
+LSK_South,2023-01-01,4180,4,Persistence,26.1839,,
+LSK_South,2023-01-01,4180,8,Persistence,26.1839,,
+LSK_South,2023-01-01,4180,13,Persistence,26.1839,,
+LSK_South,2023-01-01,4180,0,Gemiddelde dag (2021-2022),25.0289,,
+LSK_South,2023-01-01,4180,1,Gemiddelde dag (2021-2022),25.0289,,
+LSK_South,2023-01-01,4180,2,Gemiddelde dag (2021-2022),25.0289,,
+LSK_South,2023-01-01,4180,4,Gemiddelde dag (2021-2022),25.0289,,
+LSK_South,2023-01-01,4180,8,Gemiddelde dag (2021-2022),25.0289,,
+LSK_South,2023-01-01,4180,13,Gemiddelde dag (2021-2022),25.0289,,
+LSK_South,2023-01-01,4180,0,pvlib x orakel-f,18.9088,,
+LSK_South,2023-01-01,4180,1,pvlib x orakel-f,18.9088,,
+LSK_South,2023-01-01,4180,2,pvlib x orakel-f,18.9088,,
+LSK_South,2023-01-01,4180,4,pvlib x orakel-f,18.9088,,
+LSK_South,2023-01-01,4180,8,pvlib x orakel-f,18.9088,,
+LSK_South,2023-01-01,4180,13,pvlib x orakel-f,18.9088,,
+LSK_South,2023-01-01,4180,0,pvlib x f,22.3075,1.0,0.0
+LSK_South,2023-01-01,4180,0,Kaggle-eindmodel x f,26.6749,1.0,0.0
+LSK_South,2023-01-01,4180,1,pvlib x f,29.2118,1.2222,294.0
+LSK_South,2023-01-01,4180,1,Kaggle-eindmodel x f,26.1603,0.9863,294.0
+LSK_South,2023-01-01,4180,1,LR GHI alleen op de eerste N weken,24.049,,294.0
+LSK_South,2023-01-01,4180,2,pvlib x f,21.753,0.977,546.0
+LSK_South,2023-01-01,4180,2,Kaggle-eindmodel x f,19.8151,0.7614,546.0
+LSK_South,2023-01-01,4180,2,LR GHI alleen op de eerste N weken,20.4269,,546.0
+LSK_South,2023-01-01,4180,4,pvlib x f,20.5897,0.9216,1147.0
+LSK_South,2023-01-01,4180,4,Kaggle-eindmodel x f,19.8972,0.7664,1147.0
+LSK_South,2023-01-01,4180,4,LR GHI alleen op de eerste N weken,20.5031,,1147.0
+LSK_South,2023-01-01,4180,8,pvlib x f,20.1195,0.8945,2325.0
+LSK_South,2023-01-01,4180,8,Kaggle-eindmodel x f,19.6296,0.7494,2325.0
+LSK_South,2023-01-01,4180,8,LR GHI alleen op de eerste N weken,20.2819,,2325.0
+LSK_South,2023-01-01,4180,13,pvlib x f,19.6297,0.8606,3858.0
+LSK_South,2023-01-01,4180,13,Kaggle-eindmodel x f,19.2344,0.7175,3858.0
+LSK_South,2023-01-01,4180,13,LR GHI alleen op de eerste N weken,19.844,,3858.0
+LSK_South,2023-02-01,4207,0,LR GHI op 2021 + 2022 (stap 3),19.1601,,
+LSK_South,2023-02-01,4207,1,LR GHI op 2021 + 2022 (stap 3),19.1601,,
+LSK_South,2023-02-01,4207,2,LR GHI op 2021 + 2022 (stap 3),19.1601,,
+LSK_South,2023-02-01,4207,4,LR GHI op 2021 + 2022 (stap 3),19.1601,,
+LSK_South,2023-02-01,4207,8,LR GHI op 2021 + 2022 (stap 3),19.1601,,
+LSK_South,2023-02-01,4207,13,LR GHI op 2021 + 2022 (stap 3),19.1601,,
+LSK_South,2023-02-01,4207,0,Smart persistence,21.6554,,
+LSK_South,2023-02-01,4207,1,Smart persistence,21.6554,,
+LSK_South,2023-02-01,4207,2,Smart persistence,21.6554,,
+LSK_South,2023-02-01,4207,4,Smart persistence,21.6554,,
+LSK_South,2023-02-01,4207,8,Smart persistence,21.6554,,
+LSK_South,2023-02-01,4207,13,Smart persistence,21.6554,,
+LSK_South,2023-02-01,4207,0,Persistence,27.0206,,
+LSK_South,2023-02-01,4207,1,Persistence,27.0206,,
+LSK_South,2023-02-01,4207,2,Persistence,27.0206,,
+LSK_South,2023-02-01,4207,4,Persistence,27.0206,,
+LSK_South,2023-02-01,4207,8,Persistence,27.0206,,
+LSK_South,2023-02-01,4207,13,Persistence,27.0206,,
+LSK_South,2023-02-01,4207,0,Gemiddelde dag (2021-2022),22.9105,,
+LSK_South,2023-02-01,4207,1,Gemiddelde dag (2021-2022),22.9105,,
+LSK_South,2023-02-01,4207,2,Gemiddelde dag (2021-2022),22.9105,,
+LSK_South,2023-02-01,4207,4,Gemiddelde dag (2021-2022),22.9105,,
+LSK_South,2023-02-01,4207,8,Gemiddelde dag (2021-2022),22.9105,,
+LSK_South,2023-02-01,4207,13,Gemiddelde dag (2021-2022),22.9105,,
+LSK_South,2023-02-01,4207,0,pvlib x orakel-f,19.0484,,
+LSK_South,2023-02-01,4207,1,pvlib x orakel-f,19.0484,,
+LSK_South,2023-02-01,4207,2,pvlib x orakel-f,19.0484,,
+LSK_South,2023-02-01,4207,4,pvlib x orakel-f,19.0484,,
+LSK_South,2023-02-01,4207,8,pvlib x orakel-f,19.0484,,
+LSK_South,2023-02-01,4207,13,pvlib x orakel-f,19.0484,,
+LSK_South,2023-02-01,4207,0,pvlib x f,20.327,1.0,0.0
+LSK_South,2023-02-01,4207,0,Kaggle-eindmodel x f,24.0607,1.0,0.0
+LSK_South,2023-02-01,4207,1,pvlib x f,20.0145,0.7307,303.0
+LSK_South,2023-02-01,4207,1,Kaggle-eindmodel x f,20.5976,0.6017,303.0
+LSK_South,2023-02-01,4207,1,LR GHI alleen op de eerste N weken,20.1727,,303.0
+LSK_South,2023-02-01,4207,2,pvlib x f,21.3985,0.6573,565.0
+LSK_South,2023-02-01,4207,2,Kaggle-eindmodel x f,22.2783,0.5366,565.0
+LSK_South,2023-02-01,4207,2,LR GHI alleen op de eerste N weken,21.1494,,565.0
+LSK_South,2023-02-01,4207,4,pvlib x f,19.1112,0.8872,1182.0
+LSK_South,2023-02-01,4207,4,Kaggle-eindmodel x f,19.026,0.7443,1182.0
+LSK_South,2023-02-01,4207,4,LR GHI alleen op de eerste N weken,19.3197,,1182.0
+LSK_South,2023-02-01,4207,8,pvlib x f,19.0483,0.8544,2398.0
+LSK_South,2023-02-01,4207,8,Kaggle-eindmodel x f,19.0935,0.7122,2398.0
+LSK_South,2023-02-01,4207,8,LR GHI alleen op de eerste N weken,19.1293,,2398.0
+LSK_South,2023-02-01,4207,13,pvlib x f,19.9442,0.7354,3995.0
+LSK_South,2023-02-01,4207,13,Kaggle-eindmodel x f,20.2835,0.6168,3995.0
+LSK_South,2023-02-01,4207,13,LR GHI alleen op de eerste N weken,19.2451,,3995.0
+LSK_South,2023-03-01,4190,0,LR GHI op 2021 + 2022 (stap 3),19.3015,,
+LSK_South,2023-03-01,4190,1,LR GHI op 2021 + 2022 (stap 3),19.3015,,
+LSK_South,2023-03-01,4190,2,LR GHI op 2021 + 2022 (stap 3),19.3015,,
+LSK_South,2023-03-01,4190,4,LR GHI op 2021 + 2022 (stap 3),19.3015,,
+LSK_South,2023-03-01,4190,8,LR GHI op 2021 + 2022 (stap 3),19.3015,,
+LSK_South,2023-03-01,4190,13,LR GHI op 2021 + 2022 (stap 3),19.3015,,
+LSK_South,2023-03-01,4190,0,Smart persistence,21.8581,,
+LSK_South,2023-03-01,4190,1,Smart persistence,21.8581,,
+LSK_South,2023-03-01,4190,2,Smart persistence,21.8581,,
+LSK_South,2023-03-01,4190,4,Smart persistence,21.8581,,
+LSK_South,2023-03-01,4190,8,Smart persistence,21.8581,,
+LSK_South,2023-03-01,4190,13,Smart persistence,21.8581,,
+LSK_South,2023-03-01,4190,0,Persistence,27.9203,,
+LSK_South,2023-03-01,4190,1,Persistence,27.9203,,
+LSK_South,2023-03-01,4190,2,Persistence,27.9203,,
+LSK_South,2023-03-01,4190,4,Persistence,27.9203,,
+LSK_South,2023-03-01,4190,8,Persistence,27.9203,,
+LSK_South,2023-03-01,4190,13,Persistence,27.9203,,
+LSK_South,2023-03-01,4190,0,Gemiddelde dag (2021-2022),22.5823,,
+LSK_South,2023-03-01,4190,1,Gemiddelde dag (2021-2022),22.5823,,
+LSK_South,2023-03-01,4190,2,Gemiddelde dag (2021-2022),22.5823,,
+LSK_South,2023-03-01,4190,4,Gemiddelde dag (2021-2022),22.5823,,
+LSK_South,2023-03-01,4190,8,Gemiddelde dag (2021-2022),22.5823,,
+LSK_South,2023-03-01,4190,13,Gemiddelde dag (2021-2022),22.5823,,
+LSK_South,2023-03-01,4190,0,pvlib x orakel-f,19.2361,,
+LSK_South,2023-03-01,4190,1,pvlib x orakel-f,19.2361,,
+LSK_South,2023-03-01,4190,2,pvlib x orakel-f,19.2361,,
+LSK_South,2023-03-01,4190,4,pvlib x orakel-f,19.2361,,
+LSK_South,2023-03-01,4190,8,pvlib x orakel-f,19.2361,,
+LSK_South,2023-03-01,4190,13,pvlib x orakel-f,19.2361,,
+LSK_South,2023-03-01,4190,0,pvlib x f,19.8728,1.0,0.0
+LSK_South,2023-03-01,4190,0,Kaggle-eindmodel x f,23.226,1.0,0.0
+LSK_South,2023-03-01,4190,1,pvlib x f,20.0216,1.0114,315.0
+LSK_South,2023-03-01,4190,1,Kaggle-eindmodel x f,19.7329,0.8472,315.0
+LSK_South,2023-03-01,4190,1,LR GHI alleen op de eerste N weken,19.9283,,315.0
+LSK_South,2023-03-01,4190,2,pvlib x f,20.0505,1.0134,585.0
+LSK_South,2023-03-01,4190,2,Kaggle-eindmodel x f,19.6058,0.8359,585.0
+LSK_South,2023-03-01,4190,2,LR GHI alleen op de eerste N weken,20.0633,,585.0
+LSK_South,2023-03-01,4190,4,pvlib x f,19.6161,0.8217,1216.0
+LSK_South,2023-03-01,4190,4,Kaggle-eindmodel x f,20.0406,0.6806,1216.0
+LSK_South,2023-03-01,4190,4,LR GHI alleen op de eerste N weken,19.467,,1216.0
+LSK_South,2023-03-01,4190,8,pvlib x f,22.138,0.6782,2478.0
+LSK_South,2023-03-01,4190,8,Kaggle-eindmodel x f,22.7435,0.5655,2478.0
+LSK_South,2023-03-01,4190,8,LR GHI alleen op de eerste N weken,20.66,,2478.0
+LSK_South,2023-03-01,4190,13,pvlib x f,21.8296,0.6911,4104.0
+LSK_South,2023-03-01,4190,13,Kaggle-eindmodel x f,22.3119,0.58,4104.0
+LSK_South,2023-03-01,4190,13,LR GHI alleen op de eerste N weken,20.8314,,4104.0
+LSK_South,2023-04-01,2861,0,LR GHI op 2021 + 2022 (stap 3),19.4778,,
+LSK_South,2023-04-01,2861,1,LR GHI op 2021 + 2022 (stap 3),19.4778,,
+LSK_South,2023-04-01,2861,2,LR GHI op 2021 + 2022 (stap 3),19.4778,,
+LSK_South,2023-04-01,2861,4,LR GHI op 2021 + 2022 (stap 3),19.4778,,
+LSK_South,2023-04-01,2861,8,LR GHI op 2021 + 2022 (stap 3),19.4778,,
+LSK_South,2023-04-01,2861,13,LR GHI op 2021 + 2022 (stap 3),19.4778,,
+LSK_South,2023-04-01,2861,0,Smart persistence,21.1716,,
+LSK_South,2023-04-01,2861,1,Smart persistence,21.1716,,
+LSK_South,2023-04-01,2861,2,Smart persistence,21.1716,,
+LSK_South,2023-04-01,2861,4,Smart persistence,21.1716,,
+LSK_South,2023-04-01,2861,8,Smart persistence,21.1716,,
+LSK_South,2023-04-01,2861,13,Smart persistence,21.1716,,
+LSK_South,2023-04-01,2861,0,Persistence,28.1795,,
+LSK_South,2023-04-01,2861,1,Persistence,28.1795,,
+LSK_South,2023-04-01,2861,2,Persistence,28.1795,,
+LSK_South,2023-04-01,2861,4,Persistence,28.1795,,
+LSK_South,2023-04-01,2861,8,Persistence,28.1795,,
+LSK_South,2023-04-01,2861,13,Persistence,28.1795,,
+LSK_South,2023-04-01,2861,0,Gemiddelde dag (2021-2022),22.2104,,
+LSK_South,2023-04-01,2861,1,Gemiddelde dag (2021-2022),22.2104,,
+LSK_South,2023-04-01,2861,2,Gemiddelde dag (2021-2022),22.2104,,
+LSK_South,2023-04-01,2861,4,Gemiddelde dag (2021-2022),22.2104,,
+LSK_South,2023-04-01,2861,8,Gemiddelde dag (2021-2022),22.2104,,
+LSK_South,2023-04-01,2861,13,Gemiddelde dag (2021-2022),22.2104,,
+LSK_South,2023-04-01,2861,0,pvlib x orakel-f,19.3804,,
+LSK_South,2023-04-01,2861,1,pvlib x orakel-f,19.3804,,
+LSK_South,2023-04-01,2861,2,pvlib x orakel-f,19.3804,,
+LSK_South,2023-04-01,2861,4,pvlib x orakel-f,19.3804,,
+LSK_South,2023-04-01,2861,8,pvlib x orakel-f,19.3804,,
+LSK_South,2023-04-01,2861,13,pvlib x orakel-f,19.3804,,
+LSK_South,2023-04-01,2861,0,pvlib x f,19.9225,1.0,0.0
+LSK_South,2023-04-01,2861,0,Kaggle-eindmodel x f,23.1736,1.0,0.0
+LSK_South,2023-04-01,2861,1,pvlib x f,31.9533,0.404,325.0
+LSK_South,2023-04-01,2861,1,Kaggle-eindmodel x f,32.317,0.3406,325.0
+LSK_South,2023-04-01,2861,1,LR GHI alleen op de eerste N weken,29.8252,,325.0
+LSK_South,2023-04-01,2861,2,pvlib x f,27.3055,0.5264,604.0
+LSK_South,2023-04-01,2861,2,Kaggle-eindmodel x f,27.4488,0.4505,604.0
+LSK_South,2023-04-01,2861,2,LR GHI alleen op de eerste N weken,25.0749,,604.0
+LSK_South,2023-04-01,2861,4,pvlib x f,26.0896,0.5614,1268.0
+LSK_South,2023-04-01,2861,4,Kaggle-eindmodel x f,26.4191,0.4759,1268.0
+LSK_South,2023-04-01,2861,4,LR GHI alleen op de eerste N weken,23.575,,1268.0
+LSK_South,2023-04-01,2861,8,pvlib x f,24.3411,0.6157,2558.0
+LSK_South,2023-04-01,2861,8,Kaggle-eindmodel x f,24.7297,0.5202,2558.0
+LSK_South,2023-04-01,2861,8,LR GHI alleen op de eerste N weken,23.1431,,2558.0
+LSK_South,2023-04-01,2861,13,pvlib x f,21.3899,0.7282,4178.0
+LSK_South,2023-04-01,2861,13,Kaggle-eindmodel x f,21.767,0.6135,4178.0
+LSK_South,2023-04-01,2861,13,LR GHI alleen op de eerste N weken,20.7642,,4178.0
+LSK_South,2023-05-01,1540,0,LR GHI op 2021 + 2022 (stap 3),21.1867,,
+LSK_South,2023-05-01,1540,1,LR GHI op 2021 + 2022 (stap 3),21.1867,,
+LSK_South,2023-05-01,1540,2,LR GHI op 2021 + 2022 (stap 3),21.1867,,
+LSK_South,2023-05-01,1540,4,LR GHI op 2021 + 2022 (stap 3),21.1867,,
+LSK_South,2023-05-01,1540,8,LR GHI op 2021 + 2022 (stap 3),21.1867,,
+LSK_South,2023-05-01,1540,13,LR GHI op 2021 + 2022 (stap 3),21.1867,,
+LSK_South,2023-05-01,1540,0,Smart persistence,21.6709,,
+LSK_South,2023-05-01,1540,1,Smart persistence,21.6709,,
+LSK_South,2023-05-01,1540,2,Smart persistence,21.6709,,
+LSK_South,2023-05-01,1540,4,Smart persistence,21.6709,,
+LSK_South,2023-05-01,1540,8,Smart persistence,21.6709,,
+LSK_South,2023-05-01,1540,13,Smart persistence,21.6709,,
+LSK_South,2023-05-01,1540,0,Persistence,28.3861,,
+LSK_South,2023-05-01,1540,1,Persistence,28.3861,,
+LSK_South,2023-05-01,1540,2,Persistence,28.3861,,
+LSK_South,2023-05-01,1540,4,Persistence,28.3861,,
+LSK_South,2023-05-01,1540,8,Persistence,28.3861,,
+LSK_South,2023-05-01,1540,13,Persistence,28.3861,,
+LSK_South,2023-05-01,1540,0,Gemiddelde dag (2021-2022),22.2534,,
+LSK_South,2023-05-01,1540,1,Gemiddelde dag (2021-2022),22.2534,,
+LSK_South,2023-05-01,1540,2,Gemiddelde dag (2021-2022),22.2534,,
+LSK_South,2023-05-01,1540,4,Gemiddelde dag (2021-2022),22.2534,,
+LSK_South,2023-05-01,1540,8,Gemiddelde dag (2021-2022),22.2534,,
+LSK_South,2023-05-01,1540,13,Gemiddelde dag (2021-2022),22.2534,,
+LSK_South,2023-05-01,1540,0,pvlib x orakel-f,21.0019,,
+LSK_South,2023-05-01,1540,1,pvlib x orakel-f,21.0019,,
+LSK_South,2023-05-01,1540,2,pvlib x orakel-f,21.0019,,
+LSK_South,2023-05-01,1540,4,pvlib x orakel-f,21.0019,,
+LSK_South,2023-05-01,1540,8,pvlib x orakel-f,21.0019,,
+LSK_South,2023-05-01,1540,13,pvlib x orakel-f,21.0019,,
+LSK_South,2023-05-01,1540,0,pvlib x f,21.4467,1.0,0.0
+LSK_South,2023-05-01,1540,0,Kaggle-eindmodel x f,24.307,1.0,0.0
+LSK_South,2023-05-01,1540,1,pvlib x f,23.7431,0.6679,331.0
+LSK_South,2023-05-01,1540,1,Kaggle-eindmodel x f,23.7576,0.5715,331.0
+LSK_South,2023-05-01,1540,1,LR GHI alleen op de eerste N weken,23.2507,,331.0
+LSK_South,2023-05-01,1540,2,pvlib x f,23.4124,0.6835,619.0
+LSK_South,2023-05-01,1540,2,Kaggle-eindmodel x f,23.7813,0.5706,619.0
+LSK_South,2023-05-01,1540,2,LR GHI alleen op de eerste N weken,23.5051,,619.0
+LSK_South,2023-05-01,1540,4,pvlib x f,23.3558,0.6862,1290.0
+LSK_South,2023-05-01,1540,4,Kaggle-eindmodel x f,23.5488,0.5798,1290.0
+LSK_South,2023-05-01,1540,4,LR GHI alleen op de eerste N weken,23.2155,,1290.0
+LSK_South,2023-05-01,1540,8,pvlib x f,21.7178,0.7859,2574.0
+LSK_South,2023-05-01,1540,8,Kaggle-eindmodel x f,21.9098,0.6603,2574.0
+LSK_South,2023-05-01,1540,8,LR GHI alleen op de eerste N weken,21.6294,,2574.0
+LSK_South,2023-05-01,1540,13,pvlib x f,21.2288,0.8371,4206.0
+LSK_South,2023-05-01,1540,13,Kaggle-eindmodel x f,21.3391,0.7049,4206.0
+LSK_South,2023-05-01,1540,13,LR GHI alleen op de eerste N weken,21.2291,,4206.0
+LSK_South,2023-06-01,1390,0,LR GHI op 2021 + 2022 (stap 3),13.201,,
+LSK_South,2023-06-01,1390,1,LR GHI op 2021 + 2022 (stap 3),13.201,,
+LSK_South,2023-06-01,1390,2,LR GHI op 2021 + 2022 (stap 3),13.201,,
+LSK_South,2023-06-01,1390,4,LR GHI op 2021 + 2022 (stap 3),13.201,,
+LSK_South,2023-06-01,1390,8,LR GHI op 2021 + 2022 (stap 3),13.201,,
+LSK_South,2023-06-01,1390,13,LR GHI op 2021 + 2022 (stap 3),13.201,,
+LSK_South,2023-06-01,1390,0,Smart persistence,16.3562,,
+LSK_South,2023-06-01,1390,1,Smart persistence,16.3562,,
+LSK_South,2023-06-01,1390,2,Smart persistence,16.3562,,
+LSK_South,2023-06-01,1390,4,Smart persistence,16.3562,,
+LSK_South,2023-06-01,1390,8,Smart persistence,16.3562,,
+LSK_South,2023-06-01,1390,13,Smart persistence,16.3562,,
+LSK_South,2023-06-01,1390,0,Persistence,21.2836,,
+LSK_South,2023-06-01,1390,1,Persistence,21.2836,,
+LSK_South,2023-06-01,1390,2,Persistence,21.2836,,
+LSK_South,2023-06-01,1390,4,Persistence,21.2836,,
+LSK_South,2023-06-01,1390,8,Persistence,21.2836,,
+LSK_South,2023-06-01,1390,13,Persistence,21.2836,,
+LSK_South,2023-06-01,1390,0,Gemiddelde dag (2021-2022),19.509,,
+LSK_South,2023-06-01,1390,1,Gemiddelde dag (2021-2022),19.509,,
+LSK_South,2023-06-01,1390,2,Gemiddelde dag (2021-2022),19.509,,
+LSK_South,2023-06-01,1390,4,Gemiddelde dag (2021-2022),19.509,,
+LSK_South,2023-06-01,1390,8,Gemiddelde dag (2021-2022),19.509,,
+LSK_South,2023-06-01,1390,13,Gemiddelde dag (2021-2022),19.509,,
+LSK_South,2023-06-01,1390,0,pvlib x orakel-f,13.4688,,
+LSK_South,2023-06-01,1390,1,pvlib x orakel-f,13.4688,,
+LSK_South,2023-06-01,1390,2,pvlib x orakel-f,13.4688,,
+LSK_South,2023-06-01,1390,4,pvlib x orakel-f,13.4688,,
+LSK_South,2023-06-01,1390,8,pvlib x orakel-f,13.4688,,
+LSK_South,2023-06-01,1390,13,pvlib x orakel-f,13.4688,,
+LSK_South,2023-06-01,1390,0,pvlib x f,13.9181,1.0,0.0
+LSK_South,2023-06-01,1390,0,Kaggle-eindmodel x f,17.3292,1.0,0.0
+LSK_South,2023-06-01,1390,1,pvlib x f,13.5261,0.8814,332.0
+LSK_South,2023-06-01,1390,1,Kaggle-eindmodel x f,14.2589,0.7468,332.0
+LSK_South,2023-06-01,1390,1,LR GHI alleen op de eerste N weken,13.2752,,332.0
+LSK_South,2023-06-01,1390,2,pvlib x f,13.4315,0.9089,620.0
+LSK_South,2023-06-01,1390,2,Kaggle-eindmodel x f,14.1148,0.7641,620.0
+LSK_South,2023-06-01,1390,2,LR GHI alleen op de eerste N weken,13.5888,,620.0
+LSK_South,2023-06-01,1390,4,pvlib x f,13.5612,0.8755,1284.0
+LSK_South,2023-06-01,1390,4,Kaggle-eindmodel x f,14.4114,0.733,1284.0
+LSK_South,2023-06-01,1390,4,LR GHI alleen op de eerste N weken,13.5007,,1284.0
+LSK_South,2023-06-01,1390,8,pvlib x f,13.4604,0.8965,2580.0
+LSK_South,2023-06-01,1390,8,Kaggle-eindmodel x f,14.1791,0.7556,2580.0
+LSK_South,2023-06-01,1390,8,LR GHI alleen op de eerste N weken,13.4247,,2580.0
+LSK_South,2023-06-01,1390,13,pvlib x f,13.4305,0.9097,4189.0
+LSK_South,2023-06-01,1390,13,Kaggle-eindmodel x f,14.1204,0.7633,4189.0
+LSK_South,2023-06-01,1390,13,LR GHI alleen op de eerste N weken,13.534,,4189.0
+SQ1,2023-01-01,2732,0,LR GHI op 2021 + 2022 (stap 3),20.0635,,
+SQ1,2023-01-01,2732,1,LR GHI op 2021 + 2022 (stap 3),20.0635,,
+SQ1,2023-01-01,2732,2,LR GHI op 2021 + 2022 (stap 3),20.0635,,
+SQ1,2023-01-01,2732,4,LR GHI op 2021 + 2022 (stap 3),20.0635,,
+SQ1,2023-01-01,2732,8,LR GHI op 2021 + 2022 (stap 3),20.0635,,
+SQ1,2023-01-01,2732,13,LR GHI op 2021 + 2022 (stap 3),20.0635,,
+SQ1,2023-01-01,2732,0,Smart persistence,19.6052,,
+SQ1,2023-01-01,2732,1,Smart persistence,19.6052,,
+SQ1,2023-01-01,2732,2,Smart persistence,19.6052,,
+SQ1,2023-01-01,2732,4,Smart persistence,19.6052,,
+SQ1,2023-01-01,2732,8,Smart persistence,19.6052,,
+SQ1,2023-01-01,2732,13,Smart persistence,19.6052,,
+SQ1,2023-01-01,2732,0,Persistence,24.8918,,
+SQ1,2023-01-01,2732,1,Persistence,24.8918,,
+SQ1,2023-01-01,2732,2,Persistence,24.8918,,
+SQ1,2023-01-01,2732,4,Persistence,24.8918,,
+SQ1,2023-01-01,2732,8,Persistence,24.8918,,
+SQ1,2023-01-01,2732,13,Persistence,24.8918,,
+SQ1,2023-01-01,2732,0,Gemiddelde dag (2021-2022),25.5325,,
+SQ1,2023-01-01,2732,1,Gemiddelde dag (2021-2022),25.5325,,
+SQ1,2023-01-01,2732,2,Gemiddelde dag (2021-2022),25.5325,,
+SQ1,2023-01-01,2732,4,Gemiddelde dag (2021-2022),25.5325,,
+SQ1,2023-01-01,2732,8,Gemiddelde dag (2021-2022),25.5325,,
+SQ1,2023-01-01,2732,13,Gemiddelde dag (2021-2022),25.5325,,
+SQ1,2023-01-01,2732,0,pvlib x orakel-f,18.7223,,
+SQ1,2023-01-01,2732,1,pvlib x orakel-f,18.7223,,
+SQ1,2023-01-01,2732,2,pvlib x orakel-f,18.7223,,
+SQ1,2023-01-01,2732,4,pvlib x orakel-f,18.7223,,
+SQ1,2023-01-01,2732,8,pvlib x orakel-f,18.7223,,
+SQ1,2023-01-01,2732,13,pvlib x orakel-f,18.7223,,
+SQ1,2023-01-01,2732,0,pvlib x f,23.9773,1.0,0.0
+SQ1,2023-01-01,2732,0,Kaggle-eindmodel x f,25.2517,1.0,0.0
+SQ1,2023-01-01,2732,1,pvlib x f,28.139,1.123,243.0
+SQ1,2023-01-01,2732,1,Kaggle-eindmodel x f,24.695,0.9834,243.0
+SQ1,2023-01-01,2732,1,LR GHI alleen op de eerste N weken,22.146,,243.0
+SQ1,2023-01-01,2732,2,pvlib x f,19.8334,0.8287,536.0
+SQ1,2023-01-01,2732,2,Kaggle-eindmodel x f,18.8934,0.7124,536.0
+SQ1,2023-01-01,2732,2,LR GHI alleen op de eerste N weken,18.9158,,536.0
+SQ1,2023-01-01,2732,4,pvlib x f,19.1883,0.782,1137.0
+SQ1,2023-01-01,2732,4,Kaggle-eindmodel x f,18.9452,0.72,1137.0
+SQ1,2023-01-01,2732,4,LR GHI alleen op de eerste N weken,18.9942,,1137.0
+SQ1,2023-01-01,2732,8,pvlib x f,19.0169,0.7651,2313.0
+SQ1,2023-01-01,2732,8,Kaggle-eindmodel x f,18.8803,0.7102,2313.0
+SQ1,2023-01-01,2732,8,LR GHI alleen op de eerste N weken,18.8895,,2313.0
+SQ1,2023-01-01,2732,13,pvlib x f,18.8733,0.7471,3844.0
+SQ1,2023-01-01,2732,13,Kaggle-eindmodel x f,18.7894,0.6904,3844.0
+SQ1,2023-01-01,2732,13,LR GHI alleen op de eerste N weken,18.7491,,3844.0
+SQ1,2023-02-01,2867,0,LR GHI op 2021 + 2022 (stap 3),18.2239,,
+SQ1,2023-02-01,2867,1,LR GHI op 2021 + 2022 (stap 3),18.2239,,
+SQ1,2023-02-01,2867,2,LR GHI op 2021 + 2022 (stap 3),18.2239,,
+SQ1,2023-02-01,2867,4,LR GHI op 2021 + 2022 (stap 3),18.2239,,
+SQ1,2023-02-01,2867,8,LR GHI op 2021 + 2022 (stap 3),18.2239,,
+SQ1,2023-02-01,2867,13,LR GHI op 2021 + 2022 (stap 3),18.2239,,
+SQ1,2023-02-01,2867,0,Smart persistence,20.8344,,
+SQ1,2023-02-01,2867,1,Smart persistence,20.8344,,
+SQ1,2023-02-01,2867,2,Smart persistence,20.8344,,
+SQ1,2023-02-01,2867,4,Smart persistence,20.8344,,
+SQ1,2023-02-01,2867,8,Smart persistence,20.8344,,
+SQ1,2023-02-01,2867,13,Smart persistence,20.8344,,
+SQ1,2023-02-01,2867,0,Persistence,26.6455,,
+SQ1,2023-02-01,2867,1,Persistence,26.6455,,
+SQ1,2023-02-01,2867,2,Persistence,26.6455,,
+SQ1,2023-02-01,2867,4,Persistence,26.6455,,
+SQ1,2023-02-01,2867,8,Persistence,26.6455,,
+SQ1,2023-02-01,2867,13,Persistence,26.6455,,
+SQ1,2023-02-01,2867,0,Gemiddelde dag (2021-2022),22.6367,,
+SQ1,2023-02-01,2867,1,Gemiddelde dag (2021-2022),22.6367,,
+SQ1,2023-02-01,2867,2,Gemiddelde dag (2021-2022),22.6367,,
+SQ1,2023-02-01,2867,4,Gemiddelde dag (2021-2022),22.6367,,
+SQ1,2023-02-01,2867,8,Gemiddelde dag (2021-2022),22.6367,,
+SQ1,2023-02-01,2867,13,Gemiddelde dag (2021-2022),22.6367,,
+SQ1,2023-02-01,2867,0,pvlib x orakel-f,18.3778,,
+SQ1,2023-02-01,2867,1,pvlib x orakel-f,18.3778,,
+SQ1,2023-02-01,2867,2,pvlib x orakel-f,18.3778,,
+SQ1,2023-02-01,2867,4,pvlib x orakel-f,18.3778,,
+SQ1,2023-02-01,2867,8,pvlib x orakel-f,18.3778,,
+SQ1,2023-02-01,2867,13,pvlib x orakel-f,18.3778,,
+SQ1,2023-02-01,2867,0,pvlib x f,19.6269,1.0,0.0
+SQ1,2023-02-01,2867,0,Kaggle-eindmodel x f,20.7948,1.0,0.0
+SQ1,2023-02-01,2867,1,pvlib x f,20.972,0.6756,259.0
+SQ1,2023-02-01,2867,1,Kaggle-eindmodel x f,21.9131,0.6158,259.0
+SQ1,2023-02-01,2867,1,LR GHI alleen op de eerste N weken,21.1333,,259.0
+SQ1,2023-02-01,2867,2,pvlib x f,23.8159,0.5797,563.0
+SQ1,2023-02-01,2867,2,Kaggle-eindmodel x f,24.9166,0.5256,563.0
+SQ1,2023-02-01,2867,2,LR GHI alleen op de eerste N weken,23.2916,,563.0
+SQ1,2023-02-01,2867,4,pvlib x f,19.1182,0.7673,1180.0
+SQ1,2023-02-01,2867,4,Kaggle-eindmodel x f,19.5817,0.7135,1180.0
+SQ1,2023-02-01,2867,4,LR GHI alleen op de eerste N weken,18.4925,,1180.0
+SQ1,2023-02-01,2867,8,pvlib x f,19.3813,0.7505,2396.0
+SQ1,2023-02-01,2867,8,Kaggle-eindmodel x f,19.9655,0.6934,2396.0
+SQ1,2023-02-01,2867,8,LR GHI alleen op de eerste N weken,18.6064,,2396.0
+SQ1,2023-02-01,2867,13,pvlib x f,21.712,0.6479,3883.0
+SQ1,2023-02-01,2867,13,Kaggle-eindmodel x f,22.3335,0.6018,3883.0
+SQ1,2023-02-01,2867,13,LR GHI alleen op de eerste N weken,20.0502,,3883.0
+SQ1,2023-03-01,4143,0,LR GHI op 2021 + 2022 (stap 3),18.9839,,
+SQ1,2023-03-01,4143,1,LR GHI op 2021 + 2022 (stap 3),18.9839,,
+SQ1,2023-03-01,4143,2,LR GHI op 2021 + 2022 (stap 3),18.9839,,
+SQ1,2023-03-01,4143,4,LR GHI op 2021 + 2022 (stap 3),18.9839,,
+SQ1,2023-03-01,4143,8,LR GHI op 2021 + 2022 (stap 3),18.9839,,
+SQ1,2023-03-01,4143,13,LR GHI op 2021 + 2022 (stap 3),18.9839,,
+SQ1,2023-03-01,4143,0,Smart persistence,20.7228,,
+SQ1,2023-03-01,4143,1,Smart persistence,20.7228,,
+SQ1,2023-03-01,4143,2,Smart persistence,20.7228,,
+SQ1,2023-03-01,4143,4,Smart persistence,20.7228,,
+SQ1,2023-03-01,4143,8,Smart persistence,20.7228,,
+SQ1,2023-03-01,4143,13,Smart persistence,20.7228,,
+SQ1,2023-03-01,4143,0,Persistence,26.5566,,
+SQ1,2023-03-01,4143,1,Persistence,26.5566,,
+SQ1,2023-03-01,4143,2,Persistence,26.5566,,
+SQ1,2023-03-01,4143,4,Persistence,26.5566,,
+SQ1,2023-03-01,4143,8,Persistence,26.5566,,
+SQ1,2023-03-01,4143,13,Persistence,26.5566,,
+SQ1,2023-03-01,4143,0,Gemiddelde dag (2021-2022),22.178,,
+SQ1,2023-03-01,4143,1,Gemiddelde dag (2021-2022),22.178,,
+SQ1,2023-03-01,4143,2,Gemiddelde dag (2021-2022),22.178,,
+SQ1,2023-03-01,4143,4,Gemiddelde dag (2021-2022),22.178,,
+SQ1,2023-03-01,4143,8,Gemiddelde dag (2021-2022),22.178,,
+SQ1,2023-03-01,4143,13,Gemiddelde dag (2021-2022),22.178,,
+SQ1,2023-03-01,4143,0,pvlib x orakel-f,18.952,,
+SQ1,2023-03-01,4143,1,pvlib x orakel-f,18.952,,
+SQ1,2023-03-01,4143,2,pvlib x orakel-f,18.952,,
+SQ1,2023-03-01,4143,4,pvlib x orakel-f,18.952,,
+SQ1,2023-03-01,4143,8,pvlib x orakel-f,18.952,,
+SQ1,2023-03-01,4143,13,pvlib x orakel-f,18.952,,
+SQ1,2023-03-01,4143,0,pvlib x f,20.557,1.0,0.0
+SQ1,2023-03-01,4143,0,Kaggle-eindmodel x f,21.8092,1.0,0.0
+SQ1,2023-03-01,4143,1,pvlib x f,19.0776,0.8892,270.0
+SQ1,2023-03-01,4143,1,Kaggle-eindmodel x f,19.1076,0.8242,270.0
+SQ1,2023-03-01,4143,1,LR GHI alleen op de eerste N weken,19.011,,270.0
+SQ1,2023-03-01,4143,2,pvlib x f,19.0178,0.8777,585.0
+SQ1,2023-03-01,4143,2,Kaggle-eindmodel x f,19.0843,0.8021,585.0
+SQ1,2023-03-01,4143,2,LR GHI alleen op de eerste N weken,19.1085,,585.0
+SQ1,2023-03-01,4143,4,pvlib x f,19.8446,0.7335,1216.0
+SQ1,2023-03-01,4143,4,Kaggle-eindmodel x f,20.4169,0.6733,1216.0
+SQ1,2023-03-01,4143,4,LR GHI alleen op de eerste N weken,19.2344,,1216.0
+SQ1,2023-03-01,4143,8,pvlib x f,22.9877,0.5966,2465.0
+SQ1,2023-03-01,4143,8,Kaggle-eindmodel x f,23.5958,0.552,2465.0
+SQ1,2023-03-01,4143,8,LR GHI alleen op de eerste N weken,21.0823,,2465.0
+SQ1,2023-03-01,4143,13,pvlib x f,23.08,0.5934,2703.0
+SQ1,2023-03-01,4143,13,Kaggle-eindmodel x f,23.628,0.551,2703.0
+SQ1,2023-03-01,4143,13,LR GHI alleen op de eerste N weken,21.2532,,2703.0
+SQ1,2023-04-01,4157,0,LR GHI op 2021 + 2022 (stap 3),18.3598,,
+SQ1,2023-04-01,4157,1,LR GHI op 2021 + 2022 (stap 3),18.3598,,
+SQ1,2023-04-01,4157,2,LR GHI op 2021 + 2022 (stap 3),18.3598,,
+SQ1,2023-04-01,4157,4,LR GHI op 2021 + 2022 (stap 3),18.3598,,
+SQ1,2023-04-01,4157,8,LR GHI op 2021 + 2022 (stap 3),18.3598,,
+SQ1,2023-04-01,4157,13,LR GHI op 2021 + 2022 (stap 3),18.3598,,
+SQ1,2023-04-01,4157,0,Smart persistence,20.4594,,
+SQ1,2023-04-01,4157,1,Smart persistence,20.4594,,
+SQ1,2023-04-01,4157,2,Smart persistence,20.4594,,
+SQ1,2023-04-01,4157,4,Smart persistence,20.4594,,
+SQ1,2023-04-01,4157,8,Smart persistence,20.4594,,
+SQ1,2023-04-01,4157,13,Smart persistence,20.4594,,
+SQ1,2023-04-01,4157,0,Persistence,25.0665,,
+SQ1,2023-04-01,4157,1,Persistence,25.0665,,
+SQ1,2023-04-01,4157,2,Persistence,25.0665,,
+SQ1,2023-04-01,4157,4,Persistence,25.0665,,
+SQ1,2023-04-01,4157,8,Persistence,25.0665,,
+SQ1,2023-04-01,4157,13,Persistence,25.0665,,
+SQ1,2023-04-01,4157,0,Gemiddelde dag (2021-2022),23.2945,,
+SQ1,2023-04-01,4157,1,Gemiddelde dag (2021-2022),23.2945,,
+SQ1,2023-04-01,4157,2,Gemiddelde dag (2021-2022),23.2945,,
+SQ1,2023-04-01,4157,4,Gemiddelde dag (2021-2022),23.2945,,
+SQ1,2023-04-01,4157,8,Gemiddelde dag (2021-2022),23.2945,,
+SQ1,2023-04-01,4157,13,Gemiddelde dag (2021-2022),23.2945,,
+SQ1,2023-04-01,4157,0,pvlib x orakel-f,18.3752,,
+SQ1,2023-04-01,4157,1,pvlib x orakel-f,18.3752,,
+SQ1,2023-04-01,4157,2,pvlib x orakel-f,18.3752,,
+SQ1,2023-04-01,4157,4,pvlib x orakel-f,18.3752,,
+SQ1,2023-04-01,4157,8,pvlib x orakel-f,18.3752,,
+SQ1,2023-04-01,4157,13,pvlib x orakel-f,18.3752,,
+SQ1,2023-04-01,4157,0,pvlib x f,19.8358,1.0,0.0
+SQ1,2023-04-01,4157,0,Kaggle-eindmodel x f,21.0756,1.0,0.0
+SQ1,2023-04-01,4157,1,pvlib x f,32.0945,0.333,274.0
+SQ1,2023-04-01,4157,1,Kaggle-eindmodel x f,32.3506,0.3124,274.0
+SQ1,2023-04-01,4157,1,LR GHI alleen op de eerste N weken,29.7027,,274.0
+SQ1,2023-04-01,4157,2,pvlib x f,25.3779,0.5069,598.0
+SQ1,2023-04-01,4157,2,Kaggle-eindmodel x f,25.4864,0.482,598.0
+SQ1,2023-04-01,4157,2,LR GHI alleen op de eerste N weken,23.1513,,598.0
+SQ1,2023-04-01,4157,4,pvlib x f,26.3676,0.4791,1255.0
+SQ1,2023-04-01,4157,4,Kaggle-eindmodel x f,26.6488,0.4509,1255.0
+SQ1,2023-04-01,4157,4,LR GHI alleen op de eerste N weken,23.7992,,1255.0
+SQ1,2023-04-01,4157,8,pvlib x f,25.88,0.4927,1351.0
+SQ1,2023-04-01,4157,8,Kaggle-eindmodel x f,26.1756,0.4634,1351.0
+SQ1,2023-04-01,4157,8,LR GHI alleen op de eerste N weken,23.4948,,1351.0
+SQ1,2023-04-01,4157,13,pvlib x f,20.6951,0.6644,2730.0
+SQ1,2023-04-01,4157,13,Kaggle-eindmodel x f,21.1382,0.6199,2730.0
+SQ1,2023-04-01,4157,13,LR GHI alleen op de eerste N weken,19.7404,,2730.0
+SQ1,2023-05-01,4086,0,LR GHI op 2021 + 2022 (stap 3),17.3646,,
+SQ1,2023-05-01,4086,1,LR GHI op 2021 + 2022 (stap 3),17.3646,,
+SQ1,2023-05-01,4086,2,LR GHI op 2021 + 2022 (stap 3),17.3646,,
+SQ1,2023-05-01,4086,4,LR GHI op 2021 + 2022 (stap 3),17.3646,,
+SQ1,2023-05-01,4086,8,LR GHI op 2021 + 2022 (stap 3),17.3646,,
+SQ1,2023-05-01,4086,13,LR GHI op 2021 + 2022 (stap 3),17.3646,,
+SQ1,2023-05-01,4086,0,Smart persistence,19.7888,,
+SQ1,2023-05-01,4086,1,Smart persistence,19.7888,,
+SQ1,2023-05-01,4086,2,Smart persistence,19.7888,,
+SQ1,2023-05-01,4086,4,Smart persistence,19.7888,,
+SQ1,2023-05-01,4086,8,Smart persistence,19.7888,,
+SQ1,2023-05-01,4086,13,Smart persistence,19.7888,,
+SQ1,2023-05-01,4086,0,Persistence,23.5389,,
+SQ1,2023-05-01,4086,1,Persistence,23.5389,,
+SQ1,2023-05-01,4086,2,Persistence,23.5389,,
+SQ1,2023-05-01,4086,4,Persistence,23.5389,,
+SQ1,2023-05-01,4086,8,Persistence,23.5389,,
+SQ1,2023-05-01,4086,13,Persistence,23.5389,,
+SQ1,2023-05-01,4086,0,Gemiddelde dag (2021-2022),22.52,,
+SQ1,2023-05-01,4086,1,Gemiddelde dag (2021-2022),22.52,,
+SQ1,2023-05-01,4086,2,Gemiddelde dag (2021-2022),22.52,,
+SQ1,2023-05-01,4086,4,Gemiddelde dag (2021-2022),22.52,,
+SQ1,2023-05-01,4086,8,Gemiddelde dag (2021-2022),22.52,,
+SQ1,2023-05-01,4086,13,Gemiddelde dag (2021-2022),22.52,,
+SQ1,2023-05-01,4086,0,pvlib x orakel-f,17.2634,,
+SQ1,2023-05-01,4086,1,pvlib x orakel-f,17.2634,,
+SQ1,2023-05-01,4086,2,pvlib x orakel-f,17.2634,,
+SQ1,2023-05-01,4086,4,pvlib x orakel-f,17.2634,,
+SQ1,2023-05-01,4086,8,pvlib x orakel-f,17.2634,,
+SQ1,2023-05-01,4086,13,pvlib x orakel-f,17.2634,,
+SQ1,2023-05-01,4086,0,pvlib x f,19.0287,1.0,0.0
+SQ1,2023-05-01,4086,0,Kaggle-eindmodel x f,20.3486,1.0,0.0
+SQ1,2023-05-01,4086,1,pvlib x f,19.0287,1.0,0.0
+SQ1,2023-05-01,4086,1,Kaggle-eindmodel x f,20.3486,1.0,0.0
+SQ1,2023-05-01,4086,2,pvlib x f,19.0287,1.0,0.0
+SQ1,2023-05-01,4086,2,Kaggle-eindmodel x f,20.3486,1.0,0.0
+SQ1,2023-05-01,4086,4,pvlib x f,19.0287,1.0,0.0
+SQ1,2023-05-01,4086,4,Kaggle-eindmodel x f,20.3486,1.0,0.0
+SQ1,2023-05-01,4086,8,pvlib x f,17.2736,0.8125,1139.0
+SQ1,2023-05-01,4086,8,Kaggle-eindmodel x f,17.5577,0.751,1139.0
+SQ1,2023-05-01,4086,8,LR GHI alleen op de eerste N weken,17.2291,,1139.0
+SQ1,2023-05-01,4086,13,pvlib x f,17.283,0.846,2771.0
+SQ1,2023-05-01,4086,13,Kaggle-eindmodel x f,17.4771,0.7872,2771.0
+SQ1,2023-05-01,4086,13,LR GHI alleen op de eerste N weken,17.2836,,2771.0
+SQ1,2023-06-01,3970,0,LR GHI op 2021 + 2022 (stap 3),14.0303,,
+SQ1,2023-06-01,3970,1,LR GHI op 2021 + 2022 (stap 3),14.0303,,
+SQ1,2023-06-01,3970,2,LR GHI op 2021 + 2022 (stap 3),14.0303,,
+SQ1,2023-06-01,3970,4,LR GHI op 2021 + 2022 (stap 3),14.0303,,
+SQ1,2023-06-01,3970,8,LR GHI op 2021 + 2022 (stap 3),14.0303,,
+SQ1,2023-06-01,3970,13,LR GHI op 2021 + 2022 (stap 3),14.0303,,
+SQ1,2023-06-01,3970,0,Smart persistence,17.2947,,
+SQ1,2023-06-01,3970,1,Smart persistence,17.2947,,
+SQ1,2023-06-01,3970,2,Smart persistence,17.2947,,
+SQ1,2023-06-01,3970,4,Smart persistence,17.2947,,
+SQ1,2023-06-01,3970,8,Smart persistence,17.2947,,
+SQ1,2023-06-01,3970,13,Smart persistence,17.2947,,
+SQ1,2023-06-01,3970,0,Persistence,19.4511,,
+SQ1,2023-06-01,3970,1,Persistence,19.4511,,
+SQ1,2023-06-01,3970,2,Persistence,19.4511,,
+SQ1,2023-06-01,3970,4,Persistence,19.4511,,
+SQ1,2023-06-01,3970,8,Persistence,19.4511,,
+SQ1,2023-06-01,3970,13,Persistence,19.4511,,
+SQ1,2023-06-01,3970,0,Gemiddelde dag (2021-2022),20.9969,,
+SQ1,2023-06-01,3970,1,Gemiddelde dag (2021-2022),20.9969,,
+SQ1,2023-06-01,3970,2,Gemiddelde dag (2021-2022),20.9969,,
+SQ1,2023-06-01,3970,4,Gemiddelde dag (2021-2022),20.9969,,
+SQ1,2023-06-01,3970,8,Gemiddelde dag (2021-2022),20.9969,,
+SQ1,2023-06-01,3970,13,Gemiddelde dag (2021-2022),20.9969,,
+SQ1,2023-06-01,3970,0,pvlib x orakel-f,14.0226,,
+SQ1,2023-06-01,3970,1,pvlib x orakel-f,14.0226,,
+SQ1,2023-06-01,3970,2,pvlib x orakel-f,14.0226,,
+SQ1,2023-06-01,3970,4,pvlib x orakel-f,14.0226,,
+SQ1,2023-06-01,3970,8,pvlib x orakel-f,14.0226,,
+SQ1,2023-06-01,3970,13,pvlib x orakel-f,14.0226,,
+SQ1,2023-06-01,3970,0,pvlib x f,16.6626,1.0,0.0
+SQ1,2023-06-01,3970,0,Kaggle-eindmodel x f,18.1008,1.0,0.0
+SQ1,2023-06-01,3970,1,pvlib x f,14.0973,0.8381,283.0
+SQ1,2023-06-01,3970,1,Kaggle-eindmodel x f,14.4023,0.7902,283.0
+SQ1,2023-06-01,3970,1,LR GHI alleen op de eerste N weken,13.8332,,283.0
+SQ1,2023-06-01,3970,2,pvlib x f,14.1742,0.8502,619.0
+SQ1,2023-06-01,3970,2,Kaggle-eindmodel x f,14.4022,0.7902,619.0
+SQ1,2023-06-01,3970,2,LR GHI alleen op de eerste N weken,14.1046,,619.0
+SQ1,2023-06-01,3970,4,pvlib x f,14.0205,0.8192,1283.0
+SQ1,2023-06-01,3970,4,Kaggle-eindmodel x f,14.3645,0.759,1283.0
+SQ1,2023-06-01,3970,4,LR GHI alleen op de eerste N weken,13.8305,,1283.0
+SQ1,2023-06-01,3970,8,pvlib x f,14.1598,0.8482,2579.0
+SQ1,2023-06-01,3970,8,Kaggle-eindmodel x f,14.4036,0.7905,2579.0
+SQ1,2023-06-01,3970,8,LR GHI alleen op de eerste N weken,13.9062,,2579.0
+SQ1,2023-06-01,3970,13,pvlib x f,14.1378,0.8449,4190.0
+SQ1,2023-06-01,3970,13,Kaggle-eindmodel x f,14.3838,0.7843,4190.0
+SQ1,2023-06-01,3970,13,LR GHI alleen op de eerste N weken,13.908,,4190.0
+SQ4,2023-01-01,4175,0,LR GHI op 2021 + 2022 (stap 3),20.0914,,
+SQ4,2023-01-01,4175,1,LR GHI op 2021 + 2022 (stap 3),20.0914,,
+SQ4,2023-01-01,4175,2,LR GHI op 2021 + 2022 (stap 3),20.0914,,
+SQ4,2023-01-01,4175,4,LR GHI op 2021 + 2022 (stap 3),20.0914,,
+SQ4,2023-01-01,4175,8,LR GHI op 2021 + 2022 (stap 3),20.0914,,
+SQ4,2023-01-01,4175,13,LR GHI op 2021 + 2022 (stap 3),20.0914,,
+SQ4,2023-01-01,4175,0,Smart persistence,21.3005,,
+SQ4,2023-01-01,4175,1,Smart persistence,21.3005,,
+SQ4,2023-01-01,4175,2,Smart persistence,21.3005,,
+SQ4,2023-01-01,4175,4,Smart persistence,21.3005,,
+SQ4,2023-01-01,4175,8,Smart persistence,21.3005,,
+SQ4,2023-01-01,4175,13,Smart persistence,21.3005,,
+SQ4,2023-01-01,4175,0,Persistence,26.5204,,
+SQ4,2023-01-01,4175,1,Persistence,26.5204,,
+SQ4,2023-01-01,4175,2,Persistence,26.5204,,
+SQ4,2023-01-01,4175,4,Persistence,26.5204,,
+SQ4,2023-01-01,4175,8,Persistence,26.5204,,
+SQ4,2023-01-01,4175,13,Persistence,26.5204,,
+SQ4,2023-01-01,4175,0,Gemiddelde dag (2021-2022),24.9871,,
+SQ4,2023-01-01,4175,1,Gemiddelde dag (2021-2022),24.9871,,
+SQ4,2023-01-01,4175,2,Gemiddelde dag (2021-2022),24.9871,,
+SQ4,2023-01-01,4175,4,Gemiddelde dag (2021-2022),24.9871,,
+SQ4,2023-01-01,4175,8,Gemiddelde dag (2021-2022),24.9871,,
+SQ4,2023-01-01,4175,13,Gemiddelde dag (2021-2022),24.9871,,
+SQ4,2023-01-01,4175,0,pvlib x orakel-f,18.8115,,
+SQ4,2023-01-01,4175,1,pvlib x orakel-f,18.8115,,
+SQ4,2023-01-01,4175,2,pvlib x orakel-f,18.8115,,
+SQ4,2023-01-01,4175,4,pvlib x orakel-f,18.8115,,
+SQ4,2023-01-01,4175,8,pvlib x orakel-f,18.8115,,
+SQ4,2023-01-01,4175,13,pvlib x orakel-f,18.8115,,
+SQ4,2023-01-01,4175,0,pvlib x f,22.341,1.0,0.0
+SQ4,2023-01-01,4175,0,Kaggle-eindmodel x f,28.9206,1.0,0.0
+SQ4,2023-01-01,4175,1,pvlib x f,24.9345,1.0927,294.0
+SQ4,2023-01-01,4175,1,Kaggle-eindmodel x f,22.7213,0.8359,294.0
+SQ4,2023-01-01,4175,1,LR GHI alleen op de eerste N weken,21.2314,,294.0
+SQ4,2023-01-01,4175,2,pvlib x f,19.8965,0.8808,546.0
+SQ4,2023-01-01,4175,2,Kaggle-eindmodel x f,19.0217,0.6576,546.0
+SQ4,2023-01-01,4175,2,LR GHI alleen op de eerste N weken,19.0668,,546.0
+SQ4,2023-01-01,4175,4,pvlib x f,19.3131,0.8362,1147.0
+SQ4,2023-01-01,4175,4,Kaggle-eindmodel x f,19.0506,0.6611,1147.0
+SQ4,2023-01-01,4175,4,LR GHI alleen op de eerste N weken,19.1227,,1147.0
+SQ4,2023-01-01,4175,8,pvlib x f,19.2771,0.8328,2325.0
+SQ4,2023-01-01,4175,8,Kaggle-eindmodel x f,19.0659,0.6629,2325.0
+SQ4,2023-01-01,4175,8,LR GHI alleen op de eerste N weken,19.2385,,2325.0
+SQ4,2023-01-01,4175,13,pvlib x f,19.135,0.818,3856.0
+SQ4,2023-01-01,4175,13,Kaggle-eindmodel x f,18.953,0.6479,3856.0
+SQ4,2023-01-01,4175,13,LR GHI alleen op de eerste N weken,19.2023,,3856.0
+SQ4,2023-02-01,4205,0,LR GHI op 2021 + 2022 (stap 3),18.8711,,
+SQ4,2023-02-01,4205,1,LR GHI op 2021 + 2022 (stap 3),18.8711,,
+SQ4,2023-02-01,4205,2,LR GHI op 2021 + 2022 (stap 3),18.8711,,
+SQ4,2023-02-01,4205,4,LR GHI op 2021 + 2022 (stap 3),18.8711,,
+SQ4,2023-02-01,4205,8,LR GHI op 2021 + 2022 (stap 3),18.8711,,
+SQ4,2023-02-01,4205,13,LR GHI op 2021 + 2022 (stap 3),18.8711,,
+SQ4,2023-02-01,4205,0,Smart persistence,21.3215,,
+SQ4,2023-02-01,4205,1,Smart persistence,21.3215,,
+SQ4,2023-02-01,4205,2,Smart persistence,21.3215,,
+SQ4,2023-02-01,4205,4,Smart persistence,21.3215,,
+SQ4,2023-02-01,4205,8,Smart persistence,21.3215,,
+SQ4,2023-02-01,4205,13,Smart persistence,21.3215,,
+SQ4,2023-02-01,4205,0,Persistence,26.7434,,
+SQ4,2023-02-01,4205,1,Persistence,26.7434,,
+SQ4,2023-02-01,4205,2,Persistence,26.7434,,
+SQ4,2023-02-01,4205,4,Persistence,26.7434,,
+SQ4,2023-02-01,4205,8,Persistence,26.7434,,
+SQ4,2023-02-01,4205,13,Persistence,26.7434,,
+SQ4,2023-02-01,4205,0,Gemiddelde dag (2021-2022),22.8045,,
+SQ4,2023-02-01,4205,1,Gemiddelde dag (2021-2022),22.8045,,
+SQ4,2023-02-01,4205,2,Gemiddelde dag (2021-2022),22.8045,,
+SQ4,2023-02-01,4205,4,Gemiddelde dag (2021-2022),22.8045,,
+SQ4,2023-02-01,4205,8,Gemiddelde dag (2021-2022),22.8045,,
+SQ4,2023-02-01,4205,13,Gemiddelde dag (2021-2022),22.8045,,
+SQ4,2023-02-01,4205,0,pvlib x orakel-f,18.8978,,
+SQ4,2023-02-01,4205,1,pvlib x orakel-f,18.8978,,
+SQ4,2023-02-01,4205,2,pvlib x orakel-f,18.8978,,
+SQ4,2023-02-01,4205,4,pvlib x orakel-f,18.8978,,
+SQ4,2023-02-01,4205,8,pvlib x orakel-f,18.8978,,
+SQ4,2023-02-01,4205,13,pvlib x orakel-f,18.8978,,
+SQ4,2023-02-01,4205,0,pvlib x f,20.0496,1.0,0.0
+SQ4,2023-02-01,4205,0,Kaggle-eindmodel x f,25.7943,1.0,0.0
+SQ4,2023-02-01,4205,1,pvlib x f,21.275,0.6599,303.0
+SQ4,2023-02-01,4205,1,Kaggle-eindmodel x f,22.0874,0.5153,303.0
+SQ4,2023-02-01,4205,1,LR GHI alleen op de eerste N weken,21.4932,,303.0
+SQ4,2023-02-01,4205,2,pvlib x f,22.2336,0.6201,565.0
+SQ4,2023-02-01,4205,2,Kaggle-eindmodel x f,23.1594,0.482,565.0
+SQ4,2023-02-01,4205,2,LR GHI alleen op de eerste N weken,21.9586,,565.0
+SQ4,2023-02-01,4205,4,pvlib x f,18.8881,0.851,1182.0
+SQ4,2023-02-01,4205,4,Kaggle-eindmodel x f,19.0509,0.6781,1182.0
+SQ4,2023-02-01,4205,4,LR GHI alleen op de eerste N weken,18.6875,,1182.0
+SQ4,2023-02-01,4205,8,pvlib x f,18.9466,0.8291,2397.0
+SQ4,2023-02-01,4205,8,Kaggle-eindmodel x f,19.2034,0.6565,2397.0
+SQ4,2023-02-01,4205,8,LR GHI alleen op de eerste N weken,18.665,,2397.0
+SQ4,2023-02-01,4205,13,pvlib x f,20.1537,0.7166,3990.0
+SQ4,2023-02-01,4205,13,Kaggle-eindmodel x f,20.6039,0.5705,3990.0
+SQ4,2023-02-01,4205,13,LR GHI alleen op de eerste N weken,19.062,,3990.0
+SQ4,2023-03-01,4191,0,LR GHI op 2021 + 2022 (stap 3),19.2074,,
+SQ4,2023-03-01,4191,1,LR GHI op 2021 + 2022 (stap 3),19.2074,,
+SQ4,2023-03-01,4191,2,LR GHI op 2021 + 2022 (stap 3),19.2074,,
+SQ4,2023-03-01,4191,4,LR GHI op 2021 + 2022 (stap 3),19.2074,,
+SQ4,2023-03-01,4191,8,LR GHI op 2021 + 2022 (stap 3),19.2074,,
+SQ4,2023-03-01,4191,13,LR GHI op 2021 + 2022 (stap 3),19.2074,,
+SQ4,2023-03-01,4191,0,Smart persistence,21.0515,,
+SQ4,2023-03-01,4191,1,Smart persistence,21.0515,,
+SQ4,2023-03-01,4191,2,Smart persistence,21.0515,,
+SQ4,2023-03-01,4191,4,Smart persistence,21.0515,,
+SQ4,2023-03-01,4191,8,Smart persistence,21.0515,,
+SQ4,2023-03-01,4191,13,Smart persistence,21.0515,,
+SQ4,2023-03-01,4191,0,Persistence,27.6134,,
+SQ4,2023-03-01,4191,1,Persistence,27.6134,,
+SQ4,2023-03-01,4191,2,Persistence,27.6134,,
+SQ4,2023-03-01,4191,4,Persistence,27.6134,,
+SQ4,2023-03-01,4191,8,Persistence,27.6134,,
+SQ4,2023-03-01,4191,13,Persistence,27.6134,,
+SQ4,2023-03-01,4191,0,Gemiddelde dag (2021-2022),22.5521,,
+SQ4,2023-03-01,4191,1,Gemiddelde dag (2021-2022),22.5521,,
+SQ4,2023-03-01,4191,2,Gemiddelde dag (2021-2022),22.5521,,
+SQ4,2023-03-01,4191,4,Gemiddelde dag (2021-2022),22.5521,,
+SQ4,2023-03-01,4191,8,Gemiddelde dag (2021-2022),22.5521,,
+SQ4,2023-03-01,4191,13,Gemiddelde dag (2021-2022),22.5521,,
+SQ4,2023-03-01,4191,0,pvlib x orakel-f,19.2168,,
+SQ4,2023-03-01,4191,1,pvlib x orakel-f,19.2168,,
+SQ4,2023-03-01,4191,2,pvlib x orakel-f,19.2168,,
+SQ4,2023-03-01,4191,4,pvlib x orakel-f,19.2168,,
+SQ4,2023-03-01,4191,8,pvlib x orakel-f,19.2168,,
+SQ4,2023-03-01,4191,13,pvlib x orakel-f,19.2168,,
+SQ4,2023-03-01,4191,0,pvlib x f,19.9689,1.0,0.0
+SQ4,2023-03-01,4191,0,Kaggle-eindmodel x f,25.5205,1.0,0.0
+SQ4,2023-03-01,4191,1,pvlib x f,20.0325,1.0046,315.0
+SQ4,2023-03-01,4191,1,Kaggle-eindmodel x f,19.8828,0.7984,315.0
+SQ4,2023-03-01,4191,1,LR GHI alleen op de eerste N weken,19.8156,,315.0
+SQ4,2023-03-01,4191,2,pvlib x f,19.6998,0.9781,585.0
+SQ4,2023-03-01,4191,2,Kaggle-eindmodel x f,19.5529,0.7671,585.0
+SQ4,2023-03-01,4191,2,LR GHI alleen op de eerste N weken,19.8383,,585.0
+SQ4,2023-03-01,4191,4,pvlib x f,19.6384,0.8069,1215.0
+SQ4,2023-03-01,4191,4,Kaggle-eindmodel x f,20.1651,0.6348,1215.0
+SQ4,2023-03-01,4191,4,LR GHI alleen op de eerste N weken,19.197,,1215.0
+SQ4,2023-03-01,4191,8,pvlib x f,22.1243,0.6678,2474.0
+SQ4,2023-03-01,4191,8,Kaggle-eindmodel x f,22.7886,0.5284,2474.0
+SQ4,2023-03-01,4191,8,LR GHI alleen op de eerste N weken,20.3052,,2474.0
+SQ4,2023-03-01,4191,13,pvlib x f,21.6799,0.6865,4098.0
+SQ4,2023-03-01,4191,13,Kaggle-eindmodel x f,22.2461,0.546,4098.0
+SQ4,2023-03-01,4191,13,LR GHI alleen op de eerste N weken,20.4435,,4098.0
+SQ4,2023-04-01,4162,0,LR GHI op 2021 + 2022 (stap 3),18.4485,,
+SQ4,2023-04-01,4162,1,LR GHI op 2021 + 2022 (stap 3),18.4485,,
+SQ4,2023-04-01,4162,2,LR GHI op 2021 + 2022 (stap 3),18.4485,,
+SQ4,2023-04-01,4162,4,LR GHI op 2021 + 2022 (stap 3),18.4485,,
+SQ4,2023-04-01,4162,8,LR GHI op 2021 + 2022 (stap 3),18.4485,,
+SQ4,2023-04-01,4162,13,LR GHI op 2021 + 2022 (stap 3),18.4485,,
+SQ4,2023-04-01,4162,0,Smart persistence,21.0608,,
+SQ4,2023-04-01,4162,1,Smart persistence,21.0608,,
+SQ4,2023-04-01,4162,2,Smart persistence,21.0608,,
+SQ4,2023-04-01,4162,4,Smart persistence,21.0608,,
+SQ4,2023-04-01,4162,8,Smart persistence,21.0608,,
+SQ4,2023-04-01,4162,13,Smart persistence,21.0608,,
+SQ4,2023-04-01,4162,0,Persistence,26.2445,,
+SQ4,2023-04-01,4162,1,Persistence,26.2445,,
+SQ4,2023-04-01,4162,2,Persistence,26.2445,,
+SQ4,2023-04-01,4162,4,Persistence,26.2445,,
+SQ4,2023-04-01,4162,8,Persistence,26.2445,,
+SQ4,2023-04-01,4162,13,Persistence,26.2445,,
+SQ4,2023-04-01,4162,0,Gemiddelde dag (2021-2022),23.8908,,
+SQ4,2023-04-01,4162,1,Gemiddelde dag (2021-2022),23.8908,,
+SQ4,2023-04-01,4162,2,Gemiddelde dag (2021-2022),23.8908,,
+SQ4,2023-04-01,4162,4,Gemiddelde dag (2021-2022),23.8908,,
+SQ4,2023-04-01,4162,8,Gemiddelde dag (2021-2022),23.8908,,
+SQ4,2023-04-01,4162,13,Gemiddelde dag (2021-2022),23.8908,,
+SQ4,2023-04-01,4162,0,pvlib x orakel-f,18.5134,,
+SQ4,2023-04-01,4162,1,pvlib x orakel-f,18.5134,,
+SQ4,2023-04-01,4162,2,pvlib x orakel-f,18.5134,,
+SQ4,2023-04-01,4162,4,pvlib x orakel-f,18.5134,,
+SQ4,2023-04-01,4162,8,pvlib x orakel-f,18.5134,,
+SQ4,2023-04-01,4162,13,pvlib x orakel-f,18.5134,,
+SQ4,2023-04-01,4162,0,pvlib x f,18.9294,1.0,0.0
+SQ4,2023-04-01,4162,0,Kaggle-eindmodel x f,23.8991,1.0,0.0
+SQ4,2023-04-01,4162,1,pvlib x f,31.1027,0.3989,324.0
+SQ4,2023-04-01,4162,1,Kaggle-eindmodel x f,31.4943,0.319,324.0
+SQ4,2023-04-01,4162,1,LR GHI alleen op de eerste N weken,28.9034,,324.0
+SQ4,2023-04-01,4162,2,pvlib x f,26.6792,0.5189,603.0
+SQ4,2023-04-01,4162,2,Kaggle-eindmodel x f,26.9035,0.4208,603.0
+SQ4,2023-04-01,4162,2,LR GHI alleen op de eerste N weken,24.4716,,603.0
+SQ4,2023-04-01,4162,4,pvlib x f,25.3843,0.5571,1264.0
+SQ4,2023-04-01,4162,4,Kaggle-eindmodel x f,25.7849,0.4478,1264.0
+SQ4,2023-04-01,4162,4,LR GHI alleen op de eerste N weken,22.7447,,1264.0
+SQ4,2023-04-01,4162,8,pvlib x f,23.6369,0.6125,2554.0
+SQ4,2023-04-01,4162,8,Kaggle-eindmodel x f,24.1467,0.4898,2554.0
+SQ4,2023-04-01,4162,8,LR GHI alleen op de eerste N weken,22.3913,,2554.0
+SQ4,2023-04-01,4162,13,pvlib x f,20.9028,0.7159,4173.0
+SQ4,2023-04-01,4162,13,Kaggle-eindmodel x f,21.4395,0.5713,4173.0
+SQ4,2023-04-01,4162,13,LR GHI alleen op de eerste N weken,20.04,,4173.0
+SQ4,2023-05-01,4093,0,LR GHI op 2021 + 2022 (stap 3),17.7342,,
+SQ4,2023-05-01,4093,1,LR GHI op 2021 + 2022 (stap 3),17.7342,,
+SQ4,2023-05-01,4093,2,LR GHI op 2021 + 2022 (stap 3),17.7342,,
+SQ4,2023-05-01,4093,4,LR GHI op 2021 + 2022 (stap 3),17.7342,,
+SQ4,2023-05-01,4093,8,LR GHI op 2021 + 2022 (stap 3),17.7342,,
+SQ4,2023-05-01,4093,13,LR GHI op 2021 + 2022 (stap 3),17.7342,,
+SQ4,2023-05-01,4093,0,Smart persistence,20.5427,,
+SQ4,2023-05-01,4093,1,Smart persistence,20.5427,,
+SQ4,2023-05-01,4093,2,Smart persistence,20.5427,,
+SQ4,2023-05-01,4093,4,Smart persistence,20.5427,,
+SQ4,2023-05-01,4093,8,Smart persistence,20.5427,,
+SQ4,2023-05-01,4093,13,Smart persistence,20.5427,,
+SQ4,2023-05-01,4093,0,Persistence,25.3244,,
+SQ4,2023-05-01,4093,1,Persistence,25.3244,,
+SQ4,2023-05-01,4093,2,Persistence,25.3244,,
+SQ4,2023-05-01,4093,4,Persistence,25.3244,,
+SQ4,2023-05-01,4093,8,Persistence,25.3244,,
+SQ4,2023-05-01,4093,13,Persistence,25.3244,,
+SQ4,2023-05-01,4093,0,Gemiddelde dag (2021-2022),23.5457,,
+SQ4,2023-05-01,4093,1,Gemiddelde dag (2021-2022),23.5457,,
+SQ4,2023-05-01,4093,2,Gemiddelde dag (2021-2022),23.5457,,
+SQ4,2023-05-01,4093,4,Gemiddelde dag (2021-2022),23.5457,,
+SQ4,2023-05-01,4093,8,Gemiddelde dag (2021-2022),23.5457,,
+SQ4,2023-05-01,4093,13,Gemiddelde dag (2021-2022),23.5457,,
+SQ4,2023-05-01,4093,0,pvlib x orakel-f,17.7525,,
+SQ4,2023-05-01,4093,1,pvlib x orakel-f,17.7525,,
+SQ4,2023-05-01,4093,2,pvlib x orakel-f,17.7525,,
+SQ4,2023-05-01,4093,4,pvlib x orakel-f,17.7525,,
+SQ4,2023-05-01,4093,8,pvlib x orakel-f,17.7525,,
+SQ4,2023-05-01,4093,13,pvlib x orakel-f,17.7525,,
+SQ4,2023-05-01,4093,0,pvlib x f,18.2329,1.0,0.0
+SQ4,2023-05-01,4093,0,Kaggle-eindmodel x f,22.9564,1.0,0.0
+SQ4,2023-05-01,4093,1,pvlib x f,20.6032,0.6679,331.0
+SQ4,2023-05-01,4093,1,Kaggle-eindmodel x f,20.8616,0.5419,331.0
+SQ4,2023-05-01,4093,1,LR GHI alleen op de eerste N weken,20.026,,331.0
+SQ4,2023-05-01,4093,2,pvlib x f,19.7743,0.7074,619.0
+SQ4,2023-05-01,4093,2,Kaggle-eindmodel x f,20.523,0.5546,619.0
+SQ4,2023-05-01,4093,2,LR GHI alleen op de eerste N weken,20.0657,,619.0
+SQ4,2023-05-01,4093,4,pvlib x f,20.1617,0.6882,1290.0
+SQ4,2023-05-01,4093,4,Kaggle-eindmodel x f,20.6567,0.5495,1290.0
+SQ4,2023-05-01,4093,4,LR GHI alleen op de eerste N weken,20.1174,,1290.0
+SQ4,2023-05-01,4093,8,pvlib x f,18.7449,0.7683,2573.0
+SQ4,2023-05-01,4093,8,Kaggle-eindmodel x f,19.2516,0.6109,2573.0
+SQ4,2023-05-01,4093,8,LR GHI alleen op de eerste N weken,18.5544,,2573.0
+SQ4,2023-05-01,4093,13,pvlib x f,18.0887,0.8258,4205.0
+SQ4,2023-05-01,4093,13,Kaggle-eindmodel x f,18.5026,0.6585,4205.0
+SQ4,2023-05-01,4093,13,LR GHI alleen op de eerste N weken,17.9642,,4205.0
+SQ4,2023-06-01,3978,0,LR GHI op 2021 + 2022 (stap 3),13.9606,,
+SQ4,2023-06-01,3978,1,LR GHI op 2021 + 2022 (stap 3),13.9606,,
+SQ4,2023-06-01,3978,2,LR GHI op 2021 + 2022 (stap 3),13.9606,,
+SQ4,2023-06-01,3978,4,LR GHI op 2021 + 2022 (stap 3),13.9606,,
+SQ4,2023-06-01,3978,8,LR GHI op 2021 + 2022 (stap 3),13.9606,,
+SQ4,2023-06-01,3978,13,LR GHI op 2021 + 2022 (stap 3),13.9606,,
+SQ4,2023-06-01,3978,0,Smart persistence,17.7473,,
+SQ4,2023-06-01,3978,1,Smart persistence,17.7473,,
+SQ4,2023-06-01,3978,2,Smart persistence,17.7473,,
+SQ4,2023-06-01,3978,4,Smart persistence,17.7473,,
+SQ4,2023-06-01,3978,8,Smart persistence,17.7473,,
+SQ4,2023-06-01,3978,13,Smart persistence,17.7473,,
+SQ4,2023-06-01,3978,0,Persistence,20.9932,,
+SQ4,2023-06-01,3978,1,Persistence,20.9932,,
+SQ4,2023-06-01,3978,2,Persistence,20.9932,,
+SQ4,2023-06-01,3978,4,Persistence,20.9932,,
+SQ4,2023-06-01,3978,8,Persistence,20.9932,,
+SQ4,2023-06-01,3978,13,Persistence,20.9932,,
+SQ4,2023-06-01,3978,0,Gemiddelde dag (2021-2022),21.7322,,
+SQ4,2023-06-01,3978,1,Gemiddelde dag (2021-2022),21.7322,,
+SQ4,2023-06-01,3978,2,Gemiddelde dag (2021-2022),21.7322,,
+SQ4,2023-06-01,3978,4,Gemiddelde dag (2021-2022),21.7322,,
+SQ4,2023-06-01,3978,8,Gemiddelde dag (2021-2022),21.7322,,
+SQ4,2023-06-01,3978,13,Gemiddelde dag (2021-2022),21.7322,,
+SQ4,2023-06-01,3978,0,pvlib x orakel-f,14.1505,,
+SQ4,2023-06-01,3978,1,pvlib x orakel-f,14.1505,,
+SQ4,2023-06-01,3978,2,pvlib x orakel-f,14.1505,,
+SQ4,2023-06-01,3978,4,pvlib x orakel-f,14.1505,,
+SQ4,2023-06-01,3978,8,pvlib x orakel-f,14.1505,,
+SQ4,2023-06-01,3978,13,pvlib x orakel-f,14.1505,,
+SQ4,2023-06-01,3978,0,pvlib x f,14.9698,1.0,0.0
+SQ4,2023-06-01,3978,0,Kaggle-eindmodel x f,20.3834,1.0,0.0
+SQ4,2023-06-01,3978,1,pvlib x f,14.1469,0.8698,331.0
+SQ4,2023-06-01,3978,1,Kaggle-eindmodel x f,14.5676,0.699,331.0
+SQ4,2023-06-01,3978,1,LR GHI alleen op de eerste N weken,13.9641,,331.0
+SQ4,2023-06-01,3978,2,pvlib x f,14.1798,0.8581,619.0
+SQ4,2023-06-01,3978,2,Kaggle-eindmodel x f,14.6703,0.6834,619.0
+SQ4,2023-06-01,3978,2,LR GHI alleen op de eerste N weken,14.0553,,619.0
+SQ4,2023-06-01,3978,4,pvlib x f,14.3017,0.8343,1283.0
+SQ4,2023-06-01,3978,4,Kaggle-eindmodel x f,14.8823,0.6621,1283.0
+SQ4,2023-06-01,3978,4,LR GHI alleen op de eerste N weken,14.0817,,1283.0
+SQ4,2023-06-01,3978,8,pvlib x f,14.1358,0.8767,2579.0
+SQ4,2023-06-01,3978,8,Kaggle-eindmodel x f,14.5627,0.7,2579.0
+SQ4,2023-06-01,3978,8,LR GHI alleen op de eerste N weken,13.9375,,2579.0
+SQ4,2023-06-01,3978,13,pvlib x f,14.1312,0.883,4190.0
+SQ4,2023-06-01,3978,13,Kaggle-eindmodel x f,14.5503,0.7026,4190.0
+SQ4,2023-06-01,3978,13,LR GHI alleen op de eerste N weken,13.9485,,4190.0
+SQ567,2023-01-01,4174,0,LR GHI op 2021 + 2022 (stap 3),19.7303,,
+SQ567,2023-01-01,4174,1,LR GHI op 2021 + 2022 (stap 3),19.7303,,
+SQ567,2023-01-01,4174,2,LR GHI op 2021 + 2022 (stap 3),19.7303,,
+SQ567,2023-01-01,4174,4,LR GHI op 2021 + 2022 (stap 3),19.7303,,
+SQ567,2023-01-01,4174,8,LR GHI op 2021 + 2022 (stap 3),19.7303,,
+SQ567,2023-01-01,4174,13,LR GHI op 2021 + 2022 (stap 3),19.7303,,
+SQ567,2023-01-01,4174,0,Smart persistence,21.6237,,
+SQ567,2023-01-01,4174,1,Smart persistence,21.6237,,
+SQ567,2023-01-01,4174,2,Smart persistence,21.6237,,
+SQ567,2023-01-01,4174,4,Smart persistence,21.6237,,
+SQ567,2023-01-01,4174,8,Smart persistence,21.6237,,
+SQ567,2023-01-01,4174,13,Smart persistence,21.6237,,
+SQ567,2023-01-01,4174,0,Persistence,26.06,,
+SQ567,2023-01-01,4174,1,Persistence,26.06,,
+SQ567,2023-01-01,4174,2,Persistence,26.06,,
+SQ567,2023-01-01,4174,4,Persistence,26.06,,
+SQ567,2023-01-01,4174,8,Persistence,26.06,,
+SQ567,2023-01-01,4174,13,Persistence,26.06,,
+SQ567,2023-01-01,4174,0,Gemiddelde dag (2021-2022),24.0842,,
+SQ567,2023-01-01,4174,1,Gemiddelde dag (2021-2022),24.0842,,
+SQ567,2023-01-01,4174,2,Gemiddelde dag (2021-2022),24.0842,,
+SQ567,2023-01-01,4174,4,Gemiddelde dag (2021-2022),24.0842,,
+SQ567,2023-01-01,4174,8,Gemiddelde dag (2021-2022),24.0842,,
+SQ567,2023-01-01,4174,13,Gemiddelde dag (2021-2022),24.0842,,
+SQ567,2023-01-01,4174,0,pvlib x orakel-f,18.5668,,
+SQ567,2023-01-01,4174,1,pvlib x orakel-f,18.5668,,
+SQ567,2023-01-01,4174,2,pvlib x orakel-f,18.5668,,
+SQ567,2023-01-01,4174,4,pvlib x orakel-f,18.5668,,
+SQ567,2023-01-01,4174,8,pvlib x orakel-f,18.5668,,
+SQ567,2023-01-01,4174,13,pvlib x orakel-f,18.5668,,
+SQ567,2023-01-01,4174,0,pvlib x f,22.824,1.0,0.0
+SQ567,2023-01-01,4174,0,Kaggle-eindmodel x f,33.0175,1.0,0.0
+SQ567,2023-01-01,4174,1,pvlib x f,26.4109,1.1149,294.0
+SQ567,2023-01-01,4174,1,Kaggle-eindmodel x f,23.8054,0.7993,294.0
+SQ567,2023-01-01,4174,1,LR GHI alleen op de eerste N weken,22.3853,,294.0
+SQ567,2023-01-01,4174,2,pvlib x f,20.1906,0.8888,588.0
+SQ567,2023-01-01,4174,2,Kaggle-eindmodel x f,18.97,0.6204,588.0
+SQ567,2023-01-01,4174,2,LR GHI alleen op de eerste N weken,19.4286,,588.0
+SQ567,2023-01-01,4174,4,pvlib x f,19.6312,0.8565,1146.0
+SQ567,2023-01-01,4174,4,Kaggle-eindmodel x f,19.145,0.6332,1146.0
+SQ567,2023-01-01,4174,4,LR GHI alleen op de eerste N weken,19.6268,,1146.0
+SQ567,2023-01-01,4174,8,pvlib x f,19.2298,0.8282,2323.0
+SQ567,2023-01-01,4174,8,Kaggle-eindmodel x f,18.9214,0.6164,2323.0
+SQ567,2023-01-01,4174,8,LR GHI alleen op de eerste N weken,19.3874,,2323.0
+SQ567,2023-01-01,4174,13,pvlib x f,19.0287,0.8109,3849.0
+SQ567,2023-01-01,4174,13,Kaggle-eindmodel x f,18.7688,0.6014,3849.0
+SQ567,2023-01-01,4174,13,LR GHI alleen op de eerste N weken,19.2769,,3849.0
+SQ567,2023-02-01,4205,0,LR GHI op 2021 + 2022 (stap 3),18.3833,,
+SQ567,2023-02-01,4205,1,LR GHI op 2021 + 2022 (stap 3),18.3833,,
+SQ567,2023-02-01,4205,2,LR GHI op 2021 + 2022 (stap 3),18.3833,,
+SQ567,2023-02-01,4205,4,LR GHI op 2021 + 2022 (stap 3),18.3833,,
+SQ567,2023-02-01,4205,8,LR GHI op 2021 + 2022 (stap 3),18.3833,,
+SQ567,2023-02-01,4205,13,LR GHI op 2021 + 2022 (stap 3),18.3833,,
+SQ567,2023-02-01,4205,0,Smart persistence,21.0049,,
+SQ567,2023-02-01,4205,1,Smart persistence,21.0049,,
+SQ567,2023-02-01,4205,2,Smart persistence,21.0049,,
+SQ567,2023-02-01,4205,4,Smart persistence,21.0049,,
+SQ567,2023-02-01,4205,8,Smart persistence,21.0049,,
+SQ567,2023-02-01,4205,13,Smart persistence,21.0049,,
+SQ567,2023-02-01,4205,0,Persistence,26.8511,,
+SQ567,2023-02-01,4205,1,Persistence,26.8511,,
+SQ567,2023-02-01,4205,2,Persistence,26.8511,,
+SQ567,2023-02-01,4205,4,Persistence,26.8511,,
+SQ567,2023-02-01,4205,8,Persistence,26.8511,,
+SQ567,2023-02-01,4205,13,Persistence,26.8511,,
+SQ567,2023-02-01,4205,0,Gemiddelde dag (2021-2022),21.8588,,
+SQ567,2023-02-01,4205,1,Gemiddelde dag (2021-2022),21.8588,,
+SQ567,2023-02-01,4205,2,Gemiddelde dag (2021-2022),21.8588,,
+SQ567,2023-02-01,4205,4,Gemiddelde dag (2021-2022),21.8588,,
+SQ567,2023-02-01,4205,8,Gemiddelde dag (2021-2022),21.8588,,
+SQ567,2023-02-01,4205,13,Gemiddelde dag (2021-2022),21.8588,,
+SQ567,2023-02-01,4205,0,pvlib x orakel-f,18.3504,,
+SQ567,2023-02-01,4205,1,pvlib x orakel-f,18.3504,,
+SQ567,2023-02-01,4205,2,pvlib x orakel-f,18.3504,,
+SQ567,2023-02-01,4205,4,pvlib x orakel-f,18.3504,,
+SQ567,2023-02-01,4205,8,pvlib x orakel-f,18.3504,,
+SQ567,2023-02-01,4205,13,pvlib x orakel-f,18.3504,,
+SQ567,2023-02-01,4205,0,pvlib x f,20.2371,1.0,0.0
+SQ567,2023-02-01,4205,0,Kaggle-eindmodel x f,29.9617,1.0,0.0
+SQ567,2023-02-01,4205,1,pvlib x f,19.9928,0.6701,303.0
+SQ567,2023-02-01,4205,1,Kaggle-eindmodel x f,20.7493,0.4904,303.0
+SQ567,2023-02-01,4205,1,LR GHI alleen op de eerste N weken,20.0468,,303.0
+SQ567,2023-02-01,4205,2,pvlib x f,21.4977,0.605,608.0
+SQ567,2023-02-01,4205,2,Kaggle-eindmodel x f,22.4436,0.4402,608.0
+SQ567,2023-02-01,4205,2,LR GHI alleen op de eerste N weken,20.9855,,608.0
+SQ567,2023-02-01,4205,4,pvlib x f,18.3409,0.8243,1181.0
+SQ567,2023-02-01,4205,4,Kaggle-eindmodel x f,18.484,0.6141,1181.0
+SQ567,2023-02-01,4205,4,LR GHI alleen op de eerste N weken,18.3124,,1181.0
+SQ567,2023-02-01,4205,8,pvlib x f,18.3611,0.8112,2391.0
+SQ567,2023-02-01,4205,8,Kaggle-eindmodel x f,18.5674,0.6016,2391.0
+SQ567,2023-02-01,4205,8,LR GHI alleen op de eerste N weken,18.2722,,2391.0
+SQ567,2023-02-01,4205,13,pvlib x f,19.3203,0.7077,3983.0
+SQ567,2023-02-01,4205,13,Kaggle-eindmodel x f,19.7367,0.5283,3983.0
+SQ567,2023-02-01,4205,13,LR GHI alleen op de eerste N weken,18.4058,,3983.0
+SQ567,2023-03-01,4192,0,LR GHI op 2021 + 2022 (stap 3),18.5279,,
+SQ567,2023-03-01,4192,1,LR GHI op 2021 + 2022 (stap 3),18.5279,,
+SQ567,2023-03-01,4192,2,LR GHI op 2021 + 2022 (stap 3),18.5279,,
+SQ567,2023-03-01,4192,4,LR GHI op 2021 + 2022 (stap 3),18.5279,,
+SQ567,2023-03-01,4192,8,LR GHI op 2021 + 2022 (stap 3),18.5279,,
+SQ567,2023-03-01,4192,13,LR GHI op 2021 + 2022 (stap 3),18.5279,,
+SQ567,2023-03-01,4192,0,Smart persistence,20.6523,,
+SQ567,2023-03-01,4192,1,Smart persistence,20.6523,,
+SQ567,2023-03-01,4192,2,Smart persistence,20.6523,,
+SQ567,2023-03-01,4192,4,Smart persistence,20.6523,,
+SQ567,2023-03-01,4192,8,Smart persistence,20.6523,,
+SQ567,2023-03-01,4192,13,Smart persistence,20.6523,,
+SQ567,2023-03-01,4192,0,Persistence,27.313,,
+SQ567,2023-03-01,4192,1,Persistence,27.313,,
+SQ567,2023-03-01,4192,2,Persistence,27.313,,
+SQ567,2023-03-01,4192,4,Persistence,27.313,,
+SQ567,2023-03-01,4192,8,Persistence,27.313,,
+SQ567,2023-03-01,4192,13,Persistence,27.313,,
+SQ567,2023-03-01,4192,0,Gemiddelde dag (2021-2022),21.8574,,
+SQ567,2023-03-01,4192,1,Gemiddelde dag (2021-2022),21.8574,,
+SQ567,2023-03-01,4192,2,Gemiddelde dag (2021-2022),21.8574,,
+SQ567,2023-03-01,4192,4,Gemiddelde dag (2021-2022),21.8574,,
+SQ567,2023-03-01,4192,8,Gemiddelde dag (2021-2022),21.8574,,
+SQ567,2023-03-01,4192,13,Gemiddelde dag (2021-2022),21.8574,,
+SQ567,2023-03-01,4192,0,pvlib x orakel-f,18.4739,,
+SQ567,2023-03-01,4192,1,pvlib x orakel-f,18.4739,,
+SQ567,2023-03-01,4192,2,pvlib x orakel-f,18.4739,,
+SQ567,2023-03-01,4192,4,pvlib x orakel-f,18.4739,,
+SQ567,2023-03-01,4192,8,pvlib x orakel-f,18.4739,,
+SQ567,2023-03-01,4192,13,pvlib x orakel-f,18.4739,,
+SQ567,2023-03-01,4192,0,pvlib x f,19.8248,1.0,0.0
+SQ567,2023-03-01,4192,0,Kaggle-eindmodel x f,29.4303,1.0,0.0
+SQ567,2023-03-01,4192,1,pvlib x f,19.4555,0.9786,315.0
+SQ567,2023-03-01,4192,1,Kaggle-eindmodel x f,19.2531,0.7295,315.0
+SQ567,2023-03-01,4192,1,LR GHI alleen op de eerste N weken,19.4436,,315.0
+SQ567,2023-03-01,4192,2,pvlib x f,19.0431,0.9496,629.0
+SQ567,2023-03-01,4192,2,Kaggle-eindmodel x f,18.8418,0.6982,629.0
+SQ567,2023-03-01,4192,2,LR GHI alleen op de eerste N weken,19.3883,,629.0
+SQ567,2023-03-01,4192,4,pvlib x f,18.7202,0.7985,1210.0
+SQ567,2023-03-01,4192,4,Kaggle-eindmodel x f,19.1736,0.5895,1210.0
+SQ567,2023-03-01,4192,4,LR GHI alleen op de eerste N weken,18.5693,,1210.0
+SQ567,2023-03-01,4192,8,pvlib x f,20.7855,0.6712,2469.0
+SQ567,2023-03-01,4192,8,Kaggle-eindmodel x f,21.4066,0.4986,2469.0
+SQ567,2023-03-01,4192,8,LR GHI alleen op de eerste N weken,19.3006,,2469.0
+SQ567,2023-03-01,4192,13,pvlib x f,20.7072,0.6745,4092.0
+SQ567,2023-03-01,4192,13,Kaggle-eindmodel x f,21.2505,0.5034,4092.0
+SQ567,2023-03-01,4192,13,LR GHI alleen op de eerste N weken,19.5813,,4092.0
+SQ567,2023-04-01,4159,0,LR GHI op 2021 + 2022 (stap 3),17.9232,,
+SQ567,2023-04-01,4159,1,LR GHI op 2021 + 2022 (stap 3),17.9232,,
+SQ567,2023-04-01,4159,2,LR GHI op 2021 + 2022 (stap 3),17.9232,,
+SQ567,2023-04-01,4159,4,LR GHI op 2021 + 2022 (stap 3),17.9232,,
+SQ567,2023-04-01,4159,8,LR GHI op 2021 + 2022 (stap 3),17.9232,,
+SQ567,2023-04-01,4159,13,LR GHI op 2021 + 2022 (stap 3),17.9232,,
+SQ567,2023-04-01,4159,0,Smart persistence,20.5581,,
+SQ567,2023-04-01,4159,1,Smart persistence,20.5581,,
+SQ567,2023-04-01,4159,2,Smart persistence,20.5581,,
+SQ567,2023-04-01,4159,4,Smart persistence,20.5581,,
+SQ567,2023-04-01,4159,8,Smart persistence,20.5581,,
+SQ567,2023-04-01,4159,13,Smart persistence,20.5581,,
+SQ567,2023-04-01,4159,0,Persistence,26.5669,,
+SQ567,2023-04-01,4159,1,Persistence,26.5669,,
+SQ567,2023-04-01,4159,2,Persistence,26.5669,,
+SQ567,2023-04-01,4159,4,Persistence,26.5669,,
+SQ567,2023-04-01,4159,8,Persistence,26.5669,,
+SQ567,2023-04-01,4159,13,Persistence,26.5669,,
+SQ567,2023-04-01,4159,0,Gemiddelde dag (2021-2022),23.6959,,
+SQ567,2023-04-01,4159,1,Gemiddelde dag (2021-2022),23.6959,,
+SQ567,2023-04-01,4159,2,Gemiddelde dag (2021-2022),23.6959,,
+SQ567,2023-04-01,4159,4,Gemiddelde dag (2021-2022),23.6959,,
+SQ567,2023-04-01,4159,8,Gemiddelde dag (2021-2022),23.6959,,
+SQ567,2023-04-01,4159,13,Gemiddelde dag (2021-2022),23.6959,,
+SQ567,2023-04-01,4159,0,pvlib x orakel-f,17.9392,,
+SQ567,2023-04-01,4159,1,pvlib x orakel-f,17.9392,,
+SQ567,2023-04-01,4159,2,pvlib x orakel-f,17.9392,,
+SQ567,2023-04-01,4159,4,pvlib x orakel-f,17.9392,,
+SQ567,2023-04-01,4159,8,pvlib x orakel-f,17.9392,,
+SQ567,2023-04-01,4159,13,pvlib x orakel-f,17.9392,,
+SQ567,2023-04-01,4159,0,pvlib x f,18.9744,1.0,0.0
+SQ567,2023-04-01,4159,0,Kaggle-eindmodel x f,28.0842,1.0,0.0
+SQ567,2023-04-01,4159,1,pvlib x f,29.7879,0.3974,324.0
+SQ567,2023-04-01,4159,1,Kaggle-eindmodel x f,30.2112,0.2979,324.0
+SQ567,2023-04-01,4159,1,LR GHI alleen op de eerste N weken,27.5964,,324.0
+SQ567,2023-04-01,4159,2,pvlib x f,24.6254,0.5363,650.0
+SQ567,2023-04-01,4159,2,Kaggle-eindmodel x f,24.8678,0.4082,650.0
+SQ567,2023-04-01,4159,2,LR GHI alleen op de eerste N weken,22.4574,,650.0
+SQ567,2023-04-01,4159,4,pvlib x f,23.5925,0.5674,1264.0
+SQ567,2023-04-01,4159,4,Kaggle-eindmodel x f,23.9995,0.4283,1264.0
+SQ567,2023-04-01,4159,4,LR GHI alleen op de eerste N weken,21.1967,,1264.0
+SQ567,2023-04-01,4159,8,pvlib x f,22.5657,0.6002,2553.0
+SQ567,2023-04-01,4159,8,Kaggle-eindmodel x f,23.0881,0.4504,2553.0
+SQ567,2023-04-01,4159,8,LR GHI alleen op de eerste N weken,21.3503,,2553.0
+SQ567,2023-04-01,4159,13,pvlib x f,19.9029,0.7019,4172.0
+SQ567,2023-04-01,4159,13,Kaggle-eindmodel x f,20.4613,0.5249,4172.0
+SQ567,2023-04-01,4159,13,LR GHI alleen op de eerste N weken,19.1784,,4172.0
+SQ567,2023-05-01,4090,0,LR GHI op 2021 + 2022 (stap 3),17.5854,,
+SQ567,2023-05-01,4090,1,LR GHI op 2021 + 2022 (stap 3),17.5854,,
+SQ567,2023-05-01,4090,2,LR GHI op 2021 + 2022 (stap 3),17.5854,,
+SQ567,2023-05-01,4090,4,LR GHI op 2021 + 2022 (stap 3),17.5854,,
+SQ567,2023-05-01,4090,8,LR GHI op 2021 + 2022 (stap 3),17.5854,,
+SQ567,2023-05-01,4090,13,LR GHI op 2021 + 2022 (stap 3),17.5854,,
+SQ567,2023-05-01,4090,0,Smart persistence,20.3127,,
+SQ567,2023-05-01,4090,1,Smart persistence,20.3127,,
+SQ567,2023-05-01,4090,2,Smart persistence,20.3127,,
+SQ567,2023-05-01,4090,4,Smart persistence,20.3127,,
+SQ567,2023-05-01,4090,8,Smart persistence,20.3127,,
+SQ567,2023-05-01,4090,13,Smart persistence,20.3127,,
+SQ567,2023-05-01,4090,0,Persistence,25.7338,,
+SQ567,2023-05-01,4090,1,Persistence,25.7338,,
+SQ567,2023-05-01,4090,2,Persistence,25.7338,,
+SQ567,2023-05-01,4090,4,Persistence,25.7338,,
+SQ567,2023-05-01,4090,8,Persistence,25.7338,,
+SQ567,2023-05-01,4090,13,Persistence,25.7338,,
+SQ567,2023-05-01,4090,0,Gemiddelde dag (2021-2022),23.6545,,
+SQ567,2023-05-01,4090,1,Gemiddelde dag (2021-2022),23.6545,,
+SQ567,2023-05-01,4090,2,Gemiddelde dag (2021-2022),23.6545,,
+SQ567,2023-05-01,4090,4,Gemiddelde dag (2021-2022),23.6545,,
+SQ567,2023-05-01,4090,8,Gemiddelde dag (2021-2022),23.6545,,
+SQ567,2023-05-01,4090,13,Gemiddelde dag (2021-2022),23.6545,,
+SQ567,2023-05-01,4090,0,pvlib x orakel-f,17.5859,,
+SQ567,2023-05-01,4090,1,pvlib x orakel-f,17.5859,,
+SQ567,2023-05-01,4090,2,pvlib x orakel-f,17.5859,,
+SQ567,2023-05-01,4090,4,pvlib x orakel-f,17.5859,,
+SQ567,2023-05-01,4090,8,pvlib x orakel-f,17.5859,,
+SQ567,2023-05-01,4090,13,pvlib x orakel-f,17.5859,,
+SQ567,2023-05-01,4090,0,pvlib x f,18.498,1.0,0.0
+SQ567,2023-05-01,4090,0,Kaggle-eindmodel x f,26.6966,1.0,0.0
+SQ567,2023-05-01,4090,1,pvlib x f,20.1068,0.6602,330.0
+SQ567,2023-05-01,4090,1,Kaggle-eindmodel x f,20.4009,0.5025,330.0
+SQ567,2023-05-01,4090,1,LR GHI alleen op de eerste N weken,19.5609,,330.0
+SQ567,2023-05-01,4090,2,pvlib x f,19.7617,0.6762,666.0
+SQ567,2023-05-01,4090,2,Kaggle-eindmodel x f,20.5331,0.498,666.0
+SQ567,2023-05-01,4090,2,LR GHI alleen op de eerste N weken,20.0566,,666.0
+SQ567,2023-05-01,4090,4,pvlib x f,20.2204,0.6551,1289.0
+SQ567,2023-05-01,4090,4,Kaggle-eindmodel x f,20.76,0.4903,1289.0
+SQ567,2023-05-01,4090,4,LR GHI alleen op de eerste N weken,20.1434,,1289.0
+SQ567,2023-05-01,4090,8,pvlib x f,18.5307,0.7455,2572.0
+SQ567,2023-05-01,4090,8,Kaggle-eindmodel x f,19.0961,0.5549,2572.0
+SQ567,2023-05-01,4090,8,LR GHI alleen op de eerste N weken,18.4114,,2572.0
+SQ567,2023-05-01,4090,13,pvlib x f,17.9158,0.7983,4204.0
+SQ567,2023-05-01,4090,13,Kaggle-eindmodel x f,18.3751,0.5964,4204.0
+SQ567,2023-05-01,4090,13,LR GHI alleen op de eerste N weken,17.8222,,4204.0
+SQ567,2023-06-01,3974,0,LR GHI op 2021 + 2022 (stap 3),14.627,,
+SQ567,2023-06-01,3974,1,LR GHI op 2021 + 2022 (stap 3),14.627,,
+SQ567,2023-06-01,3974,2,LR GHI op 2021 + 2022 (stap 3),14.627,,
+SQ567,2023-06-01,3974,4,LR GHI op 2021 + 2022 (stap 3),14.627,,
+SQ567,2023-06-01,3974,8,LR GHI op 2021 + 2022 (stap 3),14.627,,
+SQ567,2023-06-01,3974,13,LR GHI op 2021 + 2022 (stap 3),14.627,,
+SQ567,2023-06-01,3974,0,Smart persistence,18.3943,,
+SQ567,2023-06-01,3974,1,Smart persistence,18.3943,,
+SQ567,2023-06-01,3974,2,Smart persistence,18.3943,,
+SQ567,2023-06-01,3974,4,Smart persistence,18.3943,,
+SQ567,2023-06-01,3974,8,Smart persistence,18.3943,,
+SQ567,2023-06-01,3974,13,Smart persistence,18.3943,,
+SQ567,2023-06-01,3974,0,Persistence,22.4872,,
+SQ567,2023-06-01,3974,1,Persistence,22.4872,,
+SQ567,2023-06-01,3974,2,Persistence,22.4872,,
+SQ567,2023-06-01,3974,4,Persistence,22.4872,,
+SQ567,2023-06-01,3974,8,Persistence,22.4872,,
+SQ567,2023-06-01,3974,13,Persistence,22.4872,,
+SQ567,2023-06-01,3974,0,Gemiddelde dag (2021-2022),22.4465,,
+SQ567,2023-06-01,3974,1,Gemiddelde dag (2021-2022),22.4465,,
+SQ567,2023-06-01,3974,2,Gemiddelde dag (2021-2022),22.4465,,
+SQ567,2023-06-01,3974,4,Gemiddelde dag (2021-2022),22.4465,,
+SQ567,2023-06-01,3974,8,Gemiddelde dag (2021-2022),22.4465,,
+SQ567,2023-06-01,3974,13,Gemiddelde dag (2021-2022),22.4465,,
+SQ567,2023-06-01,3974,0,pvlib x orakel-f,14.8871,,
+SQ567,2023-06-01,3974,1,pvlib x orakel-f,14.8871,,
+SQ567,2023-06-01,3974,2,pvlib x orakel-f,14.8871,,
+SQ567,2023-06-01,3974,4,pvlib x orakel-f,14.8871,,
+SQ567,2023-06-01,3974,8,pvlib x orakel-f,14.8871,,
+SQ567,2023-06-01,3974,13,pvlib x orakel-f,14.8871,,
+SQ567,2023-06-01,3974,0,pvlib x f,15.9861,1.0,0.0
+SQ567,2023-06-01,3974,0,Kaggle-eindmodel x f,24.6073,1.0,0.0
+SQ567,2023-06-01,3974,1,pvlib x f,14.8719,0.8457,331.0
+SQ567,2023-06-01,3974,1,Kaggle-eindmodel x f,15.4316,0.6374,331.0
+SQ567,2023-06-01,3974,1,LR GHI alleen op de eerste N weken,14.6325,,331.0
+SQ567,2023-06-01,3974,2,pvlib x f,14.8455,0.8595,667.0
+SQ567,2023-06-01,3974,2,Kaggle-eindmodel x f,15.4151,0.6402,667.0
+SQ567,2023-06-01,3974,2,LR GHI alleen op de eerste N weken,14.8651,,667.0
+SQ567,2023-06-01,3974,4,pvlib x f,14.9535,0.8259,1283.0
+SQ567,2023-06-01,3974,4,Kaggle-eindmodel x f,15.6525,0.6126,1283.0
+SQ567,2023-06-01,3974,4,LR GHI alleen op de eerste N weken,14.8161,,1283.0
+SQ567,2023-06-01,3974,8,pvlib x f,14.8552,0.8528,2579.0
+SQ567,2023-06-01,3974,8,Kaggle-eindmodel x f,15.4294,0.6378,2579.0
+SQ567,2023-06-01,3974,8,LR GHI alleen op de eerste N weken,14.6475,,2579.0
+SQ567,2023-06-01,3974,13,pvlib x f,14.8488,0.8567,4191.0
+SQ567,2023-06-01,3974,13,Kaggle-eindmodel x f,15.4246,0.6386,4191.0
+SQ567,2023-06-01,3974,13,LR GHI alleen op de eerste N weken,14.7219,,4191.0

@@ -1,0 +1,41 @@
+{
+  "taak": "5a stap 1 - stationkeuze HKUST",
+  "bron": "Dryad doi:10.5061/dryad.m37pvmd99 (v. 2024-09-08, CC0)",
+  "ttl_reparaties": 1,
+  "tijdzone_check": {
+    "heldere_dagen": 409,
+    "zwaartepunt_straling_uur": 12.22,
+    "zonnemiddag_HKT_uur": 12.37
+  },
+  "dekking_weerstation": {
+    "2021": 1.0,
+    "2022": 0.996,
+    "2023": 0.988
+  },
+  "aandeel_ghi_na_18u_pct": {
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.1,
+    "4": 0.3,
+    "5": 0.6,
+    "6": 0.8,
+    "7": 0.6,
+    "8": 0.5,
+    "9": 0.1,
+    "10": 0.0,
+    "11": 0.0,
+    "12": 0.0
+  },
+  "drempels": {
+    "min_ghi": 200.0,
+    "uitval_frac": 0.01,
+    "max_gaten": 0.050000000000000044,
+    "min_schaduw_index": 0.8,
+    "min_r": 0.9
+  },
+  "geschikt": [
+    "SQ1",
+    "SQ4",
+    "SQ3"
+  ]
+}

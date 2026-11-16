@@ -1,0 +1,65 @@
+{
+  "vraag": "satelliet (Himawari) vs ERA5 als weer achteraf (BESLISSINGEN #46)",
+  "satelliet_verschuiving_min": 10,
+  "controle": {
+    "r_sensor_satelliet": 0.9291521235340232,
+    "r_sensor_ERA5": 0.8398724441781464,
+    "r_opwek_satelliet": 0.9211398547530638,
+    "r_opwek_ERA5": 0.8184844814064345,
+    "kwartieren": 27361
+  },
+  "validatie_2022": {
+    "LR GHI (ERA5)": {
+      "nRMSE_%": 15.3556,
+      "nMAE_%": 10.8568,
+      "RMSE_kW": 0.7678,
+      "MAE_kW": 0.5428,
+      "R2": 0.7095,
+      "dagfout_%": 20.6369
+    },
+    "LR GHI (satelliet)": {
+      "nRMSE_%": 10.0926,
+      "nMAE_%": 6.8585,
+      "RMSE_kW": 0.5046,
+      "MAE_kW": 0.3429,
+      "R2": 0.8745,
+      "dagfout_%": 8.9652
+    },
+    "Ridge (satelliet + ERA5)": {
+      "nRMSE_%": 10.0234,
+      "nMAE_%": 6.7954,
+      "RMSE_kW": 0.5012,
+      "MAE_kW": 0.3398,
+      "R2": 0.8762,
+      "dagfout_%": 9.5346
+    }
+  },
+  "test_2023": {
+    "LR GHI (ERA5)": {
+      "nRMSE_%": 16.6084,
+      "nMAE_%": 11.6613,
+      "RMSE_kW": 0.8304,
+      "MAE_kW": 0.5831,
+      "R2": 0.615,
+      "dagfout_%": 23.902
+    },
+    "LR GHI (satelliet)": {
+      "nRMSE_%": 10.9448,
+      "nMAE_%": 7.5861,
+      "RMSE_kW": 0.5472,
+      "MAE_kW": 0.3793,
+      "R2": 0.8328,
+      "dagfout_%": 12.5033
+    },
+    "Ridge (satelliet + ERA5)": {
+      "nRMSE_%": 10.873,
+      "nMAE_%": 7.5414,
+      "RMSE_kW": 0.5436,
+      "MAE_kW": 0.3771,
+      "R2": 0.835,
+      "dagfout_%": 12.7742
+    }
+  },
+  "winst_pp": 5.664,
+  "regel_gehaald": true
+}

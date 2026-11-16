@@ -1,0 +1,16 @@
+model,droog (okt-apr),moesson (mei-sep)
+Baseline: gemiddelde dag,21.0019,22.8891
+Baseline: persistence (gisteren),19.5268,26.2727
+Smart persistence (K blijft gelijk),16.3453,21.0086
+LR GHI (ERA5),14.5404,19.0932
+LR POA (straling op het paneel),14.5454,19.0905
+"LR EFF_T (POA + reflectie, spectrum, stof, temp.)",14.8245,19.1224
+"e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)",14.6663,19.2983
+"e6: EFF_T x (a + b KT_POA), zonder intercept",14.5324,19.1954
+Ridge e6 (zonder intercept),14.5317,19.1955
+"Ridge e6 + bewolking, regen, vochtigheid",14.4951,19.0599
+Random Forest (e6 + extra),14.6497,19.7928
+Gradient Boosting (e6 + extra),14.2844,19.3097
+Zero-shot 2a: Kaggle-eindmodel (LR POA),25.2447,28.4369
+Zero-shot 2a: Kaggle-e6,30.3516,32.883
+Zero-shot 2b: pvlib-natuurkunde,17.2748,20.5617

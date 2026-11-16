@@ -5,3 +5,7 @@ matplotlib
 joblib
 pvlib
 statsmodels
+scipy
+pyarrow
+rdflib      # TAAK 5a: Brick-metadata HKUST (.ttl)
+polars      # TAAK 5b: UK PV streamen van Hugging Face

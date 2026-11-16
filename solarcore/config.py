@@ -74,6 +74,70 @@ COMPLEX_PP = 1.0                         # complex model alleen als >= 1 pp bete
 N_BOOTSTRAP = 1000                       # bootstrap over testdagen (90 %-interval)
 RANDOM_STATE = 42
 
+# ---------- TAAK 5a: externe validatie HKUST (Hong Kong, 2021-2023) ----------
+# Bron: Lin et al. (2025), Scientific Data; Dryad doi:10.5061/dryad.m37pvmd99, versie 8 sep 2024, CC0.
+HKUST_RAW = DATA / "extern" / "hkust" / "raw" / "Dataset"
+HKUST_TTL = HKUST_RAW / "Metadata" / "PV generation system metadata.ttl"
+HKUST_TS = HKUST_RAW / "Time series dataset"
+HKUST_INV = HKUST_TS / "PV generation dataset" / "PV stations with panel level optimizer" / "Inverter level dataset"
+HKUST_MET = HKUST_TS / "Meteorological dataset"
+HKUST_RESULTS = ROOT / "resultaten" / "taak5" / "hkust"
+HKUST_TZ = "Asia/Hong_Kong"
+HKUST_LOCATION = (22.3363, 114.2634)     # weerstation campus (README); de .ttl geeft afgeronde, afwijkende coördinaten
+HKUST_YEARS = (2021, 2022, 2023)         # retrain-opzet: train 2021, valideer 2022, test 2023
+HKUST_DATE_FORMATS = ("%Y-%m-%d %H:%M:%S", "%Y/%m/%d %H:%M")   # beide komen voor (per bestand consequent)
+# csv-naam -> naam in de Brick-.ttl als normaliseren (kleine letters, alleen letters/cijfers) niet genoeg is
+HKUST_NAME_ALIAS = {"indoorsportscentre": "indoorsportcenter"}
+# stationkeuze: drempels (vooraf vast, vóór het modelleren)
+HKUST_MIN_GHI = 200.0                    # W/m²: "er is zon" voor uitval- en schaduwcontrole
+HKUST_MIN_ELEV = 15.0                    # graden zonnehoogte voor de schaduwcontrole
+HKUST_OUTAGE_FRAC = 0.01                 # uitval: P < 1 % van kWp terwijl GHI > HKUST_MIN_GHI
+HKUST_MIN_COVERAGE = 0.95                # min. deel van de daguren met data, per jaar
+HKUST_MIN_SHADE_INDEX = 0.80             # PR in de slechtste uur-klasse / PR rond de middag
+HKUST_MIN_R = 0.90                       # correlatie opwek <-> GHI weerstation (5 min, overdag)
+# gekozen stations (BESLISSINGEN #25) en bekende storingsmaanden (PR t.o.v. ERA5 < 85 % van de mediaan)
+HKUST_STATIONS = ("SQ_Apartment37_48", "LSK_South", "SQ1", "SQ4", "SQ567")
+HKUST_FAULT_MONTHS = {"SQ1": ("2021-05", "2023-05")}
+# stralingssensor alleen betrouwbaar in deze periode (BESLISSINGEN #26)
+HKUST_SENSOR_OK = ("2021-05-01", "2023-02-14 23:59")
+HKUST_CLEAN = DATA / "extern" / "hkust" / "clean"
+HKUST_MIN_SUB = (3, 10)                  # min. aantal 5-min PV-waarden / 1-min weerwaarden per kwartier
+HKUST_WET_MONTHS = (5, 6, 7, 8, 9)       # moesson (nat) mei-sep; droog = okt-apr
+# testjaar 2023 pas tonen na de keuze op 2022 en akkoord Dimme (BESLISSINGEN #28, AGENTS.md §6.2)
+HKUST_TEST_VRIJGEGEVEN = True           # akkoord Dimme 2026-11-11 (na keuze #29)
+
+# ---------- TAAK 5b: dag-vooruit en horizon, Open Climate Fix UK PV (2024-2025) ----------
+# Bron: huggingface.co/datasets/openclimatefix/uk_pv (CC BY 4.0, doi:10.57967/hf/0878), data van Sheffield Solar.
+# Toegang: gratis account + voorwaarden accepteren + HF_TOKEN als omgevingsvariabele (staat nooit in de code).
+UKPV_HF = "hf://datasets/openclimatefix/uk_pv/30_minutely"
+UKPV_RAW = DATA / "extern" / "uk_pv" / "raw"             # metadata.csv, bad_data.csv, README.md
+UKPV_CLEAN = DATA / "extern" / "uk_pv" / "clean"
+UKPV_RESULTS = ROOT / "resultaten" / "taak5" / "ukpv"
+UKPV_PERIOD = ("2024-01-01", "2025-03-31")                # 15 hele maanden (april 2025 is maar half)
+UKPV_N_SYSTEMS = 40                                       # taak: 20-50 systemen
+UKPV_KWP = (1.5, 10.0)                                    # huis
+UKPV_TILT = (10.0, 60.0)
+UKPV_ORIENT = (90.0, 270.0)                               # oost .. zuid .. west (graden, 180 = zuid)
+UKPV_MIN_ROWS = 0.98                                      # per maand >= 98 % van de halve uren aanwezig
+UKPV_MAX_BAD_DAYS = 0.01                                  # < 1 % dagen met nachtopwek of nul-opwek bij zon
+UKPV_YIELD = (550.0, 1150.0)                              # plausibele jaaropbrengst (kWh per kWp), BESLISSINGEN #35
+UKPV_PMAX = (0.6, 1.2)                                    # plausibel maximum vermogen / kWp (klopt kWp?)
+UKPV_POOL = 150                                          # kandidaten die we echt ophalen voor de kwaliteitscheck
+UKPV_LAT_BANDS = (49.5, 51.0, 52.0, 53.0, 54.5, 61.0)    # 5 breedtebanden (zuid -> noord) voor de spreiding
+# weer (BESLISSINGEN #37): cache per locatie / per run
+UKPV_WEATHER = DATA / "extern" / "uk_pv" / "weer"
+UKPV_DA_MODEL = "ecmwf_ifs025"                            # Previous Runs: dag-vooruit vanaf 6 mrt 2024
+UKPV_HZ_MODEL = "ecmwf_ifs"                               # Single Runs: horizon, vanaf 14 mrt 2024
+UKPV_HZ_RUNS = ("2024-03-14", "2025-03-31", "4D")         # run 00 UTC elke 4e dag
+# tests (BESLISSINGEN #36, #38)
+UKPV_FC_START = "2024-03-06"                              # eerste dag met dag-vooruit-voorspelling
+UKPV_TRAIN_END = "2024-06-30"
+UKPV_FOLDS = (("2024-03-06", "2024-04-30", "2024-05-01", "2024-05-31"),
+              ("2024-03-06", "2024-05-31", "2024-06-01", "2024-06-30"))
+UKPV_SEASONS = {7: "zomer", 8: "zomer", 9: "zomer", 10: "herfst", 11: "herfst", 12: "winter", 1: "winter",
+                2: "winter", 3: "voorjaar"}
+UKPV_TEST_VRIJGEGEVEN = True                              # akkoord Dimme 2026-11-13 (na keuze #39)
+
 # ---------- grafieken ----------
 BLUE, ORANGE, GREY = "#2a78d6", "#eb6834", "#a3a29d"
 INK, INK2 = "#0b0b0b", "#52514e"

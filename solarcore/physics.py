@@ -34,17 +34,18 @@ def air_density(temp_c, rh, p_hpa):
     return (p_hpa - e) * 100 / (287.05 * tk) + e * 100 / (461.5 * tk)
 
 
-def _clearsky(times, lat, lon, elev):
-    return pvlib.location.Location(lat, lon, TZ, altitude=elev).get_clearsky(times, model="ineichen")
+def _clearsky(times, lat, lon, elev, tz=TZ):
+    return pvlib.location.Location(lat, lon, tz, altitude=elev).get_clearsky(times, model="ineichen")
 
 
-def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0):
+def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0, tz=TZ):
     """Uurtabel -> kwartiertabel (kwartier t = interval [t, t+15 min)). De straling van uur h hoort bij het
-    interval met midden h + rad_shift_min (bepaald in fase 3). Via de heldere-hemelindex geïnterpoleerd."""
+    interval met midden h + rad_shift_min (bepaald in fase 3). Via de heldere-hemelindex geïnterpoleerd.
+    tz alleen anders voor externe datasets (TAAK 5)."""
     h = hourly.set_index("DATE_TIME").sort_index()
     centers = h.index + pd.Timedelta(minutes=rad_shift_min)
     subs = [centers + pd.Timedelta(minutes=m) for m in (-22.5, -7.5, 7.5, 22.5)]
-    cs_h = sum(_clearsky(s.tz_localize(TZ), lat, lon, elev).ghi.values for s in subs) / 4
+    cs_h = sum(_clearsky(s.tz_localize(tz), lat, lon, elev, tz).ghi.values for s in subs) / 4
     kt = np.where(cs_h > 10, h.shortwave_radiation / np.maximum(cs_h, 1), np.nan)
     dfrac = np.where(h.shortwave_radiation > 10, h.diffuse_radiation / np.maximum(h.shortwave_radiation, 1), np.nan)
     rad = pd.DataFrame({"kt": np.clip(kt, 0, 1.2), "dfrac": np.clip(dfrac, 0, 1)}, index=centers)
@@ -55,7 +56,7 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0):
         s = s.dropna()
         return np.interp(mid.asi8, s.index.asi8, s.values) if len(s) else np.full(len(mid), np.nan)
 
-    cs = _clearsky(mid.tz_localize(TZ), lat, lon, elev)
+    cs = _clearsky(mid.tz_localize(tz), lat, lon, elev, tz)
     out = pd.DataFrame(index=grid)
     out.index.name = "DATE_TIME"
     out["CS_GHI_W"] = cs.ghi.values
@@ -67,7 +68,7 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0):
         out[new] = interp(h[c])
     # neerslag: hoeveelheid in het uur -> elk kwartier van dat uur (mm per uur)
     out["PRECIP"] = h.precipitation.reindex(grid, method="ffill").values
-    sp = pvlib.solarposition.get_solarposition(mid.tz_localize(TZ), lat, lon, altitude=elev,
+    sp = pvlib.solarposition.get_solarposition(mid.tz_localize(tz), lat, lon, altitude=elev,
                                                pressure=out.P_HPA.values * 100, temperature=out["T"].values)
     out["ZENITH"], out["AZIMUTH"] = sp.apparent_zenith.values, sp.azimuth.values
     cosz = np.cos(np.deg2rad(out.ZENITH)).clip(0)
@@ -77,19 +78,19 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0):
     return out.reset_index()
 
 
-def soiling_loss(hourly, grid, p=PARAMS):
+def soiling_loss(hourly, grid, p=PARAMS, tz=TZ):
     """Kimber: stofverlies per kwartier; regen >= 6 mm/dag spoelt schoon."""
     r = hourly.set_index("DATE_TIME").precipitation.fillna(0)
-    r.index = r.index.tz_localize(TZ)
+    r.index = r.index.tz_localize(tz)
     s = pvlib.soiling.kimber(r, cleaning_threshold=p["clean_mm"], soiling_loss_rate=p["soiling_rate"],
                              max_soiling=p["max_soiling"])
     return s.tz_localize(None).reindex(grid, method="ffill").fillna(0).values
 
 
-def panel_inputs(w15, soiling, lat, lon, elev, tilt=None, azimuth=180.0, p=PARAMS):
+def panel_inputs(w15, soiling, lat, lon, elev, tilt=None, azimuth=180.0, p=PARAMS, tz=TZ):
     """Kwartiertabel -> straling op het paneel en de V4-inputs (EFF_T, KT_POA, ...) + PHYS (pvlib, kW per kWp)."""
     d = w15.copy()
-    times = (pd.DatetimeIndex(d.DATE_TIME) + pd.Timedelta(minutes=7.5)).tz_localize(TZ)
+    times = (pd.DatetimeIndex(d.DATE_TIME) + pd.Timedelta(minutes=7.5)).tz_localize(tz)
     tilt = abs(lat) if tilt is None else tilt
     d["RHO"] = air_density(d["T"], d.RH, d.P_HPA)
     am_rel = pvlib.atmosphere.get_relative_airmass(d.ZENITH.values)
@@ -116,8 +117,8 @@ def panel_inputs(w15, soiling, lat, lon, elev, tilt=None, azimuth=180.0, p=PARAM
     pac = pvlib.inverter.pvwatts(pdc, pdc0=1000 / p["dc_ac_ratio"], eta_inv_nom=p["eta_inv"])
     d["PHYS"] = np.clip(np.nan_to_num(pac), 0, None) / 1000
     # V4-inputs (overgenomen uit V5 dayahead.add_features)
-    cs = _clearsky(times, lat, lon, elev)
-    cs_irr = pvlib.irradiance.get_total_irradiance(tilt, azimuth, d.ZENITH.values, d.AZIMUTH.values, cs.dni.values,
+    cs = _clearsky(times, lat, lon, elev, tz)
+    cs_irr =pvlib.irradiance.get_total_irradiance(tilt, azimuth, d.ZENITH.values, d.AZIMUTH.values, cs.dni.values,
                                                    cs.ghi.values, cs.dhi.values, dni_extra=dni_extra, airmass=am_rel,
                                                    albedo=p["albedo"], model="perez")
     d["CS_POA"] = np.nan_to_num(np.asarray(cs_irr["poa_global"], dtype=float))
@@ -125,3 +126,13 @@ def panel_inputs(w15, soiling, lat, lon, elev, tilt=None, azimuth=180.0, p=PARAM
     d["EFF_T"] = d.EFF_IRR * (1 + p["gamma_pdc"] * (d.T_CELL - 25))
     d["EFF_T_KT"] = d.EFF_T * d.KT_POA
     return d
+
+
+def refaiman(df, wind10, u0, u1, p=PARAMS):
+    """TAAK 6: celtemperatuur en EFF_T opnieuw met andere Faiman-waarden (u0, u1) of een andere windbron (10 m).
+    df heeft POA, T, EFF_T, T_CELL, KT_POA (uit panel_inputs). Zonder luchtdichtheidscorrectie, ook voor de
+    standaardwaarden, zodat de vergelijking eerlijk is. Geeft (T_CELL, EFF_T, EFF_T_KT)."""
+    eff_irr = df.EFF_T / (1 + p["gamma_pdc"] * (df.T_CELL - 25))            # terug naar de effectieve straling
+    t_cell = pvlib.temperature.faiman(df.POA, df["T"], np.asarray(wind10) * p["wind_height_factor"], u0=u0, u1=u1)
+    eff_t = eff_irr * (1 + p["gamma_pdc"] * (t_cell - 25))
+    return t_cell, eff_t, eff_t * df.KT_POA

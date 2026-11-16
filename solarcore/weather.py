@@ -19,15 +19,18 @@ PERIOD = ("2020-04-01", "2020-06-18")        # april = aanloop voor het stofmode
 ARCHIVE_URL = "https://archive-api.open-meteo.com/v1/archive"
 
 
-def load_era5(lat, lon, start=PERIOD[0], end=PERIOD[1]):
-    """Uurlijks ERA5 voor (lat, lon) -> (tabel, hoogte in m). Cache: data/era5_{lat}_{lon}_{start}_{end}.csv."""
-    cache = DATA / f"era5_{lat}_{lon}_{start}_{end}.csv"
+def load_era5(lat, lon, start=PERIOD[0], end=PERIOD[1], tz=TZ, folder=DATA):
+    """Uurlijks ERA5 voor (lat, lon) -> (tabel, hoogte in m). Cache: {folder}/era5_{lat}_{lon}_{start}_{end}.csv.
+
+    tz en folder alleen anders voor externe datasets (TAAK 5, bv. Asia/Hong_Kong); standaard India.
+    """
+    cache = folder / f"era5_{lat}_{lon}_{start}_{end}.csv"
     if cache.exists():
         df = pd.read_csv(cache, parse_dates=["DATE_TIME"])
         return df.drop(columns="elevation"), float(df.elevation.iloc[0])
     q = ARCHIVE_URL + "?" + urllib.parse.urlencode({
         "latitude": lat, "longitude": lon, "start_date": start, "end_date": end, "hourly": ",".join(VARS),
-        "timezone": TZ, "wind_speed_unit": "ms"})
+        "timezone": tz, "wind_speed_unit": "ms"})
     with urllib.request.urlopen(q, timeout=60) as r:
         data = json.loads(r.read().decode("utf-8"))
     h = data["hourly"]

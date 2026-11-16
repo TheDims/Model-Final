@@ -1,0 +1,16 @@
+,nRMSE_%,laag_%,hoog_%
+Baseline: gemiddelde dag,21.8227,21.0542,22.588
+Baseline: persistence (gisteren),22.6364,21.739,23.4593
+Smart persistence (K blijft gelijk),18.4686,17.5901,19.2493
+LR GHI (ERA5),16.6254,15.9594,17.2643
+LR POA (straling op het paneel),16.6266,15.9596,17.2658
+"LR EFF_T (POA + reflectie, spectrum, stof, temp.)",16.7833,16.1191,17.4294
+"e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)",16.7888,16.1023,17.4515
+"e6: EFF_T x (a + b KT_POA), zonder intercept",16.6713,16.0087,17.3117
+Ridge e6 (zonder intercept),16.671,16.0084,17.3113
+"Ridge e6 + bewolking, regen, vochtigheid",16.5864,15.9318,17.2342
+Random Forest (e6 + extra),17.0231,16.3394,17.6768
+Gradient Boosting (e6 + extra),16.6038,15.9227,17.2659
+Zero-shot 2a: Kaggle-eindmodel (LR POA),26.6461,25.7991,27.5008
+Zero-shot 2a: Kaggle-e6,31.4507,30.4787,32.4935
+Zero-shot 2b: pvlib-natuurkunde,18.7402,17.94,19.4674

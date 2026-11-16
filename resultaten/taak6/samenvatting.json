@@ -1,0 +1,98 @@
+{
+  "taak": "6 - Faiman-fit (BESLISSINGEN #44)",
+  "standaard": {
+    "u0": 25.0,
+    "u1": 6.84,
+    "wind_hoogtefactor": 0.79
+  },
+  "kaggle_fit": {
+    "standaard (u0 25, u1 6,84)": [
+      25.0,
+      6.84
+    ],
+    "gefit met ERA5-wind": [
+      37.72966702740445,
+      2.3554673517583803e-13
+    ],
+    "gefit zonder wind (u1 = 0)": [
+      37.729667028907926,
+      0.0
+    ]
+  },
+  "kaggle_temperatuur": {
+    "standaard (u0 25, u1 6,84)": {
+      "u0": 25.0,
+      "u1": 6.84,
+      "RMSE_°C": 4.549,
+      "bias_°C": -2.1385
+    },
+    "gefit met ERA5-wind": {
+      "u0": 37.7297,
+      "u1": 0.0,
+      "RMSE_°C": 2.4988,
+      "bias_°C": 0.9249
+    },
+    "gefit zonder wind (u1 = 0)": {
+      "u0": 37.7297,
+      "u1": 0.0,
+      "RMSE_°C": 2.4988,
+      "bias_°C": 0.9249
+    }
+  },
+  "kaggle_vermogen": {
+    "standaard (u0 25, u1 6,84)": {
+      "LR EFF_T": 13.4631,
+      "e6": 12.6569
+    },
+    "gefit met ERA5-wind": {
+      "LR EFF_T": 13.519,
+      "e6": 12.6702
+    },
+    "gefit zonder wind (u1 = 0)": {
+      "LR EFF_T": 13.519,
+      "e6": 12.6702
+    }
+  },
+  "hkust_beste": {
+    "gemeten wind (weerstation)": [
+      40.0,
+      12.0
+    ],
+    "ERA5-wind": [
+      40.0,
+      0.0
+    ]
+  },
+  "hkust_test_2023": {
+    "ERA5-wind | gefit": {
+      "LR EFF_T": 16.6276,
+      "e6": 16.5323
+    },
+    "ERA5-wind | standaard": {
+      "LR EFF_T": 16.7002,
+      "e6": 16.5972
+    },
+    "gemeten wind (weerstation) | gefit": {
+      "LR EFF_T": 16.5603,
+      "e6": 16.4719
+    },
+    "gemeten wind (weerstation) | standaard": {
+      "LR EFF_T": 16.5594,
+      "e6": 16.4701
+    }
+  },
+  "regel_gehaald": {
+    "Kaggle": {
+      "LR EFF_T": false,
+      "e6": false
+    },
+    "HKUST gemeten wind (weerstation)": {
+      "LR EFF_T": false,
+      "e6": false
+    },
+    "HKUST ERA5-wind": {
+      "LR EFF_T": false,
+      "e6": false
+    }
+  }
+}

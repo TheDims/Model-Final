@@ -1,0 +1,5 @@
+SEASON,Baseline: gemiddelde dag (K x heldere hemel),Smart persistence (K blijft gelijk),"Zero-shot pvlib (kWp, dakhoek, richting)",LR POA,LR POA met voorspelling dag 2,Bovengrens: LR POA met ERA5 (perfect weer)
+herfst,18.272,19.7009,16.2295,13.5154,14.715,13.552
+voorjaar,27.06,25.6755,20.301,17.3259,18.0045,16.9775
+winter,16.5195,17.8014,14.8114,12.2106,13.0825,12.1216
+zomer,20.9125,23.4609,18.5197,15.3673,16.352,15.0003

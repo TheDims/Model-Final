@@ -1,0 +1,4 @@
+variant,u0,u1,RMSE_°C,bias_°C
+"standaard (u0 25, u1 6,84)",25.0,6.84,4.549,-2.1385
+gefit met ERA5-wind,37.7297,0.0,2.4988,0.9249
+gefit zonder wind (u1 = 0),37.7297,0.0,2.4988,0.9249

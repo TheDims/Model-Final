@@ -1,0 +1,12 @@
+,nRMSE_%,nMAE_%,RMSE_kW,MAE_kW,R2,dagfout_%,skill_pers,skill_gemdag
+Baseline: gemiddelde dag (K x heldere hemel),20.3302,13.903,1.0165,0.6952,0.3761,47.101,0.1603,0.0
+Baseline: persistence (gisteren),24.2119,15.4352,1.2106,0.7718,0.1152,51.9697,0.0,-0.1909
+Smart persistence (K blijft gelijk),21.8087,14.7478,1.0904,0.7374,0.2821,50.2762,0.0993,-0.0727
+"Zero-shot pvlib (kWp, dakhoek, richting)",17.493,11.9819,0.8747,0.5991,0.5381,37.0065,0.2775,0.1396
+LR POA,14.5764,10.3213,0.7288,0.5161,0.6793,27.152,0.398,0.283
+e6 (zonder intercept),14.6722,10.179,0.7336,0.509,0.6751,26.8258,0.394,0.2783
+"Ridge e6 + bewolking, temp., wind",14.7085,10.4262,0.7354,0.5213,0.6735,27.2226,0.3925,0.2765
+Gradient Boosting (e6 + extra),14.8798,10.4282,0.744,0.5214,0.6658,27.5613,0.3854,0.2681
+LR POA getraind op ERA5,14.6322,10.5894,0.7316,0.5295,0.6768,27.8621,0.3957,0.2803
+LR POA met voorspelling dag 2,15.5268,11.1596,0.7763,0.558,0.6361,30.3897,0.3587,0.2363
+Bovengrens: LR POA met ERA5 (perfect weer),14.3436,10.1459,0.7172,0.5073,0.6895,25.9353,0.4076,0.2945

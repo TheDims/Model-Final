@@ -1,0 +1,4 @@
+variant,LR EFF_T,e6
+"standaard (u0 25, u1 6,84)",13.4631,12.6569
+gefit met ERA5-wind,13.519,12.6702
+gefit zonder wind (u1 = 0),13.519,12.6702

@@ -1,0 +1,8 @@
+,nRMSE_%,nMAE_%,RMSE_kW,MAE_kW,R2,dagfout_%,skill_pers,skill_gemdag
+Baseline: gemiddelde dag,22.7098,17.7765,1.1355,0.8888,0.3657,45.4942,0.0177,0.0
+Baseline: persistence (gisteren),23.1199,14.8785,1.156,0.7439,0.3426,33.1597,0.0,-0.0181
+Smart persistence (K blijft gelijk),19.3218,13.1264,0.9661,0.6563,0.5408,31.3007,0.1643,0.1492
+LR GHI (ERA5),15.3762,10.8735,0.7688,0.5437,0.7092,20.723,0.3349,0.3229
+LR POA (straling op het paneel),15.3757,10.8725,0.7688,0.5436,0.7092,20.7684,0.335,0.3229
+Sensor: LR straling,8.6007,5.961,0.43,0.2981,0.909,9.4517,0.628,0.6213
+"Sensor: Ridge (straling, temp., tijd)",8.4519,5.7718,0.4226,0.2886,0.9121,10.2601,0.6344,0.6278

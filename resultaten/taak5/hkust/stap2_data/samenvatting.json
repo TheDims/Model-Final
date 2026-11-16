@@ -1,0 +1,117 @@
+{
+  "taak": "5a stap 2 - opschonen HKUST",
+  "stations": {
+    "SQ_Apartment37_48": {
+      "kWp_AC": 16.22,
+      "kWp_DC": 14.82,
+      "eerste_dag": "2021-07-11",
+      "daglicht_kwartieren": 42876,
+      "bruikbaar": 38400,
+      "bruikbaar_pct": 89.6,
+      "uitval": 127,
+      "storing": 0,
+      "bruikbaar_per_jaar": {
+        "2021": 7375,
+        "2022": 15543,
+        "2023": 15482
+      }
+    },
+    "LSK_South": {
+      "kWp_AC": 25.0,
+      "kWp_DC": 28.08,
+      "eerste_dag": "2021-05-01",
+      "daglicht_kwartieren": 46603,
+      "bruikbaar": 40502,
+      "bruikbaar_pct": 86.9,
+      "uitval": 62,
+      "storing": 0,
+      "bruikbaar_per_jaar": {
+        "2021": 10900,
+        "2022": 16109,
+        "2023": 13493
+      }
+    },
+    "SQ1": {
+      "kWp_AC": 27.6,
+      "kWp_DC": 34.32,
+      "eerste_dag": "2021-05-07",
+      "daglicht_kwartieren": 46297,
+      "bruikbaar": 40157,
+      "bruikbaar_pct": 86.7,
+      "uitval": 234,
+      "storing": 2911,
+      "bruikbaar_per_jaar": {
+        "2021": 9454,
+        "2022": 16092,
+        "2023": 14611
+      }
+    },
+    "SQ4": {
+      "kWp_AC": 33.3,
+      "kWp_DC": 35.49,
+      "eerste_dag": "2021-05-12",
+      "daglicht_kwartieren": 46041,
+      "bruikbaar": 42597,
+      "bruikbaar_pct": 92.5,
+      "uitval": 63,
+      "storing": 0,
+      "bruikbaar_per_jaar": {
+        "2021": 10414,
+        "2022": 16107,
+        "2023": 16076
+      }
+    },
+    "SQ567": {
+      "kWp_AC": 47.97,
+      "kWp_DC": 47.97,
+      "eerste_dag": "2021-06-02",
+      "daglicht_kwartieren": 44941,
+      "bruikbaar": 41515,
+      "bruikbaar_pct": 92.4,
+      "uitval": 79,
+      "storing": 0,
+      "bruikbaar_per_jaar": {
+        "2021": 9345,
+        "2022": 16105,
+        "2023": 16065
+      }
+    }
+  },
+  "wind_temp_check": {
+    "2021": {
+      "wind_sensor_gem": 2.74,
+      "wind_era5_gem": 3.03,
+      "wind_r": 0.698,
+      "temp_sensor_gem": 23.19,
+      "temp_era5_gem": 22.3,
+      "temp_r": 0.967
+    },
+    "2022": {
+      "wind_sensor_gem": 2.84,
+      "wind_era5_gem": 3.18,
+      "wind_r": 0.687,
+      "temp_sensor_gem": 22.65,
+      "temp_era5_gem": 21.61,
+      "temp_r": 0.967
+    },
+    "2023": {
+      "wind_sensor_gem": 2.3,
+      "wind_era5_gem": 2.85,
+      "wind_r": 0.628,
+      "temp_sensor_gem": 23.34,
+      "temp_era5_gem": 22.06,
+      "temp_r": 0.955
+    }
+  },
+  "era5_hoogte_m": 151.0,
+  "rooster": "15 min, label = begin kwartier, HKT",
+  "regels": {
+    "pv_min_5min_per_kwartier": 3,
+    "weer_min_1min_per_kwartier": 10,
+    "uitval": "P < 1% van kWp AC terwijl ERA5-GHI > 300 W/m²",
+    "sensor_ok": [
+      "2021-05-01",
+      "2023-02-14 23:59"
+    ]
+  }
+}

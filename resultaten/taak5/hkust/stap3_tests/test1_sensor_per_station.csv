@@ -1,0 +1,8 @@
+model,LSK_South,SQ1,SQ4,SQ567,SQ_Apartment37_48
+Baseline: gemiddelde dag,23.4031,21.7902,22.7768,22.937,22.6066
+Baseline: persistence (gisteren),23.3894,22.3416,23.073,23.123,23.6698
+LR GHI (ERA5),15.461,14.993,15.1362,15.4334,15.8597
+LR POA (straling op het paneel),15.465,14.9923,15.1356,15.4321,15.856
+Sensor: LR straling,6.6201,9.275,8.3933,8.1116,10.2401
+"Sensor: Ridge (straling, temp., tijd)",6.8943,9.0107,8.194,7.9024,9.9934
+Smart persistence (K blijft gelijk),19.3729,18.5841,19.3479,19.6413,19.6545

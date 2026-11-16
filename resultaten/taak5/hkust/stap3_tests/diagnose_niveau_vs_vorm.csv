@@ -1,0 +1,21 @@
+station,model,DC_AC,capaciteit_div_kWpAC,voorspeld_div_werkelijk,nRMSE_%,nRMSE_na_schaal_%
+LSK_South,LR GHI (ERA5),1.12,0.9285,1.0718,16.9931,16.7553
+LSK_South,Zero-shot 2a: Kaggle-eindmodel (LR POA),1.12,0.9285,1.4335,22.1219,17.122
+LSK_South,Zero-shot 2a: Kaggle-e6,1.12,0.9285,1.541,26.3329,17.993
+LSK_South,Zero-shot 2b: pvlib-natuurkunde,1.12,0.9285,1.1976,18.3619,16.9958
+SQ1,LR GHI (ERA5),1.24,0.977,1.1108,16.0309,15.5521
+SQ1,Zero-shot 2a: Kaggle-eindmodel (LR POA),1.24,0.977,1.4191,20.2629,16.0078
+SQ1,Zero-shot 2a: Kaggle-e6,1.24,0.977,1.5236,23.886,16.5965
+SQ1,Zero-shot 2b: pvlib-natuurkunde,1.24,0.977,1.3086,18.8879,15.8269
+SQ4,LR GHI (ERA5),1.07,0.8845,1.1003,16.5103,16.1308
+SQ4,Zero-shot 2a: Kaggle-eindmodel (LR POA),1.07,0.8845,1.5498,23.9428,16.5937
+SQ4,Zero-shot 2a: Kaggle-e6,1.07,0.8845,1.6654,28.4314,17.2516
+SQ4,Zero-shot 2b: pvlib-natuurkunde,1.07,0.8845,1.2251,18.0221,16.4162
+SQ567,LR GHI (ERA5),1.0,0.8016,1.0887,16.484,16.2111
+SQ567,Zero-shot 2a: Kaggle-eindmodel (LR POA),1.0,0.8016,1.6929,27.9441,16.7244
+SQ567,Zero-shot 2a: Kaggle-e6,1.0,0.8016,1.8201,33.1582,17.3482
+SQ567,Zero-shot 2b: pvlib-natuurkunde,1.0,0.8016,1.2543,18.5296,16.4823
+SQ_Apartment37_48,LR GHI (ERA5),0.91,0.7419,1.2155,17.1106,15.7187
+SQ_Apartment37_48,Zero-shot 2a: Kaggle-eindmodel (LR POA),0.91,0.7419,2.0296,35.403,16.2429
+SQ_Apartment37_48,Zero-shot 2a: Kaggle-e6,0.91,0.7419,2.1906,41.4151,16.7577
+SQ_Apartment37_48,Zero-shot 2b: pvlib-natuurkunde,0.91,0.7419,1.3798,19.8428,16.0084

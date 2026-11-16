@@ -1,0 +1,99 @@
+wind,u0,u1,nRMSE_val_%
+gemeten wind (weerstation),10,0,15.9966
+gemeten wind (weerstation),10,2,15.6776
+gemeten wind (weerstation),10,4,15.58
+gemeten wind (weerstation),10,6,15.5316
+gemeten wind (weerstation),10,8,15.5033
+gemeten wind (weerstation),10,10,15.4852
+gemeten wind (weerstation),10,12,15.4728
+gemeten wind (weerstation),15,0,15.6967
+gemeten wind (weerstation),15,2,15.5836
+gemeten wind (weerstation),15,4,15.5348
+gemeten wind (weerstation),15,6,15.5072
+gemeten wind (weerstation),15,8,15.4894
+gemeten wind (weerstation),15,10,15.4773
+gemeten wind (weerstation),15,12,15.4685
+gemeten wind (weerstation),20,0,15.6009
+gemeten wind (weerstation),20,2,15.5432
+gemeten wind (weerstation),20,4,15.5132
+gemeten wind (weerstation),20,6,15.4946
+gemeten wind (weerstation),20,8,15.4819
+gemeten wind (weerstation),20,10,15.4728
+gemeten wind (weerstation),20,12,15.466
+gemeten wind (weerstation),25,0,15.5556
+gemeten wind (weerstation),25,2,15.5207
+gemeten wind (weerstation),25,4,15.5002
+gemeten wind (weerstation),25,6,15.4866
+gemeten wind (weerstation),25,8,15.4769
+gemeten wind (weerstation),25,10,15.4697
+gemeten wind (weerstation),25,12,15.4641
+gemeten wind (weerstation),30,0,15.5296
+gemeten wind (weerstation),30,2,15.5062
+gemeten wind (weerstation),30,4,15.4913
+gemeten wind (weerstation),30,6,15.4809
+gemeten wind (weerstation),30,8,15.4732
+gemeten wind (weerstation),30,10,15.4673
+gemeten wind (weerstation),30,12,15.4627
+gemeten wind (weerstation),35,0,15.5129
+gemeten wind (weerstation),35,2,15.4961
+gemeten wind (weerstation),35,4,15.4848
+gemeten wind (weerstation),35,6,15.4765
+gemeten wind (weerstation),35,8,15.4703
+gemeten wind (weerstation),35,10,15.4653
+gemeten wind (weerstation),35,12,15.4614
+gemeten wind (weerstation),40,0,15.5013
+gemeten wind (weerstation),40,2,15.4887
+gemeten wind (weerstation),40,4,15.4798
+gemeten wind (weerstation),40,6,15.4731
+gemeten wind (weerstation),40,8,15.4678
+gemeten wind (weerstation),40,10,15.4636
+gemeten wind (weerstation),40,12,15.4602
+ERA5-wind,10,0,15.9966
+ERA5-wind,10,2,15.9697
+ERA5-wind,10,4,15.9006
+ERA5-wind,10,6,15.8393
+ERA5-wind,10,8,15.7902
+ERA5-wind,10,10,15.7509
+ERA5-wind,10,12,15.7191
+ERA5-wind,15,0,15.6967
+ERA5-wind,15,2,15.7343
+ERA5-wind,15,4,15.7247
+ERA5-wind,15,6,15.7052
+ERA5-wind,15,8,15.6848
+ERA5-wind,15,10,15.666
+ERA5-wind,15,12,15.6492
+ERA5-wind,20,0,15.6009
+ERA5-wind,20,2,15.6353
+ERA5-wind,20,4,15.6395
+ERA5-wind,20,6,15.6338
+ERA5-wind,20,8,15.6248
+ERA5-wind,20,10,15.6151
+ERA5-wind,20,12,15.6056
+ERA5-wind,25,0,15.5556
+ERA5-wind,25,2,15.5828
+ERA5-wind,25,4,15.5904
+ERA5-wind,25,6,15.5902
+ERA5-wind,25,8,15.5865
+ERA5-wind,25,10,15.5814
+ERA5-wind,25,12,15.5759
+ERA5-wind,30,0,15.5296
+ERA5-wind,30,2,15.551
+ERA5-wind,30,4,15.5591
+ERA5-wind,30,6,15.5611
+ERA5-wind,30,8,15.5601
+ERA5-wind,30,10,15.5576
+ERA5-wind,30,12,15.5544
+ERA5-wind,35,0,15.5129
+ERA5-wind,35,2,15.53
+ERA5-wind,35,4,15.5377
+ERA5-wind,35,6,15.5406
+ERA5-wind,35,8,15.541
+ERA5-wind,35,10,15.54
+ERA5-wind,35,12,15.5381
+ERA5-wind,40,0,15.5013
+ERA5-wind,40,2,15.5151
+ERA5-wind,40,4,15.5222
+ERA5-wind,40,6,15.5255
+ERA5-wind,40,8,15.5266
+ERA5-wind,40,10,15.5264
+ERA5-wind,40,12,15.5255

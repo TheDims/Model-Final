@@ -1,0 +1,571 @@
+{
+  "taak": "5b stap 3 - dag-vooruit en horizon UK PV",
+  "tijdverschuiving_min": -30,
+  "tijdverschuiving_r": {
+    "-60": 0.7811,
+    "-45": 0.7927,
+    "-30": 0.7964,
+    "-15": 0.7909,
+    "0": 0.7771
+  },
+  "keuze": "LR POA",
+  "motivatie": "laagste nRMSE: 'LR POA' (16.64 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR POA', 'e6 (zonder intercept)', 'Ridge e6 + bewolking, temp., wind', 'LR POA getraind op ERA5'] -> eenvoudigste: 'LR POA' (16.64 %)",
+  "vouwen": [
+    [
+      "2024-03-06",
+      "2024-04-30",
+      "2024-05-01",
+      "2024-05-31"
+    ],
+    [
+      "2024-03-06",
+      "2024-05-31",
+      "2024-06-01",
+      "2024-06-30"
+    ]
+  ],
+  "validatie": {
+    "Baseline: gemiddelde dag (K x heldere hemel)": {
+      "nRMSE_%": 21.3417,
+      "nMAE_%": 15.6611,
+      "RMSE_kW": 1.0671,
+      "MAE_kW": 0.7831,
+      "R2": 0.484,
+      "dagfout_%": 32.3479,
+      "nRMSE_% 03-06..04-30 -> 05": 22.1956,
+      "nRMSE_% 03-06..05-31 -> 06": 20.4879,
+      "skill_pers": 0.1777,
+      "skill_gemdag": 0.0
+    },
+    "Baseline: persistence (gisteren)": {
+      "nRMSE_%": 25.954,
+      "nMAE_%": 17.0875,
+      "RMSE_kW": 1.2977,
+      "MAE_kW": 0.8544,
+      "R2": 0.236,
+      "dagfout_%": 37.0699,
+      "nRMSE_% 03-06..04-30 -> 05": 27.3096,
+      "nRMSE_% 03-06..05-31 -> 06": 24.5983,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.2161
+    },
+    "Smart persistence (K blijft gelijk)": {
+      "nRMSE_%": 23.3596,
+      "nMAE_%": 16.6883,
+      "RMSE_kW": 1.168,
+      "MAE_kW": 0.8344,
+      "R2": 0.3806,
+      "dagfout_%": 36.6644,
+      "nRMSE_% 03-06..04-30 -> 05": 24.7526,
+      "nRMSE_% 03-06..05-31 -> 06": 21.9666,
+      "skill_pers": 0.1,
+      "skill_gemdag": -0.0945
+    },
+    "Zero-shot pvlib (kWp, dakhoek, richting)": {
+      "nRMSE_%": 19.2417,
+      "nMAE_%": 13.0879,
+      "RMSE_kW": 0.9621,
+      "MAE_kW": 0.6544,
+      "R2": 0.5809,
+      "dagfout_%": 25.9733,
+      "nRMSE_% 03-06..04-30 -> 05": 19.6662,
+      "nRMSE_% 03-06..05-31 -> 06": 18.8173,
+      "skill_pers": 0.2586,
+      "skill_gemdag": 0.0984
+    },
+    "LR POA": {
+      "nRMSE_%": 16.6387,
+      "nMAE_%": 11.6685,
+      "RMSE_kW": 0.8319,
+      "MAE_kW": 0.5834,
+      "R2": 0.6868,
+      "dagfout_%": 19.0974,
+      "nRMSE_% 03-06..04-30 -> 05": 16.5829,
+      "nRMSE_% 03-06..05-31 -> 06": 16.6944,
+      "skill_pers": 0.3589,
+      "skill_gemdag": 0.2204
+    },
+    "e6 (zonder intercept)": {
+      "nRMSE_%": 16.8506,
+      "nMAE_%": 11.6229,
+      "RMSE_kW": 0.8425,
+      "MAE_kW": 0.5811,
+      "R2": 0.6787,
+      "dagfout_%": 19.5836,
+      "nRMSE_% 03-06..04-30 -> 05": 16.7294,
+      "nRMSE_% 03-06..05-31 -> 06": 16.9717,
+      "skill_pers": 0.3508,
+      "skill_gemdag": 0.2104
+    },
+    "Ridge e6 + bewolking, temp., wind": {
+      "nRMSE_%": 16.8063,
+      "nMAE_%": 11.995,
+      "RMSE_kW": 0.8403,
+      "MAE_kW": 0.5998,
+      "R2": 0.6804,
+      "dagfout_%": 19.021,
+      "nRMSE_% 03-06..04-30 -> 05": 16.7338,
+      "nRMSE_% 03-06..05-31 -> 06": 16.8788,
+      "skill_pers": 0.3525,
+      "skill_gemdag": 0.2125
+    },
+    "Gradient Boosting (e6 + extra)": {
+      "nRMSE_%": 16.792,
+      "nMAE_%": 11.6804,
+      "RMSE_kW": 0.8396,
+      "MAE_kW": 0.584,
+      "R2": 0.681,
+      "dagfout_%": 18.9157,
+      "nRMSE_% 03-06..04-30 -> 05": 16.8057,
+      "nRMSE_% 03-06..05-31 -> 06": 16.7783,
+      "skill_pers": 0.353,
+      "skill_gemdag": 0.2132
+    },
+    "LR POA getraind op ERA5": {
+      "nRMSE_%": 16.6824,
+      "nMAE_%": 11.8752,
+      "RMSE_kW": 0.8341,
+      "MAE_kW": 0.5938,
+      "R2": 0.6851,
+      "dagfout_%": 19.2163,
+      "nRMSE_% 03-06..04-30 -> 05": 16.6141,
+      "nRMSE_% 03-06..05-31 -> 06": 16.7507,
+      "skill_pers": 0.3572,
+      "skill_gemdag": 0.2183
+    }
+  },
+  "test": {
+    "periode": "2024-07-01 .. 2025-03-31",
+    "bevroren": {
+      "Baseline: gemiddelde dag (K x heldere hemel)": {
+        "nRMSE_%": 20.3302,
+        "nMAE_%": 13.903,
+        "RMSE_kW": 1.0165,
+        "MAE_kW": 0.6952,
+        "R2": 0.3761,
+        "dagfout_%": 47.101,
+        "skill_pers": 0.1603,
+        "skill_gemdag": 0.0
+      },
+      "Baseline: persistence (gisteren)": {
+        "nRMSE_%": 24.2119,
+        "nMAE_%": 15.4352,
+        "RMSE_kW": 1.2106,
+        "MAE_kW": 0.7718,
+        "R2": 0.1152,
+        "dagfout_%": 51.9697,
+        "skill_pers": 0.0,
+        "skill_gemdag": -0.1909
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 21.8087,
+        "nMAE_%": 14.7478,
+        "RMSE_kW": 1.0904,
+        "MAE_kW": 0.7374,
+        "R2": 0.2821,
+        "dagfout_%": 50.2762,
+        "skill_pers": 0.0993,
+        "skill_gemdag": -0.0727
+      },
+      "Zero-shot pvlib (kWp, dakhoek, richting)": {
+        "nRMSE_%": 17.493,
+        "nMAE_%": 11.9819,
+        "RMSE_kW": 0.8747,
+        "MAE_kW": 0.5991,
+        "R2": 0.5381,
+        "dagfout_%": 37.0065,
+        "skill_pers": 0.2775,
+        "skill_gemdag": 0.1396
+      },
+      "LR POA": {
+        "nRMSE_%": 14.5764,
+        "nMAE_%": 10.3213,
+        "RMSE_kW": 0.7288,
+        "MAE_kW": 0.5161,
+        "R2": 0.6793,
+        "dagfout_%": 27.152,
+        "skill_pers": 0.398,
+        "skill_gemdag": 0.283
+      },
+      "e6 (zonder intercept)": {
+        "nRMSE_%": 14.6722,
+        "nMAE_%": 10.179,
+        "RMSE_kW": 0.7336,
+        "MAE_kW": 0.509,
+        "R2": 0.6751,
+        "dagfout_%": 26.8258,
+        "skill_pers": 0.394,
+        "skill_gemdag": 0.2783
+      },
+      "Ridge e6 + bewolking, temp., wind": {
+        "nRMSE_%": 14.7085,
+        "nMAE_%": 10.4262,
+        "RMSE_kW": 0.7354,
+        "MAE_kW": 0.5213,
+        "R2": 0.6735,
+        "dagfout_%": 27.2226,
+        "skill_pers": 0.3925,
+        "skill_gemdag": 0.2765
+      },
+      "Gradient Boosting (e6 + extra)": {
+        "nRMSE_%": 14.8798,
+        "nMAE_%": 10.4282,
+        "RMSE_kW": 0.744,
+        "MAE_kW": 0.5214,
+        "R2": 0.6658,
+        "dagfout_%": 27.5613,
+        "skill_pers": 0.3854,
+        "skill_gemdag": 0.2681
+      },
+      "LR POA getraind op ERA5": {
+        "nRMSE_%": 14.6322,
+        "nMAE_%": 10.5894,
+        "RMSE_kW": 0.7316,
+        "MAE_kW": 0.5295,
+        "R2": 0.6768,
+        "dagfout_%": 27.8621,
+        "skill_pers": 0.3957,
+        "skill_gemdag": 0.2803
+      },
+      "LR POA met voorspelling dag 2": {
+        "nRMSE_%": 15.5268,
+        "nMAE_%": 11.1596,
+        "RMSE_kW": 0.7763,
+        "MAE_kW": 0.558,
+        "R2": 0.6361,
+        "dagfout_%": 30.3897,
+        "skill_pers": 0.3587,
+        "skill_gemdag": 0.2363
+      },
+      "Bovengrens: LR POA met ERA5 (perfect weer)": {
+        "nRMSE_%": 14.3436,
+        "nMAE_%": 10.1459,
+        "RMSE_kW": 0.7172,
+        "MAE_kW": 0.5073,
+        "R2": 0.6895,
+        "dagfout_%": 25.9353,
+        "skill_pers": 0.4076,
+        "skill_gemdag": 0.2945
+      }
+    },
+    "walkforward": {
+      "Baseline: gemiddelde dag (K x heldere hemel)": {
+        "nRMSE_%": 20.4663,
+        "nMAE_%": 14.0887,
+        "RMSE_kW": 1.0233,
+        "MAE_kW": 0.7044,
+        "R2": 0.3867,
+        "dagfout_%": 46.7465
+      },
+      "Baseline: persistence (gisteren)": {
+        "nRMSE_%": 24.6162,
+        "nMAE_%": 15.6946,
+        "RMSE_kW": 1.2308,
+        "MAE_kW": 0.7847,
+        "R2": 0.1128,
+        "dagfout_%": 52.0368
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 22.2516,
+        "nMAE_%": 15.0483,
+        "RMSE_kW": 1.1126,
+        "MAE_kW": 0.7524,
+        "R2": 0.2751,
+        "dagfout_%": 50.537
+      },
+      "Zero-shot pvlib (kWp, dakhoek, richting)": {
+        "nRMSE_%": 17.784,
+        "nMAE_%": 12.1877,
+        "RMSE_kW": 0.8892,
+        "MAE_kW": 0.6094,
+        "R2": 0.537,
+        "dagfout_%": 37.0724
+      },
+      "LR POA": {
+        "nRMSE_%": 14.7777,
+        "nMAE_%": 10.366,
+        "RMSE_kW": 0.7389,
+        "MAE_kW": 0.5183,
+        "R2": 0.6803,
+        "dagfout_%": 26.7967
+      },
+      "e6 (zonder intercept)": {
+        "nRMSE_%": 14.8583,
+        "nMAE_%": 10.2738,
+        "RMSE_kW": 0.7429,
+        "MAE_kW": 0.5137,
+        "R2": 0.6768,
+        "dagfout_%": 26.5379
+      },
+      "Ridge e6 + bewolking, temp., wind": {
+        "nRMSE_%": 14.8718,
+        "nMAE_%": 10.4276,
+        "RMSE_kW": 0.7436,
+        "MAE_kW": 0.5214,
+        "R2": 0.6762,
+        "dagfout_%": 26.6894
+      },
+      "Gradient Boosting (e6 + extra)": {
+        "nRMSE_%": 14.8524,
+        "nMAE_%": 10.2839,
+        "RMSE_kW": 0.7426,
+        "MAE_kW": 0.5142,
+        "R2": 0.677,
+        "dagfout_%": 26.4312
+      },
+      "LR POA getraind op ERA5": {
+        "nRMSE_%": 14.8369,
+        "nMAE_%": 10.6247,
+        "RMSE_kW": 0.7418,
+        "MAE_kW": 0.5312,
+        "R2": 0.6777,
+        "dagfout_%": 27.4691
+      }
+    },
+    "per_maand": {
+      "7": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 20.0119,
+        "Smart persistence (K blijft gelijk)": 22.2741,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 17.6159,
+        "LR POA": 15.1182,
+        "LR POA met voorspelling dag 2": 15.8035,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 14.6338
+      },
+      "8": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 21.1482,
+        "Smart persistence (K blijft gelijk)": 25.0799,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 18.5644,
+        "LR POA": 15.2581,
+        "LR POA met voorspelling dag 2": 16.5652,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 15.1046
+      },
+      "9": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 21.7857,
+        "Smart persistence (K blijft gelijk)": 22.9888,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 19.6103,
+        "LR POA": 15.8211,
+        "LR POA met voorspelling dag 2": 16.8074,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 15.3534
+      },
+      "10": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 19.9649,
+        "Smart persistence (K blijft gelijk)": 21.9408,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 17.0254,
+        "LR POA": 14.3596,
+        "LR POA met voorspelling dag 2": 15.2746,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 14.4685
+      },
+      "11": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 15.8527,
+        "Smart persistence (K blijft gelijk)": 16.4063,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 15.1539,
+        "LR POA": 12.3552,
+        "LR POA met voorspelling dag 2": 13.9688,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 12.2843
+      },
+      "12": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 10.5948,
+        "Smart persistence (K blijft gelijk)": 11.5079,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 12.0253,
+        "LR POA": 9.8412,
+        "LR POA met voorspelling dag 2": 10.7571,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 10.3114
+      },
+      "1": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 17.9744,
+        "Smart persistence (K blijft gelijk)": 18.8478,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 15.2236,
+        "LR POA": 12.9082,
+        "LR POA met voorspelling dag 2": 13.6665,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 12.6654
+      },
+      "2": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 18.9524,
+        "Smart persistence (K blijft gelijk)": 20.8307,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 16.4246,
+        "LR POA": 13.2682,
+        "LR POA met voorspelling dag 2": 14.2307,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 12.9618
+      },
+      "3": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 27.06,
+        "Smart persistence (K blijft gelijk)": 25.6755,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 20.301,
+        "LR POA": 17.3259,
+        "LR POA met voorspelling dag 2": 18.0045,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 16.9775
+      }
+    },
+    "per_seizoen": {
+      "herfst": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 18.272,
+        "Smart persistence (K blijft gelijk)": 19.7009,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 16.2295,
+        "LR POA": 13.5154,
+        "LR POA met voorspelling dag 2": 14.715,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 13.552
+      },
+      "voorjaar": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 27.06,
+        "Smart persistence (K blijft gelijk)": 25.6755,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 20.301,
+        "LR POA": 17.3259,
+        "LR POA met voorspelling dag 2": 18.0045,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 16.9775
+      },
+      "winter": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 16.5195,
+        "Smart persistence (K blijft gelijk)": 17.8014,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 14.8114,
+        "LR POA": 12.2106,
+        "LR POA met voorspelling dag 2": 13.0825,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 12.1216
+      },
+      "zomer": {
+        "Baseline: gemiddelde dag (K x heldere hemel)": 20.9125,
+        "Smart persistence (K blijft gelijk)": 23.4609,
+        "Zero-shot pvlib (kWp, dakhoek, richting)": 18.5197,
+        "LR POA": 15.3673,
+        "LR POA met voorspelling dag 2": 16.352,
+        "Bovengrens: LR POA met ERA5 (perfect weer)": 15.0003
+      }
+    }
+  },
+  "horizon": {
+    "1": {
+      "runs": 68,
+      "n": 58474,
+      "nRMSE_% model": 14.3593,
+      "nRMSE_% gemiddelde dag": 19.3604,
+      "nRMSE_% persistence": 24.256,
+      "nRMSE_% smart persistence": 21.0697,
+      "skill t.o.v. gemiddelde dag": 0.2583
+    },
+    "2": {
+      "runs": 69,
+      "n": 59641,
+      "nRMSE_% model": 15.6392,
+      "nRMSE_% gemiddelde dag": 20.6768,
+      "nRMSE_% persistence": 24.9816,
+      "nRMSE_% smart persistence": 22.2455,
+      "skill t.o.v. gemiddelde dag": 0.2436
+    },
+    "3": {
+      "runs": 68,
+      "n": 58932,
+      "nRMSE_% model": 17.1021,
+      "nRMSE_% gemiddelde dag": 20.2514,
+      "nRMSE_% persistence": 25.7367,
+      "nRMSE_% smart persistence": 22.8588,
+      "skill t.o.v. gemiddelde dag": 0.1555
+    },
+    "4": {
+      "runs": 68,
+      "n": 58007,
+      "nRMSE_% model": 18.256,
+      "nRMSE_% gemiddelde dag": 20.994,
+      "nRMSE_% persistence": 25.3506,
+      "nRMSE_% smart persistence": 22.5931,
+      "skill t.o.v. gemiddelde dag": 0.1304
+    },
+    "5": {
+      "runs": 68,
+      "n": 58474,
+      "nRMSE_% model": 18.7878,
+      "nRMSE_% gemiddelde dag": 19.3604,
+      "nRMSE_% persistence": 25.7788,
+      "nRMSE_% smart persistence": 22.4589,
+      "skill t.o.v. gemiddelde dag": 0.0296
+    },
+    "6": {
+      "runs": 69,
+      "n": 59641,
+      "nRMSE_% model": 20.398,
+      "nRMSE_% gemiddelde dag": 20.6768,
+      "nRMSE_% persistence": 26.8639,
+      "nRMSE_% smart persistence": 23.5231,
+      "skill t.o.v. gemiddelde dag": 0.0135
+    },
+    "7": {
+      "runs": 68,
+      "n": 58932,
+      "nRMSE_% model": 22.697,
+      "nRMSE_% gemiddelde dag": 20.2514,
+      "nRMSE_% persistence": 25.9332,
+      "nRMSE_% smart persistence": 22.7996,
+      "skill t.o.v. gemiddelde dag": -0.1208
+    },
+    "8": {
+      "runs": 68,
+      "n": 58007,
+      "nRMSE_% model": 21.9317,
+      "nRMSE_% gemiddelde dag": 20.994,
+      "nRMSE_% persistence": 26.833,
+      "nRMSE_% smart persistence": 23.8866,
+      "skill t.o.v. gemiddelde dag": -0.0447
+    },
+    "9": {
+      "runs": 68,
+      "n": 58474,
+      "nRMSE_% model": 22.7113,
+      "nRMSE_% gemiddelde dag": 19.3604,
+      "nRMSE_% persistence": 26.2459,
+      "nRMSE_% smart persistence": 22.8397,
+      "skill t.o.v. gemiddelde dag": -0.1731
+    },
+    "10": {
+      "runs": 69,
+      "n": 59641,
+      "nRMSE_% model": 23.381,
+      "nRMSE_% gemiddelde dag": 20.6768,
+      "nRMSE_% persistence": 26.8488,
+      "nRMSE_% smart persistence": 23.0325,
+      "skill t.o.v. gemiddelde dag": -0.1308
+    },
+    "11": {
+      "runs": 62,
+      "n": 51265,
+      "nRMSE_% model": 23.7187,
+      "nRMSE_% gemiddelde dag": 20.4915,
+      "nRMSE_% persistence": 25.6231,
+      "nRMSE_% smart persistence": 22.587,
+      "skill t.o.v. gemiddelde dag": -0.1575
+    },
+    "12": {
+      "runs": 62,
+      "n": 50341,
+      "nRMSE_% model": 23.2341,
+      "nRMSE_% gemiddelde dag": 21.1693,
+      "nRMSE_% persistence": 28.5548,
+      "nRMSE_% smart persistence": 24.8308,
+      "skill t.o.v. gemiddelde dag": -0.0975
+    },
+    "13": {
+      "runs": 62,
+      "n": 50818,
+      "nRMSE_% model": 22.8826,
+      "nRMSE_% gemiddelde dag": 19.4022,
+      "nRMSE_% persistence": 27.4085,
+      "nRMSE_% smart persistence": 23.5086,
+      "skill t.o.v. gemiddelde dag": -0.1794
+    },
+    "14": {
+      "runs": 62,
+      "n": 50701,
+      "nRMSE_% model": 23.652,
+      "nRMSE_% gemiddelde dag": 20.9453,
+      "nRMSE_% persistence": 27.4406,
+      "nRMSE_% smart persistence": 23.3395,
+      "skill t.o.v. gemiddelde dag": -0.1292
+    },
+    "15": {
+      "runs": 61,
+      "n": 50032,
+      "nRMSE_% model": 24.5197,
+      "nRMSE_% gemiddelde dag": 20.4988,
+      "nRMSE_% persistence": 27.0405,
+      "nRMSE_% smart persistence": 23.1943,
+      "skill t.o.v. gemiddelde dag": -0.1962
+    }
+  }
+}

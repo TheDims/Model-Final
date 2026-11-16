@@ -1,0 +1,1235 @@
+{
+  "taak": "5a stap 3 - tests HKUST",
+  "stations": [
+    "SQ_Apartment37_48",
+    "LSK_South",
+    "SQ1",
+    "SQ4",
+    "SQ567"
+  ],
+  "tijdverschuiving_min": -30,
+  "tijdverschuiving_r": {
+    "LSK_South": {
+      "-60": 0.79,
+      "-45": 0.8042,
+      "-30": 0.8088,
+      "-15": 0.8018,
+      "0": 0.7859,
+      "15": 0.7647,
+      "30": 0.7402,
+      "45": 0.7144,
+      "60": 0.6866
+    },
+    "SQ1": {
+      "-60": 0.7987,
+      "-45": 0.8072,
+      "-30": 0.8058,
+      "-15": 0.7932,
+      "0": 0.7726,
+      "15": 0.7471,
+      "30": 0.7191,
+      "45": 0.69,
+      "60": 0.6594
+    },
+    "SQ4": {
+      "-60": 0.7816,
+      "-45": 0.7942,
+      "-30": 0.7972,
+      "-15": 0.7889,
+      "0": 0.7724,
+      "15": 0.751,
+      "30": 0.7266,
+      "45": 0.7012,
+      "60": 0.6738
+    },
+    "SQ567": {
+      "-60": 0.7968,
+      "-45": 0.8137,
+      "-30": 0.821,
+      "-15": 0.817,
+      "0": 0.8043,
+      "15": 0.7862,
+      "30": 0.7645,
+      "45": 0.741,
+      "60": 0.7151
+    },
+    "SQ_Apartment37_48": {
+      "-60": 0.7859,
+      "-45": 0.8012,
+      "-30": 0.8056,
+      "-15": 0.7977,
+      "0": 0.7808,
+      "15": 0.7585,
+      "30": 0.7332,
+      "45": 0.7064,
+      "60": 0.6776
+    }
+  },
+  "test1_sensor": {
+    "train": "2021 (sensor OK)",
+    "test": "2022",
+    "tabel": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 22.7098,
+        "nMAE_%": 17.7765,
+        "RMSE_kW": 1.1355,
+        "MAE_kW": 0.8888,
+        "R2": 0.3657,
+        "dagfout_%": 45.4942,
+        "skill_pers": 0.0177,
+        "skill_gemdag": 0.0
+      },
+      "Baseline: persistence (gisteren)": {
+        "nRMSE_%": 23.1199,
+        "nMAE_%": 14.8785,
+        "RMSE_kW": 1.156,
+        "MAE_kW": 0.7439,
+        "R2": 0.3426,
+        "dagfout_%": 33.1597,
+        "skill_pers": 0.0,
+        "skill_gemdag": -0.0181
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 19.3218,
+        "nMAE_%": 13.1264,
+        "RMSE_kW": 0.9661,
+        "MAE_kW": 0.6563,
+        "R2": 0.5408,
+        "dagfout_%": 31.3007,
+        "skill_pers": 0.1643,
+        "skill_gemdag": 0.1492
+      },
+      "LR GHI (ERA5)": {
+        "nRMSE_%": 15.3762,
+        "nMAE_%": 10.8735,
+        "RMSE_kW": 0.7688,
+        "MAE_kW": 0.5437,
+        "R2": 0.7092,
+        "dagfout_%": 20.723,
+        "skill_pers": 0.3349,
+        "skill_gemdag": 0.3229
+      },
+      "LR POA (straling op het paneel)": {
+        "nRMSE_%": 15.3757,
+        "nMAE_%": 10.8725,
+        "RMSE_kW": 0.7688,
+        "MAE_kW": 0.5436,
+        "R2": 0.7092,
+        "dagfout_%": 20.7684,
+        "skill_pers": 0.335,
+        "skill_gemdag": 0.3229
+      },
+      "Sensor: LR straling": {
+        "nRMSE_%": 8.6007,
+        "nMAE_%": 5.961,
+        "RMSE_kW": 0.43,
+        "MAE_kW": 0.2981,
+        "R2": 0.909,
+        "dagfout_%": 9.4517,
+        "skill_pers": 0.628,
+        "skill_gemdag": 0.6213
+      },
+      "Sensor: Ridge (straling, temp., tijd)": {
+        "nRMSE_%": 8.4519,
+        "nMAE_%": 5.7718,
+        "RMSE_kW": 0.4226,
+        "MAE_kW": 0.2886,
+        "R2": 0.9121,
+        "dagfout_%": 10.2601,
+        "skill_pers": 0.6344,
+        "skill_gemdag": 0.6278
+      }
+    }
+  },
+  "keuze": "LR GHI (ERA5)",
+  "inputs": [
+    "GHI_W"
+  ],
+  "motivatie": "laagste nRMSE: 'LR GHI (ERA5)' (15.38 %); het beste model is geen complex model. Binnen 0.5 pp: ['LR GHI (ERA5)', 'LR POA (straling op het paneel)', 'LR EFF_T (POA + reflectie, spectrum, stof, temp.)', 'e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)', 'e6: EFF_T x (a + b KT_POA), zonder intercept', 'Ridge e6 (zonder intercept)', 'Ridge e6 + bewolking, regen, vochtigheid'] -> eenvoudigste: 'LR GHI (ERA5)' (15.38 %)",
+  "vouwen": [
+    "2021 -> 2022 H1",
+    "2021 + 2022 H1 -> 2022 H2"
+  ],
+  "validatie": {
+    "Baseline: gemiddelde dag": {
+      "nRMSE_%": 22.6499,
+      "nMAE_%": 17.765,
+      "RMSE_kW": 1.1325,
+      "MAE_kW": 0.8883,
+      "R2": 0.3565,
+      "dagfout_%": 46.3785,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 21.0505,
+      "nRMSE_% 2021 -> 2022 H1": 24.2493,
+      "skill_pers": 0.0201,
+      "skill_gemdag": 0.0
+    },
+    "Baseline: persistence (gisteren)": {
+      "nRMSE_%": 23.1143,
+      "nMAE_%": 14.8737,
+      "RMSE_kW": 1.1557,
+      "MAE_kW": 0.7437,
+      "R2": 0.3355,
+      "dagfout_%": 33.5809,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 23.1812,
+      "nRMSE_% 2021 -> 2022 H1": 23.0474,
+      "skill_pers": 0.0,
+      "skill_gemdag": -0.0205
+    },
+    "Smart persistence (K blijft gelijk)": {
+      "nRMSE_%": 19.3369,
+      "nMAE_%": 13.138,
+      "RMSE_kW": 0.9668,
+      "MAE_kW": 0.6569,
+      "R2": 0.5341,
+      "dagfout_%": 31.8459,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 18.8717,
+      "nRMSE_% 2021 -> 2022 H1": 19.8021,
+      "skill_pers": 0.1634,
+      "skill_gemdag": 0.1463
+    },
+    "LR GHI (ERA5)": {
+      "nRMSE_%": 15.3821,
+      "nMAE_%": 10.9414,
+      "RMSE_kW": 0.7691,
+      "MAE_kW": 0.5471,
+      "R2": 0.7043,
+      "dagfout_%": 21.4837,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 14.6402,
+      "nRMSE_% 2021 -> 2022 H1": 16.124,
+      "skill_pers": 0.3345,
+      "skill_gemdag": 0.3209
+    },
+    "LR POA (straling op het paneel)": {
+      "nRMSE_%": 15.3827,
+      "nMAE_%": 10.9448,
+      "RMSE_kW": 0.7691,
+      "MAE_kW": 0.5472,
+      "R2": 0.7043,
+      "dagfout_%": 21.5332,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 14.6399,
+      "nRMSE_% 2021 -> 2022 H1": 16.1255,
+      "skill_pers": 0.3345,
+      "skill_gemdag": 0.3208
+    },
+    "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": {
+      "nRMSE_%": 15.5971,
+      "nMAE_%": 11.1182,
+      "RMSE_kW": 0.7799,
+      "MAE_kW": 0.5559,
+      "R2": 0.6958,
+      "dagfout_%": 22.2398,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 14.7719,
+      "nRMSE_% 2021 -> 2022 H1": 16.4222,
+      "skill_pers": 0.3252,
+      "skill_gemdag": 0.3114
+    },
+    "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": {
+      "nRMSE_%": 15.5909,
+      "nMAE_%": 11.1272,
+      "RMSE_kW": 0.7795,
+      "MAE_kW": 0.5564,
+      "R2": 0.6961,
+      "dagfout_%": 22.1558,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 14.7838,
+      "nRMSE_% 2021 -> 2022 H1": 16.3979,
+      "skill_pers": 0.3255,
+      "skill_gemdag": 0.3117
+    },
+    "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+      "nRMSE_%": 15.6292,
+      "nMAE_%": 11.1783,
+      "RMSE_kW": 0.7815,
+      "MAE_kW": 0.5589,
+      "R2": 0.6945,
+      "dagfout_%": 22.1932,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 14.7995,
+      "nRMSE_% 2021 -> 2022 H1": 16.459,
+      "skill_pers": 0.3238,
+      "skill_gemdag": 0.31
+    },
+    "Ridge e6 (zonder intercept)": {
+      "nRMSE_%": 15.6291,
+      "nMAE_%": 11.1781,
+      "RMSE_kW": 0.7815,
+      "MAE_kW": 0.5589,
+      "R2": 0.6945,
+      "dagfout_%": 22.1921,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 14.7996,
+      "nRMSE_% 2021 -> 2022 H1": 16.4586,
+      "skill_pers": 0.3238,
+      "skill_gemdag": 0.31
+    },
+    "Ridge e6 + bewolking, regen, vochtigheid": {
+      "nRMSE_%": 15.5643,
+      "nMAE_%": 11.02,
+      "RMSE_kW": 0.7782,
+      "MAE_kW": 0.551,
+      "R2": 0.6969,
+      "dagfout_%": 21.935,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 14.7002,
+      "nRMSE_% 2021 -> 2022 H1": 16.4284,
+      "skill_pers": 0.3266,
+      "skill_gemdag": 0.3128
+    },
+    "Random Forest (e6 + extra)": {
+      "nRMSE_%": 16.1524,
+      "nMAE_%": 11.3395,
+      "RMSE_kW": 0.8076,
+      "MAE_kW": 0.567,
+      "R2": 0.6725,
+      "dagfout_%": 22.327,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 14.958,
+      "nRMSE_% 2021 -> 2022 H1": 17.3468,
+      "skill_pers": 0.3012,
+      "skill_gemdag": 0.2869
+    },
+    "Gradient Boosting (e6 + extra)": {
+      "nRMSE_%": 15.6377,
+      "nMAE_%": 11.0468,
+      "RMSE_kW": 0.7819,
+      "MAE_kW": 0.5523,
+      "R2": 0.6936,
+      "dagfout_%": 21.7268,
+      "nRMSE_% 2021 + 2022 H1 -> 2022 H2": 14.6346,
+      "nRMSE_% 2021 -> 2022 H1": 16.6409,
+      "skill_pers": 0.3235,
+      "skill_gemdag": 0.3096
+    }
+  },
+  "coefficienten": [
+    {
+      "model": "e6: EFF_T x (a + b KT_POA), zonder intercept",
+      "vouw": "2021 -> 2022 H1",
+      "a": 0.000978154165241623,
+      "b": 3.7223592691968644e-05
+    },
+    {
+      "model": "Ridge e6 (zonder intercept)",
+      "vouw": "2021 -> 2022 H1",
+      "a": 0.0009779883257368378,
+      "b": 3.742104288252091e-05
+    },
+    {
+      "model": "e6: EFF_T x (a + b KT_POA), zonder intercept",
+      "vouw": "2021 + 2022 H1 -> 2022 H2",
+      "a": 0.0007151179890050833,
+      "b": 0.0003038420431259673
+    },
+    {
+      "model": "Ridge e6 (zonder intercept)",
+      "vouw": "2021 + 2022 H1 -> 2022 H2",
+      "a": 0.0007147681360460602,
+      "b": 0.0003042405427090866
+    }
+  ],
+  "diagnose_achteraf": {
+    "niveau_vs_vorm": [
+      {
+        "station": "LSK_South",
+        "model": "LR GHI (ERA5)",
+        "DC_AC": 1.12,
+        "capaciteit_div_kWpAC": 0.9285,
+        "voorspeld_div_werkelijk": 1.0718,
+        "nRMSE_%": 16.9931,
+        "nRMSE_na_schaal_%": 16.7553
+      },
+      {
+        "station": "LSK_South",
+        "model": "Zero-shot 2a: Kaggle-eindmodel (LR POA)",
+        "DC_AC": 1.12,
+        "capaciteit_div_kWpAC": 0.9285,
+        "voorspeld_div_werkelijk": 1.4335,
+        "nRMSE_%": 22.1219,
+        "nRMSE_na_schaal_%": 17.122
+      },
+      {
+        "station": "LSK_South",
+        "model": "Zero-shot 2a: Kaggle-e6",
+        "DC_AC": 1.12,
+        "capaciteit_div_kWpAC": 0.9285,
+        "voorspeld_div_werkelijk": 1.541,
+        "nRMSE_%": 26.3329,
+        "nRMSE_na_schaal_%": 17.993
+      },
+      {
+        "station": "LSK_South",
+        "model": "Zero-shot 2b: pvlib-natuurkunde",
+        "DC_AC": 1.12,
+        "capaciteit_div_kWpAC": 0.9285,
+        "voorspeld_div_werkelijk": 1.1976,
+        "nRMSE_%": 18.3619,
+        "nRMSE_na_schaal_%": 16.9958
+      },
+      {
+        "station": "SQ1",
+        "model": "LR GHI (ERA5)",
+        "DC_AC": 1.24,
+        "capaciteit_div_kWpAC": 0.977,
+        "voorspeld_div_werkelijk": 1.1108,
+        "nRMSE_%": 16.0309,
+        "nRMSE_na_schaal_%": 15.5521
+      },
+      {
+        "station": "SQ1",
+        "model": "Zero-shot 2a: Kaggle-eindmodel (LR POA)",
+        "DC_AC": 1.24,
+        "capaciteit_div_kWpAC": 0.977,
+        "voorspeld_div_werkelijk": 1.4191,
+        "nRMSE_%": 20.2629,
+        "nRMSE_na_schaal_%": 16.0078
+      },
+      {
+        "station": "SQ1",
+        "model": "Zero-shot 2a: Kaggle-e6",
+        "DC_AC": 1.24,
+        "capaciteit_div_kWpAC": 0.977,
+        "voorspeld_div_werkelijk": 1.5236,
+        "nRMSE_%": 23.886,
+        "nRMSE_na_schaal_%": 16.5965
+      },
+      {
+        "station": "SQ1",
+        "model": "Zero-shot 2b: pvlib-natuurkunde",
+        "DC_AC": 1.24,
+        "capaciteit_div_kWpAC": 0.977,
+        "voorspeld_div_werkelijk": 1.3086,
+        "nRMSE_%": 18.8879,
+        "nRMSE_na_schaal_%": 15.8269
+      },
+      {
+        "station": "SQ4",
+        "model": "LR GHI (ERA5)",
+        "DC_AC": 1.07,
+        "capaciteit_div_kWpAC": 0.8845,
+        "voorspeld_div_werkelijk": 1.1003,
+        "nRMSE_%": 16.5103,
+        "nRMSE_na_schaal_%": 16.1308
+      },
+      {
+        "station": "SQ4",
+        "model": "Zero-shot 2a: Kaggle-eindmodel (LR POA)",
+        "DC_AC": 1.07,
+        "capaciteit_div_kWpAC": 0.8845,
+        "voorspeld_div_werkelijk": 1.5498,
+        "nRMSE_%": 23.9428,
+        "nRMSE_na_schaal_%": 16.5937
+      },
+      {
+        "station": "SQ4",
+        "model": "Zero-shot 2a: Kaggle-e6",
+        "DC_AC": 1.07,
+        "capaciteit_div_kWpAC": 0.8845,
+        "voorspeld_div_werkelijk": 1.6654,
+        "nRMSE_%": 28.4314,
+        "nRMSE_na_schaal_%": 17.2516
+      },
+      {
+        "station": "SQ4",
+        "model": "Zero-shot 2b: pvlib-natuurkunde",
+        "DC_AC": 1.07,
+        "capaciteit_div_kWpAC": 0.8845,
+        "voorspeld_div_werkelijk": 1.2251,
+        "nRMSE_%": 18.0221,
+        "nRMSE_na_schaal_%": 16.4162
+      },
+      {
+        "station": "SQ567",
+        "model": "LR GHI (ERA5)",
+        "DC_AC": 1.0,
+        "capaciteit_div_kWpAC": 0.8016,
+        "voorspeld_div_werkelijk": 1.0887,
+        "nRMSE_%": 16.484,
+        "nRMSE_na_schaal_%": 16.2111
+      },
+      {
+        "station": "SQ567",
+        "model": "Zero-shot 2a: Kaggle-eindmodel (LR POA)",
+        "DC_AC": 1.0,
+        "capaciteit_div_kWpAC": 0.8016,
+        "voorspeld_div_werkelijk": 1.6929,
+        "nRMSE_%": 27.9441,
+        "nRMSE_na_schaal_%": 16.7244
+      },
+      {
+        "station": "SQ567",
+        "model": "Zero-shot 2a: Kaggle-e6",
+        "DC_AC": 1.0,
+        "capaciteit_div_kWpAC": 0.8016,
+        "voorspeld_div_werkelijk": 1.8201,
+        "nRMSE_%": 33.1582,
+        "nRMSE_na_schaal_%": 17.3482
+      },
+      {
+        "station": "SQ567",
+        "model": "Zero-shot 2b: pvlib-natuurkunde",
+        "DC_AC": 1.0,
+        "capaciteit_div_kWpAC": 0.8016,
+        "voorspeld_div_werkelijk": 1.2543,
+        "nRMSE_%": 18.5296,
+        "nRMSE_na_schaal_%": 16.4823
+      },
+      {
+        "station": "SQ_Apartment37_48",
+        "model": "LR GHI (ERA5)",
+        "DC_AC": 0.91,
+        "capaciteit_div_kWpAC": 0.7419,
+        "voorspeld_div_werkelijk": 1.2155,
+        "nRMSE_%": 17.1106,
+        "nRMSE_na_schaal_%": 15.7187
+      },
+      {
+        "station": "SQ_Apartment37_48",
+        "model": "Zero-shot 2a: Kaggle-eindmodel (LR POA)",
+        "DC_AC": 0.91,
+        "capaciteit_div_kWpAC": 0.7419,
+        "voorspeld_div_werkelijk": 2.0296,
+        "nRMSE_%": 35.403,
+        "nRMSE_na_schaal_%": 16.2429
+      },
+      {
+        "station": "SQ_Apartment37_48",
+        "model": "Zero-shot 2a: Kaggle-e6",
+        "DC_AC": 0.91,
+        "capaciteit_div_kWpAC": 0.7419,
+        "voorspeld_div_werkelijk": 2.1906,
+        "nRMSE_%": 41.4151,
+        "nRMSE_na_schaal_%": 16.7577
+      },
+      {
+        "station": "SQ_Apartment37_48",
+        "model": "Zero-shot 2b: pvlib-natuurkunde",
+        "DC_AC": 0.91,
+        "capaciteit_div_kWpAC": 0.7419,
+        "voorspeld_div_werkelijk": 1.3798,
+        "nRMSE_%": 19.8428,
+        "nRMSE_na_schaal_%": 16.0084
+      }
+    ],
+    "opbrengst_per_era5": {
+      "(2021, 'droog (okt-apr)')": {
+        "LSK_South": 0.8523,
+        "SQ1": 0.8243,
+        "SQ4": 0.7479,
+        "SQ567": 0.7322,
+        "SQ_Apartment37_48": 0.6091
+      },
+      "(2021, 'moesson (mei-sep)')": {
+        "LSK_South": 0.8916,
+        "SQ1": 0.8892,
+        "SQ4": 0.824,
+        "SQ567": 0.7586,
+        "SQ_Apartment37_48": 0.6709
+      },
+      "(2022, 'droog (okt-apr)')": {
+        "LSK_South": 0.824,
+        "SQ1": 0.7984,
+        "SQ4": 0.7436,
+        "SQ567": 0.6943,
+        "SQ_Apartment37_48": 0.5896
+      },
+      "(2022, 'moesson (mei-sep)')": {
+        "LSK_South": 0.8297,
+        "SQ1": 0.834,
+        "SQ4": 0.7664,
+        "SQ567": 0.7028,
+        "SQ_Apartment37_48": 0.6026
+      },
+      "(2023, 'droog (okt-apr)')": {
+        "LSK_South": 0.7435,
+        "SQ1": 0.7182,
+        "SQ4": 0.6743,
+        "SQ567": 0.6271,
+        "SQ_Apartment37_48": 0.5108
+      },
+      "(2023, 'moesson (mei-sep)')": {
+        "LSK_South": 0.7755,
+        "SQ1": 0.8388,
+        "SQ4": 0.7349,
+        "SQ567": 0.6625,
+        "SQ_Apartment37_48": 0.5606
+      }
+    }
+  },
+  "test_2023": {
+    "A": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 21.8227,
+        "nMAE_%": 16.5586,
+        "RMSE_kW": 1.0911,
+        "MAE_kW": 0.8279,
+        "R2": 0.3348,
+        "dagfout_%": 43.3053,
+        "skill_pers": 0.0359,
+        "skill_gemdag": 0.0
+      },
+      "Baseline: persistence (gisteren)": {
+        "nRMSE_%": 22.6364,
+        "nMAE_%": 14.7433,
+        "RMSE_kW": 1.1318,
+        "MAE_kW": 0.7372,
+        "R2": 0.2842,
+        "dagfout_%": 33.5251,
+        "skill_pers": 0.0,
+        "skill_gemdag": -0.0373
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 18.4686,
+        "nMAE_%": 12.7057,
+        "RMSE_kW": 0.9234,
+        "MAE_kW": 0.6353,
+        "R2": 0.5235,
+        "dagfout_%": 30.9798,
+        "skill_pers": 0.1841,
+        "skill_gemdag": 0.1537
+      },
+      "LR GHI (ERA5)": {
+        "nRMSE_%": 16.6254,
+        "nMAE_%": 11.6709,
+        "RMSE_kW": 0.8313,
+        "MAE_kW": 0.5835,
+        "R2": 0.6139,
+        "dagfout_%": 23.9547,
+        "skill_pers": 0.2655,
+        "skill_gemdag": 0.2382
+      },
+      "LR POA (straling op het paneel)": {
+        "nRMSE_%": 16.6266,
+        "nMAE_%": 11.6752,
+        "RMSE_kW": 0.8313,
+        "MAE_kW": 0.5838,
+        "R2": 0.6138,
+        "dagfout_%": 23.9883,
+        "skill_pers": 0.2655,
+        "skill_gemdag": 0.2381
+      },
+      "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": {
+        "nRMSE_%": 16.7833,
+        "nMAE_%": 11.8411,
+        "RMSE_kW": 0.8392,
+        "MAE_kW": 0.5921,
+        "R2": 0.6065,
+        "dagfout_%": 24.6935,
+        "skill_pers": 0.2586,
+        "skill_gemdag": 0.2309
+      },
+      "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": {
+        "nRMSE_%": 16.7888,
+        "nMAE_%": 11.8839,
+        "RMSE_kW": 0.8394,
+        "MAE_kW": 0.5942,
+        "R2": 0.6063,
+        "dagfout_%": 24.8118,
+        "skill_pers": 0.2583,
+        "skill_gemdag": 0.2307
+      },
+      "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+        "nRMSE_%": 16.6713,
+        "nMAE_%": 11.8488,
+        "RMSE_kW": 0.8336,
+        "MAE_kW": 0.5924,
+        "R2": 0.6118,
+        "dagfout_%": 24.209,
+        "skill_pers": 0.2635,
+        "skill_gemdag": 0.2361
+      },
+      "Ridge e6 (zonder intercept)": {
+        "nRMSE_%": 16.671,
+        "nMAE_%": 11.8484,
+        "RMSE_kW": 0.8336,
+        "MAE_kW": 0.5924,
+        "R2": 0.6118,
+        "dagfout_%": 24.207,
+        "skill_pers": 0.2635,
+        "skill_gemdag": 0.2361
+      },
+      "Ridge e6 + bewolking, regen, vochtigheid": {
+        "nRMSE_%": 16.5864,
+        "nMAE_%": 11.6767,
+        "RMSE_kW": 0.8293,
+        "MAE_kW": 0.5838,
+        "R2": 0.6157,
+        "dagfout_%": 23.9905,
+        "skill_pers": 0.2673,
+        "skill_gemdag": 0.2399
+      },
+      "Random Forest (e6 + extra)": {
+        "nRMSE_%": 17.0231,
+        "nMAE_%": 11.7639,
+        "RMSE_kW": 0.8512,
+        "MAE_kW": 0.5882,
+        "R2": 0.5952,
+        "dagfout_%": 24.0704,
+        "skill_pers": 0.248,
+        "skill_gemdag": 0.2199
+      },
+      "Gradient Boosting (e6 + extra)": {
+        "nRMSE_%": 16.6038,
+        "nMAE_%": 11.6016,
+        "RMSE_kW": 0.8302,
+        "MAE_kW": 0.5801,
+        "R2": 0.6149,
+        "dagfout_%": 24.0144,
+        "skill_pers": 0.2665,
+        "skill_gemdag": 0.2392
+      },
+      "Zero-shot 2a: Kaggle-eindmodel (LR POA)": {
+        "nRMSE_%": 26.6461,
+        "nMAE_%": 21.0114,
+        "RMSE_kW": 1.3323,
+        "MAE_kW": 1.0506,
+        "R2": 0.0082,
+        "dagfout_%": 63.2936,
+        "skill_pers": -0.1771,
+        "skill_gemdag": -0.221
+      },
+      "Zero-shot 2a: Kaggle-e6": {
+        "nRMSE_%": 31.4507,
+        "nMAE_%": 23.8655,
+        "RMSE_kW": 1.5725,
+        "MAE_kW": 1.1933,
+        "R2": -0.3817,
+        "dagfout_%": 75.2835,
+        "skill_pers": -0.3894,
+        "skill_gemdag": -0.4412
+      },
+      "Zero-shot 2b: pvlib-natuurkunde": {
+        "nRMSE_%": 18.7402,
+        "nMAE_%": 13.227,
+        "RMSE_kW": 0.937,
+        "MAE_kW": 0.6613,
+        "R2": 0.5094,
+        "dagfout_%": 31.8569,
+        "skill_pers": 0.1721,
+        "skill_gemdag": 0.1413
+      }
+    },
+    "A_alleen_2021": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 21.4261,
+        "nMAE_%": 16.3594,
+        "RMSE_kW": 1.0713,
+        "MAE_kW": 0.818,
+        "R2": 0.3465,
+        "dagfout_%": 42.2512,
+        "skill_pers": 0.0446,
+        "skill_gemdag": 0.0
+      },
+      "Baseline: persistence (gisteren)": {
+        "nRMSE_%": 22.4271,
+        "nMAE_%": 14.6092,
+        "RMSE_kW": 1.1214,
+        "MAE_kW": 0.7305,
+        "R2": 0.284,
+        "dagfout_%": 33.5252,
+        "skill_pers": 0.0,
+        "skill_gemdag": -0.0467
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 18.3099,
+        "nMAE_%": 12.5953,
+        "RMSE_kW": 0.9155,
+        "MAE_kW": 0.6298,
+        "R2": 0.5227,
+        "dagfout_%": 30.9699,
+        "skill_pers": 0.1836,
+        "skill_gemdag": 0.1454
+      },
+      "LR GHI (ERA5)": {
+        "nRMSE_%": 16.8258,
+        "nMAE_%": 11.8206,
+        "RMSE_kW": 0.8413,
+        "MAE_kW": 0.591,
+        "R2": 0.597,
+        "dagfout_%": 25.2134,
+        "skill_pers": 0.2498,
+        "skill_gemdag": 0.2147
+      },
+      "LR POA (straling op het paneel)": {
+        "nRMSE_%": 16.8252,
+        "nMAE_%": 11.8219,
+        "RMSE_kW": 0.8413,
+        "MAE_kW": 0.5911,
+        "R2": 0.597,
+        "dagfout_%": 25.2311,
+        "skill_pers": 0.2498,
+        "skill_gemdag": 0.2147
+      },
+      "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": {
+        "nRMSE_%": 17.0605,
+        "nMAE_%": 12.0101,
+        "RMSE_kW": 0.853,
+        "MAE_kW": 0.6005,
+        "R2": 0.5857,
+        "dagfout_%": 26.0557,
+        "skill_pers": 0.2393,
+        "skill_gemdag": 0.2038
+      },
+      "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": {
+        "nRMSE_%": 17.0616,
+        "nMAE_%": 12.0521,
+        "RMSE_kW": 0.8531,
+        "MAE_kW": 0.6026,
+        "R2": 0.5856,
+        "dagfout_%": 26.3129,
+        "skill_pers": 0.2392,
+        "skill_gemdag": 0.2037
+      },
+      "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+        "nRMSE_%": 17.0813,
+        "nMAE_%": 12.1837,
+        "RMSE_kW": 0.8541,
+        "MAE_kW": 0.6092,
+        "R2": 0.5846,
+        "dagfout_%": 26.5585,
+        "skill_pers": 0.2384,
+        "skill_gemdag": 0.2028
+      },
+      "Ridge e6 (zonder intercept)": {
+        "nRMSE_%": 17.0811,
+        "nMAE_%": 12.1835,
+        "RMSE_kW": 0.8541,
+        "MAE_kW": 0.6092,
+        "R2": 0.5846,
+        "dagfout_%": 26.5573,
+        "skill_pers": 0.2384,
+        "skill_gemdag": 0.2028
+      },
+      "Ridge e6 + bewolking, regen, vochtigheid": {
+        "nRMSE_%": 17.0501,
+        "nMAE_%": 12.0033,
+        "RMSE_kW": 0.8525,
+        "MAE_kW": 0.6002,
+        "R2": 0.5862,
+        "dagfout_%": 26.0434,
+        "skill_pers": 0.2398,
+        "skill_gemdag": 0.2042
+      },
+      "Random Forest (e6 + extra)": {
+        "nRMSE_%": 17.6865,
+        "nMAE_%": 12.3634,
+        "RMSE_kW": 0.8843,
+        "MAE_kW": 0.6182,
+        "R2": 0.5547,
+        "dagfout_%": 26.2435,
+        "skill_pers": 0.2114,
+        "skill_gemdag": 0.1745
+      },
+      "Gradient Boosting (e6 + extra)": {
+        "nRMSE_%": 17.4766,
+        "nMAE_%": 12.2704,
+        "RMSE_kW": 0.8738,
+        "MAE_kW": 0.6135,
+        "R2": 0.5652,
+        "dagfout_%": 26.0272,
+        "skill_pers": 0.2207,
+        "skill_gemdag": 0.1843
+      }
+    },
+    "B_walkforward": {
+      "Baseline: gemiddelde dag": {
+        "nRMSE_%": 21.9656,
+        "nMAE_%": 16.6677,
+        "RMSE_kW": 1.0983,
+        "MAE_kW": 0.8334,
+        "R2": 0.335,
+        "dagfout_%": 43.2944,
+        "skill_pers": 0.0364,
+        "skill_gemdag": 0.0
+      },
+      "Baseline: persistence (gisteren)": {
+        "nRMSE_%": 22.7956,
+        "nMAE_%": 14.845,
+        "RMSE_kW": 1.1398,
+        "MAE_kW": 0.7422,
+        "R2": 0.2838,
+        "dagfout_%": 33.5265,
+        "skill_pers": 0.0,
+        "skill_gemdag": -0.0378
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "nRMSE_%": 18.5973,
+        "nMAE_%": 12.7931,
+        "RMSE_kW": 0.9299,
+        "MAE_kW": 0.6397,
+        "R2": 0.5233,
+        "dagfout_%": 31.0005,
+        "skill_pers": 0.1842,
+        "skill_gemdag": 0.1533
+      },
+      "LR GHI (ERA5)": {
+        "nRMSE_%": 16.584,
+        "nMAE_%": 11.6758,
+        "RMSE_kW": 0.8292,
+        "MAE_kW": 0.5838,
+        "R2": 0.6209,
+        "dagfout_%": 23.5619,
+        "skill_pers": 0.2725,
+        "skill_gemdag": 0.245
+      },
+      "LR POA (straling op het paneel)": {
+        "nRMSE_%": 16.5851,
+        "nMAE_%": 11.6803,
+        "RMSE_kW": 0.8293,
+        "MAE_kW": 0.584,
+        "R2": 0.6209,
+        "dagfout_%": 23.5951,
+        "skill_pers": 0.2724,
+        "skill_gemdag": 0.245
+      },
+      "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": {
+        "nRMSE_%": 16.7615,
+        "nMAE_%": 11.8616,
+        "RMSE_kW": 0.8381,
+        "MAE_kW": 0.5931,
+        "R2": 0.6128,
+        "dagfout_%": 24.4491,
+        "skill_pers": 0.2647,
+        "skill_gemdag": 0.2369
+      },
+      "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": {
+        "nRMSE_%": 16.7899,
+        "nMAE_%": 11.9105,
+        "RMSE_kW": 0.8395,
+        "MAE_kW": 0.5955,
+        "R2": 0.6115,
+        "dagfout_%": 24.5456,
+        "skill_pers": 0.2635,
+        "skill_gemdag": 0.2356
+      },
+      "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+        "nRMSE_%": 16.6652,
+        "nMAE_%": 11.8217,
+        "RMSE_kW": 0.8333,
+        "MAE_kW": 0.5911,
+        "R2": 0.6172,
+        "dagfout_%": 23.6303,
+        "skill_pers": 0.2689,
+        "skill_gemdag": 0.2413
+      },
+      "Ridge e6 (zonder intercept)": {
+        "nRMSE_%": 16.665,
+        "nMAE_%": 11.8214,
+        "RMSE_kW": 0.8332,
+        "MAE_kW": 0.5911,
+        "R2": 0.6172,
+        "dagfout_%": 23.629,
+        "skill_pers": 0.2689,
+        "skill_gemdag": 0.2413
+      },
+      "Ridge e6 + bewolking, regen, vochtigheid": {
+        "nRMSE_%": 16.5723,
+        "nMAE_%": 11.6982,
+        "RMSE_kW": 0.8286,
+        "MAE_kW": 0.5849,
+        "R2": 0.6215,
+        "dagfout_%": 23.6537,
+        "skill_pers": 0.273,
+        "skill_gemdag": 0.2455
+      },
+      "Random Forest (e6 + extra)": {
+        "nRMSE_%": 17.031,
+        "nMAE_%": 11.7517,
+        "RMSE_kW": 0.8516,
+        "MAE_kW": 0.5876,
+        "R2": 0.6002,
+        "dagfout_%": 23.5446,
+        "skill_pers": 0.2529,
+        "skill_gemdag": 0.2247
+      },
+      "Gradient Boosting (e6 + extra)": {
+        "nRMSE_%": 16.5402,
+        "nMAE_%": 11.5666,
+        "RMSE_kW": 0.827,
+        "MAE_kW": 0.5783,
+        "R2": 0.6229,
+        "dagfout_%": 23.4954,
+        "skill_pers": 0.2744,
+        "skill_gemdag": 0.247
+      }
+    },
+    "per_station": {
+      "Baseline: gemiddelde dag": {
+        "LSK_South": 22.5478,
+        "SQ1": 21.2632,
+        "SQ4": 22.0806,
+        "SQ567": 22.0413,
+        "SQ_Apartment37_48": 21.1951
+      },
+      "Baseline: persistence (gisteren)": {
+        "LSK_South": 23.8817,
+        "SQ1": 21.387,
+        "SQ4": 22.8382,
+        "SQ567": 23.4468,
+        "SQ_Apartment37_48": 21.5767
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "LSK_South": 19.0366,
+        "SQ1": 17.4715,
+        "SQ4": 18.6659,
+        "SQ567": 19.0403,
+        "SQ_Apartment37_48": 18.069
+      },
+      "LR GHI (ERA5)": {
+        "LSK_South": 16.9931,
+        "SQ1": 16.0309,
+        "SQ4": 16.5103,
+        "SQ567": 16.484,
+        "SQ_Apartment37_48": 17.1106
+      },
+      "LR POA (straling op het paneel)": {
+        "LSK_South": 16.9954,
+        "SQ1": 16.0321,
+        "SQ4": 16.5111,
+        "SQ567": 16.4841,
+        "SQ_Apartment37_48": 17.1124
+      },
+      "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": {
+        "LSK_South": 17.166,
+        "SQ1": 16.1944,
+        "SQ4": 16.693,
+        "SQ567": 16.6441,
+        "SQ_Apartment37_48": 17.2237
+      },
+      "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": {
+        "LSK_South": 17.2429,
+        "SQ1": 16.1266,
+        "SQ4": 16.699,
+        "SQ567": 16.6836,
+        "SQ_Apartment37_48": 17.1971
+      },
+      "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+        "LSK_South": 16.9404,
+        "SQ1": 16.1177,
+        "SQ4": 16.5804,
+        "SQ567": 16.5428,
+        "SQ_Apartment37_48": 17.1683
+      },
+      "Ridge e6 (zonder intercept)": {
+        "LSK_South": 16.9401,
+        "SQ1": 16.1174,
+        "SQ4": 16.5801,
+        "SQ567": 16.5425,
+        "SQ_Apartment37_48": 17.1679
+      },
+      "Ridge e6 + bewolking, regen, vochtigheid": {
+        "LSK_South": 16.8449,
+        "SQ1": 16.0715,
+        "SQ4": 16.502,
+        "SQ567": 16.4174,
+        "SQ_Apartment37_48": 17.0921
+      },
+      "Random Forest (e6 + extra)": {
+        "LSK_South": 17.3664,
+        "SQ1": 16.522,
+        "SQ4": 16.9458,
+        "SQ567": 16.826,
+        "SQ_Apartment37_48": 17.4644
+      },
+      "Gradient Boosting (e6 + extra)": {
+        "LSK_South": 16.9458,
+        "SQ1": 16.1209,
+        "SQ4": 16.5123,
+        "SQ567": 16.4185,
+        "SQ_Apartment37_48": 17.0322
+      },
+      "Zero-shot 2a: Kaggle-eindmodel (LR POA)": {
+        "LSK_South": 22.1219,
+        "SQ1": 20.2629,
+        "SQ4": 23.9428,
+        "SQ567": 27.9441,
+        "SQ_Apartment37_48": 35.403
+      },
+      "Zero-shot 2a: Kaggle-e6": {
+        "LSK_South": 26.3329,
+        "SQ1": 23.886,
+        "SQ4": 28.4314,
+        "SQ567": 33.1582,
+        "SQ_Apartment37_48": 41.4151
+      },
+      "Zero-shot 2b: pvlib-natuurkunde": {
+        "LSK_South": 18.3619,
+        "SQ1": 18.8879,
+        "SQ4": 18.0221,
+        "SQ567": 18.5296,
+        "SQ_Apartment37_48": 19.8428
+      }
+    },
+    "per_seizoen": {
+      "Baseline: gemiddelde dag": {
+        "droog (okt-apr)": 21.0019,
+        "moesson (mei-sep)": 22.8891
+      },
+      "Baseline: persistence (gisteren)": {
+        "droog (okt-apr)": 19.5268,
+        "moesson (mei-sep)": 26.2727
+      },
+      "Smart persistence (K blijft gelijk)": {
+        "droog (okt-apr)": 16.3453,
+        "moesson (mei-sep)": 21.0086
+      },
+      "LR GHI (ERA5)": {
+        "droog (okt-apr)": 14.5404,
+        "moesson (mei-sep)": 19.0932
+      },
+      "LR POA (straling op het paneel)": {
+        "droog (okt-apr)": 14.5454,
+        "moesson (mei-sep)": 19.0905
+      },
+      "LR EFF_T (POA + reflectie, spectrum, stof, temp.)": {
+        "droog (okt-apr)": 14.8245,
+        "moesson (mei-sep)": 19.1224
+      },
+      "e5: EFF_T, KT_POA, CS_POA, COSZ (LR met intercept)": {
+        "droog (okt-apr)": 14.6663,
+        "moesson (mei-sep)": 19.2983
+      },
+      "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+        "droog (okt-apr)": 14.5324,
+        "moesson (mei-sep)": 19.1954
+      },
+      "Ridge e6 (zonder intercept)": {
+        "droog (okt-apr)": 14.5317,
+        "moesson (mei-sep)": 19.1955
+      },
+      "Ridge e6 + bewolking, regen, vochtigheid": {
+        "droog (okt-apr)": 14.4951,
+        "moesson (mei-sep)": 19.0599
+      },
+      "Random Forest (e6 + extra)": {
+        "droog (okt-apr)": 14.6497,
+        "moesson (mei-sep)": 19.7928
+      },
+      "Gradient Boosting (e6 + extra)": {
+        "droog (okt-apr)": 14.2844,
+        "moesson (mei-sep)": 19.3097
+      },
+      "Zero-shot 2a: Kaggle-eindmodel (LR POA)": {
+        "droog (okt-apr)": 25.2447,
+        "moesson (mei-sep)": 28.4369
+      },
+      "Zero-shot 2a: Kaggle-e6": {
+        "droog (okt-apr)": 30.3516,
+        "moesson (mei-sep)": 32.883
+      },
+      "Zero-shot 2b: pvlib-natuurkunde": {
+        "droog (okt-apr)": 17.2748,
+        "moesson (mei-sep)": 20.5617
+      }
+    },
+    "per_maand": {
+      "1": {
+        "Baseline: gemiddelde dag": 17.3026,
+        "Smart persistence (K blijft gelijk)": 15.0707,
+        "LR GHI (ERA5)": 12.7233,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 20.0405,
+        "Zero-shot 2a: Kaggle-e6": 24.5042,
+        "Zero-shot 2b: pvlib-natuurkunde": 14.3434
+      },
+      "2": {
+        "Baseline: gemiddelde dag": 23.2184,
+        "Smart persistence (K blijft gelijk)": 16.033,
+        "LR GHI (ERA5)": 13.3277,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 23.3637,
+        "Zero-shot 2a: Kaggle-e6": 27.8898,
+        "Zero-shot 2b: pvlib-natuurkunde": 15.4599
+      },
+      "3": {
+        "Baseline: gemiddelde dag": 22.4694,
+        "Smart persistence (K blijft gelijk)": 16.4431,
+        "LR GHI (ERA5)": 14.9801,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 25.5976,
+        "Zero-shot 2a: Kaggle-e6": 32.0089,
+        "Zero-shot 2b: pvlib-natuurkunde": 17.9292
+      },
+      "4": {
+        "Baseline: gemiddelde dag": 28.9063,
+        "Smart persistence (K blijft gelijk)": 20.1707,
+        "LR GHI (ERA5)": 20.4668,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 33.3894,
+        "Zero-shot 2a: Kaggle-e6": 42.0919,
+        "Zero-shot 2b: pvlib-natuurkunde": 24.8426
+      },
+      "5": {
+        "Baseline: gemiddelde dag": 22.1079,
+        "Smart persistence (K blijft gelijk)": 21.5363,
+        "LR GHI (ERA5)": 21.1018,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 33.4891,
+        "Zero-shot 2a: Kaggle-e6": 39.3845,
+        "Zero-shot 2b: pvlib-natuurkunde": 23.8678
+      },
+      "6": {
+        "Baseline: gemiddelde dag": 22.7624,
+        "Smart persistence (K blijft gelijk)": 21.826,
+        "LR GHI (ERA5)": 19.1722,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 27.6192,
+        "Zero-shot 2a: Kaggle-e6": 32.3604,
+        "Zero-shot 2b: pvlib-natuurkunde": 20.4883
+      },
+      "7": {
+        "Baseline: gemiddelde dag": 22.0976,
+        "Smart persistence (K blijft gelijk)": 20.12,
+        "LR GHI (ERA5)": 16.8698,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 26.1141,
+        "Zero-shot 2a: Kaggle-e6": 29.7577,
+        "Zero-shot 2b: pvlib-natuurkunde": 18.01
+      },
+      "8": {
+        "Baseline: gemiddelde dag": 21.4633,
+        "Smart persistence (K blijft gelijk)": 20.8807,
+        "LR GHI (ERA5)": 21.4145,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 29.803,
+        "Zero-shot 2a: Kaggle-e6": 33.4796,
+        "Zero-shot 2b: pvlib-natuurkunde": 22.4843
+      },
+      "9": {
+        "Baseline: gemiddelde dag": 26.4329,
+        "Smart persistence (K blijft gelijk)": 20.7024,
+        "LR GHI (ERA5)": 16.0973,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 24.5211,
+        "Zero-shot 2a: Kaggle-e6": 28.9331,
+        "Zero-shot 2b: pvlib-natuurkunde": 17.1582
+      },
+      "10": {
+        "Baseline: gemiddelde dag": 20.2738,
+        "Smart persistence (K blijft gelijk)": 16.4069,
+        "LR GHI (ERA5)": 12.9962,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 23.3983,
+        "Zero-shot 2a: Kaggle-e6": 27.8315,
+        "Zero-shot 2b: pvlib-natuurkunde": 14.9635
+      },
+      "11": {
+        "Baseline: gemiddelde dag": 16.3093,
+        "Smart persistence (K blijft gelijk)": 14.5499,
+        "LR GHI (ERA5)": 13.1863,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 24.6403,
+        "Zero-shot 2a: Kaggle-e6": 27.8632,
+        "Zero-shot 2b: pvlib-natuurkunde": 15.9817
+      },
+      "12": {
+        "Baseline: gemiddelde dag": 14.2373,
+        "Smart persistence (K blijft gelijk)": 14.7505,
+        "LR GHI (ERA5)": 11.484,
+        "Zero-shot 2a: Kaggle-eindmodel (LR POA)": 23.2311,
+        "Zero-shot 2a: Kaggle-e6": 25.1356,
+        "Zero-shot 2b: pvlib-natuurkunde": 13.7904
+      }
+    },
+    "coef_A": {
+      "e6: EFF_T x (a + b KT_POA), zonder intercept": {
+        "a": 0.0007518749015539844,
+        "b": 0.0002748519065140571
+      },
+      "Ridge e6 (zonder intercept)": {
+        "a": 0.0007515669604523051,
+        "b": 0.0002751995248358472
+      }
+    },
+    "capaciteit_kW": {
+      "LSK_South": 23.212,
+      "SQ1": 26.965,
+      "SQ4": 29.452,
+      "SQ567": 38.451,
+      "SQ_Apartment37_48": 12.033
+    }
+  }
+}

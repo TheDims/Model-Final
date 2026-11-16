@@ -1,0 +1,6 @@
+,verschil_pp,laag_pp,hoog_pp,aantoonbaar
+LR GHI (ERA5) - Baseline: gemiddelde dag,-5.1973,-6.0989,-4.3138,True
+LR GHI (ERA5) - Smart persistence (K blijft gelijk),-1.8432,-2.7546,-0.8872,True
+LR GHI (ERA5) - Zero-shot 2a: Kaggle-eindmodel (LR POA),-10.0207,-10.4234,-9.6148,True
+LR GHI (ERA5) - Zero-shot 2a: Kaggle-e6,-14.8253,-15.4307,-14.2561,True
+LR GHI (ERA5) - Zero-shot 2b: pvlib-natuurkunde,-2.1148,-2.3341,-1.9123,True

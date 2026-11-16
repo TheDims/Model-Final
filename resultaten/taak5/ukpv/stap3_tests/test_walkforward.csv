@@ -1,0 +1,10 @@
+,nRMSE_%,nMAE_%,RMSE_kW,MAE_kW,R2,dagfout_%
+Baseline: gemiddelde dag (K x heldere hemel),20.4663,14.0887,1.0233,0.7044,0.3867,46.7465
+Baseline: persistence (gisteren),24.6162,15.6946,1.2308,0.7847,0.1128,52.0368
+Smart persistence (K blijft gelijk),22.2516,15.0483,1.1126,0.7524,0.2751,50.537
+"Zero-shot pvlib (kWp, dakhoek, richting)",17.784,12.1877,0.8892,0.6094,0.537,37.0724
+LR POA,14.7777,10.366,0.7389,0.5183,0.6803,26.7967
+e6 (zonder intercept),14.8583,10.2738,0.7429,0.5137,0.6768,26.5379
+"Ridge e6 + bewolking, temp., wind",14.8718,10.4276,0.7436,0.5214,0.6762,26.6894
+Gradient Boosting (e6 + extra),14.8524,10.2839,0.7426,0.5142,0.677,26.4312
+LR POA getraind op ERA5,14.8369,10.6247,0.7418,0.5312,0.6777,27.4691

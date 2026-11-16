@@ -1,0 +1,48 @@
+model,weken,gemiddeld,P10,P90
+Gemiddelde dag (2021-2022),0,22.73,21.62,24.43
+Gemiddelde dag (2021-2022),1,22.73,21.62,24.43
+Gemiddelde dag (2021-2022),2,22.73,21.62,24.43
+Gemiddelde dag (2021-2022),4,22.73,21.62,24.43
+Gemiddelde dag (2021-2022),8,22.73,21.62,24.43
+Gemiddelde dag (2021-2022),13,22.73,21.62,24.43
+Kaggle-eindmodel x f,0,26.8,20.38,36.17
+Kaggle-eindmodel x f,1,21.81,14.55,30.34
+Kaggle-eindmodel x f,2,20.38,14.64,24.97
+Kaggle-eindmodel x f,4,19.73,14.84,24.18
+Kaggle-eindmodel x f,8,19.67,14.55,23.65
+Kaggle-eindmodel x f,13,19.24,14.53,22.25
+LR GHI alleen op de eerste N weken,1,20.81,13.94,27.86
+LR GHI alleen op de eerste N weken,2,19.72,14.09,23.33
+LR GHI alleen op de eerste N weken,4,18.89,14.03,22.84
+LR GHI alleen op de eerste N weken,8,18.77,13.93,21.71
+LR GHI alleen op de eerste N weken,13,18.39,13.94,20.77
+LR GHI op 2021 + 2022 (stap 3),0,18.17,14.55,20.07
+LR GHI op 2021 + 2022 (stap 3),1,18.17,14.55,20.07
+LR GHI op 2021 + 2022 (stap 3),2,18.17,14.55,20.07
+LR GHI op 2021 + 2022 (stap 3),4,18.17,14.55,20.07
+LR GHI op 2021 + 2022 (stap 3),8,18.17,14.55,20.07
+LR GHI op 2021 + 2022 (stap 3),13,18.17,14.55,20.07
+Persistence,0,25.23,21.25,27.64
+Persistence,1,25.23,21.25,27.64
+Persistence,2,25.23,21.25,27.64
+Persistence,4,25.23,21.25,27.64
+Persistence,8,25.23,21.25,27.64
+Persistence,13,25.23,21.25,27.64
+Smart persistence,0,20.22,17.7,21.63
+Smart persistence,1,20.22,17.7,21.63
+Smart persistence,2,20.22,17.7,21.63
+Smart persistence,4,20.22,17.7,21.63
+Smart persistence,8,20.22,17.7,21.63
+Smart persistence,13,20.22,17.7,21.63
+pvlib x f,0,19.77,16.59,22.39
+pvlib x f,1,21.96,14.14,29.92
+pvlib x f,2,20.22,14.18,24.7
+pvlib x f,4,19.44,14.27,23.77
+pvlib x f,8,19.37,14.16,23.05
+pvlib x f,13,18.92,14.14,21.68
+pvlib x orakel-f,0,17.8,14.14,19.22
+pvlib x orakel-f,1,17.8,14.14,19.22
+pvlib x orakel-f,2,17.8,14.14,19.22
+pvlib x orakel-f,4,17.8,14.14,19.22
+pvlib x orakel-f,8,17.8,14.14,19.22
+pvlib x orakel-f,13,17.8,14.14,19.22
