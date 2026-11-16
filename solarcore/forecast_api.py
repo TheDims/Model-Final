@@ -34,6 +34,12 @@ def _get(url, params, tries=5, wait=60):
                 time.sleep(wait * (i + 1))
                 continue
             raise
+        except (urllib.error.URLError, TimeoutError) as e:      # time-out of verbinding weg: ook opnieuw proberen
+            if i < tries - 1:
+                print(f"    verbinding: {e}, wacht {wait * (i + 1)} s ...")
+                time.sleep(wait * (i + 1))
+                continue
+            raise
 
 
 def satellite(lat, lon, start, end, cache, tz, model="satellite_radiation_seamless"):
