@@ -1,0 +1,165 @@
+{
+  "model": "Model Final v2 (nieuw huis: pvlib + doorlopend kalibreren + mengen + band)",
+  "getest_op": "UK PV, 40 huizen, jul 2024 - mrt 2025, ECMWF-voorspelling 24 uur eerder",
+  "dagvooruit": {
+    "LR POA (stap 3, trainingsperiode nodig)": {
+      "nRMSE_%": 14.5764,
+      "nMAE_%": 10.3213,
+      "RMSE_kW": 0.7288,
+      "MAE_kW": 0.5161,
+      "R2": 0.6793,
+      "dagfout_%": 27.152
+    },
+    "v2: pvlib x f (4 weken)": {
+      "nRMSE_%": 14.3274,
+      "nMAE_%": 9.721,
+      "RMSE_kW": 0.7164,
+      "MAE_kW": 0.486,
+      "R2": 0.6902,
+      "dagfout_%": 23.9926
+    },
+    "v2: + mengen met gemiddelde dag (w = 0.87)": {
+      "nRMSE_%": 14.3235,
+      "nMAE_%": 9.8712,
+      "RMSE_kW": 0.7162,
+      "MAE_kW": 0.4936,
+      "R2": 0.6903,
+      "dagfout_%": 25.2075
+    },
+    "v2: alleen gemiddelde dag (4 weken)": {
+      "nRMSE_%": 19.3293,
+      "nMAE_%": 13.8208,
+      "RMSE_kW": 0.9665,
+      "MAE_kW": 0.691,
+      "R2": 0.4361,
+      "dagfout_%": 44.7475
+    }
+  },
+  "bootstrap_v2_vs_LR": {
+    "v2: + mengen met gemiddelde dag (w = 0.87) - LR POA (stap 3, trainingsperiode nodig)": {
+      "verschil_pp": -0.2528,
+      "laag_pp": -0.3498,
+      "hoog_pp": -0.1535,
+      "aantoonbaar": true
+    }
+  },
+  "band_dekking_%": 79.25540514094634,
+  "band_per_seizoen_%": {
+    "herfst": 78.57349311870512,
+    "voorjaar": 78.9896590273896,
+    "winter": 79.86996008158,
+    "zomer": 79.28443786868552
+  },
+  "horizon": {
+    "1": {
+      "w_d": 0.8062,
+      "v2 (gemengd)": 13.9862,
+      "LR POA (zonder mengen)": 14.3593,
+      "gemiddelde dag (trainingsperiode)": 19.3604,
+      "LR POA gemengd (stap 4)": 13.9918
+    },
+    "2": {
+      "w_d": 0.7201,
+      "v2 (gemengd)": 15.0841,
+      "LR POA (zonder mengen)": 15.6392,
+      "gemiddelde dag (trainingsperiode)": 20.6768,
+      "LR POA gemengd (stap 4)": 15.2657
+    },
+    "3": {
+      "w_d": 0.7146,
+      "v2 (gemengd)": 16.1957,
+      "LR POA (zonder mengen)": 17.1021,
+      "gemiddelde dag (trainingsperiode)": 20.2514,
+      "LR POA gemengd (stap 4)": 16.3484
+    },
+    "4": {
+      "w_d": 0.7133,
+      "v2 (gemengd)": 17.2841,
+      "LR POA (zonder mengen)": 18.256,
+      "gemiddelde dag (trainingsperiode)": 20.994,
+      "LR POA gemengd (stap 4)": 17.3752
+    },
+    "5": {
+      "w_d": 0.4907,
+      "v2 (gemengd)": 17.5052,
+      "LR POA (zonder mengen)": 18.7878,
+      "gemiddelde dag (trainingsperiode)": 19.3604,
+      "LR POA gemengd (stap 4)": 17.1963
+    },
+    "6": {
+      "w_d": 0.3458,
+      "v2 (gemengd)": 18.4421,
+      "LR POA (zonder mengen)": 20.398,
+      "gemiddelde dag (trainingsperiode)": 20.6768,
+      "LR POA gemengd (stap 4)": 19.0227
+    },
+    "7": {
+      "w_d": 0.4291,
+      "v2 (gemengd)": 19.7422,
+      "LR POA (zonder mengen)": 22.697,
+      "gemiddelde dag (trainingsperiode)": 20.2514,
+      "LR POA gemengd (stap 4)": 19.848
+    },
+    "8": {
+      "w_d": 0.176,
+      "v2 (gemengd)": 19.7494,
+      "LR POA (zonder mengen)": 21.9317,
+      "gemiddelde dag (trainingsperiode)": 20.994,
+      "LR POA gemengd (stap 4)": 20.1866
+    },
+    "9": {
+      "w_d": 0.3994,
+      "v2 (gemengd)": 19.4873,
+      "LR POA (zonder mengen)": 22.7113,
+      "gemiddelde dag (trainingsperiode)": 19.3604,
+      "LR POA gemengd (stap 4)": 18.8992
+    },
+    "10": {
+      "w_d": 0.3633,
+      "v2 (gemengd)": 19.9641,
+      "LR POA (zonder mengen)": 23.381,
+      "gemiddelde dag (trainingsperiode)": 20.6768,
+      "LR POA gemengd (stap 4)": 20.2602
+    },
+    "11": {
+      "w_d": 0.3633,
+      "v2 (gemengd)": 20.5145,
+      "LR POA (zonder mengen)": 23.7187,
+      "gemiddelde dag (trainingsperiode)": 20.4915,
+      "LR POA gemengd (stap 4)": 20.3563
+    },
+    "12": {
+      "w_d": 0.3633,
+      "v2 (gemengd)": 20.6126,
+      "LR POA (zonder mengen)": 23.2341,
+      "gemiddelde dag (trainingsperiode)": 21.1693,
+      "LR POA gemengd (stap 4)": 20.381
+    },
+    "13": {
+      "w_d": 0.3633,
+      "v2 (gemengd)": 19.6624,
+      "LR POA (zonder mengen)": 22.8826,
+      "gemiddelde dag (trainingsperiode)": 19.4022,
+      "LR POA gemengd (stap 4)": 19.0411
+    },
+    "14": {
+      "w_d": 0.3633,
+      "v2 (gemengd)": 20.0931,
+      "LR POA (zonder mengen)": 23.652,
+      "gemiddelde dag (trainingsperiode)": 20.9453,
+      "LR POA gemengd (stap 4)": 20.4307
+    },
+    "15": {
+      "w_d": 0.3633,
+      "v2 (gemengd)": 20.8365,
+      "LR POA (zonder mengen)": 24.5197,
+      "gemiddelde dag (trainingsperiode)": 20.4988,
+      "LR POA gemengd (stap 4)": 20.3801
+    }
+  },
+  "aannames": [
+    "pvlib-parameters (PARAMS) en DC/AC 1,1 zijn aannames",
+    "menggewichten uit de UK-trainingsperiode",
+    "HKUST: doorlopend kalibreren 18,1 % (BESLISSINGEN #43)"
+  ]
+}

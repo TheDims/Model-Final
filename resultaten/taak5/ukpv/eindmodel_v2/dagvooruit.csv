@@ -1,0 +1,5 @@
+,nRMSE_%,nMAE_%,RMSE_kW,MAE_kW,R2,dagfout_%
+"LR POA (stap 3, trainingsperiode nodig)",14.5764,10.3213,0.7288,0.5161,0.6793,27.152
+v2: pvlib x f (4 weken),14.3274,9.721,0.7164,0.486,0.6902,23.9926
+v2: + mengen met gemiddelde dag (w = 0.87),14.3235,9.8712,0.7162,0.4936,0.6903,25.2075
+v2: alleen gemiddelde dag (4 weken),19.3293,13.8208,0.9665,0.691,0.4361,44.7475
