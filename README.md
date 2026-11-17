@@ -11,7 +11,7 @@ The pipeline was run twice (see **"Run 2 – 70/30"** below):
 | Run 1 `split30` | choose on days 1–10, test on days 11–34 | `resultaten/split30/` | `modellen/model_final_split30.joblib` (= `model_final.joblib`): LR GHI | ✅ archive |
 | **Run 2 `split70`** | **train on days 1–24, test on days 25–34** | `resultaten/split70/` | `modellen/model_final_split70.joblib`: LR POA | ✅ main run |
 | Learning curve | 10 / 17 / 24 / 27 training days, test days 28–34 | `resultaten/leercurve/` | – (measurement only) | ✅ |
-| **Final model v2** | no training period needed; tested on UK PV (Jul 2024 – Mar 2025) | `resultaten/taak5/ukpv/eindmodel_v2/` | `modellen/model_final_v2.joblib`: pvlib × factor (4 weeks) + blending + band | ✅ proposal (choice: team) |
+| **Final model v2** | no training period needed; tested on UK PV (Jul 2024 – Mar 2025) | `resultaten/taak5/ukpv/eindmodel_v2/` | `modellen/model_final_v2.joblib`: pvlib × factor (4 weeks) + blending + band | ✅ **official final model for the app** (decision #60) |
 
 | Phase | Script |
 |---|---|
@@ -548,7 +548,8 @@ sizes fairly, on the same days.*
 - With more training data **e5 and e6 are the best ERA5 models** (~1.5–2 pp better on the test days and a much
   smaller daily error). On the validation folds all ERA5 models were within 0.5 pp, so the rule chose the simplest.
   According to the protocol the choice was not changed.
-- **Open (Dimme, AGENTS.md §13):** which model becomes the official final model?
+- **Decided (16 Nov 2026, decision #60):** LR POA (run 2) is the tested core model in the report; final model v2
+  (`modellen/model_final_v2.joblib`, see "Improving the model") is the official model for the app.
 
 **Limitations run 2:** only 10 test days (20 plant-days); the test is not blind (#19); ERA5 is weather in hindsight
 (upper limit for a real forecast); only May–June (start of the monsoon); 2 plants.
@@ -924,5 +925,5 @@ is also what final model v2 uses.
 |---|---|---|
 | Regression test Kaggle | identical to run 1 | Kaggle results remain valid |
 | Band with real forecasts | old band 63 %, new band (B) 79 % | band B in v2 |
-| Final model v2 | 14.3 % without training (LR POA 14.6 % with training) | proposal for the app |
+| Final model v2 | 14.3 % without training (LR POA 14.6 % with training) | official final model for the app (#60) |
 | Several weather models | ≤ 0.2 pp | not worth it |

@@ -370,8 +370,9 @@ Als een nieuwe uitkomst sterk afwijkt van deze tabel: eerst zoeken naar een fout
 ---
 
 ## 13. Open punten – vraag Dimme als het zover is
-1. **Welk eindmodel wordt het officiële?** `model_final_split70.joblib` of de run-1-versie? Pas beslissen na de
-   vergelijking run 1 ↔ run 2 ↔ leercurve. `model_final.joblib` (run 1) niet overschrijven zonder akkoord.
+1. ~~**Welk eindmodel wordt het officiële?**~~ **Besloten (Dimme, 16 nov 2026, BESLISSINGEN #60):** voor de app
+   eindmodel v2 (`model_final_v2.joblib`); in het verslag LR POA run 2 (`model_final_split70.joblib`) als getoetst
+   kernmodel. `model_final.joblib` (run 1) blijft het archief en wordt niet overschreven.
 2. Fase 1 met de plant-sensor als bovengrens: akkoord dat dit geen echte forecast is?
 3. Welke day-ahead-uitgiftetijd (nu 21:00 IST)?
 4. Na fase 3: echte archief-weersvoorspellingen (Open-Meteo Historical Forecast, ≥ 2022) en/of een lange
