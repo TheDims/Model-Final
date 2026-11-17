@@ -1,549 +1,559 @@
-# Model Final – SolarHome Forecast (eindmodel)
+# Model Final – SolarHome Forecast (final model)
 
-Eén eerlijk getest regressiemodel dat de zonne-opwek voorspelt: eerst op de Kaggle-data van Plant 1 en 2, daarna
-met een weermodel (ERA5) als input, zodat het voor een huis in India werkt. Werkinstructie: `AGENTS.md`.
-Alle keuzes met datum en motivatie: `BESLISSINGEN.md`.
+One honestly tested regression model that forecasts solar power: first on the Kaggle data of Plant 1 and 2, then
+with a weather model (ERA5) as input, so that it works for a house in India. Working instructions: `AGENTS.md`.
+All choices with date and motivation: `BESLISSINGEN.md` (decision log, in Dutch).
 
-De pipeline is twee keer gedraaid (zie **"Run 2 – 70/30"** onderaan):
+The pipeline was run twice (see **"Run 2 – 70/30"** below):
 
-| Run | Split | Resultaten | Eindmodel | Status |
+| Run | Split | Results | Final model | Status |
 |---|---|---|---|---|
-| Run 1 `split30` | dag 1–10 kiezen, dag 11–34 testen | `resultaten/split30/` | `modellen/model_final_split30.joblib` (= `model_final.joblib`): LR GHI | ✅ archief |
-| **Run 2 `split70`** | **dag 1–24 trainen, dag 25–34 testen** | `resultaten/split70/` | `modellen/model_final_split70.joblib`: LR POA | ✅ hoofdrun |
-| Leercurve | 10 / 17 / 24 / 27 trainingsdagen, test dag 28–34 | `resultaten/leercurve/` | – (alleen meten) | ✅ |
-| **Eindmodel v2** | geen training nodig; getest op UK PV (jul 2024 – mrt 2025) | `resultaten/taak5/ukpv/eindmodel_v2/` | `modellen/model_final_v2.joblib`: pvlib × factor (4 weken) + mengen + band | ✅ voorstel (keuze: team) |
+| Run 1 `split30` | choose on days 1–10, test on days 11–34 | `resultaten/split30/` | `modellen/model_final_split30.joblib` (= `model_final.joblib`): LR GHI | ✅ archive |
+| **Run 2 `split70`** | **train on days 1–24, test on days 25–34** | `resultaten/split70/` | `modellen/model_final_split70.joblib`: LR POA | ✅ main run |
+| Learning curve | 10 / 17 / 24 / 27 training days, test days 28–34 | `resultaten/leercurve/` | – (measurement only) | ✅ |
+| **Final model v2** | no training period needed; tested on UK PV (Jul 2024 – Mar 2025) | `resultaten/taak5/ukpv/eindmodel_v2/` | `modellen/model_final_v2.joblib`: pvlib × factor (4 weeks) + blending + band | ✅ proposal (choice: team) |
 
-| Fase | Script |
+| Phase | Script |
 |---|---|
-| 0 – data inlezen, opschonen, checken | `fase0_data.py` |
-| 1 – regressie-benchmark op de Kaggle-data | `fase1_benchmark_kaggle.py` |
-| 2 – forecast perfectioneren (alleen Kaggle-data) | `fase2_forecast.py` |
-| 3 – weermodel (ERA5) als input | `fase3_weermodel.py` |
-| 4 – eindmodel kiezen en opslaan | `fase4_eindmodel.py` |
-| extra – leercurve, heatmaps, diagnose | `leercurve.py`, `heatmaps.py`, `diagnose_era5.py` |
+| 0 – read, clean and check the data | `fase0_data.py` |
+| 1 – regression benchmark on the Kaggle data | `fase1_benchmark_kaggle.py` |
+| 2 – improve the forecast (Kaggle data only) | `fase2_forecast.py` |
+| 3 – weather model (ERA5) as input | `fase3_weermodel.py` |
+| 4 – choose and save the final model | `fase4_eindmodel.py` |
+| extra – learning curve, heatmaps, diagnosis | `leercurve.py`, `heatmaps.py`, `diagnose_era5.py` |
 
-| Taak (externe validatie en verbeteren) | Scripts (in deze volgorde) | Resultaten |
+| Task (external validation and improvement) | Scripts (in this order) | Results |
 |---|---|---|
 | 5a – HKUST Hong Kong 2021–2023 | `taak5a_hkust_stations.py` → `_data.py` → `_tests.py` → `_kalibratie.py` (→ `_satelliet.py`) | `resultaten/taak5/hkust/` |
-| 5b – UK PV 2024–2025: dag-vooruit en horizon | `taak5b_ukpv_systemen.py` → `_weer.py` → `_tests.py` → `_horizon_mix.py`, `_multimodel.py`, `_band.py` | `resultaten/taak5/ukpv/` |
-| 6 – Faiman-fit | `taak6_faiman.py` | `resultaten/taak6/` |
-| Eindmodel v2 | `eindmodel_v2.py` (na de 5b-scripts) | `resultaten/taak5/ukpv/eindmodel_v2/`, `modellen/model_final_v2.joblib` |
+| 5b – UK PV 2024–2025: day-ahead and horizon | `taak5b_ukpv_systemen.py` → `_weer.py` → `_tests.py` → `_horizon_mix.py`, `_multimodel.py`, `_band.py` | `resultaten/taak5/ukpv/` |
+| 6 – Faiman fit | `taak6_faiman.py` | `resultaten/taak6/` |
+| Final model v2 | `eindmodel_v2.py` (after the 5b scripts) | `resultaten/taak5/ukpv/eindmodel_v2/`, `modellen/model_final_v2.joblib` |
 
-| `solarcore/` | Wat |
+| `solarcore/` | What |
 |---|---|
-| `config.py` | alle instellingen (paden, splits, drempels, kleuren) |
-| `data_prep.py`, `features.py`, `split.py`, `dataset.py` | Kaggle: inlezen, opschonen, features, split op tijd |
-| `physics.py`, `weather.py` | pvlib-natuurkunde, ERA5 (Open-Meteo) |
-| `models.py`, `evaluate.py`, `forecast_features.py` | modelladders, metrics/keuzeregel/bootstrap/band, features voor vooruit voorspellen |
-| `hkust.py`, `ukpv.py`, `forecast_api.py` | externe datasets en archief-weersvoorspellingen / satelliet |
-| `model_v2.py` | eindmodel v2: kalibratie, mengen, band (ook voor de app) |
-| `plots.py` | vaste grafiekstijl |
+| `config.py` | all settings (paths, splits, thresholds, colours) |
+| `data_prep.py`, `features.py`, `split.py`, `dataset.py` | Kaggle: reading, cleaning, features, split in time |
+| `physics.py`, `weather.py` | pvlib physics, ERA5 (Open-Meteo) |
+| `models.py`, `evaluate.py`, `forecast_features.py` | model ladders, metrics / selection rule / bootstrap / band, features for forecasting ahead |
+| `hkust.py`, `ukpv.py`, `forecast_api.py` | external datasets and archived weather forecasts / satellite |
+| `model_v2.py` | final model v2: calibration, blending, band (also for the app) |
+| `plots.py` | fixed chart style |
 
-**Runnen:** met de Anaconda-Python (Python 3.13, zie `requirements.txt`), F5 in Spyder of in VS Code.
-Data die niet in de repo staat (Kaggle, HKUST, UK PV) en de benodigde accounts: zie `data/README.md`.
-Standaard draait de hoofdrun `split70`. Een andere run: in PowerShell eerst `$env:SOLAR_RUN = "split30_check"`
-(de regressietest; `split30` zelf is archief en kan niet opnieuw draaien). Welke testdagen al bekeken mogen worden,
-staat per run in `solarcore/config.py` (`TEST_VRIJGEGEVEN`).
+**Running:** with the Anaconda Python (Python 3.13, see `requirements.txt`), F5 in Spyder or in VS Code.
+Data that is not in the repository (Kaggle, HKUST, UK PV) and the accounts you need: see `data/README.md`.
+By default the main run `split70` is used. For another run, first set in PowerShell `$env:SOLAR_RUN = "split30_check"`
+(the regression test; `split30` itself is an archive and cannot be run again). Which test days may already be
+viewed is set per run in `solarcore/config.py` (`TEST_VRIJGEGEVEN`).
 
-> **Let op:** de secties "Fase 0" t/m "Diagnose" hieronder beschrijven **run 1** (30/70). Run 2 staat onderaan.
+> **Note:** the sections "Phase 0" to "Diagnosis" below describe **run 1** (30/70). Run 2 follows after them.
 
 ---
 
-## Fase 0 – Data (CRISP-DM: data understanding + preparation)
+## Phase 0 – Data (CRISP-DM: data understanding + preparation)
 
-**Wat:** de 4 Kaggle-bestanden inlezen, controleren en opschonen tot één tabel per kwartier per plant:
-`data/clean/plant_15min.csv` (6.528 rijen = 34 dagen × 96 kwartieren × 2 plants), met
+**What:** read, check and clean the 4 Kaggle files into one table per quarter-hour per plant:
+`data/clean/plant_15min.csv` (6,528 rows = 34 days × 96 quarter-hours × 2 plants), with
 `DATE_TIME, PLANT, DAY, AC_KW, N_INV, N_UITVAL, UITVAL, IRRADIATION, MODULE_TEMPERATURE, AMBIENT_TEMPERATURE`.
-Samenvatting met alle tellingen: `resultaten/fase0/samenvatting.json`.
+Summary with all counts: `resultaten/fase0/samenvatting.json`.
 
 ### Split
-34 dagen → **opzet dag 1–10 (15–24 mei 2020)**, **test dag 11–34 (25 mei – 17 juni 2020)**.
+34 days → **setup days 1–10 (15–24 May 2020)**, **test days 11–34 (25 May – 17 June 2020)**.
 
-### Datacheck (feiten)
+### Data check (facts)
 | | Plant 1 | Plant 2 |
 |---|---|---|
-| Rijen generation / omvormers | 68.778 / 22 | 67.698 / 22 |
-| Kwartieren zonder generation-data (van 3.264) | **106** | 5 |
-| DC/AC vóór de fix → na de fix | 10,23 → **1,02** | 1,02 → 1,02 |
-| Uitgevallen omvormer-rijen (weggelaten) | 63 | **3.365** |
-| Kwartieren met minstens één uitval | 28 | **594** |
-| AC_KW = NaN na opschonen | 108 | 5 |
-| Plant-brede dips (vlag `DIP`, toegevoegd na fase 1) | 0 | **29** |
-| Sensorgaten vóór → na interpolatie (≤ 1 uur) | 82 → 57 | 5 → 0 |
-| Max. IRRADIATION | 1,22 kW/m² | 1,10 kW/m² |
-| Correlatie straling ↔ AC (na opschonen) | 0,996 | 0,966 |
+| Generation rows / inverters | 68,778 / 22 | 67,698 / 22 |
+| Quarter-hours without generation data (of 3,264) | **106** | 5 |
+| DC/AC before the fix → after the fix | 10.23 → **1.02** | 1.02 → 1.02 |
+| Failed inverter rows (removed) | 63 | **3,365** |
+| Quarter-hours with at least one failure | 28 | **594** |
+| AC_KW = NaN after cleaning | 108 | 5 |
+| Plant-wide dips (flag `DIP`, added after phase 1) | 0 | **29** |
+| Sensor gaps before → after interpolation (≤ 1 hour) | 82 → 57 | 5 → 0 |
+| Max. IRRADIATION | 1.22 kW/m² | 1.10 kW/m² |
+| Correlation irradiance ↔ AC (after cleaning) | 0.996 | 0.966 |
 
-- **Geen dubbele rijen** en geen NA in de ruwe bestanden; de gaten zijn ontbrekende tijdstempels.
-- **DC-fout Plant 1 bevestigd** (DC/AC 10,2 → na / 10: 1,02, gelijk aan Plant 2).
-- **IRRADIATION is in kW/m²** (max 1,1–1,2). ERA5 is in W/m² → omrekenen in fase 3.
-- **Uitval bij Plant 2: 12–13 % van de omvormer-kwartieren met echte zon** (sensor > 0,05–0,1 kW/m²; volgens onze
-  mediaanregel 11–12 %). Het eerder genoemde getal van 17 % (wiki, `Model/`, AGENTS.md) geldt voor de grens
-  "sensor > 0 kW/m²": dan tellen ook de schemer-kwartieren mee, waarin omvormers nog niet zijn opgestart.
-  Plant 1 heeft bijna geen uitval (0,2 %).
-- Plant 1 mist 106 kwartieren (~1 dag) aan generation-data en 57 kwartieren sensordata (gaten > 1 uur).
+- **No duplicate rows** and no NA in the raw files; the gaps are missing timestamps.
+- **DC error of Plant 1 confirmed** (DC/AC 10.2 → after / 10: 1.02, the same as Plant 2).
+- **IRRADIATION is in kW/m²** (max 1.1–1.2). ERA5 is in W/m² → converted in phase 3.
+- **Inverter failures at Plant 2: 12–13 % of the inverter quarter-hours with real sun** (sensor > 0.05–0.1 kW/m²;
+  11–12 % with our median rule). The 17 % mentioned earlier (wiki, `Model/`, AGENTS.md) applies to the threshold
+  "sensor > 0 kW/m²": then twilight quarter-hours also count, when inverters have not started yet.
+  Plant 1 has almost no failures (0.2 %).
+- Plant 1 misses 106 quarter-hours (~1 day) of generation data and 57 quarter-hours of sensor data (gaps > 1 hour).
 
-### Wat de grafieken laten zien (`resultaten/fase0/`)
-| Grafiek | Wat we zien |
+### What the charts show (`resultaten/fase0/`)
+| Chart | What we see |
 |---|---|
-| `01_uurprofiel.png` | Beide plants hebben dezelfde dagvorm, piek rond 12:00–12:30 IST (klopt met ~78°O). Plant 2 heeft rond het middaguur een bredere spreiding (wolken en uitval). |
-| `02_boxplot_per_omvormer.png` | Plant 1: alle omvormers vergelijkbaar. Plant 2: een paar omvormers leveren structureel minder (mediaan ~4.000 tegen ~6.500 kWh/dag), en er zijn veel lage uitschieters → uitval. |
-| `03_straling_vs_ac.png` | Bijna een rechte lijn (r = 0,996 / 0,966). Bij Plant 2 nog punten ver onder de lijn bij veel zon: **gedeeltelijke uitval** die onze regel niet vangt (niet 0 kW, maar te laag). Aandachtspunt voor fase 1 (residuen). |
-| `04_correlatiematrix.png` | Opwek hangt vooral samen met straling (0,96). Moduletemperatuur (0,89) en "module − lucht" (0,92) hangen zelf sterk samen met straling (0,92–0,95) → **collineariteit**: temperatuur voegt waarschijnlijk weinig toe als losse input. Luchttemperatuur 0,49. |
-| `05_dagopbrengst_split.png` | Dagopbrengst schommelt sterk per dag (bewolkte dagen 18 en 28). De opzetperiode (dag 1–10) bevat zowel zonnige als bewolkte dagen. In de testperiode zitten de laagste dagen (Plant 2, dag 18 en 28) → de test is niet "makkelijker" dan de opzet. |
-| `06_dc_ac_per_dag.png` | Na de fix DC/AC 1,020–1,024 voor beide plants: stabiel, dus de fix klopt. |
-| `07_module_min_lucht.png` | Het paneel is rond het middaguur ~20 °C warmer dan de lucht; 's nachts ~1,5 °C kouder (uitstraling). Plant 1 iets warmer dan Plant 2. |
+| `01_uurprofiel.png` | Both plants have the same daily shape, peak around 12:00–12:30 IST (fits ~78°E). Plant 2 has a wider spread around noon (clouds and failures). |
+| `02_boxplot_per_omvormer.png` | Plant 1: all inverters are similar. Plant 2: a few inverters produce structurally less (median ~4,000 vs ~6,500 kWh/day), and there are many low outliers → failures. |
+| `03_straling_vs_ac.png` | Almost a straight line (r = 0.996 / 0.966). At Plant 2 there are still points far below the line at high irradiance: **partial failures** that our rule does not catch (not 0 kW, but too low). Point of attention for phase 1 (residuals). |
+| `04_correlatiematrix.png` | Power depends mostly on irradiance (0.96). Module temperature (0.89) and "module − air" (0.92) are themselves strongly correlated with irradiance (0.92–0.95) → **collinearity**: temperature probably adds little as a separate input. Air temperature 0.49. |
+| `05_dagopbrengst_split.png` | Daily yield varies strongly per day (cloudy days 18 and 28). The setup period (days 1–10) contains both sunny and cloudy days. The test period contains the lowest days (Plant 2, days 18 and 28) → the test is not "easier" than the setup. |
+| `06_dc_ac_per_dag.png` | After the fix DC/AC is 1.020–1.024 for both plants: stable, so the fix is correct. |
+| `07_module_min_lucht.png` | Around noon the panel is ~20 °C warmer than the air; at night ~1.5 °C colder (radiative cooling). Plant 1 is slightly warmer than Plant 2. |
 
-### Aannames fase 0 (apart van de feiten)
-- De uitvalregel (≤ 0 kW terwijl de mediaan > 5 % van het maximum) vangt volledige uitval, niet gedeeltelijke uitval.
-- Het tijdstip in de Kaggle-data is lokale tijd (IST) en het begin van het kwartier (zoals in V3–V5 getest).
-- De eenheid van AC_POWER is kW per omvormer (consistent met DAILY_YIELD in kWh). Voor het model maakt dit niet uit,
-  omdat we met FRAC = AC_KW / capaciteit werken.
+### Assumptions phase 0 (separate from the facts)
+- The failure rule (≤ 0 kW while the median > 5 % of the maximum) catches complete failures, not partial ones.
+- The time in the Kaggle data is local time (IST) and the start of the quarter-hour (as tested in V3–V5).
+- The unit of AC_POWER is kW per inverter (consistent with DAILY_YIELD in kWh). This does not matter for the model,
+  because we work with FRAC = AC_KW / capacity.
 
 ---
 
-## Fase 1 – Regressie-benchmark op de Kaggle-data (30/70)
+## Phase 1 – Regression benchmark on the Kaggle data (30/70)
 
-**Vraag:** hoe goed verklaart regressie het vermogen uit de data van de plant zelf?
-**Let op:** dit is **geen echte voorspelling**. De sensor meet op hetzelfde moment als de opwek. Dit is de
-**bovengrens**: een huis heeft geen stralingssensor.
+**Question:** how well does regression explain the power from the plant's own data?
+**Note:** this is **not a real forecast**. The sensor measures at the same moment as the power. This is the
+**upper limit**: a house has no irradiance sensor.
 
-**Opzet:** target FRAC = AC_KW / capaciteit (99e percentiel overdag, alleen uit de trainingsdagen, per plant).
-Alleen overdag (cos zenit > 0,02), alleen kwartieren waar alle inputs bekend zijn, en **zonder de 29 plant-brede
-dips van Plant 2** (BESLISSINGEN #10): 3.403 kwartieren. Elk model wordt op precies dezelfde kwartieren beoordeeld.
-Geen plant-ID als input. `random_state = 42`.
+**Setup:** target FRAC = AC_KW / capacity (99th percentile during the day, from the training days only, per plant).
+Daytime only (cos zenith > 0.02), only quarter-hours where all inputs are known, and **without the 29 plant-wide
+dips of Plant 2** (decision #10): 3,403 quarter-hours. Every model is judged on exactly the same quarter-hours.
+No plant ID as input. `random_state = 42`.
 
-> **Eerlijk:** de plant-brede dips zijn gevonden in de residuen, dus **na** het zien van de testdata. Daarna is de
-> hele fase opnieuw gedraaid (ook de keuze). De keuze bleef hetzelfde. De versie mét dips staat hieronder ook
-> (`MET_DIPS = True` in het script).
+> **Honesty note:** the plant-wide dips were found in the residuals, so **after** looking at the test data. The
+> whole phase was then run again (including the choice). The choice stayed the same. The version with dips is shown
+> below as well (`MET_DIPS = True` in the script).
 
-### Keuze (alleen op dag 1–10, 2 validatievouwen; zonder dips)
-| Model | nRMSE | vouw 1 (val. 7–8) | vouw 2 (val. 9–10) | R² | Dagfout |
+### Choice (on days 1–10 only, 2 validation folds; without dips)
+| Model | nRMSE | fold 1 (val. 7–8) | fold 2 (val. 9–10) | R² | Daily error |
 |---|---|---|---|---|---|
-| Baseline: gemiddelde dag | 13,2 % | 14,0 | 12,4 | 0,83 | 13,4 % |
-| Baseline: persistence | 19,9 % | 26,3 | 13,5 | 0,57 | 13,6 % |
-| **LR straling (gekozen)** | 6,5 % | 5,9 | 7,0 | 0,96 | 1,9 % |
-| LR straling + moduletemp. | 6,3 % | 5,5 | 7,0 | 0,96 | 1,6 % |
-| LR fysisch: straling × (1 + γ(T − 25)) | 6,7 % | 6,5 | 7,0 | 0,95 | 2,5 % |
-| Ridge (alle sensor-inputs + tijd) | **6,2 %** | 5,6 | 6,8 | 0,96 | 2,2 % |
-| Polynoom gr. 2 + Ridge | 6,4 % | 5,9 | 6,8 | 0,96 | 2,1 % |
-| Random Forest | 6,6 % | 5,7 | 7,5 | 0,96 | 2,2 % |
-| Gradient Boosting | 7,1 % | 6,0 | 8,2 | 0,95 | 1,9 % |
+| Baseline: mean day | 13.2 % | 14.0 | 12.4 | 0.83 | 13.4 % |
+| Baseline: persistence | 19.9 % | 26.3 | 13.5 | 0.57 | 13.6 % |
+| **LR irradiance (chosen)** | 6.5 % | 5.9 | 7.0 | 0.96 | 1.9 % |
+| LR irradiance + module temp. | 6.3 % | 5.5 | 7.0 | 0.96 | 1.6 % |
+| LR physical: irradiance × (1 + γ(T − 25)) | 6.7 % | 6.5 | 7.0 | 0.95 | 2.5 % |
+| Ridge (all sensor inputs + time) | **6.2 %** | 5.6 | 6.8 | 0.96 | 2.2 % |
+| Polynomial deg. 2 + Ridge | 6.4 % | 5.9 | 6.8 | 0.96 | 2.1 % |
+| Random Forest | 6.6 % | 5.7 | 7.5 | 0.96 | 2.2 % |
+| Gradient Boosting | 7.1 % | 6.0 | 8.2 | 0.95 | 1.9 % |
 
-Regel: laagste nRMSE = Ridge (6,2 %), geen complex model. Binnen 0,5 pp: LR straling, LR + moduletemp., polynoom
-→ de **eenvoudigste is LR straling** (1 input). Mét dips was de keuze ook LR straling (7,5 % tegen Ridge 7,1 %).
+Rule: lowest nRMSE = Ridge (6.2 %), not a complex model. Within 0.5 pp: LR irradiance, LR + module temp., polynomial
+→ the **simplest is LR irradiance** (1 input). With dips the choice was also LR irradiance (7.5 % vs Ridge 7.1 %).
 
-### Test op dag 11–34 (na de keuze, verandert de keuze niet)
-| Model | A. Bevroren nRMSE | Plant 1 | Plant 2 | R² | Dagfout | Skill t.o.v. gem. dag | B. Walk-forward | Mét dips (A) |
+### Test on days 11–34 (after the choice; does not change the choice)
+| Model | A. Frozen nRMSE | Plant 1 | Plant 2 | R² | Daily error | Skill vs mean day | B. Walk-forward | With dips (A) |
 |---|---|---|---|---|---|---|---|---|
-| Baseline: gemiddelde dag | 16,8 % | 15,0 | 18,4 | 0,68 | 16,4 % | 0 | 15,9 % | 17,5 % |
-| Baseline: persistence | 19,7 % | 19,4 | 20,0 | 0,56 | 13,9 % | −0,18 | 19,7 % | 20,3 % |
-| **LR straling (gekozen)** | **5,5 %** | 4,1 | 6,6 | 0,97 | 2,9 % | 0,68 | 5,4 % | 7,9 % |
-| LR straling + moduletemp. | 5,6 % | 4,3 | 6,6 | 0,96 | 3,7 % | 0,67 | 5,4 % | 8,1 % |
-| LR fysisch | 5,1 % | 3,4 | 6,4 | 0,97 | 2,4 % | 0,69 | 5,1 % | 7,7 % |
-| Ridge (alle) | 5,2 % | 3,7 | 6,4 | 0,97 | 2,8 % | 0,69 | 5,1 % | 7,9 % |
-| Polynoom gr. 2 + Ridge | 5,2 % | 3,9 | 6,3 | 0,97 | 3,1 % | 0,69 | 5,0 % | 8,1 % |
-| Random Forest | 5,7 % | 4,3 | 6,8 | 0,96 | 3,4 % | 0,66 | 5,2 % | 8,5 % |
-| Gradient Boosting | 5,9 % | 3,9 | 7,4 | 0,96 | 2,4 % | 0,65 | 5,4 % | 9,0 % |
+| Baseline: mean day | 16.8 % | 15.0 | 18.4 | 0.68 | 16.4 % | 0 | 15.9 % | 17.5 % |
+| Baseline: persistence | 19.7 % | 19.4 | 20.0 | 0.56 | 13.9 % | −0.18 | 19.7 % | 20.3 % |
+| **LR irradiance (chosen)** | **5.5 %** | 4.1 | 6.6 | 0.97 | 2.9 % | 0.68 | 5.4 % | 7.9 % |
+| LR irradiance + module temp. | 5.6 % | 4.3 | 6.6 | 0.96 | 3.7 % | 0.67 | 5.4 % | 8.1 % |
+| LR physical | 5.1 % | 3.4 | 6.4 | 0.97 | 2.4 % | 0.69 | 5.1 % | 7.7 % |
+| Ridge (all) | 5.2 % | 3.7 | 6.4 | 0.97 | 2.8 % | 0.69 | 5.1 % | 7.9 % |
+| Polynomial deg. 2 + Ridge | 5.2 % | 3.9 | 6.3 | 0.97 | 3.1 % | 0.69 | 5.0 % | 8.1 % |
+| Random Forest | 5.7 % | 4.3 | 6.8 | 0.96 | 3.4 % | 0.66 | 5.2 % | 8.5 % |
+| Gradient Boosting | 5.9 % | 3.9 | 7.4 | 0.96 | 2.4 % | 0.65 | 5.4 % | 9.0 % |
 
-**Wat dit betekent**
-- Met alleen de straling van de sensor is de fout **3× kleiner** dan met de gemiddelde dag (5,5 tegen 16,8 % nRMSE).
-  Dat is de **bovengrens** voor het eindmodel.
-- **De dips weglaten helpt ook Plant 1** (4,5 → 4,1 %), hoewel Plant 1 geen dips heeft: de dips in de opzetdagen
-  van Plant 2 (dag 5–7) trokken het gezamenlijke model scheef.
-- **Alle regressiemodellen liggen dicht bij elkaar** (5,1–5,9 %); RF en GB zijn niet beter. Bevestigt V1–V5.
-- Op de testdagen zijn LR fysisch, Ridge en polynoom iets beter (5,1–5,2 %) dan de gekozen LR straling (5,5 %),
-  op de validatie niet duidelijk. Verschil < 0,5 pp → de keuze blijft.
-- **Walk-forward helpt nauwelijks** (5,5 → 5,4 %): met straling als input is 10 dagen al genoeg.
-- **Kruis-plant** (bevroren, LR straling): P1 → P2 6,7 %, P2 → P1 4,7 %. Een model van de andere plant is maar
-  iets slechter dan een model van beide plants (6,6 % en 4,1 %).
-- **Stabiliteit** (48 plant-dagen, LR straling): nRMSE per dag gemiddeld 5,0 %, std 2,2, **CV 0,45**
-  (mét dips: 6,7 %, std 4,1, CV 0,61). De baselines hebben een lagere CV (~0,3) maar een veel hogere fout.
+**What this means**
+- With only the sensor irradiance the error is **3× smaller** than with the mean day (5.5 vs 16.8 % nRMSE).
+  That is the **upper limit** for the final model.
+- **Removing the dips also helps Plant 1** (4.5 → 4.1 %), although Plant 1 has no dips: the dips in the setup days
+  of Plant 2 (days 5–7) pulled the joint model off.
+- **All regression models are close together** (5.1–5.9 %); RF and GB are not better. Confirms V1–V5.
+- On the test days LR physical, Ridge and polynomial are slightly better (5.1–5.2 %) than the chosen LR irradiance
+  (5.5 %), not clearly so on the validation. Difference < 0.5 pp → the choice stays.
+- **Walk-forward hardly helps** (5.5 → 5.4 %): with irradiance as input, 10 days are already enough.
+- **Cross-plant** (frozen, LR irradiance): P1 → P2 6.7 %, P2 → P1 4.7 %. A model from the other plant is only
+  slightly worse than a model from both plants (6.6 % and 4.1 %).
+- **Stability** (48 plant-days, LR irradiance): nRMSE per day on average 5.0 %, std 2.2, **CV 0.45**
+  (with dips: 6.7 %, std 4.1, CV 0.61). The baselines have a lower CV (~0.3) but a much higher error.
 
-### Residuen (`residuen.png`) – wanneer mist het model?
-1. **Plant-brede dips bij Plant 2** (opwek < 30 % van verwacht terwijl de sensor zon meet): 29 kwartieren,
-   ~1,7 % van Plant 2. Nu weggelaten. Mogelijke oorzaak (AANNAME): netstoring of afschakelen (curtailment).
-   Er blijven nog **kleinere dips** over (residu +20 tot +60 %): de plant levert dan 30–80 % van verwacht.
-2. **Systematische kromming:** bij weinig opwek (ochtend/avond) voorspelt LR ~3 % te veel (de intercept), in het
-   middengebied ~5 % te weinig. Het verband straling → opwek is niet helemaal recht (temperatuur, zonnehoek).
-   Ridge/polynoom/LR fysisch vangen dit iets beter (zie test).
-3. **Autocorrelatie bij Plant 1:** de residuen hangen ~2,5 uur samen (ACF > 0 tot lag ~10). Fouten komen in
-   blokken (een deel van de dag te hoog of te laag), niet als losse ruis. Bij Plant 2 korter (~1 uur).
-4. Per bewolking (KT) geen duidelijk patroon.
+### Residuals (`residuen.png`) – when does the model miss?
+1. **Plant-wide dips at Plant 2** (power < 30 % of expected while the sensor measures sun): 29 quarter-hours,
+   ~1.7 % of Plant 2. Now removed. Possible cause (ASSUMPTION): grid fault or curtailment.
+   **Smaller dips** remain (residual +20 to +60 %): the plant then delivers 30–80 % of expected.
+2. **Systematic curvature:** at low power (morning/evening) LR forecasts ~3 % too much (the intercept), in the
+   middle range ~5 % too little. The relation irradiance → power is not completely straight (temperature, sun angle).
+   Ridge / polynomial / LR physical capture this slightly better (see test).
+3. **Autocorrelation at Plant 1:** the residuals are correlated over ~2.5 hours (ACF > 0 up to lag ~10). Errors come
+   in blocks (part of the day too high or too low), not as random noise. At Plant 2 shorter (~1 hour).
+4. No clear pattern per cloudiness (KT).
 
-### Aannames fase 1
-- γ = −0,004 /°C in "LR fysisch" is een aanname (niet gefit).
-- De dip-regel (sensor > 0,2 kW/m², opwek < 30 % van verwacht; verhouding uit dag 1–10) is een eigen keuze.
-- De geschatte plantlocaties worden alleen gebruikt voor de zonnestand (COSZ) en de heldere-hemel-index (analyse).
-- Grafieken: `heatmap_model_plant.png`, `heatmap_model_dag.png`, `voorbeelddagen.png`, `residuen.png`.
+### Assumptions phase 1
+- γ = −0.004 /°C in "LR physical" is an assumption (not fitted).
+- The dip rule (sensor > 0.2 kW/m², power < 30 % of expected; ratio from days 1–10) is our own choice.
+- The estimated plant locations are only used for the sun position (COSZ) and the clear-sky index (analysis).
+- Charts: `heatmap_model_plant.png`, `heatmap_model_dag.png`, `voorbeelddagen.png`, `residuen.png`.
 
 ---
 
-## Fase 2 – Forecasting perfectioneren (alleen Kaggle-data, echt vooruit)
+## Phase 2 – Improving the forecast (Kaggle data only, truly ahead)
 
-**Vraag:** wat kunnen we voorspellen met alleen informatie die er op het voorspelmoment t0 al is?
-Horizons: **+15 min, +1 uur, +3 uur** en **day-ahead** (morgen per kwartier, gemaakt om 21:00 de avond ervoor).
-Inputs alleen ≤ t0: eerdere opwek, eerdere sensorwaarden, klok, zonnestand, heldere-hemelprofiel.
+**Question:** what can we forecast with only the information that is available at the forecast moment t0?
+Horizons: **+15 min, +1 hour, +3 hours** and **day-ahead** (tomorrow per quarter-hour, made at 21:00 the evening before).
+Inputs only ≤ t0: earlier power, earlier sensor values, clock, sun position, clear-sky profile.
 
-**Aanpak:** we voorspellen de **heldere-hemelindex K** = FRAC / FRAC bij heldere hemel (Ineichen × schaal per plant,
-schaal uit de training) en vermenigvuldigen daarna met de heldere-hemel-opwek. Zo zit de dagcurve er al in en
-leert het model alleen "hoe bewolkt". Lags alleen naar het verleden; ontbrekende lags (nacht) → gemiddelde K van
-de vorige dag. Dips/uitval tellen niet mee (FRAC = NaN).
+**Approach:** we forecast the **clear-sky index K** = FRAC / FRAC under clear sky (Ineichen × scale per plant, scale
+from the training) and then multiply by the clear-sky power. This way the daily curve is already included and the
+model only learns "how cloudy". Lags only look back; missing lags (night) → mean K of the previous day.
+Dips/failures do not count (FRAC = NaN).
 
-### Keuze per horizon (validatie dag 1–10, nRMSE gemiddeld over 2 vouwen)
-| Model | +15 min | +1 uur | +3 uur | day-ahead |
+### Choice per horizon (validation days 1–10, nRMSE averaged over 2 folds)
+| Model | +15 min | +1 hour | +3 hours | day-ahead |
 |---|---|---|---|---|
-| Baseline: gemiddelde dag | 13,2 % | 13,2 % | 13,2 % | 13,2 % |
-| Baseline: persistence | 10,6 % | 20,8 % | 43,8 % | 20,9 % |
-| Smart persistence (K blijft gelijk) | 8,9 % | 13,0 % | 14,2 % | **11,4 %** ✔ |
-| LR op eerdere K | **8,6 %** ✔ | 12,1 % | 14,1 % | 14,9 % |
-| Ridge (K + sensor + tijd) | 8,4 % | **11,1 %** ✔ | **12,6 %** ✔ | 15,7 % |
-| Random Forest | 8,5 % | 11,3 % | 13,2 % | 14,8 % |
-| Gradient Boosting | 9,2 % | 11,6 % | 15,6 % | 16,9 % |
+| Baseline: mean day | 13.2 % | 13.2 % | 13.2 % | 13.2 % |
+| Baseline: persistence | 10.6 % | 20.8 % | 43.8 % | 20.9 % |
+| Smart persistence (K stays the same) | 8.9 % | 13.0 % | 14.2 % | **11.4 %** ✔ |
+| LR on earlier K | **8.6 %** ✔ | 12.1 % | 14.1 % | 14.9 % |
+| Ridge (K + sensor + time) | 8.4 % | **11.1 %** ✔ | **12.6 %** ✔ | 15.7 % |
+| Random Forest | 8.5 % | 11.3 % | 13.2 % | 14.8 % |
+| Gradient Boosting | 9.2 % | 11.6 % | 15.6 % | 16.9 % |
 
-✔ = gekozen (regel #2). +15 min: Ridge is het laagst, maar LR ligt binnen 0,5 pp en is eenvoudiger.
+✔ = chosen (rule #2). +15 min: Ridge is the lowest, but LR is within 0.5 pp and simpler.
 
-**Eerste indruk (alleen validatie, 4 dagen per plant – onzeker):**
-- Kort vooruit (+15 min) helpt de geschiedenis duidelijk (8,6 tegen 13,2 % voor de gemiddelde dag).
-- Hoe verder vooruit, hoe dichter bij de gemiddelde dag: bij +3 uur is het verschil nog ~0,6 pp.
-- **Day-ahead zonder weer:** de regressiemodellen zijn slechter dan de gemiddelde dag (overfitting op 4–7
-  trainingsdagen). Alleen smart persistence ("morgen even helder als vandaag") is iets beter.
-- Daarna (akkoord Dimme) de testdagen 11–34, zie hieronder.
-### Test op dag 11–34 (na de keuze; nRMSE, A = bevroren op dag 1–10, B = walk-forward)
-| Model | +15 min | +1 uur | +3 uur | day-ahead |
+**First impression (validation only, 4 days per plant – uncertain):**
+- Short ahead (+15 min) the history clearly helps (8.6 vs 13.2 % for the mean day).
+- The further ahead, the closer to the mean day: at +3 hours the difference is only ~0.6 pp.
+- **Day-ahead without weather:** the regression models are worse than the mean day (overfitting on 4–7 training
+  days). Only smart persistence ("tomorrow as clear as today") is slightly better.
+- After that (Dimme's approval) the test days 11–34, see below.
+
+### Test on days 11–34 (after the choice; nRMSE, A = frozen on days 1–10, B = walk-forward)
+| Model | +15 min | +1 hour | +3 hours | day-ahead |
 |---|---|---|---|---|
-| Baseline: gemiddelde dag | 16,8 % | 16,8 % | 16,8 % | 16,8 % (B: 15,9 %) |
-| Baseline: persistence | 12,8 % | 21,2 % | 38,4 % | 19,9 % |
-| Smart persistence | 11,6 % | 15,6 % | 17,8 % | **15,0 %** ✔ |
-| LR op eerdere K | **10,8 %** ✔ | 13,3 % | 14,5 % | 14,7 % |
-| Ridge (K + sensor + tijd) | 10,8 % | **13,6 %** ✔ | **14,9 %** ✔ | 15,0 % |
-| Random Forest | 10,7 % | 13,8 % | 15,0 % | 16,1 % |
-| Gradient Boosting | 11,3 % | 15,1 % | 16,2 % | 17,6 % |
-| *Bovengrens fase 1 (sensor op hetzelfde moment)* | *5,5 %* | | | |
+| Baseline: mean day | 16.8 % | 16.8 % | 16.8 % | 16.8 % (B: 15.9 %) |
+| Baseline: persistence | 12.8 % | 21.2 % | 38.4 % | 19.9 % |
+| Smart persistence | 11.6 % | 15.6 % | 17.8 % | **15.0 %** ✔ |
+| LR on earlier K | **10.8 %** ✔ | 13.3 % | 14.5 % | 14.7 % |
+| Ridge (K + sensor + time) | 10.8 % | **13.6 %** ✔ | **14.9 %** ✔ | 15.0 % |
+| Random Forest | 10.7 % | 13.8 % | 15.0 % | 16.1 % |
+| Gradient Boosting | 11.3 % | 15.1 % | 16.2 % | 17.6 % |
+| *Upper limit phase 1 (sensor at the same moment)* | *5.5 %* | | | |
 
-✔ = gekozen op dag 1–10. Walk-forward verandert bijna niets (max. ± 0,5 pp), behalve de gemiddelde dag (16,8 → 15,9 %).
+✔ = chosen on days 1–10. Walk-forward changes almost nothing (max. ± 0.5 pp), except the mean day (16.8 → 15.9 %).
 
-| Gekozen model per plant (nRMSE) | +15 min | +1 uur | +3 uur | day-ahead | gem. dag |
+| Chosen model per plant (nRMSE) | +15 min | +1 hour | +3 hours | day-ahead | mean day |
 |---|---|---|---|---|---|
-| Plant 1 | 11,0 % | 13,5 % | 14,4 % | 15,0 % | 15,0 % |
-| Plant 2 | 10,5 % | 13,7 % | 15,4 % | 14,9 % | 18,4 % |
+| Plant 1 | 11.0 % | 13.5 % | 14.4 % | 15.0 % | 15.0 % |
+| Plant 2 | 10.5 % | 13.7 % | 15.4 % | 14.9 % | 18.4 % |
 
-Stabiliteit gekozen model (nRMSE per plant-dag, 48): +15 min 10,3 % (std 3,1; CV 0,30), +1 uur 13,1 % (CV 0,29),
-+3 uur 14,3 % (CV 0,29), day-ahead 14,3 % (std 4,6; CV 0,32).
+Stability of the chosen model (nRMSE per plant-day, 48): +15 min 10.3 % (std 3.1; CV 0.30), +1 hour 13.1 % (CV 0.29),
++3 hours 14.3 % (CV 0.29), day-ahead 14.3 % (std 4.6; CV 0.32).
 
-**Wat dit betekent**
-- **Hypothese bevestigd.** Kort vooruit werkt de geschiedenis goed (+15 min: 10,8 tegen 16,8 %). Hoe verder vooruit,
-  hoe kleiner het voordeel: +3 uur 14,9 %.
-- **Day-ahead zonder weer is maar een beetje beter dan de gemiddelde dag:** 15,0 tegen 16,8 % (skill 0,11). Bij
-  **Plant 1 helemaal niet** (15,0 tegen 15,0 %); bij Plant 2 wel (14,9 tegen 18,4 %). Dagfout day-ahead 13,9 % (gem. dag 16,4 %).
-  In `voorbeeld_dayahead.png` zie je waarom: zonder weer voorspel je steeds een gladde "gemiddelde" curve; wolken
-  van morgen kun je niet zien aankomen.
-- Zelfs +15 min (10,8 %) is ruim 2× slechter dan de bovengrens met de sensor op hetzelfde moment (5,5 %).
-- Op de test zijn LR en Ridge bij +1 en +3 uur ongeveer gelijk (verschil 0,2–0,4 pp, binnen de ruis).
-- De testperiode is lastiger dan de validatie (bv. gemiddelde dag 16,8 tegen 13,2 %; meer bewolkte dagen, begin moesson).
-- **Conclusie voor fase 3:** voor "morgen" (user story 1) is een **weersvoorspelling nodig**.
+**What this means**
+- **Hypothesis confirmed.** Short ahead the history works well (+15 min: 10.8 vs 16.8 %). The further ahead, the
+  smaller the advantage: +3 hours 14.9 %.
+- **Day-ahead without weather is only a little better than the mean day:** 15.0 vs 16.8 % (skill 0.11). At
+  **Plant 1 not at all** (15.0 vs 15.0 %); at Plant 2 it is (14.9 vs 18.4 %). Daily error day-ahead 13.9 % (mean day 16.4 %).
+  `voorbeeld_dayahead.png` shows why: without weather you always forecast a smooth "average" curve; you cannot see
+  tomorrow's clouds coming.
+- Even +15 min (10.8 %) is more than 2× worse than the upper limit with the sensor at the same moment (5.5 %).
+- On the test, LR and Ridge are about equal at +1 and +3 hours (difference 0.2–0.4 pp, within the noise).
+- The test period is harder than the validation (e.g. mean day 16.8 vs 13.2 %; more cloudy days, start of the monsoon).
+- **Conclusion for phase 3:** for "tomorrow" (user story 1) a **weather forecast is needed**.
 
-### Aannames fase 2
-- Schaal heldere hemel = 90e percentiel van FRAC / CS_GHI (zon hoog) in de training; K begrensd op 0–1,5.
-- Day-ahead gemaakt om 21:00: de hele dag D−1 is dan bekend (daggemiddelden van K en sensor).
-- Ontbrekende lags (nacht, gaten) → gemiddelde K van de vorige dag (of van de training).
-- Grafieken: `horizon_validatie.png`, `horizon_test.png`, `voorbeeld_dayahead.png`.
+### Assumptions phase 2
+- Clear-sky scale = 90th percentile of FRAC / CS_GHI (high sun) in the training; K limited to 0–1.5.
+- Day-ahead made at 21:00: the whole day D−1 is then known (daily means of K and sensor).
+- Missing lags (night, gaps) → mean K of the previous day (or of the training).
+- Charts: `horizon_validatie.png`, `horizon_test.png`, `voorbeeld_dayahead.png`.
+
 ---
 
-## Fase 3 – Weermodel (ERA5) als input
+## Phase 3 – Weather model (ERA5) as input
 
-**Vraag:** hoe goed is het model als we de plant-sensor vervangen door een bestaand weermodel?
-ERA5 = weer **achteraf** (heranalyse), dus een **bovengrens** voor gebruik met een echte weersvoorspelling.
-Natuurkunde (pvlib) overgenomen uit V5: uur → kwartier, Perez-POA, Faiman-celtemperatuur, Kimber-stof, EFF_T,
-KT_POA. Opstelling plants: vast, hoek = breedtegraad, zuid (AANNAME uit V3–V5). Nooit de plant-sensor als input.
+**Question:** how good is the model if we replace the plant sensor by an existing weather model?
+ERA5 = weather **in hindsight** (reanalysis), so an **upper limit** for use with a real weather forecast.
+Physics (pvlib) taken from V5: hour → quarter-hour, Perez POA, Faiman cell temperature, Kimber soiling, EFF_T,
+KT_POA. Plant setup: fixed, tilt = latitude, facing south (ASSUMPTION from V3–V5). Never the plant sensor as input.
 
-### Tijdafspraak (alleen dag 1–10)
-Correlatie ERA5-GHI ↔ sensor per kwartier is het hoogst bij **+15 min** (P1 r = 0,863; P2 0,939), dus de straling
-van uur h hoort bij het interval met midden h + 15 min. Bij −30 min (de documentatie: "gemiddelde van het voorgaande
-uur") is r veel lager (0,79 / 0,91). Zie `tijdafspraak.png` en BESLISSINGEN #12.
+### Time alignment (days 1–10 only)
+The correlation ERA5 GHI ↔ sensor per quarter-hour is highest at **+15 min** (P1 r = 0.863; P2 0.939), so the
+irradiance of hour h belongs to the interval with centre h + 15 min. At −30 min (the documentation: "mean of the
+preceding hour") r is much lower (0.79 / 0.91). See `tijdafspraak.png` and decision #12.
 
-### Keuze (validatie binnen dag 1–10, nRMSE gemiddeld over 2 vouwen)
-| Model | nRMSE | vouw 1 | vouw 2 | R² | Dagfout |
+### Choice (validation within days 1–10, nRMSE averaged over 2 folds)
+| Model | nRMSE | fold 1 | fold 2 | R² | Daily error |
 |---|---|---|---|---|---|
-| Baseline: gemiddelde dag | 13,2 % | 14,0 | 12,4 | 0,83 | 13,4 % |
-| Baseline: persistence | 20,9 % | 28,3 | 13,5 | 0,52 | 14,4 % |
-| *Fase 2: smart persistence (geen weer)* | *11,4 %* | 12,0 | 10,8 | 0,87 | 10,4 % |
-| *Fase 1: LR straling (sensor, bovengrens)* | *6,5 %* | 5,9 | 7,0 | 0,96 | 1,9 % |
-| **LR GHI (ERA5) – gekozen** | **11,2 %** | 11,0 | 11,4 | 0,87 | 8,1 % |
-| LR POA | 11,4 % | 11,2 | 11,6 | 0,87 | 9,2 % |
-| LR EFF_T | 12,6 % | 12,5 | 12,8 | 0,84 | 11,6 % |
-| e6 (V4): EFF_T × (a + b·KT_POA), zonder intercept | 14,5 % | 15,8 | 13,2 | 0,79 | 15,8 % |
-| Ridge e6 (zonder intercept) | 14,5 % | 15,7 | 13,2 | 0,79 | 15,8 % |
-| Ridge e6 + bewolking, regen, vochtigheid | 13,2 % | 15,4 | 11,0 | 0,82 | 10,9 % |
-| Random Forest (e6 + extra) | 16,0 % | 20,3 | 11,8 | 0,73 | 14,8 % |
-| Gradient Boosting (e6 + extra) | 18,9 % | 24,0 | 13,8 | 0,62 | 17,5 % |
+| Baseline: mean day | 13.2 % | 14.0 | 12.4 | 0.83 | 13.4 % |
+| Baseline: persistence | 20.9 % | 28.3 | 13.5 | 0.52 | 14.4 % |
+| *Phase 2: smart persistence (no weather)* | *11.4 %* | 12.0 | 10.8 | 0.87 | 10.4 % |
+| *Phase 1: LR irradiance (sensor, upper limit)* | *6.5 %* | 5.9 | 7.0 | 0.96 | 1.9 % |
+| **LR GHI (ERA5) – chosen** | **11.2 %** | 11.0 | 11.4 | 0.87 | 8.1 % |
+| LR POA | 11.4 % | 11.2 | 11.6 | 0.87 | 9.2 % |
+| LR EFF_T | 12.6 % | 12.5 | 12.8 | 0.84 | 11.6 % |
+| e6 (V4): EFF_T × (a + b·KT_POA), no intercept | 14.5 % | 15.8 | 13.2 | 0.79 | 15.8 % |
+| Ridge e6 (no intercept) | 14.5 % | 15.7 | 13.2 | 0.79 | 15.8 % |
+| Ridge e6 + cloud cover, rain, humidity | 13.2 % | 15.4 | 11.0 | 0.82 | 10.9 % |
+| Random Forest (e6 + extra) | 16.0 % | 20.3 | 11.8 | 0.73 | 14.8 % |
+| Gradient Boosting (e6 + extra) | 18.9 % | 24.0 | 13.8 | 0.62 | 17.5 % |
 
-**Eerste indruk (alleen 4 validatiedagen per plant – onzeker):**
-- Met ERA5 is de fout veel groter dan met de sensor (11,2 tegen 6,5 %): **de weerdata is de bottleneck**, niet het model.
-- Op de opzetdagen is ERA5 maar iets beter dan de gemiddelde dag (11,2 tegen 13,2 %) en ongeveer gelijk aan fase 2.
-- **e6 (de V4-winnaar) werkt hier niet beter.** Gecontroleerd op fouten (alleen binnen dag 1–10): ook in-sample op
-  dag 1–10 zijn LR GHI, LR POA en e6 gelijk (13,8 / 13,8 / 14,3 %). Met 6–8 trainingsdagen schommelen a en b sterk
-  (b: −0,0012 ↔ −0,0006 per vouw; EFF_T en EFF_T·KT_POA r ≈ 0,97). ERA5 heeft per dag een flinke afwijking
-  (verhouding opwek/ERA5-POA per dag 0,79–1,18) die alle modellen evenveel raakt.
-- Complexe modellen (RF, GB) overfitten duidelijk met zo weinig dagen.
-- De testdagen 11–34 zijn nog niet bekeken (`TOON_TEST = False`).
-### Test op dag 11–34 (na de keuze; verandert de keuze niet)
-| Model | A. Bevroren nRMSE | Plant 1 | Plant 2 | R² | Dagfout | Skill t.o.v. gem. dag | B. Walk-forward |
+**First impression (only 4 validation days per plant – uncertain):**
+- With ERA5 the error is much larger than with the sensor (11.2 vs 6.5 %): **the weather data is the bottleneck**,
+  not the model.
+- On the setup days ERA5 is only slightly better than the mean day (11.2 vs 13.2 %) and about equal to phase 2.
+- **e6 (the V4 winner) does not work better here.** Checked for errors (within days 1–10 only): also in-sample on
+  days 1–10, LR GHI, LR POA and e6 are equal (13.8 / 13.8 / 14.3 %). With 6–8 training days a and b vary strongly
+  (b: −0.0012 ↔ −0.0006 per fold; EFF_T and EFF_T·KT_POA r ≈ 0.97). ERA5 has a considerable deviation per day
+  (ratio power / ERA5 POA per day 0.79–1.18) that affects all models equally.
+- Complex models (RF, GB) clearly overfit with so few days.
+- The test days 11–34 had not been viewed yet (`TOON_TEST = False`).
+
+### Test on days 11–34 (after the choice; does not change the choice)
+| Model | A. Frozen nRMSE | Plant 1 | Plant 2 | R² | Daily error | Skill vs mean day | B. Walk-forward |
 |---|---|---|---|---|---|---|---|
-| Baseline: gemiddelde dag | 16,8 % | 15,0 | 18,4 | 0,68 | 16,4 % | 0 | 15,9 % |
-| Baseline: persistence | 19,9 % | 19,4 | 20,4 | 0,55 | 14,0 % | −0,19 | 19,9 % |
-| *Fase 2: smart persistence (geen weer)* | *15,0 %* | 15,0 | 14,9 | 0,74 | 13,9 % | 0,11 | 15,0 % |
-| *Fase 1: LR straling (sensor, bovengrens)* | *5,5 %* | 4,1 | 6,6 | 0,97 | 2,9 % | 0,67 | 5,4 % |
-| **LR GHI (ERA5) – gekozen** | **15,0 %** | 15,4 | 14,7 | 0,74 | 12,8 % | 0,10 | 14,7 % |
-| LR POA | 14,9 % | 15,2 | 14,5 | 0,75 | 12,2 % | 0,11 | 14,5 % |
-| LR EFF_T | 14,5 % | 14,4 | 14,6 | 0,76 | 10,3 % | 0,13 | 14,4 % |
-| e6: EFF_T × (a + b·KT_POA) | **14,1 %** | 14,0 | 14,3 | 0,77 | **9,6 %** | **0,16** | 14,1 % |
-| Ridge e6 | 14,2 % | 14,0 | 14,3 | 0,77 | 9,6 % | 0,16 | 14,1 % |
-| Ridge e6 + bewolking, regen, vochtigheid | 16,1 % | 15,7 | 16,6 | 0,70 | 13,1 % | 0,04 | 14,0 % |
-| Random Forest | 16,1 % | 16,2 | 16,0 | 0,70 | 13,8 % | 0,04 | 14,3 % |
-| Gradient Boosting | 16,5 % | 16,7 | 16,2 | 0,69 | 13,7 % | 0,02 | 14,7 % |
+| Baseline: mean day | 16.8 % | 15.0 | 18.4 | 0.68 | 16.4 % | 0 | 15.9 % |
+| Baseline: persistence | 19.9 % | 19.4 | 20.4 | 0.55 | 14.0 % | −0.19 | 19.9 % |
+| *Phase 2: smart persistence (no weather)* | *15.0 %* | 15.0 | 14.9 | 0.74 | 13.9 % | 0.11 | 15.0 % |
+| *Phase 1: LR irradiance (sensor, upper limit)* | *5.5 %* | 4.1 | 6.6 | 0.97 | 2.9 % | 0.67 | 5.4 % |
+| **LR GHI (ERA5) – chosen** | **15.0 %** | 15.4 | 14.7 | 0.74 | 12.8 % | 0.10 | 14.7 % |
+| LR POA | 14.9 % | 15.2 | 14.5 | 0.75 | 12.2 % | 0.11 | 14.5 % |
+| LR EFF_T | 14.5 % | 14.4 | 14.6 | 0.76 | 10.3 % | 0.13 | 14.4 % |
+| e6: EFF_T × (a + b·KT_POA) | **14.1 %** | 14.0 | 14.3 | 0.77 | **9.6 %** | **0.16** | 14.1 % |
+| Ridge e6 | 14.2 % | 14.0 | 14.3 | 0.77 | 9.6 % | 0.16 | 14.1 % |
+| Ridge e6 + cloud cover, rain, humidity | 16.1 % | 15.7 | 16.6 | 0.70 | 13.1 % | 0.04 | 14.0 % |
+| Random Forest | 16.1 % | 16.2 | 16.0 | 0.70 | 13.8 % | 0.04 | 14.3 % |
+| Gradient Boosting | 16.5 % | 16.7 | 16.2 | 0.69 | 13.7 % | 0.02 | 14.7 % |
 
-**Stabiliteit** (nRMSE per plant-dag, 48): LR GHI 14,6 % (std 3,6; CV 0,25), e6 13,8 % (std 3,4; CV 0,24),
-smart persistence 14,3 % (std 4,6; CV 0,32), gemiddelde dag 15,9 % (std 5,5; CV 0,34).
-**Kruis-plant** (bevroren): LR GHI P1 → P2 14,9 %, P2 → P1 15,3 %; e6 15,1 / 15,0 %.
+**Stability** (nRMSE per plant-day, 48): LR GHI 14.6 % (std 3.6; CV 0.25), e6 13.8 % (std 3.4; CV 0.24),
+smart persistence 14.3 % (std 4.6; CV 0.32), mean day 15.9 % (std 5.5; CV 0.34).
+**Cross-plant** (frozen): LR GHI P1 → P2 14.9 %, P2 → P1 15.3 %; e6 15.1 / 15.0 %.
 
-**Gevoeligheid voor weerfouten** (ruis per dag × per uur op de ERA5-straling, testdagen, 5 herhalingen):
-| Fout | LR GHI (gekozen) | e6 | Ridge e6 + extra | gem. dag (geen weer) |
+**Sensitivity to weather errors** (noise per day × per hour on the ERA5 irradiance, test days, 5 repetitions):
+| Error | LR GHI (chosen) | e6 | Ridge e6 + extra | mean day (no weather) |
 |---|---|---|---|---|
-| 0 % | 15,0 % | 14,1 % | 16,1 % | 16,8 % |
-| 10 % | 16,2 % | 14,7 % | 16,4 % | 16,8 % |
-| 20 % | 18,4 % | 16,2 % | 17,0 % | 16,8 % |
-| 30 % | 20,3 % | 17,6 % | 18,1 % | 16,8 % |
+| 0 % | 15.0 % | 14.1 % | 16.1 % | 16.8 % |
+| 10 % | 16.2 % | 14.7 % | 16.4 % | 16.8 % |
+| 20 % | 18.4 % | 16.2 % | 17.0 % | 16.8 % |
+| 30 % | 20.3 % | 17.6 % | 18.1 % | 16.8 % |
 
-**Wat dit betekent**
-- **Met ERA5 is day-ahead maar iets beter dan zonder weer.** Het gekozen LR GHI (15,0 %) is gelijk aan fase 2
-  (smart persistence, 15,0 %) en 1,7 pp beter dan de gemiddelde dag. De sensor (5,5 %) laat zien hoeveel winst er
-  zou zijn met perfect weer: **de weerdata is de bottleneck**, zoals in V1–V5.
-- **Op de testdagen is e6 (V4) het beste ERA5-model:** 14,1 % nRMSE en een dagfout van 9,6 % (LR GHI 12,8 %). Op de
-  validatie (met maar 6–8 trainingsdagen) was e6 slechter; de keuzeregel koos daarom LR GHI. De test verandert de
-  keuze niet (protocol), maar het patroon klopt met V4/V5: **e6 heeft meer trainingsdagen nodig** (in het bevroren
-  model 10 dagen; in V4/V5 14–29 dagen).
-- **e6 is ook robuuster voor weerfouten:** bij 20 % fout 16,2 % tegen 18,4 % voor LR GHI. LR GHI wordt al bij ~12 %
-  weerfout slechter dan de gemiddelde dag.
-- Extra weervariabelen (bewolking, regen, vochtigheid) en RF/GB helpen bevroren niet (overfitting op 10 dagen); met
-  walk-forward (meer dagen) komen ze wel op 14,0–14,7 %.
-- **Residuen** (`residuen.png`): het model voorspelt op de testdagen gemiddeld te laag (veel residuen −10 tot −30 %),
-  ook bij "100 % bewolking" volgens ERA5. ERA5 zag dus vaker wolken dan er bij de plant waren (rastercel ~25 km,
-  geschatte locatie). De residuen hangen ~2–3 uur samen (ACF): fouten komen in blokken, typisch voor verkeerd
-  getimede wolken.
+**What this means**
+- **With ERA5, day-ahead is only slightly better than without weather.** The chosen LR GHI (15.0 %) equals phase 2
+  (smart persistence, 15.0 %) and is 1.7 pp better than the mean day. The sensor (5.5 %) shows how much gain perfect
+  weather would give: **the weather data is the bottleneck**, as in V1–V5.
+- **On the test days e6 (V4) is the best ERA5 model:** 14.1 % nRMSE and a daily error of 9.6 % (LR GHI 12.8 %). On
+  the validation (with only 6–8 training days) e6 was worse; the selection rule therefore chose LR GHI. The test
+  does not change the choice (protocol), but the pattern fits V4/V5: **e6 needs more training days** (10 days in the
+  frozen model; 14–29 days in V4/V5).
+- **e6 is also more robust to weather errors:** at 20 % error 16.2 % vs 18.4 % for LR GHI. LR GHI is already worse
+  than the mean day at ~12 % weather error.
+- Extra weather variables (cloud cover, rain, humidity) and RF/GB do not help when frozen (overfitting on 10 days);
+  with walk-forward (more days) they reach 14.0–14.7 %.
+- **Residuals** (`residuen.png`): on the test days the model forecasts too low on average (many residuals −10 to
+  −30 %), also at "100 % cloud cover" according to ERA5. So ERA5 saw clouds more often than there were at the plant
+  (grid cell ~25 km, estimated location). The residuals are correlated over ~2–3 hours (ACF): errors come in blocks,
+  typical for clouds at the wrong time.
 
-### Aannames fase 3
-- Opstelling plants: vast, hoek = breedtegraad, zuid (V3–V5). Natuurkunde-parameters uit V5 (γ −0,37 %/°C, ...).
-- ERA5 als stand-in voor een weersvoorspelling; de foutgroottes in de weerfout-test zijn aannames.
-- Grafieken: `tijdafspraak.png`, `vergelijking.png`, `voorbeelddagen.png`, `residuen.png`, `weerfout.png`.
+### Assumptions phase 3
+- Plant setup: fixed, tilt = latitude, facing south (V3–V5). Physics parameters from V5 (γ −0.37 %/°C, ...).
+- ERA5 as a stand-in for a weather forecast; the error sizes in the weather-error test are assumptions.
+- Charts: `tijdafspraak.png`, `vergelijking.png`, `voorbeelddagen.png`, `residuen.png`, `weerfout.png`.
+
 ---
 
-## Fase 4 – Eindmodel
+## Phase 4 – Final model
 
-**Gekozen: LR GHI (ERA5)** – een Linear Regression op alleen de horizontale straling uit het weermodel.
-Gekozen met de vaste keuzeregel op dag 1–10 (fase 3). Op de testdagen was e6 iets beter; volgens het protocol
-verandert de test de keuze niet, en Dimme koos ervoor de regel te volgen (BESLISSINGEN #14).
+**Chosen: LR GHI (ERA5)** – a linear regression on only the horizontal irradiance from the weather model.
+Chosen with the fixed selection rule on days 1–10 (phase 3). On the test days e6 was slightly better; according to
+the protocol the test does not change the choice, and Dimme chose to follow the rule (decision #14).
 
-- **Formule** (getraind op alle 34 dagen, beide plants, zonder dips):
-  FRAC = 0,0459 + 0,000902 × GHI (W/m²); 's nachts (cos zenit ≤ 0,02) = 0.
-- **Naar een huis:** kW = FRAC × kWp × **factor 0,664** × verliesfactor (schaduw, leeftijd), begrensd op de
-  omvormer. De factor is een **AANNAME**: het 99e percentiel van de pvlib-opwek (kW/kWp) op de plantlocaties
-  (Plant 1: 0,684; Plant 2: 0,643).
-- **Band P10–P90** per bewolkingsklasse (ERA5-KT), × voorspelling: bewolkt 0,66–2,52; half bewolkt 0,63–1,60;
-  helder 0,55–1,30. Out-of-sample gekalibreerd. Check: kalibratie op dag 11–22 → **dekking 80,5 %** op dag 23–34
-  (doel 80 %). De **dagband** (som P10 tot som P90) bevat de echte dag in 100 % van de gevallen: te ruim
-  (kwartier-kwantielen mag je niet optellen) → verbeterpunt.
-- **Opgeslagen:** `modellen/model_final.joblib` (zelfde sleutels als `model_v5.joblib`: model, features, factor,
-  band_method, band, kt_bins, params, rad_shift_min, min_cosz) en `resultaten/model_info.json`
-  (keuze, motivatie, scores, trainings-/testdagen, aannames).
+- **Formula** (trained on all 34 days, both plants, without dips):
+  FRAC = 0.0459 + 0.000902 × GHI (W/m²); at night (cos zenith ≤ 0.02) = 0.
+- **For a house:** kW = FRAC × kWp × **factor 0.664** × loss factor (shading, age), limited by the inverter.
+  The factor is an **ASSUMPTION**: the 99th percentile of the pvlib power (kW/kWp) at the plant locations
+  (Plant 1: 0.684; Plant 2: 0.643).
+- **Band P10–P90** per cloudiness class (ERA5 KT), × forecast: cloudy 0.66–2.52; partly cloudy 0.63–1.60;
+  clear 0.55–1.30. Calibrated out-of-sample. Check: calibration on days 11–22 → **coverage 80.5 %** on days 23–34
+  (target 80 %). The **daily band** (sum of P10 to sum of P90) contains the real day in 100 % of the cases: too wide
+  (quarter-hour quantiles must not be added up) → point for improvement.
+- **Saved:** `modellen/model_final.joblib` (same keys as `model_v5.joblib`: model, features, factor,
+  band_method, band, kt_bins, params, rad_shift_min, min_cosz) and `resultaten/model_info.json`
+  (choice, motivation, scores, training/test days, assumptions).
 
-### Eindtabel (test dag 11–34, bevroren model op dag 1–10, huis 5 kWp)
-| Model | Input | nRMSE | nMAE | RMSE | MAE | R² | Dagfout | Skill t.o.v. gem. dag |
+### Final table (test days 11–34, frozen model on days 1–10, house 5 kWp)
+| Model | Input | nRMSE | nMAE | RMSE | MAE | R² | Daily error | Skill vs mean day |
 |---|---|---|---|---|---|---|---|---|
-| Baseline: gemiddelde dag | geen | 16,8 % | 11,9 % | 0,84 kW | 0,60 kW | 0,68 | 16,4 % | 0 |
-| Baseline: persistence | geen | 19,9 % | 13,3 % | 0,99 kW | 0,66 kW | 0,55 | 14,0 % | −0,19 |
-| Fase 2: smart persistence (geen weer) | eigen opwek | 15,0 % | 10,7 % | 0,75 kW | 0,53 kW | 0,74 | 13,9 % | 0,11 |
-| **Fase 3: LR GHI (ERA5) – EINDMODEL** | ERA5-weer | **15,0 %** | 11,1 % | 0,75 kW | 0,55 kW | 0,74 | 12,8 % | 0,10 |
-| Fase 3: e6 (alternatief) | ERA5 + pvlib | 14,1 % | 10,4 % | 0,71 kW | 0,52 kW | 0,77 | 9,6 % | 0,16 |
-| Fase 1: LR straling (bovengrens) | plant-sensor | 5,5 % | 3,5 % | 0,27 kW | 0,18 kW | 0,97 | 2,9 % | 0,67 |
+| Baseline: mean day | none | 16.8 % | 11.9 % | 0.84 kW | 0.60 kW | 0.68 | 16.4 % | 0 |
+| Baseline: persistence | none | 19.9 % | 13.3 % | 0.99 kW | 0.66 kW | 0.55 | 14.0 % | −0.19 |
+| Phase 2: smart persistence (no weather) | own power | 15.0 % | 10.7 % | 0.75 kW | 0.53 kW | 0.74 | 13.9 % | 0.11 |
+| **Phase 3: LR GHI (ERA5) – FINAL MODEL** | ERA5 weather | **15.0 %** | 11.1 % | 0.75 kW | 0.55 kW | 0.74 | 12.8 % | 0.10 |
+| Phase 3: e6 (alternative) | ERA5 + pvlib | 14.1 % | 10.4 % | 0.71 kW | 0.52 kW | 0.77 | 9.6 % | 0.16 |
+| Phase 1: LR irradiance (upper limit) | plant sensor | 5.5 % | 3.5 % | 0.27 kW | 0.18 kW | 0.97 | 2.9 % | 0.67 |
 
-Per plant (eindmodel): Plant 1 15,4 %, Plant 2 14,7 % nRMSE. Walk-forward (elke dag opnieuw op alle eerdere
-dagen): 14,7 %.
+Per plant (final model): Plant 1 15.4 %, Plant 2 14.7 % nRMSE. Walk-forward (every day again on all earlier days):
+14.7 %.
 
-### Conclusie
-- Het eindmodel is **beter dan de baseline** (gemiddelde dag): 15,0 tegen 16,8 % nRMSE, dagfout 12,8 tegen 16,4 %.
-- De winst is bescheiden: met deze ERA5-data is het eindmodel even goed als "morgen even helder als vandaag" (fase 2).
-- **De weerdata is de bottleneck**, niet het model: met de plant-sensor (perfect weer) is de fout 3× kleiner.
-- **Aanbeveling:** zodra er meer data is (meer dagen, of een huis met eigen meetdata), **e6** opnieuw testen:
-  dat gebruikt de straling op het schuine paneel (dakhoek + richting) en was op de test en bij weerfouten beter.
+### Conclusion
+- The final model is **better than the baseline** (mean day): 15.0 vs 16.8 % nRMSE, daily error 12.8 vs 16.4 %.
+- The gain is modest: with this ERA5 data the final model is as good as "tomorrow as clear as today" (phase 2).
+- **The weather data is the bottleneck**, not the model: with the plant sensor (perfect weather) the error is 3× smaller.
+- **Recommendation:** as soon as there is more data (more days, or a house with its own measurements), test **e6**
+  again: it uses the irradiance on the tilted panel (roof tilt + orientation) and was better on the test and with
+  weather errors.
 
-### Beperkingen
-- 34 dagen in mei–juni (begin moesson), 2 plants, 10 opzetdagen. Geen conclusies over een heel jaar.
-- ERA5 is weer **achteraf**; een echte voorspelling heeft meer fout (bij ~12 % weerfout is LR GHI al slechter dan de
-  gemiddelde dag, fase 3). Testen met archief-voorspellingen (Open-Meteo Historical Forecast, vanaf ~2022) kan pas
-  met recente opwekdata.
-- **LR GHI kijkt niet naar de dakhoek en richting** van een huis: die tellen alleen mee via kWp en verliezen.
-  Voor een plat of zuidgericht dak is dat geen probleem; voor een oost/west-dak wel (e6 zou dat meenemen).
-- Plantlocaties en opstelling zijn geschat; de factor 0,664 is niet gecontroleerd met data van een echt huis.
+### Limitations
+- 34 days in May–June (start of the monsoon), 2 plants, 10 setup days. No conclusions about a whole year.
+- ERA5 is weather **in hindsight**; a real forecast has more error (at ~12 % weather error LR GHI is already worse
+  than the mean day, phase 3). Testing with archived forecasts (Open-Meteo Historical Forecast, from ~2022) is only
+  possible with recent power data.
+- **LR GHI does not look at the tilt and orientation** of a house's roof: these only count through kWp and losses.
+  For a flat or south-facing roof that is no problem; for an east/west roof it is (e6 would include it).
+- Plant locations and setup are estimated; the factor 0.664 has not been checked with data of a real house.
 
-### Aannames fase 4
-- Factor 0,664 (zie boven); band gekalibreerd op 24 out-of-sample dagen (2 × 24 plant-dagen).
-- Grafieken: `eindvergelijking.png`, `band_voorbeeld.png`.
+### Assumptions phase 4
+- Factor 0.664 (see above); band calibrated on 24 out-of-sample days (2 × 24 plant-days).
+- Charts: `eindvergelijking.png`, `band_voorbeeld.png`.
+
 ---
 
-## Heatmaps voor het verslag (`heatmaps.py` → `resultaten/heatmaps/`)
-Zelfde opzet als fase 3/4 (bevroren model, getraind op dag 1–10, getest op dag 11–34). Geen nieuwe keuzes.
+## Heatmaps for the report (`heatmaps.py` → `resultaten/heatmaps/`)
+Same setup as phase 3/4 (frozen model, trained on days 1–10, tested on days 11–34). No new choices.
 
-| Bestand | Wat | Wat valt op |
+| File | What | What stands out |
 |---|---|---|
-| `01_correlatie_alle_features.png` | Correlatie (Pearson) van alle 20 features met elkaar en met de opwek, overdag, beide plants | Sensor-straling 0,98 met de opwek; ERA5-straling, POA, EFF_T en pvlib-opwek ~0,88 (onderling 0,97–1,00: bijna hetzelfde). ERA5-bewolking (−0,17), -helderheid (0,15), wind en neerslag zeggen per kwartier weinig. Luchtvochtigheid −0,45 (vooral via temperatuur, −0,94). |
-| `02_fout_eindmodel_dag_plant.png` | nRMSE van het eindmodel per testdag × Plant 1 / Plant 2 / samen | De fout wisselt sterk per dag (8–26 %). Samen is dag 18 het moeilijkst (Plant 2: 26 %); bij Plant 1 is dag 34 de slechtste (22 %). Dag 14–15 zijn voor beide plants het makkelijkst (8–9 %). |
-| `03_fout_model_dag_plant1.png`, `..._plant2.png` | nRMSE per model × testdag, per plant | Alle ERA5-modellen gaan samen op en neer: het **weer van de dag** bepaalt de fout. De sensor (bovengrens) blijft bijna overal laag. |
-| `04_fout_model_plant.png` | nRMSE per model × plant over de hele testperiode | Eindmodel 15,4 % (P1) en 14,7 % (P2); gemiddelde dag 15,0 / 18,4 %; sensor 4,1 / 6,6 %. |
+| `01_correlatie_alle_features.png` | Correlation (Pearson) of all 20 features with each other and with the power, daytime, both plants | Sensor irradiance 0.98 with the power; ERA5 irradiance, POA, EFF_T and pvlib power ~0.88 (0.97–1.00 among themselves: almost the same). ERA5 cloud cover (−0.17), clearness (0.15), wind and rain say little per quarter-hour. Humidity −0.45 (mostly through temperature, −0.94). |
+| `02_fout_eindmodel_dag_plant.png` | nRMSE of the final model per test day × Plant 1 / Plant 2 / both | The error varies strongly per day (8–26 %). Together, day 18 is the hardest (Plant 2: 26 %); for Plant 1 day 34 is the worst (22 %). Days 14–15 are the easiest for both plants (8–9 %). |
+| `03_fout_model_dag_plant1.png`, `..._plant2.png` | nRMSE per model × test day, per plant | All ERA5 models go up and down together: the **weather of the day** determines the error. The sensor (upper limit) stays low almost everywhere. |
+| `04_fout_model_plant.png` | nRMSE per model × plant over the whole test period | Final model 15.4 % (P1) and 14.7 % (P2); mean day 15.0 / 18.4 %; sensor 4.1 / 6.6 %. |
 
-De tabellen staan ernaast als `.csv` (`fout_per_dag_per_plant.csv` met de nRMSE per plant-dag voor alle modellen).
+The tables are next to them as `.csv` (`fout_per_dag_per_plant.csv` with the nRMSE per plant-day for all models).
+English versions of two charts: `EN_correlation_features.png`, `EN_error_final_model_per_day.png`.
+
 ---
 
-## Diagnose: waarom scoort ERA5 even goed als "zonder weer" (beide ~15 % nRMSE)? (`diagnose_era5.py`)
-Alleen uitleg, geen nieuwe keuze. Test dag 11–34, bevroren op dag 1–10. Geen fout gevonden.
+## Diagnosis: why does ERA5 score as well as "without weather" (both ~15 % nRMSE)? (`diagnose_era5.py`)
+Explanation only, no new choice. Test days 11–34, frozen on days 1–10. No error found.
 
-**1. ERA5 weet wél veel beter hoe zonnig de dag wordt.** Correlatie van de echte daghelderheid met ERA5 van vandaag
-0,85 (P1 0,70; P2 0,91), met de gemeten helderheid van gisteren (wat smart persistence gebruikt) maar 0,54.
+**1. ERA5 does know much better how sunny the day will be.** Correlation of the real daily clearness with ERA5 of
+the same day 0.85 (P1 0.70; P2 0.91), with the measured clearness of yesterday (what smart persistence uses) only 0.54.
 
-**2. Maar per kwartier telt vooral iets wat niemand kan voorspellen: wanneer precies een wolk voorbij komt.**
-| Model | nRMSE | bias | fout dagniveau | fout binnen de dag | aandeel binnen de dag |
+**2. But per quarter-hour what counts most is something nobody can forecast: exactly when a cloud passes.**
+| Model | nRMSE | bias | error at day level | error within the day | share within the day |
 |---|---|---|---|---|---|
-| gemiddelde dag | 16,8 % | +3,4 % | 8,5 % | 14,1 % | 70 % |
-| smart persistence (geen weer) | 15,0 % | +0,5 % | 7,4 % | 13,0 % | 75 % |
-| **LR GHI (ERA5) – eindmodel** | 15,0 % | **−4,1 %** | **4,9 %** | 13,6 % | 82 % |
-| e6 (ERA5) | 14,2 % | −2,0 % | 4,8 % | 13,2 % | 87 % |
-| sensor (bovengrens) | 5,5 % | −0,9 % | 1,3 % | 5,2 % | 92 % |
+| mean day | 16.8 % | +3.4 % | 8.5 % | 14.1 % | 70 % |
+| smart persistence (no weather) | 15.0 % | +0.5 % | 7.4 % | 13.0 % | 75 % |
+| **LR GHI (ERA5) – final model** | 15.0 % | **−4.1 %** | **4.9 %** | 13.6 % | 82 % |
+| e6 (ERA5) | 14.2 % | −2.0 % | 4.8 % | 13.2 % | 87 % |
+| sensor (upper limit) | 5.5 % | −0.9 % | 1.3 % | 5.2 % | 92 % |
 
-- **Dagniveau:** ERA5 is duidelijk beter (4,9 tegen 7,4 %).
-- **Binnen de dag:** alle voorspellers missen ~13–14 %. ERA5 is hier zelfs iets slechter dan een gladde curve: als
-  ERA5 een wolk op het verkeerde uur zet, krijg je de fout twee keer (dip voorspeld waar zon was, en zon waar de dip
-  was). Een gladde curve "gokt" het midden en wordt daarvoor minder gestraft.
-- **Vaste afwijking:** het bevroren LR GHI voorspelt op de testdagen gemiddeld 4,1 % te laag (getraind op 10 dagen,
-  niet bijgeleerd). Smart persistence kalibreert zichzelf elke dag met de gemeten opwek van gisteren (bias 0,5 %).
-- Netto heffen die effecten elkaar per kwartier op → beide ~15 %.
+- **Day level:** ERA5 is clearly better (4.9 vs 7.4 %).
+- **Within the day:** all forecasters miss ~13–14 %. ERA5 is even slightly worse here than a smooth curve: if ERA5
+  puts a cloud at the wrong hour, you get the error twice (dip forecast where there was sun, and sun where the dip
+  was). A smooth curve "guesses" the middle and is punished less for it.
+- **Fixed offset:** the frozen LR GHI forecasts 4.1 % too low on average on the test days (trained on 10 days, not
+  updated). Smart persistence recalibrates itself every day with yesterday's measured power (bias 0.5 %).
+- Net, these effects cancel out per quarter-hour → both ~15 %.
 
-**3. Op grovere tijdschaal wint ERA5 wel:**
-| Model | per kwartier | per uur | per dag |
+**3. On a coarser time scale ERA5 does win:**
+| Model | per quarter-hour | per hour | per day |
 |---|---|---|---|
-| gemiddelde dag | 16,8 % | 14,2 % | 9,2 % |
-| smart persistence (geen weer) | 15,0 % | 12,3 % | 7,5 % |
-| **LR GHI (ERA5) – eindmodel** | 15,0 % | 12,3 % | **6,4 %** |
-| e6 (ERA5) | 14,2 % | 11,3 % | 5,2 % |
-| sensor (bovengrens) | 5,5 % | 4,1 % | 1,6 % |
+| mean day | 16.8 % | 14.2 % | 9.2 % |
+| smart persistence (no weather) | 15.0 % | 12.3 % | 7.5 % |
+| **LR GHI (ERA5) – final model** | 15.0 % | 12.3 % | **6.4 %** |
+| e6 (ERA5) | 14.2 % | 11.3 % | 5.2 % |
+| sensor (upper limit) | 5.5 % | 4.1 % | 1.6 % |
 
-Voor user story 1 ("hoeveel opwek morgen?") telt vooral het dagtotaal: daar is ERA5 beter (ook de dagfout: 12,8 tegen
-13,9 %). Ter informatie (verandert de keuze niet): zonder de vaste afwijking zou LR GHI 14,5 % halen, en het
-gemiddelde van LR GHI en smart persistence 13,7 % → de twee bevatten **verschillende** informatie.
+For user story 1 ("how much power tomorrow?") the daily total counts most: there ERA5 is better (also the daily
+error: 12.8 vs 13.9 %). For information (does not change the choice): without the fixed offset LR GHI would reach
+14.5 %, and the average of LR GHI and smart persistence 13.7 % → the two contain **different** information.
 
 ---
 
-# Run 2 – 70/30 (hoofdrun, 29 okt 2026)
+# Run 2 – 70/30 (main run, 29 Oct 2026)
 
-**Waarom opnieuw?** Run 1 liet zien dat 10 trainingsdagen te weinig zijn voor modellen met meer inputs (e6: a en b
-schommelden; LR GHI −4 % bias; RF/GB overfitten). Run 2 traint op **dag 1–24 (15 mei – 7 juni)** en test op
-**dag 25–34 (8–17 juni)**. Kiezen gebeurt op 3 validatievouwen binnen de training (1–14 → 15–17; 1–17 → 18–20;
-1–20 → 21–24), met dezelfde keuzeregel als run 1 (BESLISSINGEN #16–#17). De kandidaten van fase 3 zijn vóór het
-draaien vastgelegd (#18), met **e5** en **e6** uit V4 erbij.
+**Why again?** Run 1 showed that 10 training days are too few for models with more inputs (e6: a and b varied;
+LR GHI −4 % bias; RF/GB overfit). Run 2 trains on **days 1–24 (15 May – 7 June)** and tests on
+**days 25–34 (8–17 June)**. The choice is made on 3 validation folds within the training (1–14 → 15–17; 1–17 → 18–20;
+1–20 → 21–24), with the same selection rule as run 1 (decisions #16–#17). The candidates of phase 3 were fixed
+before running (#18), with **e5** and **e6** from V4 added.
 
-> **Eerlijkheidsnoot (#19):** dag 25–34 zaten in de testdagen van run 1 en zijn dus al bekeken. De testuitslag van
-> run 2 is **niet blind**. Daarom zijn kandidaten en keuzeregel vooraf vastgelegd en verandert de test de keuze niet.
+> **Honesty note (#19):** days 25–34 were part of the test days of run 1 and have therefore already been viewed.
+> The test result of run 2 is **not blind**. That is why the candidates and the selection rule were fixed in advance
+> and the test does not change the choice.
 
-**Code:** de split is instelbaar (`solarcore/config.py`: `RUNS`, `RUN_NAME`, `TRAIN_FRACTION`); de vouwen worden
-afgeleid uit het aantal trainingsdagen (`split.fold_days`). **Regressietest:** met `split30_check` komen de schone
-data en alle fase-1-tabellen van run 1 exact terug (grootste verschil 7·10⁻¹⁵).
+**Code:** the split is configurable (`solarcore/config.py`: `RUNS`, `RUN_NAME`, `TRAIN_FRACTION`); the folds are
+derived from the number of training days (`split.fold_days`). **Regression test:** with `split30_check` the clean
+data and all phase-1 tables of run 1 come back exactly (largest difference 7·10⁻¹⁵).
 
-## Per fase (run 2)
-| Fase | Keuze (op de vouwen) | Testuitslag dag 25–34 (bevroren) |
+## Per phase (run 2)
+| Phase | Choice (on the folds) | Test result days 25–34 (frozen) |
 |---|---|---|
-| 0 – data | Dips met de verhouding uit dag 1–24: **dezelfde 29 kwartieren** als run 1 | – |
-| 1 – sensor (bovengrens) | LR straling (5,0 %; polynoom 4,6 % laagste, 5 modellen binnen 0,5 pp) | 5,2 % nRMSE (gem. dag 16,6 %) |
-| 2 – zonder weer | LR op eerdere K bij **alle** horizons, ook day-ahead (15,8 % tegen smart persistence 16,5 %) | niet bekeken (niet nodig voor de eindkeuze) |
-| 3 – ERA5 | Tijdafspraak opnieuw **+15 min**. **LR POA** (15,56 %): 6 modellen binnen 0,5 pp (15,5–15,7 %), e5 laagste (15,53 %) | zie tabel |
-| 4 – eindmodel | LR POA, band uit walk-forward dag 11–24 | band-dekking **82,3 %** (doel 80 %) |
+| 0 – data | Dips with the ratio from days 1–24: **the same 29 quarter-hours** as run 1 | – |
+| 1 – sensor (upper limit) | LR irradiance (5.0 %; polynomial 4.6 % lowest, 5 models within 0.5 pp) | 5.2 % nRMSE (mean day 16.6 %) |
+| 2 – without weather | LR on earlier K at **all** horizons, also day-ahead (15.8 % vs smart persistence 16.5 %) | not viewed (not needed for the final choice) |
+| 3 – ERA5 | Time alignment again **+15 min**. **LR POA** (15.56 %): 6 models within 0.5 pp (15.5–15.7 %), e5 lowest (15.53 %) | see table |
+| 4 – final model | LR POA, band from walk-forward days 11–24 | band coverage **82.3 %** (target 80 %) |
 
-### Fase 3 – test dag 25–34 (bevroren op dag 1–24; 90 %-interval = bootstrap over de 10 testdagen)
-| Model | nRMSE | 90 %-interval | Dagfout | Plant 1 | Plant 2 | Walk-forward |
+### Phase 3 – test days 25–34 (frozen on days 1–24; 90 % interval = bootstrap over the 10 test days)
+| Model | nRMSE | 90 % interval | Daily error | Plant 1 | Plant 2 | Walk-forward |
 |---|---|---|---|---|---|---|
-| Baseline: gemiddelde dag | 16,6 % | 14,7–18,3 | 21,7 % | 14,1 | 18,7 | 16,1 % |
-| Fase 2: smart persistence (geen weer) | 14,2 % | 12,3–16,2 | 15,9 % | 14,5 | 13,9 | 14,2 % |
-| LR GHI | 14,7 % | 13,4–15,9 | 14,7 % | 15,7 | 13,7 | 14,4 % |
-| **LR POA – eindmodel** | **14,3 %** | 13,1–15,3 | 13,3 % | 15,2 | 13,4 | 14,1 % |
-| LR EFF_T | 13,5 % | 12,3–14,5 | 8,5 % | 14,1 | 12,8 | 13,4 % |
-| e5 | 12,2 % | 11,2–13,2 | 8,5 % | 12,2 | 12,2 | 12,0 % |
-| e6 | 12,7 % | 11,7–13,6 | 6,4 % | 13,0 | 12,3 | 12,6 % |
-| Random Forest (e6 + extra) | 12,6 % | 11,5–13,7 | 7,7 % | 13,2 | 11,9 | 12,5 % |
-| Fase 1: sensor (bovengrens) | 5,2 % | 4,6–5,8 | 3,6 % | 3,8 | 6,3 | 5,2 % |
+| Baseline: mean day | 16.6 % | 14.7–18.3 | 21.7 % | 14.1 | 18.7 | 16.1 % |
+| Phase 2: smart persistence (no weather) | 14.2 % | 12.3–16.2 | 15.9 % | 14.5 | 13.9 | 14.2 % |
+| LR GHI | 14.7 % | 13.4–15.9 | 14.7 % | 15.7 | 13.7 | 14.4 % |
+| **LR POA – final model** | **14.3 %** | 13.1–15.3 | 13.3 % | 15.2 | 13.4 | 14.1 % |
+| LR EFF_T | 13.5 % | 12.3–14.5 | 8.5 % | 14.1 | 12.8 | 13.4 % |
+| e5 | 12.2 % | 11.2–13.2 | 8.5 % | 12.2 | 12.2 | 12.0 % |
+| e6 | 12.7 % | 11.7–13.6 | 6.4 % | 13.0 | 12.3 | 12.6 % |
+| Random Forest (e6 + extra) | 12.6 % | 11.5–13.7 | 7.7 % | 13.2 | 11.9 | 12.5 % |
+| Phase 1: sensor (upper limit) | 5.2 % | 4.6–5.8 | 3.6 % | 3.8 | 6.3 | 5.2 % |
 
-Bootstrap-verschillen (90 %-interval): LR POA − gemiddelde dag **−2,3 pp (−3,7…−0,9, aantoonbaar)**;
-LR POA − LR GHI −0,4 pp (−0,6…−0,2, aantoonbaar maar klein); LR POA − smart persistence +0,1 pp (−1,9…+2,0,
-**niet aantoonbaar**). Weerfout 20 %: LR POA 16,9 %, e6 14,7 %. Residuen: LR POA voorspelt begin juni vaak te laag,
-vooral als ERA5 "100 % bewolkt" geeft (begin moesson).
+Bootstrap differences (90 % interval): LR POA − mean day **−2.3 pp (−3.7…−0.9, significant)**;
+LR POA − LR GHI −0.4 pp (−0.6…−0.2, significant but small); LR POA − smart persistence +0.1 pp (−1.9…+2.0,
+**not significant**). Weather error 20 %: LR POA 16.9 %, e6 14.7 %. Residuals: LR POA often forecasts too low in
+early June, especially when ERA5 gives "100 % cloud cover" (start of the monsoon).
 
-### Eindmodel run 2
-FRAC = 0,0576 + 0,000941 × POA (W/m²), 's nachts 0; getraind op dag 1–34. Naar een huis: kW = FRAC × kWp × 0,664
-(factor, AANNAME) × verliesfactor. POA gebruikt de **dakhoek en richting** van een huis (GHI in run 1 niet).
-Band per bewolkingsklasse (× voorspelling): bewolkt 0,23–3,03, half bewolkt 0,50–1,61, helder 0,56–1,32. De dagband
-(som P10 … som P90) bevat de echte dag nog steeds altijd (100 %): te ruim → verbeterpunt.
-Opgeslagen: `modellen/model_final_split70.joblib`, `resultaten/split70/model_info.json`. `model_final.joblib`
-(run 1) is niet overschreven. Heatmaps: `resultaten/split70/heatmaps/`.
+### Final model run 2
+FRAC = 0.0576 + 0.000941 × POA (W/m²), 0 at night; trained on days 1–34. For a house: kW = FRAC × kWp × 0.664
+(factor, ASSUMPTION) × loss factor. POA uses the **roof tilt and orientation** of a house (GHI in run 1 does not).
+Band per cloudiness class (× forecast): cloudy 0.23–3.03, partly cloudy 0.50–1.61, clear 0.56–1.32. The daily band
+(sum P10 … sum P90) still always contains the real day (100 %): too wide → point for improvement.
+Saved: `modellen/model_final_split70.joblib`, `resultaten/split70/model_info.json`. `model_final.joblib`
+(run 1) was not overwritten. Heatmaps: `resultaten/split70/heatmaps/`.
 
-### Diagnose run 2 (`resultaten/split70/diagnose/`)
-ERA5 kent de helderheid van de dag nog beter dan in run 1 (r = 0,93, tegen 0,57 voor "gisteren"). Per dag is de fout
-van LR POA 6,0 % (smart persistence 7,7 %, e6 3,4 %), maar per kwartier zit 83 % van de fout binnen de dag
-(wolken op het verkeerde kwartier) en heeft LR POA een bias van −5 %. Dezelfde verklaring als in run 1.
+### Diagnosis run 2 (`resultaten/split70/diagnose/`)
+ERA5 knows the clearness of the day even better than in run 1 (r = 0.93, vs 0.57 for "yesterday"). Per day the error
+of LR POA is 6.0 % (smart persistence 7.7 %, e6 3.4 %), but per quarter-hour 83 % of the error is within the day
+(clouds at the wrong quarter-hour) and LR POA has a bias of −5 %. The same explanation as in run 1.
 
-## Leercurve (`leercurve.py`, `resultaten/leercurve/`)
-Bevroren, altijd getest op **dag 28–34**; alle fouten op dezelfde schaal (capaciteit uit 27 dagen).
+## Learning curve (`leercurve.py`, `resultaten/leercurve/`)
+Frozen, always tested on **days 28–34**; all errors on the same scale (capacity from 27 days).
 
-| Model | 10 dagen | 17 | 24 | 27 |
+| Model | 10 days | 17 | 24 | 27 |
 |---|---|---|---|---|
-| gemiddelde dag | 19,2 % | 19,2 % | 17,8 % | 17,8 % |
-| smart persistence | 14,1 % | 14,1 % | 14,1 % | 14,1 % |
-| LR GHI | 16,3 % | 16,1 % | 15,8 % | 15,7 % |
-| LR POA | 15,8 % | 15,5 % | 15,2 % | 15,1 % |
-| e5 | 14,2 % | 13,2 % | 12,4 % | 12,3 % |
-| e6 | 13,3 % | 13,5 % | 13,1 % | 13,2 % |
+| mean day | 19.2 % | 19.2 % | 17.8 % | 17.8 % |
+| smart persistence | 14.1 % | 14.1 % | 14.1 % | 14.1 % |
+| LR GHI | 16.3 % | 16.1 % | 15.8 % | 15.7 % |
+| LR POA | 15.8 % | 15.5 % | 15.2 % | 15.1 % |
+| e5 | 14.2 % | 13.2 % | 12.4 % | 12.3 % |
+| e6 | 13.3 % | 13.5 % | 13.1 % | 13.2 % |
 
-- **80 % (27 dagen) is niet aantoonbaar beter dan 70 % (24 dagen):** verschil ≤ 0,12 pp, de 90 %-intervallen
-  (~±1–2,5 pp) overlappen volledig. → **Advies: 70/30 blijft de hoofdsplit** (#23).
-- **10 → 24 dagen helpt wel**, vooral e5 (−1,75 pp, 4 inputs), de gemiddelde dag (−1,4) en LR (−0,6). e6 is met 10
-  dagen al bijna op zijn best (−0,2); a en b van e6 bij 24/27 dagen: 0,00171/−0,00055 en 0,00170/−0,00054.
-- De ERA5-tijdafspraak en de dips komen uit run 2 (dag 1–24); run 1 (dag 1–10) gaf precies dezelfde, dus dat maakt
-  voor de kleine trainingsgroottes geen verschil.
+- **80 % (27 days) is not significantly better than 70 % (24 days):** difference ≤ 0.12 pp, the 90 % intervals
+  (~±1–2.5 pp) overlap completely. → **Advice: 70/30 stays the main split** (#23).
+- **10 → 24 days does help**, mostly e5 (−1.75 pp, 4 inputs), the mean day (−1.4) and LR (−0.6). e6 is already almost
+  at its best with 10 days (−0.2); a and b of e6 at 24/27 days: 0.00171/−0.00055 and 0.00170/−0.00054.
+- The ERA5 time alignment and the dips come from run 2 (days 1–24); run 1 (days 1–10) gave exactly the same, so this
+  makes no difference for the small training sizes.
 
-## Vergelijking run 1 ↔ run 2 ↔ leercurve
-| | Run 1 (10 trainingsdagen) | Run 2 (24) | Leercurve (27) |
+## Comparison run 1 ↔ run 2 ↔ learning curve
+| | Run 1 (10 training days) | Run 2 (24) | Learning curve (27) |
 |---|---|---|---|
-| testdagen | 11–34 (24 dagen) | 25–34 (10 dagen) | 28–34 (7 dagen) |
-| gekozen model | LR GHI (ERA5) | LR POA (ERA5) | – (geen keuze; LR POA ter vergelijking) |
-| nRMSE / dagfout gekozen model | 15,0 % / 12,8 % | 14,3 % / 13,3 % | 15,1 % / 15,0 % (LR POA) |
-| e6 | 14,1 % / 9,6 % | 12,7 % / 6,4 % | 13,2 % / 6,5 % |
-| e5 | – (geen kandidaat) | 12,2 % / 8,5 % | 12,3 % / 8,2 % |
-| LR GHI | 15,0 % / 12,8 % | 14,7 % / 14,7 % | 15,7 % / 17,2 % |
-| smart persistence (geen weer) | 15,0 % / 13,9 % | 14,2 % / 15,9 % | 14,1 % / 16,4 % |
-| gemiddelde dag | 16,8 % / 16,4 % | 16,6 % / 21,7 % | 17,8 % / 26,8 % |
-| spreiding a en b (e6) | a 0,00167–0,00219; b −0,00055…−0,00118 (vouwen) | a 0,00156–0,00173; b −0,00036…−0,00055 (vouwen) | a 0,00170; b −0,00054 (stabiel vanaf 24 dagen) |
+| test days | 11–34 (24 days) | 25–34 (10 days) | 28–34 (7 days) |
+| chosen model | LR GHI (ERA5) | LR POA (ERA5) | – (no choice; LR POA for comparison) |
+| nRMSE / daily error chosen model | 15.0 % / 12.8 % | 14.3 % / 13.3 % | 15.1 % / 15.0 % (LR POA) |
+| e6 | 14.1 % / 9.6 % | 12.7 % / 6.4 % | 13.2 % / 6.5 % |
+| e5 | – (no candidate) | 12.2 % / 8.5 % | 12.3 % / 8.2 % |
+| LR GHI | 15.0 % / 12.8 % | 14.7 % / 14.7 % | 15.7 % / 17.2 % |
+| smart persistence (no weather) | 15.0 % / 13.9 % | 14.2 % / 15.9 % | 14.1 % / 16.4 % |
+| mean day | 16.8 % / 16.4 % | 16.6 % / 21.7 % | 17.8 % / 26.8 % |
+| spread of a and b (e6) | a 0.00167–0.00219; b −0.00055…−0.00118 (folds) | a 0.00156–0.00173; b −0.00036…−0.00055 (folds) | a 0.00170; b −0.00054 (stable from 24 days) |
 
-*Run 1, run 2 en de leercurve hebben **andere testdagen**: de getallen tussen de kolommen zijn niet direct
-vergelijkbaar (de testperiode wordt steeds lastiger: begin moesson). Alleen de leercurve vergelijkt
-trainingsgroottes eerlijk, op dezelfde dagen.*
+*Run 1, run 2 and the learning curve have **different test days**: the numbers between the columns are not directly
+comparable (the test period gets harder each time: start of the monsoon). Only the learning curve compares training
+sizes fairly, on the same days.*
 
-**Conclusie run 2 (feiten):**
-- Het eindmodel LR POA is **aantoonbaar beter dan de gemiddelde dag**, maar niet aantoonbaar beter dan smart
-  persistence zonder weer.
-- Met meer trainingsdata zijn **e5 en e6 de beste ERA5-modellen** (op de testdagen ~1,5–2 pp beter en een veel
-  kleinere dagfout). Op de validatievouwen lagen alle ERA5-modellen binnen 0,5 pp, dus koos de regel de
-  eenvoudigste. De keuze is volgens het protocol niet veranderd.
-- **Open (Dimme, AGENTS.md §13):** welk model wordt het officiële eindmodel?
+**Conclusion run 2 (facts):**
+- The final model LR POA is **significantly better than the mean day**, but not significantly better than smart
+  persistence without weather.
+- With more training data **e5 and e6 are the best ERA5 models** (~1.5–2 pp better on the test days and a much
+  smaller daily error). On the validation folds all ERA5 models were within 0.5 pp, so the rule chose the simplest.
+  According to the protocol the choice was not changed.
+- **Open (Dimme, AGENTS.md §13):** which model becomes the official final model?
 
-**Beperkingen run 2:** maar 10 testdagen (20 plant-dagen); de test is niet blind (#19); ERA5 is weer achteraf
-(bovengrens voor een echte voorspelling); alleen mei–juni (begin moesson); 2 plants.
+**Limitations run 2:** only 10 test days (20 plant-days); the test is not blind (#19); ERA5 is weather in hindsight
+(upper limit for a real forecast); only May–June (start of the monsoon); 2 plants.
 
-## Wikitekst (Development / Backend, eenvoudig Engels – concept, pas op de wiki na akkoord van Dimme)
+## Wiki text (Development / Backend, simple English – draft, only on the wiki after Dimme's approval)
 In our first test we used only the first ten days to train the model, and we saw that this was not enough data for
 models with more inputs. So we ran the whole pipeline again with the first part of the data for training and the
 last part for testing, always split by time and never at random. We chose the model only on days inside the
@@ -554,363 +564,365 @@ more physics-based inputs did better on the test days, so we want to compare the
 
 ---
 
-# TAAK 5a – Externe validatie: HKUST rooftop PV (Hong Kong, 2021–2023)
+# Task 5a – External validation: HKUST rooftop PV (Hong Kong, 2021–2023)
 
-**Bron:** Lin et al. (2025), *Scientific Data*, doi:10.1038/s41597-025-04397-y; data Dryad doi:10.5061/dryad.m37pvmd99
-(versie 8 sep 2024, licentie CC0). 60 dak-installaties op de campus van HKUST, PV per 5 min (omvormer) of per uur
-(stations zonder optimizer), weerstation per 1 min. Zelf downloaden naar `data/extern/hkust/raw/` (staat niet in git).
-ERA5 via Open-Meteo (CC BY 4.0), 22,3363 N 114,2634 O.
+**Source:** Lin et al. (2025), *Scientific Data*, doi:10.1038/s41597-025-04397-y; data Dryad doi:10.5061/dryad.m37pvmd99
+(version 8 Sep 2024, licence CC0). 60 rooftop systems on the HKUST campus, PV every 5 min (inverter) or every hour
+(stations without optimizer), weather station every 1 min. Download it yourself to `data/extern/hkust/raw/` (not in git).
+ERA5 via Open-Meteo (CC BY 4.0), 22.3363 N 114.2634 E.
 
-## Stap 1 – Stations kiezen (`taak5a_hkust_stations.py` → `resultaten/taak5/hkust/stap1_stations/`)
-**Feiten**
-- Brick-metadata gelezen met rdflib + SPARQL. Eén tikfout in de .ttl (Zone_D) wordt bij het inlezen gerepareerd.
-- `ratedPowerOutput` = **AC-vermogen van de omvormer**; het paneelvermogen (DC, modules × W) is 5–30 % hoger.
-  Bewijs: `P_max/kWp` ≈ 1,00 bij bijna alle stations (clipping).
-- Tijden zijn **HKT** (zwaartepunt straling op heldere dagen 12:13, berekende zonnemiddag 12:22). Opwek en weerstation
-  lopen gelijk (beste verschuiving 0 min per kwartaal).
-- 23 stations zonder optimizer hebben alleen **uurdata** → doen niet mee (ons protocol is 15 min).
-- PV-bestanden stoppen elke dag om 17:55; na 18:00 valt maximaal 0,8 % van de maandstraling (juni).
-- **Stralingssensor weerstation is onbetrouwbaar** (`03_sensorcheck.png`): mrt–apr 2021 ≈ 0; mei 2021 – 14 feb 2023
-  ~20 % te laag (P99 ≈ 0,80 × heldere hemel); vanaf 15 feb 2023 onmogelijk hoog (P99 1,2–1,5 × heldere hemel,
-  pieken tot 3600 W/m²). Alle stations verspringen op dezelfde dag; de PV-opwek zelf blijft stabiel.
+## Step 1 – Choosing stations (`taak5a_hkust_stations.py` → `resultaten/taak5/hkust/stap1_stations/`)
+**Facts**
+- Brick metadata read with rdflib + SPARQL. One typo in the .ttl (Zone_D) is repaired while reading.
+- `ratedPowerOutput` = **AC power of the inverter**; the panel power (DC, modules × W) is 5–30 % higher.
+  Evidence: `P_max/kWp` ≈ 1.00 at almost all stations (clipping).
+- Times are **HKT** (centre of the irradiance on clear days 12:13, calculated solar noon 12:22). Power and weather
+  station are aligned (best shift 0 min per quarter).
+- 23 stations without optimizer only have **hourly data** → not used (our protocol is 15 min).
+- PV files stop every day at 17:55; after 18:00 at most 0.8 % of the monthly irradiance falls (June).
+- **The irradiance sensor of the weather station is unreliable** (`03_sensorcheck.png`): Mar–Apr 2021 ≈ 0; May 2021 –
+  14 Feb 2023 ~20 % too low (P99 ≈ 0.80 × clear sky); from 15 Feb 2023 impossibly high (P99 1.2–1.5 × clear sky,
+  peaks up to 3,600 W/m²). All stations jump on the same day; the PV power itself stays stable.
 
-**Keuze (BESLISSINGEN #25):** SQ_Apartment37_48 (16 kW AC), LSK_South (25), SQ1 (28), SQ4 (33), SQ567 (48); allemaal
-plat. **Eerlijkheidsnoot:** de eerste keuzeregel liet 0 stations door; daarna zijn 2 maatstaven aangepast
-(schaduwindex over uur 8–16, correlatie per kwartaal). De oude kolommen staan nog in `stations_inventaris.csv`.
+**Choice (decision #25):** SQ_Apartment37_48 (16 kW AC), LSK_South (25), SQ1 (28), SQ4 (33), SQ567 (48); all flat.
+**Honesty note:** the first selection rule let 0 stations through; after that 2 measures were changed (shading
+index over hours 8–16, correlation per quarter). The old columns are still in `stations_inventaris.csv`.
 
-## Stap 2 – Opschonen naar 15 min (`taak5a_hkust_data.py` → `data/extern/hkust/clean/hkust_15min.csv`)
-- PV: som van de omvormers, gemiddelde per kwartier alleen als alle 3 vijf-minutenwaarden er zijn. Weer: ≥ 10 van
-  15 minuten. Label = begin van het kwartier (zoals Kaggle).
-- Vlaggen: `DAG` (cos zenit > 0,02), `SENSOR_OK` (#26), `STORING` (SQ1: 2021-05, 2023-05), `UITVAL` (P < 1 % van
-  kWp AC terwijl ERA5-GHI > 300 W/m²). Bruikbaar overdag: 87–93 % per station.
-- **Wind en temperatuur vs ERA5** (`02_wind_temp_vs_era5.png`): temperatuur r ≈ 0,96 (sensor 1–2 °C warmer in de
-  zomer). Wind r ≈ 0,63–0,70 per uur; sensor gemiddeld 10–20 % lager dan ERA5 en vanaf medio 2022 verder dalend
-  (2023: 2,3 tegen 2,9 m/s). **Aanname:** mogelijk beschutting of veroudering van de windmeter; voorzichtig mee zijn
-  bij de Faiman-fit (TAAK 6).
+## Step 2 – Cleaning to 15 min (`taak5a_hkust_data.py` → `data/extern/hkust/clean/hkust_15min.csv`)
+- PV: sum of the inverters, mean per quarter-hour only if all 3 five-minute values exist. Weather: ≥ 10 of 15 minutes.
+  Label = start of the quarter-hour (as in Kaggle).
+- Flags: `DAG` (cos zenith > 0.02), `SENSOR_OK` (#26), `STORING` (fault; SQ1: 2021-05, 2023-05), `UITVAL` (failure:
+  P < 1 % of kWp AC while ERA5 GHI > 300 W/m²). Usable during the day: 87–93 % per station.
+- **Wind and temperature vs ERA5** (`02_wind_temp_vs_era5.png`): temperature r ≈ 0.96 (sensor 1–2 °C warmer in
+  summer). Wind r ≈ 0.63–0.70 per hour; sensor on average 10–20 % lower than ERA5 and decreasing further from mid-2022
+  (2023: 2.3 vs 2.9 m/s). **Assumption:** possibly sheltering or ageing of the anemometer; to be used with care in
+  the Faiman fit (Task 6).
 
-## Stap 3 – Tests (`taak5a_hkust_tests.py` → `resultaten/taak5/hkust/stap3_tests/`)
-Opzet vooraf vast (BESLISSINGEN #28). Platte daken → POA ≈ GHI. Capaciteit = 99e percentiel uit de training.
+## Step 3 – Tests (`taak5a_hkust_tests.py` → `resultaten/taak5/hkust/stap3_tests/`)
+Setup fixed in advance (decision #28). Flat roofs → POA ≈ GHI. Capacity = 99th percentile from the training.
 
-**Tijdverschuiving ERA5 (alleen 2021):** −30 min (r ≈ 0,80–0,82). Dat is de officiële Open-Meteo-afspraak
-(gemiddelde over het voorgaande uur); bij Kaggle paste +15 beter. **Aanname:** het verschil komt van de plant-sensor
-en de geschatte locatie bij Kaggle; HKUST heeft exacte coördinaten.
+**ERA5 time shift (2021 only):** −30 min (r ≈ 0.80–0.82). That is the official Open-Meteo convention (mean over the
+preceding hour); for Kaggle +15 fitted better. **Assumption:** the difference comes from the plant sensor and the
+estimated location in Kaggle; HKUST has exact coordinates.
 
-**(1) Bovengrens met de eigen sensor (train 2021, test 2022):**
+**(1) Upper limit with the station's own sensor (train 2021, test 2022):**
 
-| Model | nRMSE % | R² | dagfout % |
+| Model | nRMSE % | R² | daily error % |
 |---|---|---|---|
-| Baseline gemiddelde dag (per maand) | 22,7 | 0,37 | 45,5 |
-| Baseline persistence | 23,1 | 0,34 | 33,2 |
-| Smart persistence | 19,3 | 0,54 | 31,3 |
-| LR GHI (ERA5) | 15,4 | 0,71 | 20,7 |
-| **Sensor: LR straling** | **8,6** | 0,91 | 9,5 |
-| Sensor: Ridge (straling, temp., tijd) | 8,5 | 0,91 | 10,3 |
+| Baseline mean day (per month) | 22.7 | 0.37 | 45.5 |
+| Baseline persistence | 23.1 | 0.34 | 33.2 |
+| Smart persistence | 19.3 | 0.54 | 31.3 |
+| LR GHI (ERA5) | 15.4 | 0.71 | 20.7 |
+| **Sensor: LR irradiance** | **8.6** | 0.91 | 9.5 |
+| Sensor: Ridge (irradiance, temp., time) | 8.5 | 0.91 | 10.3 |
 
-Zelfde patroon als Kaggle (sensor ~5 %, ERA5 ~14–15 %): met een eigen sensor halveert de fout; het verschil is de
-fout van het weermodel (ERA5 ziet de wolken op het verkeerde moment/de verkeerde plek).
+Same pattern as Kaggle (sensor ~5 %, ERA5 ~14–15 %): with its own sensor the error halves; the difference is the
+error of the weather model (ERA5 sees the clouds at the wrong moment / in the wrong place).
 
-**(3) Keuze retrain op 2022 (2 vouwen):** **LR GHI (ERA5)**, 15,38 %. Zeven modellen liggen binnen 0,5 pp
-(LR GHI/POA/EFF_T, e5, e6, Ridge e6 (+ extra)); Random Forest (16,2 %) en Gradient Boosting (15,6 %) zijn niet beter.
-Net als bij Kaggle: met ERA5 als input maakt de modelvorm weinig uit; het weer bepaalt de fout.
+**(3) Retrain choice on 2022 (2 folds):** **LR GHI (ERA5)**, 15.38 %. Seven models are within 0.5 pp
+(LR GHI/POA/EFF_T, e5, e6, Ridge e6 (+ extra)); Random Forest (16.2 %) and Gradient Boosting (15.6 %) are not better.
+As with Kaggle: with ERA5 as input the model form matters little; the weather determines the error.
 
-**Test 2023 (na akkoord; keuze blijft LR GHI).** nRMSE %, 90 %-interval = bootstrap over 365 testdagen.
+**Test 2023 (after approval; choice stays LR GHI).** nRMSE %, 90 % interval = bootstrap over 365 test days.
 
-| Model | A: 2021 + 2022 | A': alleen 2021 | B: walk-forward | droog | moesson |
+| Model | A: 2021 + 2022 | A': 2021 only | B: walk-forward | dry | monsoon |
 |---|---|---|---|---|---|
-| Baseline gemiddelde dag (per maand) | 21,8 | 21,4 | 22,0 | 21,0 | 22,9 |
-| Baseline persistence | 22,6 | 22,4 | 22,8 | 19,5 | 26,3 |
-| Smart persistence | 18,5 | 18,3 | 18,6 | 16,4 | 21,0 |
-| **LR GHI (ERA5), gekozen** | **16,6** (16,0–17,3) | 16,8 | 16,6 | 14,5 | 19,1 |
-| e6 | 16,7 | 17,1 | 16,7 | 14,5 | 19,2 |
-| Ridge e6 + extra weer | 16,6 | 17,1 | 16,6 | 14,5 | 19,1 |
-| Gradient Boosting | 16,6 | 17,5 | 16,5 | 14,3 | 19,3 |
-| Random Forest | 17,0 | 17,7 | 17,0 | 14,7 | 19,8 |
-| Zero-shot 2a: Kaggle-eindmodel (LR POA) | 26,6 | – | – | 25,2 | 28,4 |
-| Zero-shot 2a: Kaggle-e6 | 31,5 | – | – | 30,4 | 32,9 |
-| Zero-shot 2b: pvlib-natuurkunde | 18,7 | – | – | 17,3 | 20,6 |
+| Baseline mean day (per month) | 21.8 | 21.4 | 22.0 | 21.0 | 22.9 |
+| Baseline persistence | 22.6 | 22.4 | 22.8 | 19.5 | 26.3 |
+| Smart persistence | 18.5 | 18.3 | 18.6 | 16.4 | 21.0 |
+| **LR GHI (ERA5), chosen** | **16.6** (16.0–17.3) | 16.8 | 16.6 | 14.5 | 19.1 |
+| e6 | 16.7 | 17.1 | 16.7 | 14.5 | 19.2 |
+| Ridge e6 + extra weather | 16.6 | 17.1 | 16.6 | 14.5 | 19.1 |
+| Gradient Boosting | 16.6 | 17.5 | 16.5 | 14.3 | 19.3 |
+| Random Forest | 17.0 | 17.7 | 17.0 | 14.7 | 19.8 |
+| Zero-shot 2a: Kaggle final model (LR POA) | 26.6 | – | – | 25.2 | 28.4 |
+| Zero-shot 2a: Kaggle e6 | 31.5 | – | – | 30.4 | 32.9 |
+| Zero-shot 2b: pvlib physics | 18.7 | – | – | 17.3 | 20.6 |
 
-- LR GHI is aantoonbaar beter dan de gemiddelde dag (−5,2 pp), smart persistence (−1,8 pp), pvlib zero-shot (−2,1 pp)
-  en Kaggle zero-shot (−10 pp). Tussen de ERA5-modellen onderling: < 0,5 pp, niet relevant.
-- Per station 16,0–17,1 %; per maand 11,5 % (dec) tot 21,4 % (aug). Moesson ~4,5 pp slechter dan droog.
-- Residuen (`04_residuen.png`): grootste fouten rond de middag en bij half bewolkt (KT 0,4–0,9); sterke autocorrelatie
-  (ERA5 zet wolken uren verkeerd); mediaan iets positief in het droge seizoen (te hoog voorspeld).
+- LR GHI is significantly better than the mean day (−5.2 pp), smart persistence (−1.8 pp), pvlib zero-shot (−2.1 pp)
+  and Kaggle zero-shot (−10 pp). Among the ERA5 models: < 0.5 pp, not relevant.
+- Per station 16.0–17.1 %; per month 11.5 % (Dec) to 21.4 % (Aug). Monsoon ~4.5 pp worse than the dry season.
+- Residuals (`04_residuen.png`): largest errors around noon and in partly cloudy weather (KT 0.4–0.9); strong
+  autocorrelation (ERA5 puts clouds hours off); median slightly positive in the dry season (forecast too high).
 
-**Diagnose achteraf (na het zien van 2023, geen nieuw model; `diagnose_*.csv`):**
-- **Zero-shot = niveauprobleem, geen vormprobleem.** Kaggle voorspelt 1,4–2,0× te veel, pvlib 1,2–1,4×. Met één
-  schaalfactor per station is iedereen 15,6–18 % (zelfde als de retrain). Oorzaken: (a) Kaggle-FRAC × kWp AC gaat
-  ervan uit dat het systeem zijn AC-vermogen haalt; bij SQ567 en SQ_Apartment ligt de echte capaciteit op 0,80 en
-  0,74 × AC (DC/AC ≤ 1); (b) het intercept van Kaggle (0,058) geeft 12 % opwek bij weinig licht (werkelijk 3 %);
-  (c) de HKUST-daken leveren minder per eenheid ERA5-straling dan pvlib verwacht (**aanname:** schaduw, vuil op platte
-  panelen, of ERA5 te hoog boven de kust).
-- **De opbrengst per eenheid ERA5-straling daalt elk jaar** (alle 5 stations, ook binnen hetzelfde seizoen; bv. SQ4
-  0,74 → 0,71 → 0,68). Daardoor voorspelt ook de retrain in 2023 7–22 % te veel. Volgens de datasheet: 2,5 % in jaar 1
-  en 0,6 %/jaar daarna – dat verklaart maar een deel. **Aanname:** vervuiling van platte panelen of drift in ERA5.
+**Diagnosis in hindsight (after seeing 2023, no new model; `diagnose_*.csv`):**
+- **Zero-shot = a level problem, not a shape problem.** Kaggle forecasts 1.4–2.0× too much, pvlib 1.2–1.4×. With one
+  scale factor per station everyone is at 15.6–18 % (the same as the retrain). Causes: (a) Kaggle FRAC × kWp AC
+  assumes that the system reaches its AC power; at SQ567 and SQ_Apartment the real capacity is 0.80 and 0.74 × AC
+  (DC/AC ≤ 1); (b) the Kaggle intercept (0.058) gives 12 % power in low light (really 3 %); (c) the HKUST roofs
+  deliver less per unit of ERA5 irradiance than pvlib expects (**assumption:** shading, dirt on flat panels, or ERA5
+  too high near the coast).
+- **The yield per unit of ERA5 irradiance decreases every year** (all 5 stations, also within the same season; e.g.
+  SQ4 0.74 → 0.71 → 0.68). Because of this the retrain also forecasts 7–22 % too much in 2023. According to the
+  datasheet: 2.5 % in year 1 and 0.6 %/year after that – this explains only part. **Assumption:** soiling of flat
+  panels or drift in ERA5.
 
-**Wat betekent dit voor een huis in India?** De retrain-score (16,6 %) lijkt sterk op Kaggle (14–15 %): de methode
-werkt ook in een ander klimaat en over een heel jaar. Zero-shot (zonder eigen data) is níet goed genoeg met het
-Kaggle-model; het natuurkundige pvlib-model is veel beter (18,7 %), maar zit nog boven smart persistence. Een huis
-heeft dus **eigen meetdata nodig om het niveau te kalibreren** (en daarna periodiek opnieuw, vanwege de daling).
+**What does this mean for a house in India?** The retrain score (16.6 %) is very similar to Kaggle (14–15 %): the
+method also works in another climate and over a whole year. Zero-shot (without own data) is **not** good enough with
+the Kaggle model; the physical pvlib model is much better (18.7 %), but still above smart persistence. So a house
+**needs its own measured data to calibrate the level** (and recalibrate regularly after that, because of the decrease).
 
-## Stap 4 – Kalibratietest "nieuw huis" (`taak5a_hkust_kalibratie.py` → `resultaten/taak5/hkust/stap4_kalibratie/`)
-**ACHTERAF-test** (2023 al bekeken in stap 3; opzet vooraf vastgelegd in BESLISSINGEN #31, gekozen door de agent op
-verzoek van Dimme). 30 "nieuwe huizen" (5 stations × installatie op de 1e van jan…jun 2023). Eén niveaufactor
-f = Σ gemeten / Σ voorspeld uit de eerste N weken; evaluatie altijd in week 13–26 na installatie.
+## Step 4 – Calibration test "new house" (`taak5a_hkust_kalibratie.py` → `resultaten/taak5/hkust/stap4_kalibratie/`)
+**TEST IN HINDSIGHT** (2023 already viewed in step 3; setup fixed in advance in decision #31, chosen by the agent at
+Dimme's request). 30 "new houses" (5 stations × installation on the 1st of Jan…Jun 2023). One level factor
+f = Σ measured / Σ forecast from the first N weeks; evaluation always in weeks 13–26 after installation.
 
-| Gemiddelde nRMSE % (30 huizen) | N = 0 | 1 wk | 2 wk | 4 wk | 8 wk | 13 wk |
+| Mean nRMSE % (30 houses) | N = 0 | 1 wk | 2 wk | 4 wk | 8 wk | 13 wk |
 |---|---|---|---|---|---|---|
-| pvlib × f | **19,8** | 22,0 | 20,2 | 19,4 | 19,4 | 18,9 |
-| Kaggle-eindmodel × f | 26,8 | 21,8 | 20,4 | 19,7 | 19,7 | 19,2 |
-| LR GHI alleen op de eerste N weken | – | 20,8 | 19,7 | 18,9 | 18,8 | 18,4 |
+| pvlib × f | **19.8** | 22.0 | 20.2 | 19.4 | 19.4 | 18.9 |
+| Kaggle final model × f | 26.8 | 21.8 | 20.4 | 19.7 | 19.7 | 19.2 |
+| LR GHI on the first N weeks only | – | 20.8 | 19.7 | 18.9 | 18.8 | 18.4 |
 
-Referenties op dezelfde kwartieren: pvlib met orakel-f 17,8 · LR GHI met 2 jaar historie 18,2 · smart persistence
-20,2 · gemiddelde dag 22,7 · persistence 25,2.
+References on the same quarter-hours: pvlib with oracle f 17.8 · LR GHI with 2 years of history 18.2 · smart
+persistence 20.2 · mean day 22.7 · persistence 25.2.
 
-**Feiten**
-- Volgens de vooraf vastgelegde regel (binnen 0,5 pp van het orakel) is **geen enkele N genoeg**, ook 13 weken niet.
-- **1–2 weken kalibreren is gemiddeld slechter dan niet kalibreren** (pvlib). Vanaf 4 weken helpt het (−0,4 pp).
-- Het Kaggle-model heeft kalibratie wél nodig (26,8 → 19,7 % na 4 weken), maar blijft net achter pvlib.
-- Met 4+ weken eigen data is een LR op alleen die weken even goed of iets beter dan pvlib × f.
-- Oorzaak: f hangt af van het seizoen van de kalibratie. Installatie 1 april → f uit week 1 ≈ 0,33–0,40 (alle
-  stations); installatie 1 januari → f ≈ 1,1–1,2. **Aanname:** in het voorjaar (mist, motregen) ziet ERA5 te veel
-  zon; in de winter te weinig.
+**Facts**
+- According to the rule fixed in advance (within 0.5 pp of the oracle) **no N is enough**, not even 13 weeks.
+- **Calibrating on 1–2 weeks is on average worse than not calibrating** (pvlib). From 4 weeks it helps (−0.4 pp).
+- The Kaggle model does need calibration (26.8 → 19.7 % after 4 weeks), but stays just behind pvlib.
+- With 4+ weeks of own data an LR on only those weeks is as good as or slightly better than pvlib × f.
+- Cause: f depends on the season of the calibration. Installation 1 April → f from week 1 ≈ 0.33–0.40 (all
+  stations); installation 1 January → f ≈ 1.1–1.2. **Assumption:** in spring (fog, drizzle) ERA5 sees too much sun;
+  in winter too little.
 
-**Wat betekent dit voor de app?** Zonder eigen data: pvlib met de systeemgegevens (niet het Kaggle-model). Daarna
-**doorlopend kalibreren** (bv. elke week de factor of het model op de laatste weken bijwerken) in plaats van één keer.
-Dat is niet getest; het is een voorstel voor een volgende test (vooraf vastleggen).
+**What does this mean for the app?** Without own data: pvlib with the system data (not the Kaggle model). After that
+**calibrate continuously** (e.g. update the factor or the model on the last weeks every week) instead of once.
+This was not tested at this point; it was a proposal for a next test (fixed in advance; see "Follow-up tests").
 
 ---
 
-# TAAK 5b – Dag-vooruit en horizon: Open Climate Fix UK PV (2024–2025)
+# Task 5b – Day-ahead and horizon: Open Climate Fix UK PV (2024–2025)
 
-**Bron:** huggingface.co/datasets/openclimatefix/uk_pv (CC BY 4.0, doi:10.57967/hf/0878), data van Sheffield Solar.
-Gated: gratis account, voorwaarden accepteren, en `HF_TOKEN` als omgevingsvariabele (nooit in de code). Alleen de
-gekozen systemen worden gestreamd met polars. **Klimaat anders dan India: dit test het voorspellen, niet de locatie.**
+**Source:** huggingface.co/datasets/openclimatefix/uk_pv (CC BY 4.0, doi:10.57967/hf/0878), data from Sheffield Solar.
+Gated: free account, accept the conditions, and `HF_TOKEN` as an environment variable (never in the code). Only the
+chosen systems are streamed with polars. **Climate different from India: this tests the forecasting, not the location.**
 
-## Stap 1 – Systemen kiezen (`taak5b_ukpv_systemen.py` → `resultaten/taak5/ukpv/stap1_systemen/`)
-**Feiten**
-- Tijden in UTC; een rij met tijd t = energie van (t − 30 min, t]. Vermogen = `generation_Wh` × 2. We blijven op
-  30 min (niet naar 15 min: dat zou data verzinnen). Data loopt tot 2 april 2025 → periode **jan 2024 – mrt 2025**.
-- In apr, mei, jul, aug, dec 2024 en jan–feb 2025 ontbreken 1–4 hele dagen voor bijna alle systemen tegelijk
-  (storing in de datastroom). Compleetheid daarom t.o.v. het maximum van de dataset per maand (BESLISSINGEN #34).
-- Filter (#33–#35): 23 493 systemen na metadata (1,5–10 kWp, dakhoek 10–60°, oost–zuid–west, geen bad_data) →
-  462 compleet → pool van 150 (30 per breedteband) → 99 door de kwaliteits- en plausibiliteitscheck → **40 gekozen**
-  (8 per band, max. 1 per locatie, seed 42).
-- Gekozen: 1,5–4 kWp, dakhoek 20–45°, richting 90–270° (ook oost en west), opbrengst 565–985 kWh/kWp per jaar.
-- Na de eerste keuze vielen 5 systemen op met een onlogische opbrengst (358–488 kWh/kWp of P_max 1,34 × kWp):
-  plausibiliteitseis toegevoegd vóór enig model (#35).
+## Step 1 – Choosing systems (`taak5b_ukpv_systemen.py` → `resultaten/taak5/ukpv/stap1_systemen/`)
+**Facts**
+- Times in UTC; a row with time t = energy of (t − 30 min, t]. Power = `generation_Wh` × 2. We stay at 30 min (not
+  15 min: that would invent data). The data runs until 2 April 2025 → period **Jan 2024 – Mar 2025**.
+- In Apr, May, Jul, Aug, Dec 2024 and Jan–Feb 2025, 1–4 whole days are missing for almost all systems at the same
+  time (outage in the data stream). Completeness is therefore measured against the dataset maximum per month
+  (decision #34).
+- Filter (#33–#35): 23,493 systems after metadata (1.5–10 kWp, tilt 10–60°, east–south–west, no bad_data) →
+  462 complete → pool of 150 (30 per latitude band) → 99 through the quality and plausibility check → **40 chosen**
+  (8 per band, max. 1 per location, seed 42).
+- Chosen: 1.5–4 kWp, tilt 20–45°, orientation 90–270° (also east and west), yield 565–985 kWh/kWp per year.
+- After the first choice 5 systems stood out with an illogical yield (358–488 kWh/kWp or P_max 1.34 × kWp):
+  plausibility requirement added before any model (#35).
 
-## Stap 2 – Weer ophalen (`taak5b_ukpv_weer.py` → `data/extern/uk_pv/weer/`, `resultaten/taak5/ukpv/stap2_weer/`)
-Open-Meteo (CC BY 4.0), alles UTC, gecachet (BESLISSINGEN #37).
-- **Dag-vooruit:** ECMWF IFS 0,25° (Previous Runs), voorspeld 24/48 uur vóór het tijdstip. Archief pas vanaf
-  **6 maart 2024**; daarna 100 % gevuld. (Gecontroleerd: `ecmwf_ifs` 9 km is leeg in Previous Runs; UK Met Office pas
-  vanaf aug 2024; ICON/GFS vanaf 19 jan 2024.)
-- **Horizon:** ECMWF IFS 9 km (Single Runs), 96 runs (00 UTC, elke 4e dag, 14 mrt 2024 – 29 mrt 2025). Dag 1–10
-  ~100 % gevuld; dag 11–15 maar 68 % (runs uit 2024 gaan maar 10 dagen vooruit).
-- **ERA5** (weer achteraf) als bovengrens.
-- **Eerste controle** (correlatie opwek ↔ GHI per uur, mediaan over 40 systemen): ERA5 0,825; voorspeld dag 1 0,812;
-  dag 2 0,792. De voorspelling van gisteren is in het VK dus bijna even goed als het weer achteraf.
+## Step 2 – Fetching the weather (`taak5b_ukpv_weer.py` → `data/extern/uk_pv/weer/`, `resultaten/taak5/ukpv/stap2_weer/`)
+Open-Meteo (CC BY 4.0), everything in UTC, cached (decision #37).
+- **Day-ahead:** ECMWF IFS 0.25° (Previous Runs), forecast 24/48 hours before the time. Archive only from
+  **6 March 2024**; 100 % filled after that. (Checked: `ecmwf_ifs` 9 km is empty in Previous Runs; UK Met Office only
+  from Aug 2024; ICON/GFS from 19 Jan 2024.)
+- **Horizon:** ECMWF IFS 9 km (Single Runs), 96 runs (00 UTC, every 4th day, 14 Mar 2024 – 29 Mar 2025). Days 1–10
+  ~100 % filled; days 11–15 only 68 % (runs from 2024 only go 10 days ahead).
+- **ERA5** (weather in hindsight) as the upper limit.
+- **First check** (correlation power ↔ GHI per hour, median over 40 systems): ERA5 0.825; forecast day 1 0.812;
+  day 2 0.792. So in the UK yesterday's forecast is almost as good as the weather in hindsight.
 
-## Stap 3 – Tests (`taak5b_ukpv_tests.py` → `resultaten/taak5/ukpv/stap3_tests/`)
-Opzet vooraf vast (BESLISSINGEN #38). Training 6 mrt – 30 jun 2024 (voorspellingen pas vanaf 6 mrt), test
-1 jul 2024 – 31 mrt 2025.
+## Step 3 – Tests (`taak5b_ukpv_tests.py` → `resultaten/taak5/ukpv/stap3_tests/`)
+Setup fixed in advance (decision #38). Training 6 Mar – 30 Jun 2024 (forecasts only from 6 Mar), test
+1 Jul 2024 – 31 Mar 2025.
 
-**Tijdverschuiving straling:** −30 min (ERA5, jan–jun 2024), zelfde als HKUST en de officiële Open-Meteo-afspraak.
+**Irradiance time shift:** −30 min (ERA5, Jan–Jun 2024), the same as HKUST and the official Open-Meteo convention.
 
-**Keuze op 2 vouwen (input = ECMWF-voorspelling van 1 dag eerder):** **LR POA**, 16,6 % nRMSE.
+**Choice on 2 folds (input = ECMWF forecast from 1 day earlier):** **LR POA**, 16.6 % nRMSE.
 
-| Model (vouwen mei, juni 2024) | nRMSE % | R² | dagfout % |
+| Model (folds May, June 2024) | nRMSE % | R² | daily error % |
 |---|---|---|---|
-| Baseline gemiddelde dag (K × heldere hemel) | 21,3 | 0,48 | 32,3 |
-| Baseline persistence | 26,0 | 0,24 | 37,1 |
-| Smart persistence | 23,4 | 0,38 | 36,7 |
-| Zero-shot pvlib (kWp, dakhoek, richting) | 19,2 | 0,58 | 26,0 |
-| **LR POA (voorspelling)** | **16,6** | 0,69 | 19,1 |
-| e6 / Ridge e6 + extra / Gradient Boosting | 16,9 / 16,8 / 16,8 | | |
-| LR POA getraind op ERA5, toegepast op de voorspelling | 16,7 | | |
+| Baseline mean day (K × clear sky) | 21.3 | 0.48 | 32.3 |
+| Baseline persistence | 26.0 | 0.24 | 37.1 |
+| Smart persistence | 23.4 | 0.38 | 36.7 |
+| Zero-shot pvlib (kWp, tilt, orientation) | 19.2 | 0.58 | 26.0 |
+| **LR POA (forecast)** | **16.6** | 0.69 | 19.1 |
+| e6 / Ridge e6 + extra / Gradient Boosting | 16.9 / 16.8 / 16.8 | | |
+| LR POA trained on ERA5, applied to the forecast | 16.7 | | |
 
-Met een **echte** dag-vooruit-voorspelling is de fout in het VK (16,6 %) ongeveer gelijk aan wat we in India en Hong
-Kong met ERA5 (weer achteraf) haalden. Trainen op ERA5 of op de voorspelling maakt bijna geen verschil.
+With a **real** day-ahead forecast the error in the UK (16.6 %) is about the same as what we reached in India and
+Hong Kong with ERA5 (weather in hindsight). Training on ERA5 or on the forecast makes almost no difference.
 
-**Test jul 2024 – mrt 2025 (na akkoord; keuze blijft LR POA).** 40 huizen, 273 testdagen, 90 %-interval = bootstrap.
+**Test Jul 2024 – Mar 2025 (after approval; choice stays LR POA).** 40 houses, 273 test days, 90 % interval = bootstrap.
 
-| Model | nRMSE % | R² | dagfout % |
+| Model | nRMSE % | R² | daily error % |
 |---|---|---|---|
-| Baseline gemiddelde dag (K × heldere hemel) | 20,3 | 0,38 | 47,1 |
-| Baseline persistence | 24,2 | 0,12 | 52,0 |
-| Smart persistence | 21,8 | 0,28 | 50,3 |
-| Zero-shot pvlib (kWp, dakhoek, richting) | 17,5 | 0,54 | 37,0 |
-| **LR POA, voorspelling dag 1 (gekozen)** | **14,6** (14,3–14,9) | 0,68 | 27,2 |
-| LR POA, voorspelling dag 2 | 15,5 | 0,64 | 30,4 |
-| Bovengrens: LR POA met ERA5 (perfect weer) | 14,3 | 0,69 | 25,9 |
-| e6 / Ridge e6 + extra / Gradient Boosting | 14,7 / 14,7 / 14,9 | | |
+| Baseline mean day (K × clear sky) | 20.3 | 0.38 | 47.1 |
+| Baseline persistence | 24.2 | 0.12 | 52.0 |
+| Smart persistence | 21.8 | 0.28 | 50.3 |
+| Zero-shot pvlib (kWp, tilt, orientation) | 17.5 | 0.54 | 37.0 |
+| **LR POA, forecast day 1 (chosen)** | **14.6** (14.3–14.9) | 0.68 | 27.2 |
+| LR POA, forecast day 2 | 15.5 | 0.64 | 30.4 |
+| Upper limit: LR POA with ERA5 (perfect weather) | 14.3 | 0.69 | 25.9 |
+| e6 / Ridge e6 + extra / Gradient Boosting | 14.7 / 14.7 / 14.9 | | |
 
-- Walk-forward per maand: LR POA 14,8 % (bevroren 14,6): extra training na juni helpt niet.
-- Per seizoen: winter 12,2 · herfst 13,5 · zomer 15,4 · voorjaar (maart) 17,3 %. Per systeem 10,8–22,8 % (mediaan 14,0).
-- Alle verschillen met de baselines en met dag 2 zijn aantoonbaar. Verschil met perfect weer: **maar 0,2 pp**.
+- Walk-forward per month: LR POA 14.8 % (frozen 14.6): extra training after June does not help.
+- Per season: winter 12.2 · autumn 13.5 · summer 15.4 · spring (March) 17.3 %. Per system 10.8–22.8 % (median 14.0).
+- All differences with the baselines and with day 2 are significant. Difference with perfect weather: **only 0.2 pp**.
 
-**Horizon (TAAK 7):** gekozen model, bevroren, met ECMWF IFS Single Runs (00 UTC, ~68 runs per dag in de test;
-dag 11–15 ~62 runs). Dag 1 = 0–24 uur na de run.
+**Horizon (Task 7):** chosen model, frozen, with ECMWF IFS Single Runs (00 UTC, ~68 runs per day in the test;
+days 11–15 ~62 runs). Day 1 = 0–24 hours after the run.
 
-| Dag vooruit | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 10 | 15 |
+| Days ahead | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 10 | 15 |
 |---|---|---|---|---|---|---|---|---|---|
-| nRMSE % model | 14,4 | 15,6 | 17,1 | 18,3 | 18,8 | 20,4 | 22,7 | 23,4 | 24,5 |
-| nRMSE % gemiddelde dag | 19,4 | 20,7 | 20,3 | 21,0 | 19,4 | 20,7 | 20,3 | 20,7 | 20,5 |
-| skill t.o.v. gemiddelde dag | 0,26 | 0,24 | 0,16 | 0,13 | 0,03 | 0,01 | −0,12 | −0,13 | −0,20 |
+| nRMSE % model | 14.4 | 15.6 | 17.1 | 18.3 | 18.8 | 20.4 | 22.7 | 23.4 | 24.5 |
+| nRMSE % mean day | 19.4 | 20.7 | 20.3 | 21.0 | 19.4 | 20.7 | 20.3 | 20.7 | 20.5 |
+| skill vs mean day | 0.26 | 0.24 | 0.16 | 0.13 | 0.03 | 0.01 | −0.12 | −0.13 | −0.20 |
 
-**Wat betekent dit?**
-- Met een **echte** weersvoorspelling van gisteren is de fout (14,6 %) bijna even klein als met perfect weer (14,3 %).
-  Het weermodel van morgen is in het VK dus nauwelijks slechter dan het weer achteraf; de rest van de fout komt van
-  wolken die ook ERA5 niet precies goed heeft (zelfde patroon als Kaggle en HKUST).
-- De voorspelling helpt duidelijk tot **dag 4**, nauwelijks op dag 5–6, en vanaf **dag 7 is een gemiddelde dag
-  beter**. Een app (FR4: komende dagen) kan dus dag 1–4 met het weer voorspellen en verder de gemiddelde dag tonen
-  (of een mengsel; niet getest – voorstel voor later, vooraf vastleggen).
-- Klimaat VK ≠ India: dit test het **voorspellen**, niet de locatie.
+**What does this mean?**
+- With a **real** weather forecast from yesterday the error (14.6 %) is almost as small as with perfect weather
+  (14.3 %). So in the UK tomorrow's weather model is hardly worse than the weather in hindsight; the rest of the error
+  comes from clouds that ERA5 does not get exactly right either (the same pattern as Kaggle and HKUST).
+- The forecast clearly helps up to **day 4**, hardly on days 5–6, and from **day 7 a mean day is better**. An app
+  (FR4: coming days) can therefore forecast days 1–4 with the weather and show the mean day after that (or a blend;
+  not tested at this point – see "Follow-up tests").
+- UK climate ≠ India: this tests the **forecasting**, not the location.
 
-## Vervolgtests (ACHTERAF; opzet vóór het draaien vastgelegd in BESLISSINGEN #41–#43)
+## Follow-up tests (IN HINDSIGHT; setup fixed before running in decisions #41–#43)
 
-**HKUST – doorlopend kalibreren** (`taak5a_hkust_kalibratie.py`, deel 4 → `stap4_kalibratie/doorlopend_*.csv`).
-Zelfde 30 nieuwe huizen, week 13–26. Elke week een nieuwe factor uit de laatste N weken eigen data.
+**HKUST – continuous calibration** (`taak5a_hkust_kalibratie.py`, part 4 → `stap4_kalibratie/doorlopend_*.csv`).
+The same 30 new houses, weeks 13–26. Every week a new factor from the last N weeks of own data.
 
-| Methode | gemiddelde nRMSE % | P10–P90 |
+| Method | mean nRMSE % | P10–P90 |
 |---|---|---|
-| pvlib zonder kalibratie | 19,8 | 16,6–22,4 |
-| pvlib × vaste f uit 13 weken | 18,9 | 14,1–21,7 |
-| **pvlib × f, elke week uit de laatste 4 weken** | **18,1** | 15,1–19,5 |
-| pvlib × f, laatste 2 / 8 weken / alles sinds installatie | 18,4 / 18,3 / 18,5 | |
-| LR GHI met 2 jaar historie | 18,2 | |
-| orakel-f | 17,8 | |
+| pvlib without calibration | 19.8 | 16.6–22.4 |
+| pvlib × fixed f from 13 weeks | 18.9 | 14.1–21.7 |
+| **pvlib × f, every week from the last 4 weeks** | **18.1** | 15.1–19.5 |
+| pvlib × f, last 2 / 8 weeks / everything since installation | 18.4 / 18.3 / 18.5 | |
+| LR GHI with 2 years of history | 18.2 | |
+| oracle f | 17.8 | |
 
-→ Een nieuw huis met pvlib en een factor die elke week op de laatste 4 weken wordt bijgewerkt, is na een paar weken
-even goed als een model met 2 jaar historie. Het seizoenseffect en de jaarlijkse daling worden zo vanzelf
-gevolgd.
+→ A new house with pvlib and a factor that is updated every week on the last 4 weeks is, after a few weeks, as good
+as a model with 2 years of history. The seasonal effect and the yearly decrease are followed automatically.
 
-**UK – horizon mengen met de gemiddelde dag** (`taak5b_ukpv_horizon_mix.py` → `resultaten/taak5/ukpv/stap4_horizon_mengen/`).
-Voorspelling = w_d × model + (1 − w_d) × gemiddelde dag; w_d per dag vooruit uit de trainingsperiode (mrt–jun 2024).
+**UK – blending the horizon with the mean day** (`taak5b_ukpv_horizon_mix.py` → `resultaten/taak5/ukpv/stap4_horizon_mengen/`).
+Forecast = w_d × model + (1 − w_d) × mean day; w_d per day ahead from the training period (Mar–Jun 2024).
 
-| Dag vooruit | 1 | 2 | 3 | 4 | 5 | 7 | 10 | 15* |
+| Days ahead | 1 | 2 | 3 | 4 | 5 | 7 | 10 | 15* |
 |---|---|---|---|---|---|---|---|---|
-| gewicht model w_d | 0,79 | 0,70 | 0,67 | 0,70 | 0,46 | 0,40 | 0,33 | 0,33* |
-| alleen model | 14,4 | 15,6 | 17,1 | 18,3 | 18,8 | 22,7 | 23,4 | 24,5 |
-| alleen gemiddelde dag | 19,4 | 20,7 | 20,3 | 21,0 | 19,4 | 20,3 | 20,7 | 20,5 |
-| **mengen** | **14,0** | **15,3** | **16,4** | **17,4** | **17,2** | **19,9** | **20,3** | **20,4** |
+| model weight w_d | 0.79 | 0.70 | 0.67 | 0.70 | 0.46 | 0.40 | 0.33 | 0.33* |
+| model only | 14.4 | 15.6 | 17.1 | 18.3 | 18.8 | 22.7 | 23.4 | 24.5 |
+| mean day only | 19.4 | 20.7 | 20.3 | 21.0 | 19.4 | 20.3 | 20.7 | 20.5 |
+| **blending** | **14.0** | **15.3** | **16.4** | **17.4** | **17.2** | **19.9** | **20.3** | **20.4** |
 
-\* dag 11–15: geen trainingsruns zo ver vooruit → gewicht van dag 10 doorgetrokken.
-Gemiddeld dag 1–10: mengen 18,0 % · vaste regel (model t/m dag 4) 18,8 · alleen model 19,8 · gemiddelde dag 20,3.
-→ Mengen is op **elke** dag het beste, ook op dag 1. Voor de app (FR4) is dit de aanpak voor "komende dagen".
-
----
-
-# TAAK 6 – Faiman-fit (`taak6_faiman.py` → `resultaten/taak6/`)
-Opzet vooraf vast (BESLISSINGEN #44). Faiman: T_cel = T_lucht + straling / (u0 + u1 × wind). Standaard (aanname
-uit V4/V5): u0 = 25, u1 = 6,84. Vraag: wordt het model beter met gefitte waarden, en met gemeten in plaats van
-ERA5-wind?
-
-| Dataset | Wat | Standaard | Gefit |
-|---|---|---|---|
-| Kaggle (dag 25–34) | RMSE moduletemperatuur | 4,5 °C (bias −2,1) | **2,5 °C** (bias +0,9); u0 37,7, u1 0 |
-| Kaggle | nRMSE vermogen LR EFF_T / e6 | 13,46 / 12,66 % | 13,52 / 12,67 % |
-| HKUST 2023, gemeten wind | nRMSE LR EFF_T / e6 | 16,56 / 16,47 % | 16,56 / 16,47 % |
-| HKUST 2023, ERA5-wind | nRMSE LR EFF_T / e6 | 16,70 / 16,60 % | 16,63 / 16,53 % |
-
-**Feiten**
-- Op Kaggle voorspelt de gefitte Faiman de moduletemperatuur veel beter (fout bijna gehalveerd). ERA5-wind helpt
-  daarbij niet (u1 → 0): de wind op het ERA5-rooster zegt weinig over de wind op het paneel.
-- Op het **vermogen** heeft dat geen effect (< 0,1 pp). Een paar °C verschil verandert de opwek maar ~1 %.
-- HKUST (geen moduletemperatuur, indirect via de opwek): het optimum ligt op de rand van het rooster en het rooster
-  is vlak → de data kunnen u0/u1 niet goed bepalen.
-- Gemeten wind (weerstation) vs ERA5-wind: 0,14 pp verschil → niet relevant. (Bovendien twijfelachtige windmeter,
-  zie TAAK 5a stap 2.)
-
-**Keuze:** standaardwaarden blijven (#45). De fout van het model zit in de straling (wolken), niet in de temperatuur.
+\* days 11–15: no training runs that far ahead → weight of day 10 carried forward.
+Mean over days 1–10: blending 18.0 % · fixed rule (model up to day 4) 18.8 · model only 19.8 · mean day 20.3.
+→ Blending is the best on **every** day, also on day 1. For the app (FR4) this is the approach for "coming days".
 
 ---
 
-# Wolken via de satelliet (vraag Dimme: "kan een wolkenmodel helpen?")
+# Task 6 – Faiman fit (`taak6_faiman.py` → `resultaten/taak6/`)
+Setup fixed in advance (decision #44). Faiman: T_cell = T_air + irradiance / (u0 + u1 × wind). Default (assumption
+from V4/V5): u0 = 25, u1 = 6.84. Question: does the model get better with fitted values, and with measured instead of
+ERA5 wind?
 
-**Onderzoek (kort):** zelf een wolkensimulatie draaien (bv. WRF-Solar) is voor dit project en een app niet
-realistisch (rekencluster, heeft zelf ECMWF/GFS nodig) en helpt voor *morgen* weinig: wolken boven één dak zijn een
-dag vooruit niet precies te voorspellen. Satellietbeelden (wolkenbeweging doortrekken) zijn volgens de literatuur tot
-~5–6 uur vooruit beter dan weermodellen. Open-Meteo biedt gratis satellietstraling: Himawari-9 (India, Azië;
-10 min, ~5 km, archief vanaf 2015) en EUMETSAT IODC (India, vanaf 2025).
-
-## Stap 5 HKUST – satelliet als "weer achteraf" (`taak5a_hkust_satelliet.py` → `resultaten/taak5/hkust/stap5_satelliet/`)
-Opzet vooraf vast (BESLISSINGEN #46). Zelfde model (LR GHI), zelfde kwartieren; alleen de bron van de straling
-verschilt. Satelliet tijdverschuiving +10 min (gekozen op 2021).
-
-| | ERA5 (31 km, 1 uur) | **Satelliet Himawari (5 km, 10 min)** | eigen stralingssensor |
+| Dataset | What | Default | Fitted |
 |---|---|---|---|
-| Correlatie met de sensor (per kwartier) | 0,84 | **0,93** | – |
-| Correlatie met de opwek | 0,82 | **0,92** | – |
-| nRMSE validatie 2022 (train 2021) | 15,4 % | **10,1 %** | 8,6 % |
-| nRMSE test 2023 (train 2021 + 2022) | 16,6 % | **10,9 %** (−5,7 pp, aantoonbaar) | sensor kapot |
-| Droog / moesson 2023 | 14,5 / 19,1 % | **8,3 / 13,8 %** | |
+| Kaggle (days 25–34) | RMSE module temperature | 4.5 °C (bias −2.1) | **2.5 °C** (bias +0.9); u0 37.7, u1 0 |
+| Kaggle | nRMSE power LR EFF_T / e6 | 13.46 / 12.66 % | 13.52 / 12.67 % |
+| HKUST 2023, measured wind | nRMSE LR EFF_T / e6 | 16.56 / 16.47 % | 16.56 / 16.47 % |
+| HKUST 2023, ERA5 wind | nRMSE LR EFF_T / e6 | 16.70 / 16.60 % | 16.63 / 16.53 % |
 
-**Wat betekent dit?** De satelliet ziet de wolken bijna zoals het dak ze ziet: de fout zakt van 16,6 naar 10,9 %,
-dicht bij een eigen stralingsmeter (8,6 %). De grootste foutbron was dus de grove resolutie van ERA5. Satelliet en
-ERA5 samen helpen niet extra.
-**Beperking:** de satelliet meet het weer van *nu* (30 min vertraging), het is geen voorspelling. Bruikbaar voor:
-(1) de komende uren (wolken doortrekken = nowcast), (2) kalibratie van een huis zonder eigen meter, (3) controle of
-een huis normaal werkt (storingen opsporen). Voor **morgen** blijft de weersvoorspelling nodig.
+**Facts**
+- On Kaggle the fitted Faiman forecasts the module temperature much better (error almost halved). ERA5 wind does not
+  help here (u1 → 0): the wind on the ERA5 grid says little about the wind at the panel.
+- On the **power** this has no effect (< 0.1 pp). A few °C difference changes the power by only ~1 %.
+- HKUST (no module temperature, indirectly through the power): the optimum is at the edge of the grid and the grid is
+  flat → the data cannot determine u0/u1 well.
+- Measured wind (weather station) vs ERA5 wind: 0.14 pp difference → not relevant. (Moreover a doubtful anemometer,
+  see Task 5a step 2.)
 
-**Status (16 nov 2026):** het satelliet-/wolkenspoor is op verzoek van Dimme gestopt (BESLISSINGEN #50). De
-controle in India is niet gedaan (Open-Meteo heeft voor India pas satellietdata vanaf 2025). Het HKUST-resultaat
-blijft staan als bevinding: satelliet zit veel dichter bij het dak dan ERA5, maar is geen voorspelling voor morgen.
+**Choice:** the default values stay (#45). The model error is in the irradiance (clouds), not in the temperature.
 
 ---
 
-# Model verbeteren (16 nov 2026; BESLISSINGEN #51–#57)
+# Clouds from satellite (Dimme's question: "can a cloud model help?")
 
-**1. Regressietest Kaggle (#55):** na de wijzigingen voor TAAK 5 (tijdzone-parameter, verhuisde bandfuncties) geeft
-de controle-run (`SOLAR_RUN=split30_check`, fase 2–4) exact dezelfde getallen als het archief van run 1.
+**Research (short):** running a cloud simulation ourselves (e.g. WRF-Solar) is not realistic for this project and an
+app (computing cluster, and it needs ECMWF/GFS itself) and helps little for *tomorrow*: clouds above one roof cannot
+be forecast exactly a day ahead. According to the literature, satellite images (extrapolating cloud motion) are better
+than weather models up to ~5–6 hours ahead. Open-Meteo offers free satellite irradiance: Himawari-9 (India, Asia;
+10 min, ~5 km, archive from 2015) and EUMETSAT IODC (India, from 2025).
 
-**2. Band P10–P90 met echte voorspellingen (UK, `taak5b_ukpv_band.py` → `resultaten/taak5/ukpv/stap6_band/`)**
+## Step 5 HKUST – satellite as "weather in hindsight" (`taak5a_hkust_satelliet.py` → `resultaten/taak5/hkust/stap5_satelliet/`)
+Setup fixed in advance (decision #46). Same model (LR GHI), same quarter-hours; only the source of the irradiance
+differs. Satellite time shift +10 min (chosen on 2021).
 
-| Band | Dekking test (doel 80 %) | Winter / zomer | Breedte (% cap.) |
+| | ERA5 (31 km, 1 hour) | **Satellite Himawari (5 km, 10 min)** | station's own irradiance sensor |
 |---|---|---|---|
-| Fase-4-methode (factor per bewolkingsklasse, mei–juni gekalibreerd) | 63,4 % | 51,7 / 71,5 | 30,6 |
-| A: factor, elke week op de laatste 4 weken | 72,8 % | 77,6 / 71,0 | 32,8 |
-| **B: optellen per voorspelklasse, elke week op de laatste 4 weken** | **79,4 %** | **80,2 / 79,5** | **29,8** |
+| Correlation with the sensor (per quarter-hour) | 0.84 | **0.93** | – |
+| Correlation with the power | 0.82 | **0.92** | – |
+| nRMSE validation 2022 (train 2021) | 15.4 % | **10.1 %** | 8.6 % |
+| nRMSE test 2023 (train 2021 + 2022) | 16.6 % | **10.9 %** (−5.7 pp, significant) | sensor broken |
+| Dry / monsoon 2023 | 14.5 / 19.1 % | **8.3 / 13.8 %** | |
 
-Waarom de oude band faalde: bij weinig zon is "factor × voorspelling" bijna 0 breed (dekking 24 %), en de band was
-alleen op mei–juni ingesteld (in herfst/winter levert een huis vaak bijna niets terwijl er zon voorspeld is). Met
-dagen vooruit wordt de oude band nog slechter (44–64 %). **Variant B gaat in het eindmodel v2.**
+**What does this mean?** The satellite sees the clouds almost as the roof sees them: the error drops from 16.6 to
+10.9 %, close to an own irradiance meter (8.6 %). So the largest error source was the coarse resolution of ERA5.
+Satellite and ERA5 together do not help extra.
+**Limitation:** the satellite measures the weather of *now* (30 min delay); it is not a forecast. Useful for:
+(1) the coming hours (extrapolating clouds = nowcast), (2) calibrating a house without its own meter, (3) checking
+whether a house works normally (detecting faults). For **tomorrow** the weather forecast is still needed.
 
-**3. Eindmodel v2 – "nieuw huis" (`eindmodel_v2.py`, `solarcore/model_v2.py` → `modellen/model_final_v2.joblib`)**
-pvlib (kWp, dakhoek, richting) × factor uit de laatste 4 weken, gemengd met de gemiddelde dag (ook uit de laatste
-4 weken), band variant B. **Geen trainingsperiode nodig**: na 4 weken eigen meetdata is het model compleet.
+**Status (16 Nov 2026):** the satellite / cloud track was stopped at Dimme's request (decision #50). The check in
+India was not done (Open-Meteo only has satellite data for India from 2025). The HKUST result stays as a finding:
+satellite is much closer to the roof than ERA5, but it is not a forecast for tomorrow.
 
-| UK-test jul 2024 – mrt 2025 (40 huizen) | nRMSE % | R² | dagfout % |
+---
+
+# Improving the model (16 Nov 2026; decisions #51–#58)
+
+**1. Regression test Kaggle (#55):** after the changes for Task 5 (time-zone parameter, moved band functions) the
+control run (`SOLAR_RUN=split30_check`, phases 2–4) gives exactly the same numbers as the archive of run 1.
+
+**2. Band P10–P90 with real forecasts (UK, `taak5b_ukpv_band.py` → `resultaten/taak5/ukpv/stap6_band/`)**
+
+| Band | Test coverage (target 80 %) | Winter / summer | Width (% cap.) |
 |---|---|---|---|
-| LR POA (stap 3; heeft mrt–jun 2024 als training nodig) | 14,58 | 0,68 | 27,2 |
-| **v2: pvlib × f, gemengd (w = 0,87)** | **14,32** | 0,69 | 25,2 |
-| v2: pvlib × f, zonder mengen | 14,33 | 0,69 | 24,0 |
-| v2: alleen gemiddelde dag | 19,33 | 0,44 | 44,7 |
+| Phase-4 method (factor per cloudiness class, calibrated on May–June) | 63.4 % | 51.7 / 71.5 | 30.6 |
+| A: factor, every week on the last 4 weeks | 72.8 % | 77.6 / 71.0 | 32.8 |
+| **B: additive per forecast class, every week on the last 4 weeks** | **79.4 %** | **80.2 / 79.5** | **29.8** |
 
-- v2 is aantoonbaar iets beter dan LR POA (−0,25 pp; 90 %: −0,35…−0,15) en heeft geen training nodig.
-- Band v2: 79,3 % dekking (alle seizoenen 78,6–79,9 %).
-- Horizon (gemengd per dag): dag 1 14,0 · dag 2 15,1 · dag 4 17,3 · dag 7 19,7 · dag 10 20,0 · dag 15 20,8 %.
-- HKUST (Hong Kong) liet hetzelfde zien: doorlopend kalibreren 18,1 % ≈ 2 jaar historie (#43).
-- **Aannames:** pvlib-parameters (PARAMS, DC/AC 1,1), menggewichten uit de UK-trainingsperiode, band in fractie van kWp.
-- Compatibel met de app: zelfde sleutels als `model_v5.joblib` (`model, features, factor, band_method, band, kt_bins,
-  params, rad_shift_min, min_cosz`) + een `v2`-blok met de nieuwe onderdelen.
+Why the old band failed: in low sun "factor × forecast" is almost 0 wide (coverage 24 %), and the band was only
+calibrated on May–June (in autumn/winter a house often delivers almost nothing while sun is forecast). With more days
+ahead the old band gets even worse (44–64 %). **Variant B goes into final model v2.**
 
-**4. Meerdere weermodellen voor morgen (UK, `taak5b_ukpv_multimodel.py` → `resultaten/taak5/ukpv/stap5_multimodel/`, #52/#58)**
+**3. Final model v2 – "new house" (`eindmodel_v2.py`, `solarcore/model_v2.py` → `modellen/model_final_v2.joblib`)**
+pvlib (kWp, tilt, orientation) × factor from the last 4 weeks, blended with the mean day (also from the last
+4 weeks), band variant B. **No training period needed**: after 4 weeks of own measured data the model is complete.
 
-| Test jul 2024 – mrt 2025 (dag 1) | nRMSE % | t.o.v. ECMWF |
+| UK test Jul 2024 – Mar 2025 (40 houses) | nRMSE % | R² | daily error % |
+|---|---|---|---|
+| LR POA (step 3; needs Mar–Jun 2024 as training) | 14.58 | 0.68 | 27.2 |
+| **v2: pvlib × f, blended (w = 0.87)** | **14.32** | 0.69 | 25.2 |
+| v2: pvlib × f, without blending | 14.33 | 0.69 | 24.0 |
+| v2: mean day only | 19.33 | 0.44 | 44.7 |
+
+- v2 is significantly slightly better than LR POA (−0.25 pp; 90 %: −0.35…−0.15) and needs no training.
+- Band v2: 79.3 % coverage (all seasons 78.6–79.9 %).
+- Horizon (blended per day): day 1 14.0 · day 2 15.1 · day 4 17.3 · day 7 19.7 · day 10 20.0 · day 15 20.8 %.
+- HKUST (Hong Kong) showed the same: continuous calibration 18.1 % ≈ 2 years of history (#43).
+- **Assumptions:** pvlib parameters (PARAMS, DC/AC 1.1), blending weights from the UK training period, band in
+  fraction of kWp.
+- Compatible with the app: same keys as `model_v5.joblib` (`model, features, factor, band_method, band, kt_bins,
+  params, rad_shift_min, min_cosz`) + a `v2` block with the new components.
+
+**4. Several weather models for tomorrow (UK, `taak5b_ukpv_multimodel.py` → `resultaten/taak5/ukpv/stap5_multimodel/`, #52/#58)**
+
+| Test Jul 2024 – Mar 2025 (day 1) | nRMSE % | vs ECMWF |
 |---|---|---|
-| **ECMWF IFS alleen (huidig)** | **14,58** | – |
-| DWD ICON alleen | 15,59 | +1,0 pp |
-| NOAA GFS alleen | 17,32 | +2,8 pp |
-| Gemiddelde van de 3 (gekozen met regel #17) | 14,83 | +0,25 pp (slechter) |
-| LR op de 3 modellen | 14,38 | −0,19 pp |
+| **ECMWF IFS only (current)** | **14.58** | – |
+| DWD ICON only | 15.59 | +1.0 pp |
+| NOAA GFS only | 17.32 | +2.8 pp |
+| Mean of the 3 (chosen with rule #17) | 14.83 | +0.25 pp (worse) |
+| LR on the 3 models | 14.38 | −0.19 pp |
 
-→ Geen relevante winst (≤ 0,2 pp, en het volgens de regel gekozen model is op de test zelfs slechter). ECMWF alleen
-blijft; dat is ook wat eindmodel v2 gebruikt.
+→ No relevant gain (≤ 0.2 pp, and the model chosen by the rule is even worse on the test). ECMWF alone stays; that
+is also what final model v2 uses.
 
-## Samenvatting "model verbeteren"
-| Wat | Uitkomst | Gevolg |
+## Summary "improving the model"
+| What | Result | Consequence |
 |---|---|---|
-| Regressietest Kaggle | identiek aan run 1 | Kaggle-resultaten blijven geldig |
-| Band met echte voorspellingen | oude band 63 %, nieuwe band (B) 79 % | band B in v2 |
-| Eindmodel v2 | 14,3 % zonder training (LR POA 14,6 % met training) | voorstel voor de app |
-| Meerdere weermodellen | ≤ 0,2 pp | niet doen |
+| Regression test Kaggle | identical to run 1 | Kaggle results remain valid |
+| Band with real forecasts | old band 63 %, new band (B) 79 % | band B in v2 |
+| Final model v2 | 14.3 % without training (LR POA 14.6 % with training) | proposal for the app |
+| Several weather models | ≤ 0.2 pp | not worth it |
