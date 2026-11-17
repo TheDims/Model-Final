@@ -13,8 +13,25 @@ def style():
                          "legend.frameon": False})
 
 
+def to_english(fig):
+    """Alle tekst in de grafiek naar het Engels (titels, assen, legenda's, labels, categorieën op de assen)."""
+    from matplotlib.text import Text
+    from matplotlib.ticker import FixedFormatter
+    from .labels_en import translate
+    for ax in fig.axes:
+        for axis in (ax.xaxis, ax.yaxis):
+            fmt = axis.get_major_formatter()
+            if isinstance(fmt, FixedFormatter):
+                fmt.seq = [translate(s) for s in fmt.seq]
+    for t in fig.findobj(Text):
+        s = t.get_text()
+        if s:
+            t.set_text(translate(s))
+
+
 def save(fig, path):
-    """Opslaan met vaste resolutie en strakke marges."""
+    """Opslaan met vaste resolutie en strakke marges; tekst in het Engels (de groep en docenten lezen Engels)."""
+    to_english(fig)
     fig.tight_layout()
     fig.savefig(path, dpi=DPI)
     print("grafiek:", path.name)

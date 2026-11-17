@@ -311,12 +311,19 @@ Vraag: *hoe goed is het model als we de plant-sensor vervangen door een bestaand
 - Kleine functies met een docstring van 1–3 regels. Geen dubbele code tussen fases: gedeeld → `solarcore/`.
 - Vaste `random_state=42`. Resultaten als `.csv` (tabellen) en `.png` (≥ 150 dpi) in `resultaten/faseX/`.
 - Grafieken: titel, asnamen **met eenheid**, legenda; kleuren blauw `#2a78d6`, oranje `#eb6834`, rest grijs.
+  Alle grafiektekst is **Engels**: `plots.save()` vertaalt automatisch via `solarcore/labels_en.py`. Nieuwe
+  Nederlandse grafiektekst → zinsdeel toevoegen aan `PHRASES` (controle: `$env:SOLAR_TEXT_LOG` = logbestand).
 - Elke fase schrijft `resultaten/faseX/samenvatting.json` (keuze, scores, trainings- en testdagen).
 - Overschrijf geen resultaten van een andere fase.
 
 ---
 
 ## 10. Documentatie
+- **Taal (besluit Dimme, 16 nov 2026):** README, grafieken, pull requests en commitberichten in het **Engels** (de groep
+  en de docenten lezen geen Nederlands). `BESLISSINGEN.md` en commentaar/docstrings in de code blijven Nederlands.
+  Uitleg aan Dimme in de chat: Nederlands.
+- **GitHub:** per taak een eigen branch, naar `main` alleen via een pull request (Dimme of een teamlid merget);
+  een tag (`v2.0`, ...) bij een nieuwe modelversie.
 - **README.md:** per fase wat we deden, de tabel, de keuze + motivatie, beperkingen, aannames apart van feiten.
 - **BESLISSINGEN.md:** elke keuze met datum, wat, waarom, welk alternatief. Begin met:
   - split op tijd (§6) en waarom: run 1 30/70, run 2 70/30, leercurve als controle op 80/20;
