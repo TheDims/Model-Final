@@ -9,3 +9,5 @@ scipy
 pyarrow
 rdflib      # TAAK 5a: Brick-metadata HKUST (.ttl)
 polars      # TAAK 5b: UK PV streamen van Hugging Face
+streamlit   # app (app/app.py)
+plotly      # grafieken in de app
