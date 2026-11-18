@@ -66,11 +66,14 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0, tz=TZ):
     for c, new in [("temperature_2m", "T"), ("relative_humidity_2m", "RH"), ("surface_pressure", "P_HPA"),
                    ("wind_speed_10m", "WS10"), ("cloud_cover", "CLOUD")]:
         out[new] = interp(h[c])
+    if "precipitation_probability" in h:                 # alleen in de live voorspelling (app)
+        out["RAIN_PROB"] = interp(h.precipitation_probability)
     # neerslag: hoeveelheid in het uur -> elk kwartier van dat uur (mm per uur)
     out["PRECIP"] = h.precipitation.reindex(grid, method="ffill").values
     sp = pvlib.solarposition.get_solarposition(mid.tz_localize(tz), lat, lon, altitude=elev,
                                                pressure=out.P_HPA.values * 100, temperature=out["T"].values)
     out["ZENITH"], out["AZIMUTH"] = sp.apparent_zenith.values, sp.azimuth.values
+    out["COSZ"] = np.cos(np.deg2rad(sp.zenith.values)).clip(0)      # zonnestand (app: dag/nacht, zoals V5)
     cosz = np.cos(np.deg2rad(out.ZENITH)).clip(0)
     dni = np.where(cosz > 0.05, (out.GHI_W - out.DHI_W) / np.maximum(cosz, 0.05), 0)
     out["DNI_W"] = np.clip(dni, 0, cs.dni.values * 1.1)
@@ -79,11 +82,17 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0, tz=TZ):
 
 
 def soiling_loss(hourly, grid, p=PARAMS, tz=TZ):
-    """Kimber: stofverlies per kwartier; regen >= 6 mm/dag spoelt schoon."""
+    """Kimber: stofverlies per kwartier; regen >= 6 mm/dag spoelt schoon. Optioneel p['wash_every_days']:
+    handmatig schoonmaken, teruggerekend vanaf vandaag (app, overgenomen uit V5 physics.py)."""
     r = hourly.set_index("DATE_TIME").precipitation.fillna(0)
     r.index = r.index.tz_localize(tz)
+    wash = None
+    if p.get("wash_every_days"):
+        today = pd.Timestamp.now(tz=tz).normalize()
+        wash = pd.date_range(start=today, end=r.index.min(), freq=f"-{int(p['wash_every_days'])}D")
+        wash = [d.date() for d in wash[wash.isin(r.index)]]
     s = pvlib.soiling.kimber(r, cleaning_threshold=p["clean_mm"], soiling_loss_rate=p["soiling_rate"],
-                             max_soiling=p["max_soiling"])
+                             max_soiling=p["max_soiling"], manual_wash_dates=wash)
     return s.tz_localize(None).reindex(grid, method="ffill").fillna(0).values
 
 
@@ -96,6 +105,7 @@ def panel_inputs(w15, soiling, lat, lon, elev, tilt=None, azimuth=180.0, p=PARAM
     am_rel = pvlib.atmosphere.get_relative_airmass(d.ZENITH.values)
     am_abs = pvlib.atmosphere.get_absolute_airmass(am_rel, d.P_HPA.values * 100)
     pw = pvlib.atmosphere.gueymard94_pw(d["T"].values, d.RH.values)
+    d["AM_ABS"], d["PW_CM"] = am_abs, pw                       # voor de app ("wat beïnvloedt je panelen")
     dni_extra = pvlib.irradiance.get_extra_radiation(times).values
     irr = pvlib.irradiance.get_total_irradiance(tilt, azimuth, d.ZENITH.values, d.AZIMUTH.values, d.DNI_W.values,
                                                 d.GHI_W.values, d.DHI_W.values, dni_extra=dni_extra, airmass=am_rel,
@@ -109,7 +119,7 @@ def panel_inputs(w15, soiling, lat, lon, elev, tilt=None, azimuth=180.0, p=PARAM
     d["SPECTRAL"] = np.where(cosz > 0.02, np.nan_to_num(spec, nan=1.0), 1.0)
     d["SOILING"] = soiling
     d["POA"] = np.nan_to_num(irr["poa_global"])
-    d["EFF_IRR"] = eff * d.SPECTRAL * (1 - d.SOILING)
+    d["EFF_IRR"] = eff * d.SPECTRAL * (1 - d.SOILING) * (1 + p.get("bifacial_gain", 0.0))   # bifaciaal: app
     u1 = p["u1"] * np.sqrt(d.RHO / RHO0)
     d["T_CELL"] = pvlib.temperature.faiman(d.POA, d["T"], d.WS10 * p["wind_height_factor"], u0=p["u0"], u1=u1)
     pdc = pvlib.pvsystem.pvwatts_dc(d.EFF_IRR, d.T_CELL, pdc0=1000, gamma_pdc=p["gamma_pdc"])

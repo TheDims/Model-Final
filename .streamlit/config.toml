@@ -1,0 +1,12 @@
+[theme]
+base = "light"
+primaryColor = "#ee7d1a"
+backgroundColor = "#fdf6ec"
+secondaryBackgroundColor = "#fff7ec"
+textColor = "#2a1f17"
+
+[server]
+runOnSave = true
+
+[client]
+toolbarMode = "viewer"     # geen 'Deploy'-knop en ontwikkelaarsmenu voor gebruikers

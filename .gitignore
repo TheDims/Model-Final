@@ -6,6 +6,9 @@ data/Plant_*_Weather_Sensor_Data.csv
 data/clean/
 # Externe datasets (TAAK 5): groot, zelf te downloaden (zie README)
 data/extern/
+# App: gegevens van de gebruiker blijven lokaal (NFR5, GDPR); alleen het lege voorbeeld gaat mee
+app/gebruiker/*
+!app/gebruiker/mijn_panelen.example.json
 
 # ---------- Resultaten ----------
 # Run 1 staat in resultaten/split30/. De losse mappen hieronder zijn exacte kopieën daarvan.

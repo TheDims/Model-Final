@@ -45,6 +45,43 @@ By default the main run `split70` is used. For another run, first set in PowerSh
 (the regression test; `split30` itself is an archive and cannot be run again). Which test days may already be
 viewed is set per run in `solarcore/config.py` (`TEST_VRIJGEGEVEN`).
 
+## Running the app
+
+The Streamlit app in `app/` is the user interface for **final model v2** (decision #60). It shows the solar power
+forecast for a house in India (today + 15 days), with a likely range (P10–P90), tips and panel health alerts.
+
+**Start:** double-click `start_app.bat`, or in a terminal in this folder:
+```
+pip install -r requirements.txt          # once (streamlit, plotly, pvlib, ...)
+python -m streamlit run app/app.py
+```
+The app opens at http://localhost:8501. It needs internet for the live weather forecast (Open-Meteo, CC BY 4.0).
+It loads `modellen/model_final_v2.joblib`; if that file is missing, it shows the plain physics forecast with a warning.
+
+**How the forecast is made:**
+- pvlib physics with the house's size (kWp), roof tilt and direction, on the Open-Meteo weather forecast
+  (radiation shifted −30 min, as in the model);
+- × level factor *f* from **the user's own daily production** (entered on *My Usage*) over the 4 weeks before
+  this week, updated every week. Without data, *f* = 1 and the app says the forecast is not yet tuned;
+- blended with an average day (from the same 4 weeks), more for days further ahead;
+- from day 5 on (today = day 1) the day is marked as a **rough estimate** (skill ≈ 0 from there in the UK test);
+- band P10–P90: variant B from the UK test (79 % coverage there).
+
+**Privacy (NFR5, GDPR):** the user's profile and entered production are stored only on the computer, in
+`app/gebruiker/` (ignored by git). The repository only contains the empty example `app/gebruiker/mijn_panelen.example.json`.
+
+**Tests:** `python app/test_app.py` runs the app without a browser (Streamlit AppTest) for the four personas
+(Anita, Rahul, Lakshmi, Vikram), a new house without data and a house with 6 weeks of data, on every page, plus the
+forecast page in all 6 languages (47 checks, all pass). It uses a temporary user folder, not your own data.
+
+**Same result as the model:** with the same calibration, the app computes exactly the same forecast as
+`eindmodel_v2.py` (difference 0.0 kW on the UK test data). The app calibrates from daily totals (users only enter kWh
+per day) instead of quarter-hours; on the UK test this changes nRMSE from 14.32 to 14.33 % and the daily error from
+25.2 to 25.3 %.
+
+**Limits:** the band is fixed from the UK test (not yet per house); "this year" on *My Usage* is physics without the
+factor; the app works only for locations in India; there is no FastAPI service (not found in the project).
+
 > **Note:** the sections "Phase 0" to "Diagnosis" below describe **run 1** (30/70). Run 2 follows after them.
 
 ---

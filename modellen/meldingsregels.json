@@ -1,0 +1,311 @@
+{
+  "rules": {
+    "min_kt": 0.5,
+    "baseline_days": 10,
+    "baseline_q": 0.5,
+    "window": 5,
+    "t_service": 0.7,
+    "t_clean": 0.8,
+    "rain_mm": 6.0,
+    "t_trend": null,
+    "trend_days": 14,
+    "trend_min_points": 8
+  },
+  "test_dag21_34": {
+    "detectie_%": 85.71428571428571,
+    "service_bij_storing_%": 84.6938775510204,
+    "vals_alarm_%": 0.0,
+    "n_storing": 98,
+    "n_gezond": 296
+  },
+  "stof_test": {
+    "0%/dag": {
+      "omvormers": 16,
+      "melding_binnen_22_dagen_%": 0.0,
+      "dagen_tot_melding_mediaan": null,
+      "stofverlies_bij_melding_%": null
+    },
+    "0.5%/dag": {
+      "omvormers": 16,
+      "melding_binnen_22_dagen_%": 0.0,
+      "dagen_tot_melding_mediaan": null,
+      "stofverlies_bij_melding_%": null
+    },
+    "1%/dag": {
+      "omvormers": 16,
+      "melding_binnen_22_dagen_%": 0.0,
+      "dagen_tot_melding_mediaan": null,
+      "stofverlies_bij_melding_%": null
+    },
+    "2%/dag": {
+      "omvormers": 16,
+      "melding_binnen_22_dagen_%": 100.0,
+      "dagen_tot_melding_mediaan": 10.0,
+      "stofverlies_bij_melding_%": 20.0
+    }
+  },
+  "trendregel": {
+    "kandidaten": [
+      {
+        "trend_days": 14,
+        "t_trend": 0.15,
+        "vals_alarm_dag1_20_%": 0.7481296758104738,
+        "gevonden_A_%": 0.0
+      },
+      {
+        "trend_days": 20,
+        "t_trend": 0.15,
+        "vals_alarm_dag1_20_%": 0.7481296758104738,
+        "gevonden_A_%": 18.75
+      }
+    ],
+    "overgenomen": false,
+    "gekozen": {
+      "t_trend": 0.15,
+      "trend_days": 20
+    },
+    "test_dag21_34": {
+      "detectie_%": 86.73469387755102,
+      "service_bij_storing_%": 84.6938775510204,
+      "vals_alarm_%": 0.6756756756756757,
+      "n_storing": 98,
+      "n_gezond": 296
+    },
+    "stof_B_oud": {
+      "0%/dag": {
+        "omvormers": 8,
+        "melding_binnen_22_dagen_%": 0.0,
+        "dagen_tot_melding_mediaan": null,
+        "stofverlies_bij_melding_%": null
+      },
+      "0.5%/dag": {
+        "omvormers": 8,
+        "melding_binnen_22_dagen_%": 0.0,
+        "dagen_tot_melding_mediaan": null,
+        "stofverlies_bij_melding_%": null
+      },
+      "1%/dag": {
+        "omvormers": 8,
+        "melding_binnen_22_dagen_%": 0.0,
+        "dagen_tot_melding_mediaan": null,
+        "stofverlies_bij_melding_%": null
+      },
+      "2%/dag": {
+        "omvormers": 8,
+        "melding_binnen_22_dagen_%": 100.0,
+        "dagen_tot_melding_mediaan": 10.0,
+        "stofverlies_bij_melding_%": 20.0
+      }
+    },
+    "stof_B_nieuw": {
+      "0%/dag": {
+        "omvormers": 8,
+        "melding_binnen_22_dagen_%": 0.0,
+        "dagen_tot_melding_mediaan": null,
+        "stofverlies_bij_melding_%": null
+      },
+      "0.5%/dag": {
+        "omvormers": 8,
+        "melding_binnen_22_dagen_%": 0.0,
+        "dagen_tot_melding_mediaan": null,
+        "stofverlies_bij_melding_%": null
+      },
+      "1%/dag": {
+        "omvormers": 8,
+        "melding_binnen_22_dagen_%": 0.0,
+        "dagen_tot_melding_mediaan": null,
+        "stofverlies_bij_melding_%": null
+      },
+      "2%/dag": {
+        "omvormers": 8,
+        "melding_binnen_22_dagen_%": 100.0,
+        "dagen_tot_melding_mediaan": 10.0,
+        "stofverlies_bij_melding_%": 20.0
+      }
+    },
+    "beter": false,
+    "niet_meer_vals_alarm": false
+  },
+  "kalibratie_grid": [
+    {
+      "t_service": 0.6,
+      "t_clean": 0.75,
+      "detectie_%": 30.701754385964914,
+      "service_bij_storing_%": 27.192982456140353,
+      "vals_alarm_%": 0.24937655860349126,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.6,
+      "t_clean": 0.78,
+      "detectie_%": 30.701754385964914,
+      "service_bij_storing_%": 27.192982456140353,
+      "vals_alarm_%": 0.24937655860349126,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.6,
+      "t_clean": 0.8,
+      "detectie_%": 35.08771929824561,
+      "service_bij_storing_%": 27.192982456140353,
+      "vals_alarm_%": 0.24937655860349126,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.6,
+      "t_clean": 0.82,
+      "detectie_%": 35.08771929824561,
+      "service_bij_storing_%": 27.192982456140353,
+      "vals_alarm_%": 1.2468827930174564,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.6,
+      "t_clean": 0.85,
+      "detectie_%": 35.08771929824561,
+      "service_bij_storing_%": 27.192982456140353,
+      "vals_alarm_%": 7.73067331670823,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.65,
+      "t_clean": 0.75,
+      "detectie_%": 34.21052631578947,
+      "service_bij_storing_%": 33.33333333333333,
+      "vals_alarm_%": 0.4987531172069825,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.65,
+      "t_clean": 0.78,
+      "detectie_%": 34.21052631578947,
+      "service_bij_storing_%": 33.33333333333333,
+      "vals_alarm_%": 0.4987531172069825,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.65,
+      "t_clean": 0.8,
+      "detectie_%": 38.59649122807017,
+      "service_bij_storing_%": 33.33333333333333,
+      "vals_alarm_%": 0.4987531172069825,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.65,
+      "t_clean": 0.82,
+      "detectie_%": 38.59649122807017,
+      "service_bij_storing_%": 33.33333333333333,
+      "vals_alarm_%": 1.4962593516209477,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.65,
+      "t_clean": 0.85,
+      "detectie_%": 38.59649122807017,
+      "service_bij_storing_%": 33.33333333333333,
+      "vals_alarm_%": 7.98004987531172,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.7,
+      "t_clean": 0.75,
+      "detectie_%": 38.59649122807017,
+      "service_bij_storing_%": 38.59649122807017,
+      "vals_alarm_%": 0.7481296758104738,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.7,
+      "t_clean": 0.78,
+      "detectie_%": 38.59649122807017,
+      "service_bij_storing_%": 38.59649122807017,
+      "vals_alarm_%": 0.7481296758104738,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.7,
+      "t_clean": 0.8,
+      "detectie_%": 42.98245614035088,
+      "service_bij_storing_%": 38.59649122807017,
+      "vals_alarm_%": 0.7481296758104738,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.7,
+      "t_clean": 0.82,
+      "detectie_%": 42.98245614035088,
+      "service_bij_storing_%": 38.59649122807017,
+      "vals_alarm_%": 1.7456359102244388,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.7,
+      "t_clean": 0.85,
+      "detectie_%": 42.98245614035088,
+      "service_bij_storing_%": 38.59649122807017,
+      "vals_alarm_%": 8.229426433915211,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.75,
+      "t_clean": 0.75,
+      "detectie_%": 45.614035087719294,
+      "service_bij_storing_%": 45.614035087719294,
+      "vals_alarm_%": 2.2443890274314215,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.75,
+      "t_clean": 0.78,
+      "detectie_%": 45.614035087719294,
+      "service_bij_storing_%": 45.614035087719294,
+      "vals_alarm_%": 2.2443890274314215,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.75,
+      "t_clean": 0.8,
+      "detectie_%": 49.122807017543856,
+      "service_bij_storing_%": 45.614035087719294,
+      "vals_alarm_%": 2.2443890274314215,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.75,
+      "t_clean": 0.82,
+      "detectie_%": 49.122807017543856,
+      "service_bij_storing_%": 45.614035087719294,
+      "vals_alarm_%": 3.2418952618453867,
+      "n_storing": 114,
+      "n_gezond": 401
+    },
+    {
+      "t_service": 0.75,
+      "t_clean": 0.85,
+      "detectie_%": 49.122807017543856,
+      "service_bij_storing_%": 45.614035087719294,
+      "vals_alarm_%": 8.478802992518704,
+      "n_storing": 114,
+      "n_gezond": 401
+    }
+  ]
+}

@@ -138,6 +138,13 @@ UKPV_SEASONS = {7: "zomer", 8: "zomer", 9: "zomer", 10: "herfst", 11: "herfst", 
                 2: "winter", 3: "voorjaar"}
 UKPV_TEST_VRIJGEGEVEN = True                              # akkoord Dimme 2026-11-13 (na keuze #39)
 
+# ---------- app (Streamlit, app/) ----------
+# Officieel eindmodel voor de app (BESLISSINGEN #60): eindmodel v2. Ontbreekt het bestand, dan rekent de app met
+# de standaardwaarden (pvlib zonder menggewichten) en toont een melding.
+APP_MODEL_FILE = MODELS / "model_final_v2.joblib"
+APP_MODEL_INFO = UKPV_RESULTS / "eindmodel_v2" / "model_info_v2.json"
+APP_ROUGH_FROM_DAY = 5           # vanaf dag 5 vooruit (vandaag = dag 1) is de skill ~0 (UK-horizon, #40) -> "rough estimate"
+
 # ---------- grafieken ----------
 BLUE, ORANGE, GREY = "#2a78d6", "#eb6834", "#a3a29d"
 INK, INK2 = "#0b0b0b", "#52514e"
