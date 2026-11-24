@@ -931,12 +931,15 @@ pvlib (kWp, tilt, orientation) × factor from the last 4 weeks, blended with the
 | UK test Jul 2024 – Mar 2025 (40 houses) | nRMSE % | R² | daily error % |
 |---|---|---|---|
 | LR POA (step 3; needs Mar–Jun 2024 as training) | 14.58 | 0.68 | 27.2 |
-| **v2: pvlib × f, blended (w = 0.87)** | **14.32** | 0.69 | 25.2 |
-| v2: pvlib × f, without blending | 14.33 | 0.69 | 24.0 |
-| v2: mean day only | 19.33 | 0.44 | 44.7 |
+| **v2: pvlib × f, blended (w = 0.87)** | **14.34** | 0.69 | 25.3 |
+| v2: pvlib × f, without blending | 14.34 | 0.69 | 24.1 |
+| v2: mean day only | 19.31 | 0.44 | 44.6 |
 
-- v2 is significantly slightly better than LR POA (−0.25 pp; 90 %: −0.35…−0.15) and needs no training.
-- Band v2: 79.3 % coverage (all seasons 78.6–79.9 %).
+- v2 is significantly slightly better than LR POA (−0.24 pp; 90 %: −0.34…−0.14) and needs no training.
+- Numbers after the code review of 24 Nov 2026 (decision #73): for day-ahead, the calibration now only uses data
+  measured before the forecast was made (before: Monday used Sunday's later data). This cost 0.01–0.02 pp
+  (14.32 → 14.34 %). Older texts and task 8 (#67–#70) still use 14.32 %.
+- Band v2: 79.2 % coverage (all seasons 78.5–79.8 %).
 - Horizon (blended per day): day 1 14.0 · day 2 15.1 · day 4 17.3 · day 7 19.7 · day 10 20.0 · day 15 20.8 %.
 - HKUST (Hong Kong) showed the same: continuous calibration 18.1 % ≈ 2 years of history (#43).
 - **Assumptions:** pvlib parameters (PARAMS, DC/AC 1.1), blending weights from the UK training period, band in
