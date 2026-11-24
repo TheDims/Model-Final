@@ -964,3 +964,25 @@ is also what final model v2 uses.
 | Band with real forecasts | old band 63 %, new band (B) 79 % | band B in v2 |
 | Final model v2 | 14.3 % without training (LR POA 14.6 % with training) | official final model for the app (#60) |
 | Several weather models | ≤ 0.2 pp | not worth it |
+
+## TASK 8 – Feedback pitch week 9 (`taak8_feedback_pitch9.py` → `resultaten/taak8/uk`, `/hkust`, decisions #67–#70)
+
+Teachers' tips after pitch week 9 (plus the Orbit idea from the interim feedback), each tested against final model v2 on
+**two datasets**: UK PV (40 homes, real ECMWF forecasts, train Mar–Jun 2024, test Jul 2024 – Mar 2025) and HKUST
+(5 stations, ERA5, train 2021–2022 with all seasons, test 2023). Rule fixed before running: adopt only if ≥ 0.3 pp
+better than v2 **and** the 90 % bootstrap interval of the difference is below 0.
+
+| Tip | Best variant | UK vs v2 (pp) | HKUST vs v2 (pp) | Verdict |
+|---|---|---|---|---|
+| – | **v2 (reference)** | 14.32 % | 16.58 % | std over days 3.9 / 6.1 pp |
+| Stream learning | update f every day, exponential forgetting (half-life 14 d) | **−0.12** | **−0.55** | only tip that wins on both; proposed |
+| Decision tree on the residual of v2 | depth 8 / 3 | +0.81 | −0.31 | only helps with a full year of training; no cold start |
+| Decision tree instead of LR | depth 5 | +0.13 | −0.27 (not significant) | not adopted |
+| Tree as switch between techniques | v2 or the home's average day | 0.00 | +0.01 | almost always picks v2; blending already does this |
+| Calibration window | 1 / 2 / 8 weeks / all data | +0.30 / +0.17 / −0.01 / +0.03 | +0.63 / +0.31 / −0.07 / −0.08 | 4–8 weeks is fine; shorter is worse |
+| Mean/std of past clearness as features | all previous days | −0.10 | −0.17 | too small, needs training |
+| Bayesian calibration (core of Orbit, Kalman filter) | q chosen on validation | +0.29 | −0.41 (not significant) | no gain over exponential forgetting; Orbit itself needs Stan |
+
+**For the report:** the error comes from the weather (clouds), not from the model form. More complex models (trees)
+only help when a full year of history is available, which a new home does not have. The one change that helps on both
+datasets is updating the calibration every day with exponential forgetting (stream learning). Final choice: team.
