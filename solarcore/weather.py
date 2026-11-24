@@ -9,6 +9,7 @@ Overgenomen uit V5 solarhome/weather.py. Tijden = lokale tijd (standaard India, 
   get_current(lat, lon)              het weer van NU (app)
   rain_per_day(hourly)               neerslag per dag (mm)
 """
+import http.client
 import json
 import time
 import urllib.error
@@ -28,27 +29,40 @@ ATTRIBUTION = "Weather data by Open-Meteo.com (CC BY 4.0)"
 
 
 def _call(url, params, timeout=60, tries=3):
-    """API-aanroep; bij een tijdelijke fout (bv. 503, time-out) nog twee keer proberen (uit V5)."""
+    """API-aanroep; bij een tijdelijke fout (5xx, 429, time-out, verbroken verbinding) nog twee keer proberen
+    (uit V5). Bij een fout van de vraag zelf (4xx) meteen stoppen, met de reden van Open-Meteo."""
     q = url + "?" + urllib.parse.urlencode(params)
     for i in range(tries):
         try:
             with urllib.request.urlopen(q, timeout=timeout) as r:
                 data = json.loads(r.read().decode("utf-8"))
             break
-        except (urllib.error.URLError, TimeoutError) as e:
-            client_error = isinstance(e, urllib.error.HTTPError) and e.code < 500
-            if client_error or i == tries - 1:
+        except urllib.error.HTTPError as e:
+            if e.code < 500 and e.code != 429:
+                try:
+                    reason = json.loads(e.read().decode("utf-8")).get("reason")
+                except Exception:
+                    reason = None
+                raise RuntimeError(f"Open-Meteo fout {e.code}: {reason or e.reason}") from e
+            if i == tries - 1:
                 raise
-            time.sleep(2 * (i + 1))
+        except (urllib.error.URLError, OSError, http.client.HTTPException):   # OSError: o.a. time-out, reset
+            if i == tries - 1:
+                raise
+        time.sleep(2 * (i + 1))
     if data.get("error"):
         raise RuntimeError(f"Open-Meteo fout: {data.get('reason')}")
     return data
 
 
 def _frame(data, extra=()):
-    """API-antwoord -> uurtabel met DATE_TIME en de variabelen."""
+    """API-antwoord -> uurtabel met DATE_TIME en de variabelen. Ontbreekt een variabele: fout (niet stil overslaan,
+    anders komt een onvolledige tabel in de cache)."""
     h = data["hourly"]
-    df = pd.DataFrame({v: h[v] for v in list(VARS) + list(extra) if v in h})
+    missing = [v for v in list(VARS) + list(extra) if v not in h]
+    if missing:
+        raise RuntimeError(f"Open-Meteo gaf geen {', '.join(missing)}")
+    df = pd.DataFrame({v: h[v] for v in list(VARS) + list(extra)})
     df.insert(0, "DATE_TIME", pd.to_datetime(h["time"]))
     return df
 

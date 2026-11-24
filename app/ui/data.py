@@ -78,8 +78,9 @@ def bundle():
     """Alles wat een pagina nodig heeft, voor de huidige instellingen."""
     from appcore.i18n import t                      # laadmelding in de taal van de gebruiker
     lat, lon, place, kwp, tilt, az, ov = setup()
-    key = (round(lat, 2), round(lon, 2), kwp, tilt, az, json.dumps(ov, sort_keys=True))
     readings = load_readings()
+    ov = {**ov, "wash_dates": readings["cleaned"]}  # knop "I cleaned my panels today" -> stofmodel
+    key = (round(lat, 2), round(lon, 2), kwp, tilt, az, json.dumps(ov, sort_keys=True))
     sol = json.dumps({str(k): v for k, v in measured(readings, "solar").items()}, sort_keys=True)
     with st.spinner(t("loading", st.session_state.get("lang", "en"))):   # eerste keer ~5-10 s
         hourly, elev, cur, fetched = weather(*key[:2])
