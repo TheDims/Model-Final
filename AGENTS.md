@@ -320,7 +320,8 @@ Vraag: *hoe goed is het model als we de plant-sensor vervangen door een bestaand
 
 ## 10. Documentatie
 - **Taal (besluit Dimme, 16 nov 2026):** README, grafieken, pull requests en commitberichten in het **Engels** (de groep
-  en de docenten lezen geen Nederlands). `BESLISSINGEN.md` en commentaar/docstrings in de code blijven Nederlands.
+  en de docenten lezen geen Nederlands). Commentaar/docstrings in de code blijven Nederlands.
+  **`BESLISSINGEN.md`: nieuwe rijen in het Engels vanaf #71 (besluit Dimme, 24 nov 2026);** oudere rijen blijven Nederlands.
   Uitleg aan Dimme in de chat: Nederlands.
 - **GitHub:** per taak een eigen branch, naar `main` alleen via een pull request (Dimme of een teamlid merget);
   een tag (`v2.0`, ...) bij een nieuwe modelversie.
