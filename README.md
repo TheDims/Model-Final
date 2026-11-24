@@ -968,24 +968,39 @@ is also what final model v2 uses.
 | Final model v2 | 14.3 % without training (LR POA 14.6 % with training) | official final model for the app (#60) |
 | Several weather models | ≤ 0.2 pp | not worth it |
 
-## TASK 8 – Feedback pitch week 9 (`taak8_feedback_pitch9.py` → `resultaten/taak8/uk`, `/hkust`, decisions #67–#70)
+## TASK 8 – Feedback pitch week 9 (`taak8_feedback_pitch9.py` → `resultaten/taak8/<dataset>/<scenario>`, decisions #67–#70, revised in #75)
 
 Teachers' tips after pitch week 9 (plus the Orbit idea from the interim feedback), each tested against final model v2 on
 **two datasets**: UK PV (40 homes, real ECMWF forecasts, train Mar–Jun 2024, test Jul 2024 – Mar 2025) and HKUST
 (5 stations, ERA5, train 2021–2022 with all seasons, test 2023). Rule fixed before running: adopt only if ≥ 0.3 pp
 better than v2 **and** the 90 % bootstrap interval of the difference is below 0.
 
-| Tip | Best variant | UK vs v2 (pp) | HKUST vs v2 (pp) | Verdict |
-|---|---|---|---|---|
-| – | **v2 (reference)** | 14.32 % | 16.58 % | std over days 3.9 / 6.1 pp |
-| Stream learning | update f every day, exponential forgetting (half-life 14 d) | **−0.12** | **−0.55** | only tip that wins on both; proposed |
-| Decision tree on the residual of v2 | depth 8 / 3 | +0.81 | −0.31 | only helps with a full year of training; no cold start |
-| Decision tree instead of LR | depth 5 | +0.13 | −0.27 (not significant) | not adopted |
-| Tree as switch between techniques | v2 or the home's average day | 0.00 | +0.01 | almost always picks v2; blending already does this |
-| Calibration window | 1 / 2 / 8 weeks / all data | +0.30 / +0.17 / −0.01 / +0.03 | +0.63 / +0.31 / −0.07 / −0.08 | 4–8 weeks is fine; shorter is worse |
-| Mean/std of past clearness as features | all previous days | −0.10 | −0.17 | too small, needs training |
-| Bayesian calibration (core of Orbit, Kalman filter) | q chosen on validation | +0.29 | −0.41 (not significant) | no gain over exponential forgetting; Orbit itself needs Stan |
+**Revised after the code review (24 Nov 2026, #75).** Two scenarios for *when a day's yield is known*:
+- **evening**: the forecast for tomorrow is made at 21:00, after sunset, so today's yield is known (the app);
+- **strict**: the forecast is made 24 h before the target (as in the UK test), so today is not finished yet.
 
-**For the report:** the error comes from the weather (clouds), not from the model form. More complex models (trees)
-only help when a full year of history is available, which a new home does not have. The one change that helps on both
-datasets is updating the calibration every day with exponential forgetting (stream learning). Final choice: team.
+All variants, including the weekly v2 reference, now use the same information. Choices inside a family (window,
+half-life, Kalman q, tree depth) are made on the validation period only, not on the test. The first run
+(`eerste_run/`) let the daily variants use one day more than v2 and picked some variants on the test.
+
+Difference with v2 on the test, in pp (negative = better; **bold** = meets the rule):
+
+| Tip | UK evening | UK strict | HKUST evening | HKUST strict | Verdict |
+|---|---|---|---|---|---|
+| – **v2 (reference), nRMSE** | 14.32 % | 14.34 % | 16.58 % | 16.67 % | |
+| Stream learning: f every day, exponential forgetting (half-life chosen on validation: 14 / 14 / 7 / 14 d) | −0.12 | −0.09 | **−0.68** | **−0.48** | only tip better on both datasets in both scenarios; meets the rule on HKUST only |
+| f every day, last 28 days | −0.06 | −0.04 | **−0.32** | −0.29 | smaller than with forgetting |
+| Decision tree on the residual of v2 (depth on validation) | −0.02 | +1.19 | **−0.31** | **−0.32** | unstable: much worse on UK strict; needs training, no cold start |
+| Decision tree instead of LR (depth 5) | +0.13 | +0.12 | −0.27 (n.s.) | −0.37 (n.s.) | not adopted |
+| Tree as switch between techniques | 0.00 | 0.00 | +0.01 | +0.01 | almost always picks v2 |
+| Calibration window (chosen on validation: 8 wk / 8 wk / all / all) | −0.01 (n.s.) | −0.01 (n.s.) | −0.08 (n.s.) | −0.16 (n.s.) | 4 weeks is fine |
+| Mean/std of past clearness as features (all days) | −0.10 | −0.10 | −0.17 | −0.17 | too small, needs training |
+| Bayesian calibration (Kalman, q on validation) | +0.29 | +0.37 | −0.41 (n.s.) | +0.41 (n.s.) | no gain |
+
+(n.s. = not significant: the 90 % interval includes 0.)
+
+**For the report:** the error comes from the weather (clouds), not from the model form. Trees only help with a full
+year of history (HKUST) and fail with a short one (UK), which does not fit a new home. Updating the calibration every
+day with exponential forgetting (stream learning) is the only change that is better on both datasets, also without any
+look-ahead (strict); it meets the adoption rule only on HKUST (ERA5, weather in hindsight). The first run's conclusion
+holds, with a slightly smaller gain on UK strict (−0.09 instead of −0.12 pp). Final choice: team.

@@ -1,0 +1,42 @@
+{
+  "dataset": "uk",
+  "scenario": "strikt",
+  "lag_dagen": 2,
+  "gekozen_op_validatie": {
+    "F1": "F1: f uit 8 weken",
+    "S2": "S2: elke dag, exponentieel vergeten (halfwaardetijd 14 d)",
+    "B1": "B1: Bayesiaans (Kalman, q = 0.01 r), elke dag",
+    "T1": "T1: decision tree i.p.v. LR (diepte 5)",
+    "T2": "T2: tree kiest v2 of gemiddelde dag (diepte 6)",
+    "T3": "T3: v2 + tree op de restfout (diepte 8)"
+  },
+  "menggewicht_v2": 0.8653758285100417,
+  "bayes_r": 0.0885315794015247,
+  "regel_pp": 0.3,
+  "training": [
+    "2024-03-07 16:00:00",
+    "2024-06-30 20:30:00"
+  ],
+  "validatie": [
+    "2024-05-01 04:30:00",
+    "2024-06-30 20:30:00"
+  ],
+  "vouwen": [
+    [
+      "2024-03-06",
+      "2024-04-30",
+      "2024-05-01",
+      "2024-05-31"
+    ],
+    [
+      "2024-03-06",
+      "2024-05-31",
+      "2024-06-01",
+      "2024-06-30"
+    ]
+  ],
+  "test": [
+    "2024-07-01 03:30:00",
+    "2025-03-31 18:00:00"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "dataset": "hkust",
+  "scenario": "strikt",
+  "lag_dagen": 2,
+  "gekozen_op_validatie": {
+    "F1": "F1: f uit alle eerdere data (compleet verleden)",
+    "S2": "S2: elke dag, exponentieel vergeten (halfwaardetijd 14 d)",
+    "B1": "B1: Bayesiaans (Kalman, q = 0.3 r), elke dag",
+    "T1": "T1: decision tree i.p.v. LR (diepte 5)",
+    "T2": "T2: tree kiest v2 of gemiddelde dag (diepte 3)",
+    "T3": "T3: v2 + tree op de restfout (diepte 3)"
+  },
+  "menggewicht_v2": 1.0,
+  "bayes_r": 0.11807523380982757,
+  "regel_pp": 0.3,
+  "training": [
+    "2021-05-01 06:00:00",
+    "2022-12-31 17:30:00"
+  ],
+  "validatie": [
+    "2022-01-01 07:15:00",
+    "2022-12-31 17:30:00"
+  ],
+  "vouwen": [
+    [
+      "2021-05-01",
+      "2021-12-31",
+      "2022-01-01",
+      "2022-12-31"
+    ]
+  ],
+  "test": [
+    "2023-01-01 07:15:00",
+    "2023-12-31 17:30:00"
+  ]
+}

@@ -1,0 +1,17 @@
+,vouw 1,gemiddeld
+v2 (referentie),15.838,15.838
+T1: decision tree i.p.v. LR (diepte 3),15.929,15.929
+T1: decision tree i.p.v. LR (diepte 5),15.859,15.859
+T1: decision tree i.p.v. LR (diepte 8),16.592,16.592
+T1: decision tree i.p.v. LR (diepte 12),17.099,17.099
+T2: tree kiest v2 of gemiddelde dag (diepte 2),15.872,15.872
+T2: tree kiest v2 of gemiddelde dag (diepte 3),15.861,15.861
+T2: tree kiest v2 of gemiddelde dag (diepte 4),15.861,15.861
+T2: tree kiest v2 of gemiddelde dag (diepte 6),15.886,15.886
+T3: v2 + tree op de restfout (diepte 2),15.626,15.626
+T3: v2 + tree op de restfout (diepte 3),15.574,15.574
+T3: v2 + tree op de restfout (diepte 5),15.711,15.711
+T3: v2 + tree op de restfout (diepte 8),15.764,15.764
+F2: LR op alleen v2 (controle),15.804,15.804
+F2: LR op v2 + KT + gem./std helderheid 7 d (recent),15.711,15.711
+F2: LR op v2 + KT + gem./std helderheid alle dagen (compleet),15.72,15.72

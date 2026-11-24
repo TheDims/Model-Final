@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-TAAK 8 - Feedback pitch week 9: helpen deze tips eindmodel v2? (BESLISSINGEN #67-#70)
-=====================================================================================
+TAAK 8 - Feedback pitch week 9: helpen deze tips eindmodel v2? (BESLISSINGEN #67-#70, herzien in #75)
+=====================================================================================================
 Twee datasets, zelfde varianten, zelfde regel:
   UK PV   40 huizen, dag-vooruit (ECMWF dag 1). Training 6 mrt - 30 jun 2024, test 1 jul 2024 - 31 mrt 2025.
   HKUST   5 stations Hong Kong, ERA5 (weer achteraf). Training 2021-2022, test 2023 (alle seizoenen in de training).
@@ -16,7 +16,16 @@ Referentie = eindmodel v2 (pvlib x f uit 4 weken, gemengd met de gemiddelde dag)
   B1  Bayesiaans: f als 'local level' (random walk) met Kalman-filter, elke dag bijgewerkt. Start bij een nieuw
       huis met f = 1 en een brede onzekerheid (cold start). Dit is de kern van Orbit's ETS/DLT-niveau, zonder Stan.
 Regel (#67): overnemen als test >= 0,3 pp lager dan v2 en het 90 %-bootstrapinterval van het verschil < 0.
-Runnen: F5 in Spyder of VS Code (Anaconda). Eerst de UK- en HKUST-scripts (cache) en eindmodel_v2.py.
+
+Herzien na de code-review (#75):
+  - twee scenario's voor wanneer de dagopbrengst bekend is (config TAAK8_SCENARIOS): 'avond' (voorspelling om
+    21:00, vandaag bekend) en 'strikt' (24 uur vooruit, vandaag nog niet af). Alle varianten, ook de wekelijkse
+    v2-referentie, gebruiken alleen dagen tot en met (doeldag - lag);
+  - keuzes binnen een familie (F1-venster, S2-halfwaardetijd, B1-q, boomdiepte) alleen op de validatie;
+  - menggewicht en v2-feature in de validatie alleen uit data vóór de validatieperiode;
+  - opvulwaarden alleen uit de training; random_state uit config; perioden in samenvatting.json;
+  - cache zonder kalibratie (die wordt elke run opnieuw berekend).
+Runnen: F5 in Spyder of VS Code (Anaconda). Eerst de UK- en HKUST-scripts (cache). Argument 'hkust' = HKUST.
 """
 
 # %% Imports en paden
@@ -34,14 +43,15 @@ try:
 except NameError:          # Spyder/interactief
     ROOT = Path.cwd()
 sys.path.insert(0, str(ROOT))
-from solarcore.config import (UKPV_RESULTS, UKPV_FC_START, UKPV_TRAIN_END, UKPV_CLEAN,   # noqa: E402
-                              HKUST_RESULTS, CAPACITY_QUANTILE, MIN_COSZ)
+from solarcore.config import (UKPV_RESULTS, UKPV_FC_START, UKPV_TRAIN_END, UKPV_CLEAN, UKPV_FOLDS,   # noqa: E402
+                              HKUST_RESULTS, HKUST_CLEAN, HKUST_YEARS, CAPACITY_QUANTILE, MIN_COSZ,
+                              RANDOM_STATE, TAAK8_RULE_PP, TAAK8_SCENARIOS)
 from solarcore import model_v2 as v2   # noqa: E402
 from solarcore.evaluate import bootstrap_days   # noqa: E402
 
 warnings.filterwarnings("ignore")
 pd.set_option("display.width", 240)
-RULE_PP = 0.3
+OUT = ROOT / "resultaten" / "taak8"
 X_T1 = ["POA_F1", "KT_W_F1", "COSZ", "CLOUD_F1", "T_F1"]
 X_SEL = ["KT_W_F1", "CLOUD_F1", "COSZ", "SLOT"]
 X_RES = ["V2F", "KT_W_F1", "CLOUD_F1", "COSZ", "SLOT"]
@@ -49,12 +59,19 @@ COLS = ["PLANT", "DATE_TIME", "SLOT", "P_KW", "KWP", "CAP", "FRAC", "PV_KW", "CS
         "POA_F1", "KT_W_F1", "CLOUD_F1", "T_F1", "f", "c", "K", "n"]
 
 
-def add_v2_stats(data):
-    """Wekelijkse v2-kalibratie (f, c, K uit de 4 weken ervoor) op rijen overdag met meting."""
+def end_of(day):
+    return pd.Timestamp(day) + pd.Timedelta("23:59:59")
+
+
+def add_v2_stats(data, lag):
+    """Wekelijkse v2-kalibratie (f, c, K uit de 4 weken ervoor). De week waarmee gekalibreerd wordt is die van
+    (doeldag - (lag - 1)): bij lag 1 telt de dag van gisteren mee, bij lag 2 niet (zie TAAK8_SCENARIOS)."""
     data = data.copy()
     data["WEEK"] = data.DATE_TIME.dt.to_period("W-SUN")
+    data["CALWEEK"] = (data.DATE_TIME.dt.normalize() - pd.Timedelta(days=lag - 1)).dt.to_period("W-SUN")
     stats = v2.rolling_stats(data[["PLANT", "WEEK", "P_KW", "PV_KW", "CS_GHI", "COSZ"]])
-    return data.merge(stats, on=["PLANT", "WEEK"], how="left")[COLS].reset_index(drop=True)
+    return (data.merge(stats.rename(columns={"WEEK": "CALWEEK"}), on=["PLANT", "CALWEEK"], how="left")[COLS]
+            .reset_index(drop=True))
 
 
 def kalman_f(y, ok, q, r, p0=0.3 ** 2):
@@ -70,32 +87,9 @@ def kalman_f(y, ok, q, r, p0=0.3 ** 2):
     return np.exp(out)
 
 
-def evaluate(d, start, trm, te, folds, valm, out):
-    """Alle varianten op één dataset. trm/te/valm: maskers (training, test, validatie voor varianten zonder fit)."""
-    out.mkdir(parents=True, exist_ok=True)
-    d = d.copy()
-    d["DATE"] = d.DATE_TIME.dt.normalize()
-    d["WSTART"] = d.DATE - pd.to_timedelta(d.DATE.dt.dayofweek, unit="D")
-    d["MEANDAY"] = d.K * d.c * d.CS_GHI
-
-    def frac(pred_kw):
-        return np.clip(np.nan_to_num(np.asarray(pred_kw, float)), 0, None) / d.CAP.values
-
-    def blend(f):
-        raw, md = f * d.PV_KW.values, d.MEANDAY.values
-        ok = np.isfinite(md)
-        m = trm.values & (d.n.values > 0) & ok
-        w = v2.mix_weight(raw[m], md[m], d.P_KW.values[m])
-        return frac(np.where(ok, w * raw + (1 - w) * md, raw)), w
-
-    def nrmse(p, m):
-        m = np.asarray(m)
-        return float(np.sqrt(np.mean((p[m] - d.FRAC.values[m]) ** 2)) * 100)
-
-    PRED = {}
-    PRED["v2 (referentie)"], w0 = blend(d.f.fillna(1.0).values)
-
-    # dagtotalen per huis -> f-varianten
+def daily_f(d, trm):
+    """Per huis en dag: f-varianten uit dagtotalen van de dagen VÓÓR die dag (venster, exponentieel, Kalman).
+    Opzoeken met een latere datum geeft de lag (zie evaluate). r van het Kalman-filter alleen uit de training."""
     day = d.groupby(["PLANT", "DATE"])[["P_KW", "PV_KW"]].sum()
     day["N"] = d.groupby(["PLANT", "DATE"]).size()
     cal = []
@@ -129,44 +123,89 @@ def evaluate(d, start, trm, te, folds, valm, out):
     for ratio in (0.01, 0.03, 0.1, 0.3):
         fk[f"b{ratio}"] = np.concatenate([kalman_f(g.LOGY.values, g.OKD.values, ratio * r, r)
                                           for _, g in cal.groupby("PLANT", sort=False)])
-    wk = d[["PLANT", "WSTART"]].merge(fk.rename(columns={"DATE": "WSTART"}), on=["PLANT", "WSTART"], how="left")
-    dy = d[["PLANT", "DATE"]].merge(fk, on=["PLANT", "DATE"], how="left")
-    for key, lab in (("1w", "F1: f uit 1 week"), ("2w", "F1: f uit 2 weken"), ("4w", "F1: f uit 4 weken (= v2, controle)"),
-                     ("8w", "F1: f uit 8 weken"), ("all", "F1: f uit alle eerdere data (compleet verleden)")):
-        PRED[lab], _ = blend(wk[key].fillna(1.0).values)
-    PRED["S1: f elke dag bijwerken (28 dagen)"], _ = blend(dy["4w"].fillna(1.0).values)
-    for hl in (7, 14, 28):
-        PRED[f"S2: elke dag, exponentieel vergeten (halfwaardetijd {hl} d)"], _ = blend(dy[f"exp{hl}"].fillna(1.0).values)
-    bval = {}
-    for ratio in (0.01, 0.03, 0.1, 0.3):
-        p, _ = blend(dy[f"b{ratio}"].fillna(1.0).values)
-        bval[ratio] = (nrmse(p, valm), p)
-    best_ratio = min(bval, key=lambda k: bval[k][0])
-    PRED[f"B1: Bayesiaans (Kalman, q = {best_ratio} r), elke dag"] = bval[best_ratio][1]
+    return fk, r
 
-    # varianten met training
-    d["V2F"] = PRED["v2 (referentie)"]
-    d["RAWF"] = frac(d.f.fillna(1.0) * d.PV_KW)
-    d["MDF"] = frac(np.where(np.isfinite(d.MEANDAY), d.MEANDAY, d.f.fillna(1.0) * d.PV_KW))
+
+def evaluate(d, start, trm, te, folds, valm, out, lag, meta):
+    """Alle varianten op één dataset en één scenario (lag). trm/te/valm: maskers (training, test, validatie)."""
+    out.mkdir(parents=True, exist_ok=True)
+    d = d.copy()
+    d["DATE"] = d.DATE_TIME.dt.normalize()
+    d["CALDATE"] = d.DATE - pd.Timedelta(days=lag - 1)          # laatste bekende dag = CALDATE - 1 = doel - lag
+    d["WSTART"] = d.CALDATE - pd.to_timedelta(d.CALDATE.dt.dayofweek, unit="D")
+    d["MEANDAY"] = d.K * d.c * d.CS_GHI
+    val_fit = trm.values & (d.DATE_TIME < d.DATE_TIME[valm].min()).values   # vóór de validatie: voor gewichten
+
+    def frac(pred_kw):
+        return np.clip(np.nan_to_num(np.asarray(pred_kw, float)), 0, None) / d.CAP.values
+
+    def blend(f, fitm):
+        """v2-mengen met gewicht w, geschat op de rijen van fitm."""
+        raw, md = f * d.PV_KW.values, d.MEANDAY.values
+        ok = np.isfinite(md)
+        m = np.asarray(fitm) & (d.n.values > 0) & ok
+        w = v2.mix_weight(raw[m], md[m], d.P_KW.values[m])
+        return frac(np.where(ok, w * raw + (1 - w) * md, raw)), w
+
+    def nrmse(p, m):
+        m = np.asarray(m)
+        return float(np.sqrt(np.mean((p[m] - d.FRAC.values[m]) ** 2)) * 100)
+
+    f_ref = d.f.fillna(1.0).values
+    PRED = {}
+    PRED["v2 (referentie)"], w0 = blend(f_ref, trm)
+
+    # kalibratie-varianten (geen fit): keuze binnen de familie op de validatie
+    fk, r = daily_f(d, trm)
+    wk = d[["PLANT", "WSTART"]].merge(fk.rename(columns={"DATE": "WSTART"}), on=["PLANT", "WSTART"], how="left")
+    dy = d[["PLANT", "CALDATE"]].merge(fk.rename(columns={"DATE": "CALDATE"}), on=["PLANT", "CALDATE"], how="left")
+    fams = {"F1": {f"F1: f uit {lab}": wk[key].fillna(1.0).values for key, lab in
+                   (("1w", "1 week"), ("2w", "2 weken"), ("4w", "4 weken (= v2)"), ("8w", "8 weken"),
+                    ("all", "alle eerdere data (compleet verleden)"))},
+            "S2": {f"S2: elke dag, exponentieel vergeten (halfwaardetijd {hl} d)": dy[f"exp{hl}"].fillna(1.0).values
+                   for hl in (7, 14, 28)},
+            "B1": {f"B1: Bayesiaans (Kalman, q = {q} r), elke dag": dy[f"b{q}"].fillna(1.0).values
+                   for q in (0.01, 0.03, 0.1, 0.3)}}
+    val_cal, chosen = {}, {}
+    for fam, opts in fams.items():
+        sc = {lab: nrmse(blend(f, val_fit)[0], valm) for lab, f in opts.items()}
+        val_cal.update(sc)
+        chosen[fam] = min(sc, key=sc.get)
+        PRED[chosen[fam]] = blend(opts[chosen[fam]], trm)[0]
+    PRED["F1: f uit 4 weken (= v2, controle)"] = blend(fams["F1"]["F1: f uit 4 weken (= v2)"], trm)[0]
+    PRED["S1: f elke dag bijwerken (28 dagen)"] = blend(dy["4w"].fillna(1.0).values, trm)[0]
+    val_cal["S1: f elke dag bijwerken (28 dagen)"] = nrmse(blend(dy["4w"].fillna(1.0).values, val_fit)[0], valm)
+    val_cal["v2 (referentie)"] = nrmse(blend(f_ref, val_fit)[0], valm)
+
+    # varianten met training: features
+    d["RAWF"] = frac(f_ref * d.PV_KW)
+    d["MDF"] = frac(np.where(np.isfinite(d.MEANDAY), d.MEANDAY, f_ref * d.PV_KW))
     kd = d.groupby(["PLANT", "DATE"]).apply(lambda g: g.P_KW.sum() / max((g.CS_GHI * g.KWP / 1000).sum(), 1e-6)).rename("KD")
     kd = kd.reset_index().sort_values(["PLANT", "DATE"])
     gk = kd.groupby("PLANT").KD
-    kd["KM7"] = gk.transform(lambda s: s.shift(1).rolling(7, min_periods=3).mean())
+    kd["KM7"] = gk.transform(lambda s: s.shift(1).rolling(7, min_periods=3).mean())   # dagen vóór DATE
     kd["KS7"] = gk.transform(lambda s: s.shift(1).rolling(7, min_periods=3).std())
     kd["KMALL"] = gk.transform(lambda s: s.shift(1).expanding(3).mean())
     kd["KSALL"] = gk.transform(lambda s: s.shift(1).expanding(3).std())
-    d = d.merge(kd.drop(columns="KD"), on=["PLANT", "DATE"], how="left")
+    d = d.merge(kd.drop(columns="KD").rename(columns={"DATE": "CALDATE"}), on=["PLANT", "CALDATE"], how="left")
     for c in ("KM7", "KS7", "KMALL", "KSALL"):
-        d[c] = d[c].fillna(d[c].median())
-        d[f"V2x{c}"] = d.V2F * d[c]
-    d["V2xKT"] = d.V2F * d.KT_W_F1
+        d[c] = d[c].fillna(d.loc[trm.values, c].median())      # opvulwaarde alleen uit de training
+
+    def set_v2f(fitm):
+        """v2-feature (en de afgeleide kolommen) met het menggewicht uit fitm."""
+        d["V2F"] = blend(f_ref, fitm)[0]
+        for c in ("KM7", "KS7", "KMALL", "KSALL"):
+            d[f"V2x{c}"] = d.V2F * d[c]
+        d["V2xKT"] = d.V2F * d.KT_W_F1
+
     cand = {
         **{f"T1: decision tree i.p.v. LR (diepte {k})": (lambda k=k: DecisionTreeRegressor(max_depth=k, min_samples_leaf=50,
-                                                             random_state=0), X_T1, "reg") for k in (3, 5, 8, 12)},
+                                                             random_state=RANDOM_STATE), X_T1, "reg") for k in (3, 5, 8, 12)},
         **{f"T2: tree kiest v2 of gemiddelde dag (diepte {k})": (lambda k=k: DecisionTreeClassifier(max_depth=k,
-                                                             min_samples_leaf=200, random_state=0), X_SEL, "sel") for k in (2, 3, 4, 6)},
+                                                             min_samples_leaf=200, random_state=RANDOM_STATE), X_SEL, "sel")
+           for k in (2, 3, 4, 6)},
         **{f"T3: v2 + tree op de restfout (diepte {k})": (lambda k=k: DecisionTreeRegressor(max_depth=k, min_samples_leaf=200,
-                                                             random_state=0), X_RES, "res") for k in (2, 3, 5, 8)},
+                                                             random_state=RANDOM_STATE), X_RES, "res") for k in (2, 3, 5, 8)},
         "F2: LR op alleen v2 (controle)": (LinearRegression, ["V2F"], "reg"),
         "F2: LR op v2 + KT + gem./std helderheid 7 d (recent)": (LinearRegression, ["V2F", "V2xKT", "V2xKM7", "V2xKS7"], "reg"),
         "F2: LR op v2 + KT + gem./std helderheid alle dagen (compleet)": (LinearRegression, ["V2F", "V2xKT", "V2xKMALL", "V2xKSALL"], "reg"),
@@ -185,25 +224,26 @@ def evaluate(d, start, trm, te, folds, valm, out):
         return np.clip(d.loc[am, "V2F"].values + m.predict(d.loc[am, cols]), 0, None)
 
     val = {}
-    for name, (make, cols, kind) in cand.items():
-        sc = []
-        for tr_end, v0, v1 in folds:
-            tm = d.DATE_TIME.between(start, pd.Timestamp(tr_end) + pd.Timedelta("23:59:59"))
-            vm = d.DATE_TIME.between(pd.Timestamp(v0), pd.Timestamp(v1) + pd.Timedelta("23:59:59"))
-            sc.append(nrmse(_fill(fit_predict(make, cols, kind, tm, vm), vm), vm))
-        val[name] = sc
-    for tr_end, v0, v1 in folds:
-        vm = d.DATE_TIME.between(pd.Timestamp(v0), pd.Timestamp(v1) + pd.Timedelta("23:59:59"))
+    for tr0, tr_end, v0, v1 in folds:
+        tm = d.DATE_TIME.between(pd.Timestamp(tr0), end_of(tr_end))
+        vm = d.DATE_TIME.between(pd.Timestamp(v0), end_of(v1))
+        set_v2f(tm)                                             # menggewicht alleen uit de vouw-training
         val.setdefault("v2 (referentie)", []).append(nrmse(d.V2F.values, vm))
+        for name, (make, cols, kind) in cand.items():
+            val.setdefault(name, []).append(nrmse(_fill(fit_predict(make, cols, kind, tm, vm), vm), vm))
     vtab = pd.DataFrame(val, index=[f"vouw {i + 1}" for i in range(len(folds))]).T
     vtab["gemiddeld"] = vtab.mean(axis=1)
-    print("\n=== Validatie, nRMSE % ==="); print(vtab.round(2).to_string())
-    chosen = {fam: vtab.loc[[n for n in vtab.index if n.startswith(fam)], "gemiddeld"].idxmin() for fam in ("T1", "T2", "T3")}
-    for n in list(chosen.values()) + [n for n in vtab.index if n.startswith("F2")]:
+    print("\n=== Validatie bomen/F2, nRMSE % ==="); print(vtab.round(2).to_string())
+    print("\n=== Validatie kalibratie-varianten, nRMSE % ===")
+    print(pd.Series(val_cal).round(2).to_string())
+    for fam in ("T1", "T2", "T3"):
+        chosen[fam] = vtab.loc[[n for n in vtab.index if n.startswith(fam)], "gemiddeld"].idxmin()
+    set_v2f(trm)
+    for n in [chosen[f] for f in ("T1", "T2", "T3")] + [n for n in vtab.index if n.startswith("F2")]:
         make, cols, kind = cand[n]
         PRED[n] = _fill(fit_predict(make, cols, kind, trm, te), te)
 
-    tdf = d[te].copy()
+    tdf = d[te.values].copy()
     rows = {}
     for n, p in PRED.items():
         e2 = (p[te.values] - tdf.FRAC.values) ** 2
@@ -217,14 +257,17 @@ def evaluate(d, start, trm, te, folds, valm, out):
                               pairs=[(n, "v2 (referentie)") for n in PRED if n != "v2 (referentie)"])
     diffs.index = [i.replace(" - v2 (referentie)", "") for i in diffs.index]
     tab = tab.join(diffs)
-    tab["overnemen"] = (tab.verschil_pp <= -RULE_PP) & (tab.hoog_pp < 0)
-    print("\n=== Test, nRMSE % ==="); print(tab.round(2).to_string())
+    tab["overnemen"] = (tab.verschil_pp <= -TAAK8_RULE_PP) & (tab.hoog_pp < 0)
+    print(f"\n=== Test {meta['dataset']} / {meta['scenario']}, nRMSE % ==="); print(tab.round(2).to_string())
     vtab.round(3).to_csv(out / "validatie.csv")
+    pd.Series(val_cal, name="nRMSE_%").round(3).to_csv(out / "validatie_kalibratie.csv")
     tab.round(3).to_csv(out / "test.csv")
-    (out / "samenvatting.json").write_text(json.dumps({"gekozen_op_vouwen": chosen, "menggewicht_v2": w0,
-                                                       "bayes_r": r, "bayes_q_ratio": best_ratio,
-                                                       "bayes_validatie": {str(k): v[0] for k, v in bval.items()},
-                                                       "regel_pp": RULE_PP}, indent=2, ensure_ascii=False), encoding="utf-8")
+    (out / "samenvatting.json").write_text(json.dumps({
+        **meta, "lag_dagen": lag, "gekozen_op_validatie": chosen, "menggewicht_v2": w0, "bayes_r": r,
+        "regel_pp": TAAK8_RULE_PP, "training": [str(d.DATE_TIME[trm].min()), str(d.DATE_TIME[trm].max())],
+        "validatie": [str(d.DATE_TIME[valm].min()), str(d.DATE_TIME[valm].max())],
+        "vouwen": [list(f) for f in folds], "test": [str(tdf.DATE_TIME.min()), str(tdf.DATE_TIME.max())]},
+        indent=2, ensure_ascii=False), encoding="utf-8")
     return tab
 
 
@@ -235,59 +278,72 @@ def _fill(p, mask):
     return a
 
 
+def run_all(base, dataset, start, trm, te, folds, valm):
+    """Beide scenario's (TAAK8_SCENARIOS) op één dataset."""
+    for scen, lag in TAAK8_SCENARIOS.items():
+        d = add_v2_stats(base, lag)
+        evaluate(d, start, trm, te, folds, valm, OUT / dataset / scen, lag, {"dataset": dataset, "scenario": scen})
+
+
 # %% 1. UK PV (dag-vooruit, echte voorspellingen)
 def uk_frame():
+    """Basistabel UK (zonder v2-kalibratie). Cache per tijdverschuiving en einde training (bepaalt CAP)."""
     from solarcore.ukpv import chosen_systems, model_frame
     shift = json.loads((UKPV_RESULTS / "stap3_tests" / "samenvatting.json").read_text(encoding="utf-8"))["tijdverschuiving_min"]
-    cache = UKPV_CLEAN / f"taak8_base_shift{shift}.parquet"
+    cache = UKPV_CLEAN / f"taak8_base_shift{shift}_tr{UKPV_TRAIN_END}.parquet"
     if cache.exists():
         return pd.read_parquet(cache)
     data = model_frame(shift, chosen_systems())
-    tr = data.DATE_TIME.between(pd.Timestamp(UKPV_FC_START), pd.Timestamp(UKPV_TRAIN_END) + pd.Timedelta("23:59:59"))
+    tr = data.DATE_TIME.between(pd.Timestamp(UKPV_FC_START), end_of(UKPV_TRAIN_END))
     data["CAP"] = data.PLANT.map(data[tr & data.OK].groupby("PLANT").P_KW.quantile(CAPACITY_QUANTILE))
     data["FRAC"] = data.P_KW / data.CAP
     data["PV_KW"] = data.PHYS_F1 * data.KWP
-    d = add_v2_stats(data[data.OK])
-    d.to_parquet(cache, index=False)
-    return d
+    base = data[data.OK][[c for c in COLS if c not in ("f", "c", "K", "n")]].reset_index(drop=True)
+    base.to_parquet(cache, index=False)
+    return base
 
 
 if __name__ == "__main__" and "hkust" not in sys.argv:
-    d = uk_frame()
+    base = uk_frame()
     start = pd.Timestamp(UKPV_FC_START)
-    trm = d.DATE_TIME.between(start, pd.Timestamp(UKPV_TRAIN_END) + pd.Timedelta("23:59:59"))
-    print(f"UK: {len(d):,} halfuren overdag, {d.PLANT.nunique()} huizen")
-    evaluate(d, start, trm, d.DATE_TIME >= "2024-07-01",
-             [("2024-04-30", "2024-05-01", "2024-05-31"), ("2024-05-31", "2024-06-01", "2024-06-30")],
-             d.DATE_TIME.between("2024-05-01", "2024-06-30 23:59"), ROOT / "resultaten" / "taak8" / "uk")
+    trm = base.DATE_TIME.between(start, end_of(UKPV_TRAIN_END))
+    te = base.DATE_TIME > end_of(UKPV_TRAIN_END)
+    valm = base.DATE_TIME.between(pd.Timestamp(UKPV_FOLDS[0][2]), end_of(UKPV_FOLDS[-1][3]))
+    print(f"UK: {len(base):,} halfuren overdag, {base.PLANT.nunique()} huizen")
+    run_all(base, "uk", start, trm, te, UKPV_FOLDS, valm)
 
 
 # %% 2. HKUST (Hong Kong, 3 jaar, ERA5 = weer achteraf)
 def hk_frame():
+    """Basistabel HKUST (zonder v2-kalibratie). Cache per tijdverschuiving en testjaar (bepaalt CAP)."""
     from solarcore.hkust import load_clean, load_era5_hk, add_era5, capacity, pvlib_ac_kw
     from solarcore.physics import PARAMS
-    cache = ROOT / "data" / "extern" / "hkust" / "clean" / "taak8_base.parquet"
+    shift = json.loads((HKUST_RESULTS / "stap3_tests" / "samenvatting.json").read_text(encoding="utf-8"))["tijdverschuiving_min"]
+    test_start = f"{HKUST_YEARS[2]}-01-01"
+    cache = HKUST_CLEAN / f"taak8_base_shift{shift}_test{HKUST_YEARS[2]}.parquet"
     if cache.exists():
         return pd.read_parquet(cache)
-    shift = json.loads((HKUST_RESULTS / "stap3_tests" / "samenvatting.json").read_text(encoding="utf-8"))["tijdverschuiving_min"]
     h, elev = load_era5_hk()
     data = add_era5(load_clean(), h, elev, shift)
     data = data[data.OK & (data.COSZ > MIN_COSZ)].copy()
     meta = data.groupby("PLANT")[["KWP_AC", "KWP_DC"]].first()
-    data["CAP"] = data.PLANT.map(capacity(data[data.DATE_TIME < "2023-01-01"]))
+    data["CAP"] = data.PLANT.map(capacity(data[data.DATE_TIME < test_start]))
     data["FRAC"] = data.P_KW / data.CAP
     data["KWP"] = data.PLANT.map(meta.KWP_DC)
     data["PV_KW"] = pvlib_ac_kw(data, data.KWP.values, data.PLANT.map(meta.KWP_AC).values, PARAMS)
     data = data.rename(columns={"POA": "POA_F1", "KT_W": "KT_W_F1", "CLOUD": "CLOUD_F1", "T": "T_F1"})
-    d = add_v2_stats(data)
-    d.to_parquet(cache, index=False)
-    return d
+    base = data[[c for c in COLS if c not in ("f", "c", "K", "n")]].reset_index(drop=True)
+    base.to_parquet(cache, index=False)
+    return base
 
 
 if __name__ == "__main__" and "hkust" in sys.argv:
-    d = hk_frame()
-    start = d.DATE_TIME.min()
-    print(f"HKUST: {len(d):,} kwartieren overdag, {d.PLANT.nunique()} stations")
-    evaluate(d, start, d.DATE_TIME < "2023-01-01", d.DATE_TIME >= "2023-01-01",
-             [("2021-12-31", "2022-01-01", "2022-12-31")],
-             d.DATE_TIME.between("2022-01-01", "2022-12-31 23:59"), ROOT / "resultaten" / "taak8" / "hkust")
+    base = hk_frame()
+    y0, y1, y2 = HKUST_YEARS                                    # train 2021-2022 (vouw: 2021 -> 2022), test 2023
+    start = base.DATE_TIME.min()
+    trm = base.DATE_TIME < f"{y2}-01-01"
+    te = base.DATE_TIME >= f"{y2}-01-01"
+    folds = ((str(start.date()), f"{y0}-12-31", f"{y1}-01-01", f"{y1}-12-31"),)
+    valm = base.DATE_TIME.between(f"{y1}-01-01", end_of(f"{y1}-12-31"))
+    print(f"HKUST: {len(base):,} kwartieren overdag, {base.PLANT.nunique()} stations")
+    run_all(base, "hkust", start, trm, te, folds, valm)
