@@ -73,7 +73,11 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0, tz=TZ):
     sp = pvlib.solarposition.get_solarposition(mid.tz_localize(tz), lat, lon, altitude=elev,
                                                pressure=out.P_HPA.values * 100, temperature=out["T"].values)
     out["ZENITH"], out["AZIMUTH"] = sp.apparent_zenith.values, sp.azimuth.values
-    out["COSZ"] = np.cos(np.deg2rad(sp.zenith.values)).clip(0)      # zonnestand (app: dag/nacht, zoals V5)
+    # bewust twee: COSZ (echte zenit) = dag/nacht-masker, zoals features.add_solar (Kaggle) en HKUST;
+    # cosz (schijnbare zenit, met lichtbreking) voor de natuurkunde (DNI hieronder).
+    # Let op: ukpv.model_frame (UK, eindmodel v2) gebruikt de schijnbare zenit voor COSZ; het verschil zit
+    # alleen in de minuten rond zonsopkomst/-ondergang (onder MIN_COSZ = 0,02 vrijwel geen opwek)
+    out["COSZ"] = np.cos(np.deg2rad(sp.zenith.values)).clip(0)
     cosz = np.cos(np.deg2rad(out.ZENITH)).clip(0)
     dni = np.where(cosz > 0.05, (out.GHI_W - out.DHI_W) / np.maximum(cosz, 0.05), 0)
     out["DNI_W"] = np.clip(dni, 0, cs.dni.values * 1.1)
@@ -81,16 +85,32 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0, tz=TZ):
     return out.reset_index()
 
 
+WASH_ANCHOR = "2000-01-01"      # vaste startdatum van het schoonmaakschema als er geen echte schoonmaakdatum is
+
+
+def wash_days(index, every=None, done=(), anchor=WASH_ANCHOR):
+    """Schoonmaakdagen binnen de periode van `index` (tz-bewust): de echte datums `done` (knop in de app) plus
+    elke `every` dagen, gerekend vanaf de laatste echte datum (of een vaste datum), ook in de toekomst."""
+    first, last = index.min().normalize(), index.max().normalize()
+    done = pd.DatetimeIndex(pd.to_datetime(list(done))).tz_localize(index.tz) if len(done) else None
+    days = [] if done is None else list(done)
+    if every:
+        start = done.max() if done is not None else pd.Timestamp(anchor, tz=index.tz)
+        days += list(pd.date_range(start, last, freq=f"{int(every)}D")) + \
+            list(pd.date_range(start, first, freq=f"-{int(every)}D"))
+    days = pd.DatetimeIndex(sorted(set(days))) if days else pd.DatetimeIndex([], tz=index.tz)
+    return days[days.isin(index)]                     # pvlib kimber zoekt de datums op in de index (middernacht)
+
+
 def soiling_loss(hourly, grid, p=PARAMS, tz=TZ):
-    """Kimber: stofverlies per kwartier; regen >= 6 mm/dag spoelt schoon. Optioneel p['wash_every_days']:
-    handmatig schoonmaken, teruggerekend vanaf vandaag (app, overgenomen uit V5 physics.py)."""
+    """Kimber: stofverlies per kwartier; regen >= 6 mm/dag spoelt schoon. Optioneel (app) handmatig schoonmaken:
+    p['wash_every_days'] (schema) en p['wash_dates'] (echte schoonmaakdatums). Geen van beide = alleen regen,
+    zoals in het onderzoek (overgenomen uit V5 physics.py; schema niet meer vanaf 'vandaag', BESLISSINGEN #71)."""
     r = hourly.set_index("DATE_TIME").precipitation.fillna(0)
     r.index = r.index.tz_localize(tz)
     wash = None
-    if p.get("wash_every_days"):
-        today = pd.Timestamp.now(tz=tz).normalize()
-        wash = pd.date_range(start=today, end=r.index.min(), freq=f"-{int(p['wash_every_days'])}D")
-        wash = [d.date() for d in wash[wash.isin(r.index)]]
+    if p.get("wash_every_days") or p.get("wash_dates"):
+        wash = [d.date() for d in wash_days(r.index, p.get("wash_every_days"), p.get("wash_dates") or ())]
     s = pvlib.soiling.kimber(r, cleaning_threshold=p["clean_mm"], soiling_loss_rate=p["soiling_rate"],
                              max_soiling=p["max_soiling"], manual_wash_dates=wash)
     return s.tz_localize(None).reindex(grid, method="ffill").fillna(0).values

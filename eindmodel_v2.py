@@ -33,7 +33,7 @@ from solarcore.config import (UKPV_RESULTS, UKPV_FC_START, UKPV_TRAIN_END, MODEL
 from solarcore.ukpv import chosen_systems, model_frame, horizon_features, horizon_frame   # noqa: E402
 from solarcore.models import _lr   # noqa: E402
 from solarcore.physics import PARAMS   # noqa: E402
-from solarcore.evaluate import metrics, bootstrap_days, KT_BINS   # noqa: E402
+from solarcore.evaluate import metrics, bootstrap_days   # noqa: E402
 from solarcore import model_v2 as v2   # noqa: E402
 from solarcore.plots import style, save   # noqa: E402
 
@@ -46,6 +46,7 @@ step3 = json.loads((UKPV_RESULTS / "stap3_tests" / "samenvatting.json").read_tex
 SHIFT = step3["tijdverschuiving_min"]
 chosen = chosen_systems()
 END_TR = pd.Timestamp(UKPV_TRAIN_END) + pd.Timedelta("23:59:59")
+TEST_START = pd.Timestamp(UKPV_TRAIN_END) + pd.Timedelta(days=1)              # test = alles na de training
 
 # %% 1. Data + weekelijkse kalibratie per huis (alleen data van vóór de week)
 data = model_frame(SHIFT, chosen)
@@ -54,9 +55,12 @@ cap = data[TR & data.OK].groupby("PLANT").P_KW.quantile(CAPACITY_QUANTILE)      
 data["FRAC"] = data.P_KW / data.PLANT.map(cap)
 data["PV_KW"] = data.PHYS_F1 * data.KWP                                           # pvlib met de voorspelling van gisteren
 data["WEEK"] = data.DATE_TIME.dt.to_period("W-SUN")
+# dag-vooruit: de voorspelling is 24 uur eerder gemaakt, dus kalibreren met de week van (doel - 1 dag);
+# anders gebruikt een maandag de metingen van zondag na het voorspelmoment (BESLISSINGEN #73)
+data["WEEK_DA"] = (data.DATE_TIME - pd.Timedelta(days=1)).dt.to_period("W-SUN")
 hist = data[data.OK][["PLANT", "WEEK", "P_KW", "PV_KW", "CS_GHI", "COSZ"]]
 stats = v2.rolling_stats(hist)
-d = data[data.OK].merge(stats, on=["PLANT", "WEEK"], how="left")
+d = data[data.OK].merge(stats.rename(columns={"WEEK": "WEEK_DA"}), on=["PLANT", "WEEK_DA"], how="left")
 d["V2_RAW"], d["V2_GEMDAG"] = v2.predict(d.PV_KW, d.CS_GHI, d.f, d.c, d.K, w=1.0)
 print(f"kalibratie: {len(stats)} huis-weken; mediaan f = {stats.f[stats.n > 0].median():.3f}")
 
@@ -64,14 +68,18 @@ print(f"kalibratie: {len(stats)} huis-weken; mediaan f = {stats.f[stats.n > 0].m
 in_tr = d.DATE_TIME.between(pd.Timestamp(UKPV_FC_START), END_TR) & (d.n > 0)
 W_DA = v2.mix_weight(d.V2_RAW[in_tr], d.V2_GEMDAG[in_tr], d.P_KW[in_tr])
 d["V2"] = W_DA * d.V2_RAW + (1 - W_DA) * d.V2_GEMDAG
-te = d[d.DATE_TIME >= "2024-07-01"].copy()
+te = d[d.DATE_TIME >= TEST_START].copy()
 lr = _lr().fit(data[TR & data.OK][["POA_F1"]], data[TR & data.OK].FRAC)
 te["LR_POA"] = np.clip(lr.predict(te[["POA_F1"]]), 0, None)
+# alle modellen op dezelfde rijen: rijen waar één model geen voorspelling heeft vallen voor iedereen weg (#73)
+same = np.isfinite(te[["LR_POA", "V2_RAW", "V2", "V2_GEMDAG", "FRAC"]]).all(axis=1)
+print(f"dag-vooruit: {int((~same).sum())} van {len(te)} test-rijen zonder voorspelling, weggelaten bij alle modellen")
+te = te[same]
 NAMES = {"LR POA (stap 3, trainingsperiode nodig)": te.LR_POA.values,
          "v2: pvlib x f (4 weken)": te.V2_RAW.values / te.PLANT.map(cap).values,
          f"v2: + mengen met gemiddelde dag (w = {W_DA:.2f})": te.V2.values / te.PLANT.map(cap).values,
          "v2: alleen gemiddelde dag (4 weken)": te.V2_GEMDAG.values / te.PLANT.map(cap).values}
-NAMES = {n: np.clip(np.nan_to_num(p), 0, None) * (te.COSZ.values > MIN_COSZ) for n, p in NAMES.items()}
+NAMES = {n: np.clip(p, 0, None) * (te.COSZ.values > MIN_COSZ) for n, p in NAMES.items()}
 da = pd.DataFrame({n: metrics(te.FRAC, p, te) for n, p in NAMES.items()}).T
 V2N = list(NAMES)[2]
 boot_m, boot_d = bootstrap_days(te, NAMES, pairs=[(V2N, list(NAMES)[0])])
@@ -81,10 +89,11 @@ print(boot_d.round(2).to_string())
 
 # %% 3. Band variant B op de eigen v2-voorspellingen (fractie van kWp), elke week op de laatste 4 weken
 d["P_KWP"], d["V2_KWP"] = d.P_KW / d.KWP, d.V2 / d.KWP
+d = d[np.isfinite(d.V2_KWP)]                                                      # zelfde rijen als de test
 bands, parts = {}, []
-for w in sorted(d.WEEK[d.DATE_TIME >= "2024-07-01"].unique()):
-    h = d[(d.WEEK < w) & (d.WEEK >= w - v2.WEEKS)]
-    cur = d[d.WEEK == w].copy()
+for w in sorted(d.WEEK_DA[d.DATE_TIME >= TEST_START].unique()):
+    h = d[(d.WEEK < w) & (d.WEEK >= w - v2.WEEKS)]                                # gemeten vóór het voorspelmoment
+    cur = d[(d.WEEK_DA == w) & (d.DATE_TIME >= TEST_START)].copy()
     bq = v2.band_quantiles(h.V2_KWP, h.P_KWP)
     cur["lo"], cur["hi"] = v2.apply_band(cur.V2_KWP.values, bq)
     bands[str(w)] = bq
@@ -103,10 +112,13 @@ hz = hz.merge(stats, on=["PLANT", "WEEK"], how="left").merge(data[["PLANT", "DAT
 hz["RAW"], hz["GEMDAG_V2"] = v2.predict(hz.PHYS * hz.KWP, hz.CS_GHI, hz.f, hz.c, hz.K, w=1.0)
 h_tr = hz[(hz.DATE_TIME <= END_TR) & (hz.n > 0)]
 W_H = {int(dd): v2.mix_weight(g.RAW, g.GEMDAG_V2, g.P_KW) for dd, g in h_tr.groupby("DAG")}
-W_H = pd.Series(W_H).reindex(range(1, 16)).ffill().to_dict()
-h_te = hz[hz.DATE_TIME >= "2024-07-01"].copy()
+W_H = pd.Series(W_H).reindex(range(1, 16)).ffill().bfill().to_dict()
+assert all(np.isfinite(v) for v in W_H.values()), f"menggewicht ontbreekt: {W_H}"   # NaN zou in de app belanden
+h_te = hz[hz.DATE_TIME >= TEST_START].copy()
 h_te["V2"] = h_te.DAG.map(W_H) * h_te.RAW + (1 - h_te.DAG.map(W_H)) * h_te.GEMDAG_V2
-c_h = h_te.PLANT.map(cap)
+same = np.isfinite(h_te[["V2", "P_MODEL", "P_GEMDAG", "FRAC"]]).all(axis=1)     # zelfde rijen voor alle modellen (#73)
+print(f"horizon: {int((~same).sum())} van {len(h_te)} test-rijen zonder voorspelling, weggelaten bij alle modellen")
+h_te = h_te[same]
 rows = []
 for dd, g in h_te.groupby("DAG"):
     cc = g.PLANT.map(cap)
@@ -124,7 +136,8 @@ kaggle = joblib.load(MODELS / "model_final_split70.joblib")
 bundle = {"versie": "Model Final v2 (nieuw huis: pvlib + doorlopend kalibreren + mengen + band)",
           # sleutels zoals model_v5.joblib (de app kan die blijven lezen)
           "model": kaggle["model"], "features": kaggle["features"], "factor": kaggle["factor"],
-          "band_method": "optellen_per_voorspelklasse", "band": bands[max(bands)], "kt_bins": KT_BINS,
+          # kt_bins = klassen van de band; bij v2 zijn dat klassen van de voorspelling (fractie van kWp), geen KT
+          "band_method": "optellen_per_voorspelklasse", "band": bands[max(bands)], "kt_bins": v2.PRED_BINS,
           "params": PARAMS, "rad_shift_min": SHIFT, "min_cosz": MIN_COSZ,
           # v2-onderdelen
           "v2": {"start": "pvlib (kWp, dakhoek, richting), physics.panel_inputs -> PHYS (kW per kWp)",

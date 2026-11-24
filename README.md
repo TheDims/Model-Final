@@ -931,12 +931,15 @@ pvlib (kWp, tilt, orientation) × factor from the last 4 weeks, blended with the
 | UK test Jul 2024 – Mar 2025 (40 houses) | nRMSE % | R² | daily error % |
 |---|---|---|---|
 | LR POA (step 3; needs Mar–Jun 2024 as training) | 14.58 | 0.68 | 27.2 |
-| **v2: pvlib × f, blended (w = 0.87)** | **14.32** | 0.69 | 25.2 |
-| v2: pvlib × f, without blending | 14.33 | 0.69 | 24.0 |
-| v2: mean day only | 19.33 | 0.44 | 44.7 |
+| **v2: pvlib × f, blended (w = 0.87)** | **14.34** | 0.69 | 25.3 |
+| v2: pvlib × f, without blending | 14.34 | 0.69 | 24.1 |
+| v2: mean day only | 19.31 | 0.44 | 44.6 |
 
-- v2 is significantly slightly better than LR POA (−0.25 pp; 90 %: −0.35…−0.15) and needs no training.
-- Band v2: 79.3 % coverage (all seasons 78.6–79.9 %).
+- v2 is significantly slightly better than LR POA (−0.24 pp; 90 %: −0.34…−0.14) and needs no training.
+- Numbers after the code review of 24 Nov 2026 (decision #73): for day-ahead, the calibration now only uses data
+  measured before the forecast was made (before: Monday used Sunday's later data). This cost 0.01–0.02 pp
+  (14.32 → 14.34 %). Older texts and task 8 (#67–#70) still use 14.32 %.
+- Band v2: 79.2 % coverage (all seasons 78.5–79.8 %).
 - Horizon (blended per day): day 1 14.0 · day 2 15.1 · day 4 17.3 · day 7 19.7 · day 10 20.0 · day 15 20.8 %.
 - HKUST (Hong Kong) showed the same: continuous calibration 18.1 % ≈ 2 years of history (#43).
 - **Assumptions:** pvlib parameters (PARAMS, DC/AC 1.1), blending weights from the UK training period, band in
@@ -964,3 +967,40 @@ is also what final model v2 uses.
 | Band with real forecasts | old band 63 %, new band (B) 79 % | band B in v2 |
 | Final model v2 | 14.3 % without training (LR POA 14.6 % with training) | official final model for the app (#60) |
 | Several weather models | ≤ 0.2 pp | not worth it |
+
+## TASK 8 – Feedback pitch week 9 (`taak8_feedback_pitch9.py` → `resultaten/taak8/<dataset>/<scenario>`, decisions #67–#70, revised in #75)
+
+Teachers' tips after pitch week 9 (plus the Orbit idea from the interim feedback), each tested against final model v2 on
+**two datasets**: UK PV (40 homes, real ECMWF forecasts, train Mar–Jun 2024, test Jul 2024 – Mar 2025) and HKUST
+(5 stations, ERA5, train 2021–2022 with all seasons, test 2023). Rule fixed before running: adopt only if ≥ 0.3 pp
+better than v2 **and** the 90 % bootstrap interval of the difference is below 0.
+
+**Revised after the code review (24 Nov 2026, #75).** Two scenarios for *when a day's yield is known*:
+- **evening**: the forecast for tomorrow is made at 21:00, after sunset, so today's yield is known (the app);
+- **strict**: the forecast is made 24 h before the target (as in the UK test), so today is not finished yet.
+
+All variants, including the weekly v2 reference, now use the same information. Choices inside a family (window,
+half-life, Kalman q, tree depth) are made on the validation period only, not on the test. The first run
+(`eerste_run/`) let the daily variants use one day more than v2 and picked some variants on the test.
+
+Difference with v2 on the test, in pp (negative = better; **bold** = meets the rule):
+
+| Tip | UK evening | UK strict | HKUST evening | HKUST strict | Verdict |
+|---|---|---|---|---|---|
+| – **v2 (reference), nRMSE** | 14.32 % | 14.34 % | 16.58 % | 16.67 % | |
+| Stream learning: f every day, exponential forgetting (half-life chosen on validation: 14 / 14 / 7 / 14 d) | −0.12 | −0.09 | **−0.68** | **−0.48** | only tip better on both datasets in both scenarios; meets the rule on HKUST only |
+| f every day, last 28 days | −0.06 | −0.04 | **−0.32** | −0.29 | smaller than with forgetting |
+| Decision tree on the residual of v2 (depth on validation) | −0.02 | +1.19 | **−0.31** | **−0.32** | unstable: much worse on UK strict; needs training, no cold start |
+| Decision tree instead of LR (depth 5) | +0.13 | +0.12 | −0.27 (n.s.) | −0.37 (n.s.) | not adopted |
+| Tree as switch between techniques | 0.00 | 0.00 | +0.01 | +0.01 | almost always picks v2 |
+| Calibration window (chosen on validation: 8 wk / 8 wk / all / all) | −0.01 (n.s.) | −0.01 (n.s.) | −0.08 (n.s.) | −0.16 (n.s.) | 4 weeks is fine |
+| Mean/std of past clearness as features (all days) | −0.10 | −0.10 | −0.17 | −0.17 | too small, needs training |
+| Bayesian calibration (Kalman, q on validation) | +0.29 | +0.37 | −0.41 (n.s.) | +0.41 (n.s.) | no gain |
+
+(n.s. = not significant: the 90 % interval includes 0.)
+
+**For the report:** the error comes from the weather (clouds), not from the model form. Trees only help with a full
+year of history (HKUST) and fail with a short one (UK), which does not fit a new home. Updating the calibration every
+day with exponential forgetting (stream learning) is the only change that is better on both datasets, also without any
+look-ahead (strict); it meets the adoption rule only on HKUST (ERA5, weather in hindsight). The first run's conclusion
+holds, with a slightly smaller gain on UK strict (−0.09 instead of −0.12 pp). Final choice: team.
