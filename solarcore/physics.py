@@ -73,8 +73,10 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0, tz=TZ):
     sp = pvlib.solarposition.get_solarposition(mid.tz_localize(tz), lat, lon, altitude=elev,
                                                pressure=out.P_HPA.values * 100, temperature=out["T"].values)
     out["ZENITH"], out["AZIMUTH"] = sp.apparent_zenith.values, sp.azimuth.values
-    # bewust twee: COSZ (echte zenit) = dag/nacht-masker, zelfde definitie als features.add_solar en MIN_COSZ
-    # in het onderzoek; cosz (schijnbare zenit, met lichtbreking) alleen voor de natuurkunde (DNI hieronder)
+    # bewust twee: COSZ (echte zenit) = dag/nacht-masker, zoals features.add_solar (Kaggle) en HKUST;
+    # cosz (schijnbare zenit, met lichtbreking) voor de natuurkunde (DNI hieronder).
+    # Let op: ukpv.model_frame (UK, eindmodel v2) gebruikt de schijnbare zenit voor COSZ; het verschil zit
+    # alleen in de minuten rond zonsopkomst/-ondergang (onder MIN_COSZ = 0,02 vrijwel geen opwek)
     out["COSZ"] = np.cos(np.deg2rad(sp.zenith.values)).clip(0)
     cosz = np.cos(np.deg2rad(out.ZENITH)).clip(0)
     dni = np.where(cosz > 0.05, (out.GHI_W - out.DHI_W) / np.maximum(cosz, 0.05), 0)
