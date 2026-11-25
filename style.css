@@ -117,3 +117,8 @@ body, button { font-family: 'Nunito', Arial, sans-serif; }
 .page-title { font-size: 34px; margin-bottom: 8px; }
 .page-desc { color: #777; font-size: 14px; line-height: 1.5; max-width: 900px; margin-bottom: 20px; }
 .fc-box { height: 420px; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 18px 0 20px; }
+.stat small { display: block; color: #666; font-size: 14px; margin-bottom: 6px; }
+.stat b { font-size: 34px; font-weight: 600; }
+.us-box { height: 380px; }
+.us-note { color: #555; font-size: 14px; margin-top: 14px; }

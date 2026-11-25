@@ -64,3 +64,10 @@ const FORECAST = {
     { label: 'Wed 17', forecast: 13.5, measured: 13.4 }
   ]
 };
+const USAGE = {
+  assumption: 'Assumption: your usage is spread evenly over the day. Change your daily usage in Settings.',
+  coveredPct: 47,
+  extraKwh: 10.9,
+  note: 'Above the green line the panels make more than you use: a good moment for big devices or charging.',
+  best: '10:45 AM – 2:45 PM'
+};

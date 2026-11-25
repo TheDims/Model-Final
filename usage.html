@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Usage · SolarHome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">☀️🏠</div>
+      <div class="logo-name"><span>Solar</span>Home</div>
+      <div class="logo-sub">Forecast</div>
+      <div class="logo-tag">Powering Brighter Days</div>
+    </div>
+    <nav>
+      <a href="index.html"><span class="ico">🏠</span>Home</a>
+      <a href="forecast.html"><span class="ico">📊</span>Forecast</a>
+      <a class="active" href="usage.html"><span class="ico">🔌</span>My Usage</a>
+      <a href="#"><span class="ico">🍃</span>Tips</a>
+      <a href="#"><span class="ico">⚙️</span>Settings</a>
+    </nav>
+    <div class="side-foot">
+      <div class="scene">🌴🏠☀️</div>
+      Clean energy<br>for a brighter tomorrow.
+    </div>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">My Usage</h1>
+    <p class="page-desc" id="assumption"></p>
+
+    <div class="stats">
+      <div class="stat"><small>Solar today</small><b id="sSolar"></b></div>
+      <div class="stat"><small>Your usage</small><b id="sUsage"></b></div>
+      <div class="stat"><small>Usage covered by solar ⓘ</small><b id="sCovered"></b></div>
+      <div class="stat"><small>Extra solar (to store or use)</small><b id="sExtra"></b></div>
+    </div>
+
+    <div class="us-box"><canvas id="usChart"></canvas></div>
+    <p class="us-note" id="usNote"></p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="data.js"></script>
+  <script>
+    Chart.defaults.font.family = 'Nunito, Arial, sans-serif';
+    const $ = id => document.getElementById(id);
+    const fmt = n => n.toFixed(1);
+    const T = DATA.today;
+    const avg = +(DATA.consumptionKwh / 24).toFixed(3);
+
+    $('assumption').textContent = USAGE.assumption;
+    $('sSolar').textContent = `${fmt(T.kwh)} kWh`;
+    $('sUsage').textContent = `${fmt(DATA.consumptionKwh)} kWh`;
+    $('sCovered').textContent = `${USAGE.coveredPct}%`;
+    $('sExtra').textContent = `${fmt(USAGE.extraKwh)} kWh`;
+    $('usNote').innerHTML = `${USAGE.note} Best block today: <b>${USAGE.best}</b>.`;
+
+    const tickNames = { 0: '12 AM', 6: '6 AM', 12: '12 PM', 18: '6 PM' };
+
+    const peakLabel = {
+      id: 'peakLabel',
+      afterDatasetsDraw(chart) {
+        const { ctx, chartArea } = chart;
+        const pt = chart.getDatasetMeta(0).data[T.peakHour];
+        ctx.save();
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = '#f5a25d';
+        ctx.beginPath();
+        ctx.moveTo(pt.x, pt.y);
+        ctx.lineTo(pt.x, chartArea.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        const w = 74, h = 36, x = pt.x - w / 2, y = pt.y - h - 12;
+        ctx.fillStyle = '#fff3e0';
+        ctx.fillRect(x, y, w, h);
+        ctx.strokeRect(x, y, w, h);
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#8a5a00';
+        ctx.font = '11px Arial';
+        ctx.fillText('12:00 PM', pt.x, y + 14);
+        ctx.fillStyle = '#333';
+        ctx.font = 'bold 13px Arial';
+        ctx.fillText(`${T.peakKw} kW`, pt.x, y + 29);
+        ctx.restore();
+      }
+    };
+
+    const usageLabel = {
+      id: 'usageLabel',
+      afterDatasetsDraw(chart) {
+        const { ctx, chartArea, scales } = chart;
+        const y = scales.y.getPixelForValue(avg);
+        ctx.save();
+        ctx.fillStyle = '#3a9d4f';
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'right';
+        ctx.fillText('your usage (average)', chartArea.right - 4, y - 6);
+        ctx.restore();
+      }
+    };
+
+    new Chart($('usChart'), {
+      type: 'line',
+      plugins: [peakLabel, usageLabel],
+      data: {
+        labels: T.power.map((v, i) => i),
+        datasets: [
+          {
+            label: 'Solar', data: T.power, borderColor: '#f57c00', borderWidth: 2.5, tension: 0.3,
+            fill: 'origin',
+            backgroundColor: c => {
+              const a = c.chart.chartArea;
+              if (!a) return 'rgba(250,190,110,0.3)';
+              const g = c.chart.ctx.createLinearGradient(0, a.top, 0, a.bottom);
+              g.addColorStop(0, 'rgba(245,146,62,0.55)');
+              g.addColorStop(1, 'rgba(250,210,150,0.05)');
+              return g;
+            },
+            pointRadius: T.power.map((v, i) => i === T.peakHour ? 6 : 0),
+            pointBackgroundColor: '#f57c00'
+          },
+          {
+            label: 'your usage', data: T.power.map(() => avg), borderColor: '#3a9d4f',
+            borderWidth: 2, borderDash: [6, 4], pointRadius: 0, fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { top: 20 } },
+        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0, callback: (v, i) => tickNames[i] || '' } },
+          y: { min: 0, max: 3, ticks: { stepSize: 0.5 }, title: { display: true, text: 'Power (kW)' }, grid: { color: '#eee' } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
