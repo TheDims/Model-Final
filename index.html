@@ -8,45 +8,69 @@
 </head>
 <body>
   <aside class="sidebar">
-    <div class="logo">SolarHome Forecast</div>
-    <nav>
-      <a class="active" href="#">Home</a>
-      <a href="#">Forecast</a>
-      <a href="#">My Usage</a>
-      <a href="#">Tips</a>
-      <a href="#">Settings</a>
-    </nav>
-  </aside>
+   <div class="logo">
+    <div class="logo-icon">☀️🏠</div>
+    <div class="logo-name"><span>Solar</span>Home</div>
+    <div class="logo-sub">Forecast</div>
+    <div class="logo-tag">Powering Brighter Days</div>
+  </div>
+  <nav>
+    <a class="active" href="#"><span class="ico">🏠</span>Home</a>
+    <a href="#"><span class="ico">📊</span>Forecast</a>
+    <a href="#"><span class="ico">🔌</span>My Usage</a>
+    <a href="#"><span class="ico">🍃</span>Tips</a>
+    <a href="#"><span class="ico">⚙️</span>Settings</a>
+  </nav>
+  <div class="side-foot">Clean energy<br>for a brighter tomorrow.</div>
+</aside>
 
   <main class="main">
     <header class="top">
       <div>
-        <h1>Good morning!</h1>
+        <h1><span class="sun">☀️</span> Good morning!</h1>
         <p>Here's your solar forecast for today.</p>
       </div>
-      <div>Delhi, India · 28°C</div>
+      <div class="info">
+       <div class="info-item">
+        <span class="pin">📍</span>
+        <div><b>Delhi, India</b><small>Fri, Sep 26, 2026</small></div>
+       </div>
+       <div class="info-item">
+        <span class="wx">⛅</span>
+        <div><b>28°C</b><small>Mostly sunny</small></div>
+       </div>
+       <div class="avatar">👤</div>
+      </div>
     </header>
 
     <section class="grid">
       <div class="card chart">
-      <h3>Today's Solar Production</h3>
+      <div class="chart-head">
+       <h3>Today's Solar Production</h3>
+       <div class="tabs">
+        <button class="tab active">Today</button>
+        <button class="tab">This Week</button>
+        <button class="tab">This Month</button>
+       </div>
+      </div>
       <div class="big">24.5 <span>kWh</span></div>
       <div class="up">↑ 12% higher than yesterday</div>
       <div class="chart-box"><canvas id="powerChart"></canvas></div>
     </div>
       <div class="card cons">
-       <h3>Estimated Household Consumption</h3>
+       <h3>🏠 Estimated Household Consumption</h3>
        <div class="big2">18.0 <span>kWh</span></div>
        <div class="sub">based on your typical usage today</div>
       </div>
       <div class="card act">
-       <h3>Recommended Action</h3>
+       <h3>🔋 Recommended Action</h3><span class="arrow">›</span>
        <div class="charge">Charge</div>
        <div class="time">between 11:00 – 15:00</div>
        <div class="sub">Best time to store excess solar energy.</div>
+       <div class="battery">🔋</div>
       </div>
       <div class="card next">
-       <h3>Next 3 Days Forecast</h3>
+       <h3>📊 Next 3 Days Forecast</h3>
        <div class="days">
         <div class="day"><b>Sat</b><small>Sep 27</small><div class="emoji">☀️</div><div class="kwh">26.1 kWh</div></div>
         <div class="day"><b>Sun</b><small>Sep 28</small><div class="emoji">⛅</div><div class="kwh">22.3 kWh</div></div>
@@ -54,13 +78,18 @@
        </div>
       </div>
       <div class="card env">
-       <h3>Environmental Impact</h3>
-       <div class="co2">17.2 <span>kg CO₂</span></div>
-       <div class="sub">avoided today</div>
-       <div class="sub">= planting 0.8 trees 🌳</div>
+       <h3>🍃 Environmental Impact</h3>
+       <div class="env-body">
+        <div class="tree">🌳</div>
+        <div>
+         <div class="co2">17.2 <span>kg CO₂</span></div>
+         <div class="sub">avoided today</div>
+         <div class="sub">= planting 0.8 trees</div>
+        </div>
+       </div>
       </div>
       <div class="card plan">
-       <h3>Plan Your Usage</h3>
+       <h3>⚡ Plan Your Usage</h3><span class="arrow">›</span>
        <div class="sub">Get the most from your solar energy.</div>
       </div>
     </section>
@@ -79,7 +108,7 @@
         backgroundColor: 'rgba(245,124,0,0.15)',
         fill: true,
         tension: 0.4,
-        pointRadius: 0
+        pointRadius: power.map((v, i) => i === 6 ? 6 : 0), pointBackgroundColor: '#f57c00'
       }]
     },
     options: {
@@ -89,6 +118,10 @@
       scales: { y: { title: { display: true, text: 'Power (kW)' }, min: 0, max: 6 } }
     }
   });
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+}));
 </script>
 </body>
 </html>
