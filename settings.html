@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings · SolarHome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">☀️🏠</div>
+      <div class="logo-name"><span>Solar</span>Home</div>
+      <div class="logo-sub">Forecast</div>
+      <div class="logo-tag">Powering Brighter Days</div>
+    </div>
+   <nav>
+    <a href="index.html"><span class="ico">🏠</span>Home</a>
+    <a href="forecast.html"><span class="ico">📊</span>Forecast</a>
+    <a href="usage.html"><span class="ico">🔌</span>My Usage</a>
+    <a href="tips.html"><span class="ico">🍃</span>Tips</a>
+    <a class="active" href="settings.html"><span class="ico">⚙️</span>Settings</a>
+   </nav>
+    <div class="side-foot">
+      <div class="scene">🌴🏠☀️</div>
+      Clean energy<br>for a brighter tomorrow.
+    </div>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">Settings</h1>
+
+    <div class="settings">
+      <section>
+        <h2 class="sec-title">Your home</h2>
+
+        <div class="field">
+          <div class="label">Size of your solar system (kW) <span class="help" title="Total size of the panels on your roof">?</span></div>
+          <div class="slider"><span class="val" id="sizeVal"></span><input type="range" id="size" min="1" max="10" step="0.25"></div>
+        </div>
+
+        <div class="field">
+          <div class="label">Your usage per day (kWh) <span class="help" title="How much electricity your home uses in a day">?</span></div>
+          <div class="slider"><span class="val" id="usageVal"></span><input type="range" id="usage" min="1" max="40" step="0.5"></div>
+        </div>
+
+        <div class="field">
+          <div class="label">CO₂ per kWh from the grid (kg) <span class="help" title="How much CO₂ one kWh from the grid causes">?</span></div>
+          <div class="num">
+            <input type="number" id="co2" step="0.01" min="0">
+            <button class="step" data-target="co2" data-delta="-0.01">−</button>
+            <button class="step" data-target="co2" data-delta="0.01">+</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Electricity price (₹ per kWh) <span class="help" title="Used to estimate the money saved">?</span></div>
+          <div class="num">
+            <input type="number" id="price" step="0.25" min="0">
+            <button class="step" data-target="price" data-delta="-0.25">−</button>
+            <button class="step" data-target="price" data-delta="0.25">+</button>
+          </div>
+        </div>
+
+        <label class="toggle">
+          <span class="switch"><input type="checkbox" id="showRange"><span class="knob"></span></span>
+          Show likely range (P10–P90) in the chart
+        </label>
+        <label class="toggle">
+          <span class="switch"><input type="checkbox" id="showMeasured"><span class="knob"></span></span>
+          Show measured output on Home (check)
+        </label>
+      </section>
+
+      <section>
+        <h2 class="sec-title">Demo</h2>
+
+        <div class="field">
+          <div class="label">Data from</div>
+          <div class="radios">
+            <label><input type="radio" name="plant" value="Plant 1"> Plant 1</label>
+            <label><input type="radio" name="plant" value="Plant 2"> Plant 2</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Demo day ('today')</div>
+          <div class="slider"><span class="val" id="dayVal"></span><input type="range" id="day" min="0" max="19" step="1"></div>
+        </div>
+
+        <div class="infobox">
+          The demo uses 20 test days (29 May – 17 June 2020). Each day was forecast by a model trained only on earlier days. 13–17 June is the final test.
+        </div>
+      </section>
+    </div>
+
+    <p class="footnote" id="footnote"></p>
+  </main>
+
+  <script src="data.js"></script>
+  <script>
+    const KEY = 'solarhome-settings';
+    const defaults = { size: 3, usage: 10, co2: 0.7, price: 7, showRange: true, showMeasured: false, plant: 'Plant 1', day: 16 };
+    let S = { ...defaults };
+    try { S = { ...defaults, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch (e) {}
+
+    const $ = id => document.getElementById(id);
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+
+    const wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const mo = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const dayLabel = i => {
+      const d = new Date(2020, 4, 29 + i);
+      return `${wd[d.getDay()]} ${d.getDate()} ${mo[d.getMonth()]}`;
+    };
+
+    function placeVal(rangeEl, valEl, text) {
+      const pct = (rangeEl.value - rangeEl.min) / (rangeEl.max - rangeEl.min);
+      valEl.textContent = text;
+      valEl.style.left = `calc(${pct * 100}% + ${(0.5 - pct) * 16}px)`;
+    }
+
+    function render() {
+      $('size').value = S.size;
+      placeVal($('size'), $('sizeVal'), (+S.size).toFixed(2));
+      $('usage').value = S.usage;
+      placeVal($('usage'), $('usageVal'), (+S.usage).toFixed(2));
+      $('day').value = S.day;
+      placeVal($('day'), $('dayVal'), dayLabel(+S.day));
+      $('co2').value = (+S.co2).toFixed(2);
+      $('price').value = (+S.price).toFixed(2);
+      $('showRange').checked = S.showRange;
+      $('showMeasured').checked = S.showMeasured;
+      document.querySelectorAll('input[name=plant]').forEach(r => r.checked = (r.value === S.plant));
+    }
+
+    $('size').addEventListener('input', e => { S.size = +e.target.value; save(); render(); });
+    $('usage').addEventListener('input', e => { S.usage = +e.target.value; save(); render(); });
+    $('day').addEventListener('input', e => { S.day = +e.target.value; save(); render(); });
+    ['co2', 'price'].forEach(id => $(id).addEventListener('input', e => { S[id] = +e.target.value; save(); }));
+    document.querySelectorAll('.step').forEach(b => b.addEventListener('click', () => {
+      const t = b.dataset.target;
+      S[t] = Math.max(0, +(+S[t] + +b.dataset.delta).toFixed(2));
+      save(); render();
+    }));
+    $('showRange').addEventListener('change', e => { S.showRange = e.target.checked; save(); });
+    $('showMeasured').addEventListener('change', e => { S.showMeasured = e.target.checked; save(); });
+    document.querySelectorAll('input[name=plant]').forEach(r => r.addEventListener('change', e => { S.plant = e.target.value; save(); }));
+
+    $('footnote').textContent = DATA.footnote;
+    render();
+  </script>
+</body>
+</html>

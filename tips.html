@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tips · SolarHome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">☀️🏠</div>
+      <div class="logo-name"><span>Solar</span>Home</div>
+      <div class="logo-sub">Forecast</div>
+      <div class="logo-tag">Powering Brighter Days</div>
+    </div>
+    <nav>
+      <a href="index.html"><span class="ico">🏠</span>Home</a>
+      <a href="forecast.html"><span class="ico">📊</span>Forecast</a>
+      <a href="usage.html"><span class="ico">🔌</span>My Usage</a>
+      <a class="active" href="tips.html"><span class="ico">🍃</span>Tips</a>
+      <a href="settings.html"><span class="ico">⚙️</span>Settings</a>
+    </nav>
+    <div class="side-foot">
+      <div class="scene">🌴🏠☀️</div>
+      Clean energy<br>for a brighter tomorrow.
+    </div>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">Tips</h1>
+    <div class="tips" id="tips"></div>
+  </main>
+
+  <script src="data.js"></script>
+  <script>
+    document.getElementById('tips').innerHTML = TIPS.map(t =>
+      `<div class="tip"><span class="tip-ico">${t.icon}</span><p>${t.text.replace('{best}', USAGE.best)}</p></div>`
+    ).join('');
+  </script>
+</body>
+</html>

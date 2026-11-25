@@ -71,3 +71,12 @@ const USAGE = {
   note: 'Above the green line the panels make more than you use: a good moment for big devices or charging.',
   best: '10:45 AM – 2:45 PM'
 };
+const TIPS = [
+  { icon: '💧', text: 'Fill the overhead water tank with the motor pump between <b>{best}</b>, when your panels make the most power.' },
+  { icon: '🔋', text: '<b>Charge your inverter battery around</b> midday. Then it is full for the evening or a power cut, without using grid power.' },
+  { icon: '🧺', text: '<b>Run the washing machine</b>, mixer-grinder or iron in the sunny hours instead of in the evening.' },
+  { icon: '♨️', text: '<b>Heat water with the geyser</b> around noon and use it in the evening; a good tank keeps it warm.' },
+  { icon: '☀️', text: '<b>Today looks good for solar.</b> Use the extra energy instead of sending it back to the grid.' },
+  { icon: '🧹', text: '<b>Dust on the panels lowers the output.</b> Rinse them with water now and then, especially in the dry, dusty months before the monsoon.' },
+  { icon: 'ℹ️', text: '<b>The forecast is a best guess.</b> On cloudy days it can be less exact; the ‘likely range’ shows how much it can vary.' }
+];
