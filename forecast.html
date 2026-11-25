@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forecast · SolarHome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">☀️🏠</div>
+      <div class="logo-name"><span>Solar</span>Home</div>
+      <div class="logo-sub">Forecast</div>
+      <div class="logo-tag">Powering Brighter Days</div>
+    </div>
+    <nav>
+      <a href="index.html"><span class="ico">🏠</span>Home</a>
+      <a class="active" href="forecast.html"><span class="ico">📊</span>Forecast</a>
+      <a href="#"><span class="ico">🔌</span>My Usage</a>
+      <a href="#"><span class="ico">🍃</span>Tips</a>
+      <a href="#"><span class="ico">⚙️</span>Settings</a>
+    </nav>
+    <div class="side-foot">
+      <div class="scene">🌴🏠☀️</div>
+      Clean energy<br>for a brighter tomorrow.
+    </div>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">Forecast</h1>
+    <p class="page-desc" id="desc"></p>
+    <div class="card">
+      <div class="fc-box"><canvas id="fcChart"></canvas></div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="data.js"></script>
+  <script>
+    Chart.defaults.font.family = 'Nunito, Arial, sans-serif';
+    const F = FORECAST;
+    document.getElementById('desc').textContent = F.description;
+
+    new Chart(document.getElementById('fcChart'), {
+      type: 'bar',
+      data: {
+        labels: F.days.map(d => d.label),
+        datasets: [
+          {
+            type: 'bar', label: 'Forecast', data: F.days.map(d => d.forecast),
+            backgroundColor: F.days.map(d => d.label === F.selected ? '#f57c00' : '#fad48a'),
+            borderRadius: 4, barPercentage: 0.7, order: 2
+          },
+          {
+            type: 'line', label: 'Measured (check)', data: F.days.map(d => d.measured),
+            showLine: false, pointStyle: 'line', pointRadius: 13, pointHoverRadius: 13,
+            pointBorderColor: '#222', pointBorderWidth: 3,
+            borderColor: '#222', backgroundColor: '#222', order: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', align: 'start', labels: { boxWidth: 14 } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0 } },
+          y: { min: 0, max: 20, ticks: { stepSize: 5 }, title: { display: true, text: 'kWh per day' }, grid: { color: '#eee' } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

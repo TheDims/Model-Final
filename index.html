@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SolarHome Forecast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,11 +17,11 @@
     <div class="logo-tag">Powering Brighter Days</div>
   </div>
   <nav>
-    <a class="active" href="#"><span class="ico">🏠</span>Home</a>
-    <a href="#"><span class="ico">📊</span>Forecast</a>
-    <a href="#"><span class="ico">🔌</span>My Usage</a>
-    <a href="#"><span class="ico">🍃</span>Tips</a>
-    <a href="#"><span class="ico">⚙️</span>Settings</a>
+   <a class="active" href="index.html"><span class="ico">🏠</span>Home</a>
+   <a href="forecast.html"><span class="ico">📊</span>Forecast</a>
+   <a href="#"><span class="ico">🔌</span>My Usage</a>
+   <a href="#"><span class="ico">🍃</span>Tips</a>
+   <a href="#"><span class="ico">⚙️</span>Settings</a>
   </nav>
   <div class="side-foot">
    <div class="scene">🌴🏠☀️</div>
@@ -116,6 +118,7 @@
   const $ = id => document.getElementById(id);
 const T = DATA.today;
 const fmt = n => n.toFixed(1);
+Chart.defaults.font.family = 'Nunito, Arial, sans-serif';
 
 $('greeting').textContent = DATA.greeting;
 $('badge').textContent = DATA.badge;

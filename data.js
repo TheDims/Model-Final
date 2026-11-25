@@ -37,3 +37,30 @@ const DATA = {
   env: { co2: 10.9, note: '≈ what 0.5 trees absorb in a year' },
   footnote: 'Demo with 2020 data (Plant 1, location estimated at 14.5°N, 77.5°E, Andhra Pradesh). Times in IST. Money saved uses ₹7.0/kWh (assumption). Weather input is ERA5 (weather measured afterwards); a real app uses a weather forecast, so real errors are a bit larger.'
 };
+
+const FORECAST = {
+  selected: 'Sun 14',
+  description: 'Forecast for each day of the demo period (29 May – 17 June 2020). Each day was forecast by a model that only saw earlier days. The measured value is shown to check the model.',
+  days: [
+    { label: 'Fri 29', forecast: 17.0, measured: 18.5 },
+    { label: 'Sat 30', forecast: 16.8, measured: 16.4 },
+    { label: 'Sun 31', forecast: 15.5, measured: 13.6 },
+    { label: 'Mon 1',  forecast: 16.5, measured: 13.1 },
+    { label: 'Tue 2',  forecast: 16.6, measured: 16.8 },
+    { label: 'Wed 3',  forecast: 14.2, measured: 17.0 },
+    { label: 'Thu 4',  forecast: 15.7, measured: 18.5 },
+    { label: 'Fri 5',  forecast: 16.6, measured: 17.4 },
+    { label: 'Sat 6',  forecast: 16.5, measured: 14.4 },
+    { label: 'Sun 7',  forecast: 16.6, measured: 18.3 },
+    { label: 'Mon 8',  forecast: 17.4, measured: 18.9 },
+    { label: 'Tue 9',  forecast: 16.5, measured: 18.6 },
+    { label: 'Wed 10', forecast: 13.4, measured: 14.6 },
+    { label: 'Thu 11', forecast: 12.0, measured: 12.7 },
+    { label: 'Fri 12', forecast: 12.8, measured: 13.2 },
+    { label: 'Sat 13', forecast: 16.1, measured: 19.2 },
+    { label: 'Sun 14', forecast: 15.6, measured: 16.6 },
+    { label: 'Mon 15', forecast: 15.0, measured: 15.3 },
+    { label: 'Tue 16', forecast: 13.2, measured: 14.1 },
+    { label: 'Wed 17', forecast: 13.5, measured: 13.4 }
+  ]
+};

@@ -113,3 +113,7 @@ body { background: radial-gradient(circle at 1px 1px, rgba(232,160,100,0.14) 1px
 .scene { font-size: 56px; margin-bottom: 8px; }
 .scene { font-size: 40px; white-space: nowrap; }
 .up span { color: #555; font-weight: normal; }
+body, button { font-family: 'Nunito', Arial, sans-serif; }
+.page-title { font-size: 34px; margin-bottom: 8px; }
+.page-desc { color: #777; font-size: 14px; line-height: 1.5; max-width: 900px; margin-bottom: 20px; }
+.fc-box { height: 420px; }
