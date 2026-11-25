@@ -112,3 +112,4 @@ body { background: radial-gradient(circle at 1px 1px, rgba(232,160,100,0.14) 1px
 .sidebar { background: rgba(255,255,255,0.55); border-right: 1px solid #f0e4d6; }
 .scene { font-size: 56px; margin-bottom: 8px; }
 .scene { font-size: 40px; white-space: nowrap; }
+.up span { color: #555; font-weight: normal; }

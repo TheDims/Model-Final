@@ -28,26 +28,26 @@
 </aside>
 
   <main class="main">
-    <div class="garland"></div>
+   <div class="garland"></div>
    <header class="top">
     <div>
-      <h1><span class="sun">☀️</span> Namaste!</h1>
-      <p>Here's your solar forecast for today. <span class="badge">demo · 2020 data</span></p>
+     <h1><span class="sun">☀️</span> <span id="greeting"></span></h1>
+     <p>Here's your solar forecast for today. <span class="badge" id="badge"></span></p>
     </div>
     <div class="info">
-      <div class="info-item">
-        <span class="pin">📍</span>
-        <div><b>Andhra Pradesh, India</b><small>Sun, 14 Jun 2020</small></div>
-      </div>
-      <div class="info-item">
-        <span class="wx">☁️</span>
-        <div><b>33°C</b><small>Cloudy</small></div>
-      </div>
-      <div class="avatar">👤</div>
+     <div class="info-item">
+      <span class="pin">📍</span>
+      <div><b id="location"></b><small id="date"></small></div>
+     </div>
+     <div class="info-item">
+      <span class="wx">☁️</span>
+      <div><b id="temp"></b><small id="condition"></small></div>
+     </div>
+     <div class="avatar">👤</div>
     </div>
-  </header>
+   </header>
 
-  <section class="layout">
+   <section class="layout">
     <div class="left">
       <div class="card chart">
         <div class="chart-head">
@@ -58,30 +58,26 @@
             <button class="tab">This Month</button>
           </div>
         </div>
-        <div class="big">15.6 <span>kWh</span></div>
-        <div class="down">↓ 3% <span>lower than yesterday</span></div>
-        <div class="range">likely between 9.5 and 20.9 kWh</div>
-        <div class="pill">≈ ₹109 of electricity from your roof</div>
+        <div class="big" id="todayBig"></div>
+        <div class="down" id="todayDown"></div>
+        <div class="range" id="todayRange"></div>
+        <div class="pill" id="todayPill"></div>
         <div class="chart-box"><canvas id="powerChart"></canvas></div>
       </div>
 
       <div class="bottom">
         <div class="card next">
           <h3>📊 Next 3 Days Forecast</h3>
-          <div class="days">
-            <div class="day"><b>Mon</b><small>15 Jun</small><div class="emoji">☁️</div><div class="kwh">15.0 kWh</div></div>
-            <div class="day"><b>Tue</b><small>16 Jun</small><div class="emoji">☁️</div><div class="kwh">13.2 kWh</div></div>
-            <div class="day"><b>Wed</b><small>17 Jun</small><div class="emoji">☁️</div><div class="kwh">13.5 kWh</div></div>
-          </div>
+          <div class="days" id="nextDays"></div>
         </div>
         <div class="card env">
           <h3>🍃 Environmental Impact</h3>
           <div class="env-body">
             <div class="tree">🌳</div>
             <div>
-              <div class="co2">10.9 <span>kg CO₂</span></div>
+              <div class="co2" id="envCo2"></div>
               <div class="sub">avoided today</div>
-              <div class="sub">≈ what 0.5 trees absorb in a year</div>
+              <div class="sub" id="envNote"></div>
             </div>
           </div>
         </div>
@@ -91,42 +87,72 @@
     <div class="right">
       <div class="card cons">
         <h3>🏠 Estimated Household Consumption</h3>
-        <div class="big2">10.0 <span>kWh</span></div>
+        <div class="big2" id="consBig"></div>
         <div class="sub">based on your typical usage (set in Settings)</div>
       </div>
       <div class="card act">
         <h3>🔋 Recommended Action</h3><span class="arrow">›</span>
-        <div class="charge">Charge</div>
-        <div class="time">between 10:45 AM – 2:45 PM</div>
-        <div class="sub">Best time to charge your inverter battery or use extra solar.</div>
+        <div class="charge" id="actTitle"></div>
+        <div class="time" id="actTime"></div>
+        <div class="sub" id="actNote"></div>
       </div>
       <div class="card weather">
         <h3>☁️ Weather Today</h3>
-        <div class="wx-big">Cloudy</div>
-        <div class="sub">High 33°C | Low 25°C · clouds 96%</div>
+        <div class="wx-big" id="wxTitle"></div>
+        <div class="sub" id="wxDetail"></div>
       </div>
       <div class="card plan">
         <h3>⚡ Plan Your Usage</h3><span class="arrow">›</span>
-        <div class="sub">About 6 kWh more than you use. Run the water pump, washing machine or geyser in the sunny hours.</div>
+        <div class="sub" id="planText"></div>
       </div>
     </div>
   </section>
 
-  <p class="footnote">Demo with 2020 data (Plant 1, location estimated at 14.5°N, 77.5°E, Andhra Pradesh). Times in IST. Money saved uses ₹7.0/kWh (assumption). Weather input is ERA5 (weather measured afterwards); a real app uses a weather forecast, so real errors are a bit larger.</p>
+  <p class="footnote" id="footnote"></p>
 </main>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="data.js"></script>
 <script>
-  const hours = Array.from({ length: 25 }, (_, i) => i);
-  const power = [0,0,0,0,0,0,0.1,0.4,0.9,1.3,1.6,1.9,2.3,2.1,1.9,1.5,1.0,0.5,0.1,0,0,0,0,0,0];
-  const upper = power.map(v => +(v * 1.3).toFixed(2));
-  const lower = power.map(v => +(v * 0.6).toFixed(2));
-  const tickNames = { 0: '12 AM', 6: '6 AM', 12: '12 PM', 18: '6 PM' };
+  const $ = id => document.getElementById(id);
+const T = DATA.today;
+const fmt = n => n.toFixed(1);
 
-  const peakLabel = {
-   id: 'peakLabel',
-   afterDatasetsDraw(chart) {
+$('greeting').textContent = DATA.greeting;
+$('badge').textContent = DATA.badge;
+$('location').textContent = DATA.location;
+$('date').textContent = DATA.date;
+$('temp').textContent = DATA.temp;
+$('condition').textContent = DATA.condition;
+
+$('todayBig').innerHTML = `${fmt(T.kwh)} <span>kWh</span>`;
+const isUp = T.changePct >= 0;
+$('todayDown').className = isUp ? 'up' : 'down';
+$('todayDown').innerHTML = `${isUp ? '↑' : '↓'} ${Math.abs(T.changePct)}% <span>${isUp ? 'higher' : 'lower'} than yesterday</span>`;
+$('todayRange').textContent = `likely between ${fmt(T.rangeLow)} and ${fmt(T.rangeHigh)} kWh`;
+$('todayPill').textContent = `≈ ₹${T.rupees} of electricity from your roof`;
+
+$('consBig').innerHTML = `${fmt(DATA.consumptionKwh)} <span>kWh</span>`;
+$('actTitle').textContent = DATA.action.title;
+$('actTime').textContent = DATA.action.time;
+$('actNote').textContent = DATA.action.note;
+$('wxTitle').textContent = DATA.weather.title;
+$('wxDetail').textContent = DATA.weather.detail;
+$('planText').textContent = DATA.plan;
+$('envCo2').innerHTML = `${fmt(DATA.env.co2)} <span>kg CO₂</span>`;
+$('envNote').textContent = DATA.env.note;
+$('footnote').textContent = DATA.footnote;
+$('nextDays').innerHTML = DATA.nextDays.map(d =>
+  `<div class="day"><b>${d.day}</b><small>${d.date}</small><div class="emoji">${d.icon}</div><div class="kwh">${fmt(d.kwh)} kWh</div></div>`
+).join('');
+
+const hours = Array.from({ length: T.power.length }, (_, i) => i);
+const tickNames = { 0: '12 AM', 6: '6 AM', 12: '12 PM', 18: '6 PM' };
+
+const peakLabel = {
+  id: 'peakLabel',
+  afterDatasetsDraw(chart) {
     const { ctx, chartArea } = chart;
-    const pt = chart.getDatasetMeta(0).data[12];
+    const pt = chart.getDatasetMeta(0).data[T.peakHour];
     ctx.save();
     ctx.setLineDash([4, 4]);
     ctx.strokeStyle = '#f5a25d';
@@ -145,22 +171,22 @@
     ctx.fillText('12:00 PM', pt.x, y + 14);
     ctx.fillStyle = '#333';
     ctx.font = 'bold 13px Arial';
-    ctx.fillText('2.3 kW', pt.x, y + 29);
+    ctx.fillText(`${T.peakKw} kW`, pt.x, y + 29);
     ctx.restore();
-   }
-  };
+  }
+};
 
-  new Chart(document.getElementById('powerChart'), {
-   type: 'line',
-   plugins: [peakLabel],
-   data: {
+new Chart($('powerChart'), {
+  type: 'line',
+  plugins: [peakLabel],
+  data: {
     labels: hours,
     datasets: [
-      { label: 'Forecast', data: power, borderColor: '#f57c00', borderWidth: 2.5, tension: 0.4,
-        pointRadius: power.map((v, i) => i === 12 ? 6 : 0), pointBackgroundColor: '#f57c00', fill: false },
-      { label: 'Likely range', data: upper, borderWidth: 0, backgroundColor: 'rgba(250,190,110,0.30)',
+      { label: 'Forecast', data: T.power, borderColor: '#f57c00', borderWidth: 2.5, tension: 0.4,
+        pointRadius: T.power.map((v, i) => i === T.peakHour ? 6 : 0), pointBackgroundColor: '#f57c00', fill: false },
+      { label: 'Likely range', data: T.upper, borderWidth: 0, backgroundColor: 'rgba(250,190,110,0.30)',
         tension: 0.4, pointRadius: 0, fill: '+1' },
-      { label: 'lower', data: lower, borderWidth: 0, tension: 0.4, pointRadius: 0, fill: false }
+      { label: 'lower', data: T.lower, borderWidth: 0, tension: 0.4, pointRadius: 0, fill: false }
     ]
   },
   options: {
@@ -173,7 +199,7 @@
     },
     scales: {
       x: { grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0, callback: (v, i) => tickNames[i] || '' } },
-      y: { min: 0, max: 3, ticks: { stepSize: 1 }, title: { display: true, text: 'Power (kW)' }, grid: { color: '#eee' } }
+      y: { min: 0, max: Math.ceil(Math.max(...T.upper)), ticks: { stepSize: 1 }, title: { display: true, text: 'Power (kW)' }, grid: { color: '#eee' } }
     }
   }
 });
