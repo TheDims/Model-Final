@@ -66,11 +66,18 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0, tz=TZ):
     for c, new in [("temperature_2m", "T"), ("relative_humidity_2m", "RH"), ("surface_pressure", "P_HPA"),
                    ("wind_speed_10m", "WS10"), ("cloud_cover", "CLOUD")]:
         out[new] = interp(h[c])
+    if "precipitation_probability" in h:                 # alleen in de live voorspelling (app)
+        out["RAIN_PROB"] = interp(h.precipitation_probability)
     # neerslag: hoeveelheid in het uur -> elk kwartier van dat uur (mm per uur)
     out["PRECIP"] = h.precipitation.reindex(grid, method="ffill").values
     sp = pvlib.solarposition.get_solarposition(mid.tz_localize(tz), lat, lon, altitude=elev,
                                                pressure=out.P_HPA.values * 100, temperature=out["T"].values)
     out["ZENITH"], out["AZIMUTH"] = sp.apparent_zenith.values, sp.azimuth.values
+    # bewust twee: COSZ (echte zenit) = dag/nacht-masker, zoals features.add_solar (Kaggle) en HKUST;
+    # cosz (schijnbare zenit, met lichtbreking) voor de natuurkunde (DNI hieronder).
+    # Let op: ukpv.model_frame (UK, eindmodel v2) gebruikt de schijnbare zenit voor COSZ; het verschil zit
+    # alleen in de minuten rond zonsopkomst/-ondergang (onder MIN_COSZ = 0,02 vrijwel geen opwek)
+    out["COSZ"] = np.cos(np.deg2rad(sp.zenith.values)).clip(0)
     cosz = np.cos(np.deg2rad(out.ZENITH)).clip(0)
     dni = np.where(cosz > 0.05, (out.GHI_W - out.DHI_W) / np.maximum(cosz, 0.05), 0)
     out["DNI_W"] = np.clip(dni, 0, cs.dni.values * 1.1)
@@ -78,12 +85,34 @@ def hourly_to_15min(hourly, lat, lon, elev, rad_shift_min=0, tz=TZ):
     return out.reset_index()
 
 
+WASH_ANCHOR = "2000-01-01"      # vaste startdatum van het schoonmaakschema als er geen echte schoonmaakdatum is
+
+
+def wash_days(index, every=None, done=(), anchor=WASH_ANCHOR):
+    """Schoonmaakdagen binnen de periode van `index` (tz-bewust): de echte datums `done` (knop in de app) plus
+    elke `every` dagen, gerekend vanaf de laatste echte datum (of een vaste datum), ook in de toekomst."""
+    first, last = index.min().normalize(), index.max().normalize()
+    done = pd.DatetimeIndex(pd.to_datetime(list(done))).tz_localize(index.tz) if len(done) else None
+    days = [] if done is None else list(done)
+    if every:
+        start = done.max() if done is not None else pd.Timestamp(anchor, tz=index.tz)
+        days += list(pd.date_range(start, last, freq=f"{int(every)}D")) + \
+            list(pd.date_range(start, first, freq=f"-{int(every)}D"))
+    days = pd.DatetimeIndex(sorted(set(days))) if days else pd.DatetimeIndex([], tz=index.tz)
+    return days[days.isin(index)]                     # pvlib kimber zoekt de datums op in de index (middernacht)
+
+
 def soiling_loss(hourly, grid, p=PARAMS, tz=TZ):
-    """Kimber: stofverlies per kwartier; regen >= 6 mm/dag spoelt schoon."""
+    """Kimber: stofverlies per kwartier; regen >= 6 mm/dag spoelt schoon. Optioneel (app) handmatig schoonmaken:
+    p['wash_every_days'] (schema) en p['wash_dates'] (echte schoonmaakdatums). Geen van beide = alleen regen,
+    zoals in het onderzoek (overgenomen uit V5 physics.py; schema niet meer vanaf 'vandaag', BESLISSINGEN #71)."""
     r = hourly.set_index("DATE_TIME").precipitation.fillna(0)
     r.index = r.index.tz_localize(tz)
+    wash = None
+    if p.get("wash_every_days") or p.get("wash_dates"):
+        wash = [d.date() for d in wash_days(r.index, p.get("wash_every_days"), p.get("wash_dates") or ())]
     s = pvlib.soiling.kimber(r, cleaning_threshold=p["clean_mm"], soiling_loss_rate=p["soiling_rate"],
-                             max_soiling=p["max_soiling"])
+                             max_soiling=p["max_soiling"], manual_wash_dates=wash)
     return s.tz_localize(None).reindex(grid, method="ffill").fillna(0).values
 
 
@@ -96,6 +125,7 @@ def panel_inputs(w15, soiling, lat, lon, elev, tilt=None, azimuth=180.0, p=PARAM
     am_rel = pvlib.atmosphere.get_relative_airmass(d.ZENITH.values)
     am_abs = pvlib.atmosphere.get_absolute_airmass(am_rel, d.P_HPA.values * 100)
     pw = pvlib.atmosphere.gueymard94_pw(d["T"].values, d.RH.values)
+    d["AM_ABS"], d["PW_CM"] = am_abs, pw                       # voor de app ("wat beïnvloedt je panelen")
     dni_extra = pvlib.irradiance.get_extra_radiation(times).values
     irr = pvlib.irradiance.get_total_irradiance(tilt, azimuth, d.ZENITH.values, d.AZIMUTH.values, d.DNI_W.values,
                                                 d.GHI_W.values, d.DHI_W.values, dni_extra=dni_extra, airmass=am_rel,
@@ -109,7 +139,7 @@ def panel_inputs(w15, soiling, lat, lon, elev, tilt=None, azimuth=180.0, p=PARAM
     d["SPECTRAL"] = np.where(cosz > 0.02, np.nan_to_num(spec, nan=1.0), 1.0)
     d["SOILING"] = soiling
     d["POA"] = np.nan_to_num(irr["poa_global"])
-    d["EFF_IRR"] = eff * d.SPECTRAL * (1 - d.SOILING)
+    d["EFF_IRR"] = eff * d.SPECTRAL * (1 - d.SOILING) * (1 + p.get("bifacial_gain", 0.0))   # bifaciaal: app
     u1 = p["u1"] * np.sqrt(d.RHO / RHO0)
     d["T_CELL"] = pvlib.temperature.faiman(d.POA, d["T"], d.WS10 * p["wind_height_factor"], u0=p["u0"], u1=u1)
     pdc = pvlib.pvsystem.pvwatts_dc(d.EFF_IRR, d.T_CELL, pdc0=1000, gamma_pdc=p["gamma_pdc"])

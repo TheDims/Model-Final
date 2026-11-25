@@ -138,6 +138,20 @@ UKPV_SEASONS = {7: "zomer", 8: "zomer", 9: "zomer", 10: "herfst", 11: "herfst", 
                 2: "winter", 3: "voorjaar"}
 UKPV_TEST_VRIJGEGEVEN = True                              # akkoord Dimme 2026-11-13 (na keuze #39)
 
+# ---------- TAAK 8: feedback pitch week 9 (BESLISSINGEN #67-#70, #75) ----------
+TAAK8_RULE_PP = 0.3                                       # overnemen: >= 0,3 pp beter dan v2 en interval < 0
+# Wanneer is de opbrengst van een dag bekend? lag = dagen tussen de laatste bekende dag en de doeldag.
+# avond: voorspelling om 21:00 (na zonsondergang), vandaag is al bekend -> lag 1 (de app, AGENTS §13.3)
+# strikt: voorspelling 24 uur vóór het doel (zoals de UK-test), vandaag is nog niet af -> lag 2
+TAAK8_SCENARIOS = {"avond": 1, "strikt": 2}
+
+# ---------- app (Streamlit, app/) ----------
+# Officieel eindmodel voor de app (BESLISSINGEN #60): eindmodel v2. Ontbreekt het bestand, dan rekent de app met
+# de standaardwaarden (pvlib zonder menggewichten) en toont een melding.
+APP_MODEL_FILE = MODELS / "model_final_v2.joblib"
+APP_MODEL_INFO = UKPV_RESULTS / "eindmodel_v2" / "model_info_v2.json"
+APP_ROUGH_FROM_DAY = 5           # vanaf dag 5 vooruit (vandaag = dag 1) is de skill ~0 (UK-horizon, #40) -> "rough estimate"
+
 # ---------- grafieken ----------
 BLUE, ORANGE, GREY = "#2a78d6", "#eb6834", "#a3a29d"
 INK, INK2 = "#0b0b0b", "#52514e"

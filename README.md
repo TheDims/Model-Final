@@ -45,6 +45,43 @@ By default the main run `split70` is used. For another run, first set in PowerSh
 (the regression test; `split30` itself is an archive and cannot be run again). Which test days may already be
 viewed is set per run in `solarcore/config.py` (`TEST_VRIJGEGEVEN`).
 
+## Running the app
+
+The Streamlit app in `app/` is the user interface for **final model v2** (decision #60). It shows the solar power
+forecast for a house in India (today + 15 days), with a likely range (P10–P90), tips and panel health alerts.
+
+**Start:** double-click `start_app.bat`, or in a terminal in this folder:
+```
+pip install -r requirements.txt          # once (streamlit, plotly, pvlib, ...)
+python -m streamlit run app/app.py
+```
+The app opens at http://localhost:8501. It needs internet for the live weather forecast (Open-Meteo, CC BY 4.0).
+It loads `modellen/model_final_v2.joblib`; if that file is missing, it shows the plain physics forecast with a warning.
+
+**How the forecast is made:**
+- pvlib physics with the house's size (kWp), roof tilt and direction, on the Open-Meteo weather forecast
+  (radiation shifted −30 min, as in the model);
+- × level factor *f* from **the user's own daily production** (entered on *My Usage*) over the 4 weeks before
+  this week, updated every week. Without data, *f* = 1 and the app says the forecast is not yet tuned;
+- blended with an average day (from the same 4 weeks), more for days further ahead;
+- from day 5 on (today = day 1) the day is marked as a **rough estimate** (skill ≈ 0 from there in the UK test);
+- band P10–P90: variant B from the UK test (79 % coverage there).
+
+**Privacy (NFR5, GDPR):** the user's profile and entered production are stored only on the computer, in
+`app/gebruiker/` (ignored by git). The repository only contains the empty example `app/gebruiker/mijn_panelen.example.json`.
+
+**Tests:** `python app/test_app.py` runs the app without a browser (Streamlit AppTest) for the four personas
+(Anita, Rahul, Lakshmi, Vikram), a new house without data and a house with 6 weeks of data, on every page, plus the
+forecast page in all 6 languages (47 checks, all pass). It uses a temporary user folder, not your own data.
+
+**Same result as the model:** with the same calibration, the app computes exactly the same forecast as
+`eindmodel_v2.py` (difference 0.0 kW on the UK test data). The app calibrates from daily totals (users only enter kWh
+per day) instead of quarter-hours; on the UK test this changes nRMSE from 14.32 to 14.33 % and the daily error from
+25.2 to 25.3 %.
+
+**Limits:** the band is fixed from the UK test (not yet per house); "this year" on *My Usage* is physics without the
+factor; the app works only for locations in India; there is no FastAPI service (not found in the project).
+
 > **Note:** the sections "Phase 0" to "Diagnosis" below describe **run 1** (30/70). Run 2 follows after them.
 
 ---
@@ -894,12 +931,15 @@ pvlib (kWp, tilt, orientation) × factor from the last 4 weeks, blended with the
 | UK test Jul 2024 – Mar 2025 (40 houses) | nRMSE % | R² | daily error % |
 |---|---|---|---|
 | LR POA (step 3; needs Mar–Jun 2024 as training) | 14.58 | 0.68 | 27.2 |
-| **v2: pvlib × f, blended (w = 0.87)** | **14.32** | 0.69 | 25.2 |
-| v2: pvlib × f, without blending | 14.33 | 0.69 | 24.0 |
-| v2: mean day only | 19.33 | 0.44 | 44.7 |
+| **v2: pvlib × f, blended (w = 0.87)** | **14.34** | 0.69 | 25.3 |
+| v2: pvlib × f, without blending | 14.34 | 0.69 | 24.1 |
+| v2: mean day only | 19.31 | 0.44 | 44.6 |
 
-- v2 is significantly slightly better than LR POA (−0.25 pp; 90 %: −0.35…−0.15) and needs no training.
-- Band v2: 79.3 % coverage (all seasons 78.6–79.9 %).
+- v2 is significantly slightly better than LR POA (−0.24 pp; 90 %: −0.34…−0.14) and needs no training.
+- Numbers after the code review of 24 Nov 2026 (decision #73): for day-ahead, the calibration now only uses data
+  measured before the forecast was made (before: Monday used Sunday's later data). This cost 0.01–0.02 pp
+  (14.32 → 14.34 %). Older texts and task 8 (#67–#70) still use 14.32 %.
+- Band v2: 79.2 % coverage (all seasons 78.5–79.8 %).
 - Horizon (blended per day): day 1 14.0 · day 2 15.1 · day 4 17.3 · day 7 19.7 · day 10 20.0 · day 15 20.8 %.
 - HKUST (Hong Kong) showed the same: continuous calibration 18.1 % ≈ 2 years of history (#43).
 - **Assumptions:** pvlib parameters (PARAMS, DC/AC 1.1), blending weights from the UK training period, band in
@@ -927,3 +967,40 @@ is also what final model v2 uses.
 | Band with real forecasts | old band 63 %, new band (B) 79 % | band B in v2 |
 | Final model v2 | 14.3 % without training (LR POA 14.6 % with training) | official final model for the app (#60) |
 | Several weather models | ≤ 0.2 pp | not worth it |
+
+## TASK 8 – Feedback pitch week 9 (`taak8_feedback_pitch9.py` → `resultaten/taak8/<dataset>/<scenario>`, decisions #67–#70, revised in #75)
+
+Teachers' tips after pitch week 9 (plus the Orbit idea from the interim feedback), each tested against final model v2 on
+**two datasets**: UK PV (40 homes, real ECMWF forecasts, train Mar–Jun 2024, test Jul 2024 – Mar 2025) and HKUST
+(5 stations, ERA5, train 2021–2022 with all seasons, test 2023). Rule fixed before running: adopt only if ≥ 0.3 pp
+better than v2 **and** the 90 % bootstrap interval of the difference is below 0.
+
+**Revised after the code review (24 Nov 2026, #75).** Two scenarios for *when a day's yield is known*:
+- **evening**: the forecast for tomorrow is made at 21:00, after sunset, so today's yield is known (the app);
+- **strict**: the forecast is made 24 h before the target (as in the UK test), so today is not finished yet.
+
+All variants, including the weekly v2 reference, now use the same information. Choices inside a family (window,
+half-life, Kalman q, tree depth) are made on the validation period only, not on the test. The first run
+(`eerste_run/`) let the daily variants use one day more than v2 and picked some variants on the test.
+
+Difference with v2 on the test, in pp (negative = better; **bold** = meets the rule):
+
+| Tip | UK evening | UK strict | HKUST evening | HKUST strict | Verdict |
+|---|---|---|---|---|---|
+| – **v2 (reference), nRMSE** | 14.32 % | 14.34 % | 16.58 % | 16.67 % | |
+| Stream learning: f every day, exponential forgetting (half-life chosen on validation: 14 / 14 / 7 / 14 d) | −0.12 | −0.09 | **−0.68** | **−0.48** | only tip better on both datasets in both scenarios; meets the rule on HKUST only |
+| f every day, last 28 days | −0.06 | −0.04 | **−0.32** | −0.29 | smaller than with forgetting |
+| Decision tree on the residual of v2 (depth on validation) | −0.02 | +1.19 | **−0.31** | **−0.32** | unstable: much worse on UK strict; needs training, no cold start |
+| Decision tree instead of LR (depth 5) | +0.13 | +0.12 | −0.27 (n.s.) | −0.37 (n.s.) | not adopted |
+| Tree as switch between techniques | 0.00 | 0.00 | +0.01 | +0.01 | almost always picks v2 |
+| Calibration window (chosen on validation: 8 wk / 8 wk / all / all) | −0.01 (n.s.) | −0.01 (n.s.) | −0.08 (n.s.) | −0.16 (n.s.) | 4 weeks is fine |
+| Mean/std of past clearness as features (all days) | −0.10 | −0.10 | −0.17 | −0.17 | too small, needs training |
+| Bayesian calibration (Kalman, q on validation) | +0.29 | +0.37 | −0.41 (n.s.) | +0.41 (n.s.) | no gain |
+
+(n.s. = not significant: the 90 % interval includes 0.)
+
+**For the report:** the error comes from the weather (clouds), not from the model form. Trees only help with a full
+year of history (HKUST) and fail with a short one (UK), which does not fit a new home. Updating the calibration every
+day with exponential forgetting (stream learning) is the only change that is better on both datasets, also without any
+look-ahead (strict); it meets the adoption rule only on HKUST (ERA5, weather in hindsight). The first run's conclusion
+holds, with a slightly smaller gain on UK strict (−0.09 instead of −0.12 pp). Final choice: team.

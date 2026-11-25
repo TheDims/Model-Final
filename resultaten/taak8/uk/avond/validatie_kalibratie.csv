@@ -1,0 +1,15 @@
+,nRMSE_%
+F1: f uit 1 week,16.243
+F1: f uit 2 weken,16.143
+F1: f uit 4 weken (= v2),16.113
+F1: f uit 8 weken,16.088
+F1: f uit alle eerdere data (compleet verleden),16.121
+"S2: elke dag, exponentieel vergeten (halfwaardetijd 7 d)",16.063
+"S2: elke dag, exponentieel vergeten (halfwaardetijd 14 d)",16.058
+"S2: elke dag, exponentieel vergeten (halfwaardetijd 28 d)",16.069
+"B1: Bayesiaans (Kalman, q = 0.01 r), elke dag",16.206
+"B1: Bayesiaans (Kalman, q = 0.03 r), elke dag",16.256
+"B1: Bayesiaans (Kalman, q = 0.1 r), elke dag",16.357
+"B1: Bayesiaans (Kalman, q = 0.3 r), elke dag",16.49
+S1: f elke dag bijwerken (28 dagen),16.081
+v2 (referentie),16.113

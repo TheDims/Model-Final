@@ -53,6 +53,8 @@ def predict(pv_kw, cs_ghi, f, c, kmean, w=1.0):
 def mix_weight(pred, mean_day, y):
     """Gewicht w in [0, 1] met kleinste kwadraten: y ~ w x pred + (1 - w) x mean_day."""
     d = np.asarray(pred) - np.asarray(mean_day)
+    if not (d ** 2).sum() > 0:                  # voorspelling = gemiddelde dag (of geen data): mengen maakt niets uit
+        return 1.0
     return float(np.clip(((np.asarray(y) - np.asarray(mean_day)) * d).sum() / (d ** 2).sum(), 0, 1))
 
 

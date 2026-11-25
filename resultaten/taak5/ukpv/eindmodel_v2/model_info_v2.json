@@ -11,44 +11,44 @@
       "dagfout_%": 27.152
     },
     "v2: pvlib x f (4 weken)": {
-      "nRMSE_%": 14.3274,
-      "nMAE_%": 9.721,
-      "RMSE_kW": 0.7164,
-      "MAE_kW": 0.486,
-      "R2": 0.6902,
-      "dagfout_%": 23.9926
+      "nRMSE_%": 14.3406,
+      "nMAE_%": 9.7314,
+      "RMSE_kW": 0.717,
+      "MAE_kW": 0.4866,
+      "R2": 0.6896,
+      "dagfout_%": 24.0526
     },
     "v2: + mengen met gemiddelde dag (w = 0.87)": {
-      "nRMSE_%": 14.3235,
-      "nMAE_%": 9.8712,
-      "RMSE_kW": 0.7162,
-      "MAE_kW": 0.4936,
-      "R2": 0.6903,
-      "dagfout_%": 25.2075
+      "nRMSE_%": 14.3367,
+      "nMAE_%": 9.8832,
+      "RMSE_kW": 0.7168,
+      "MAE_kW": 0.4942,
+      "R2": 0.6898,
+      "dagfout_%": 25.2852
     },
     "v2: alleen gemiddelde dag (4 weken)": {
-      "nRMSE_%": 19.3293,
-      "nMAE_%": 13.8208,
-      "RMSE_kW": 0.9665,
-      "MAE_kW": 0.691,
-      "R2": 0.4361,
-      "dagfout_%": 44.7475
+      "nRMSE_%": 19.3073,
+      "nMAE_%": 13.7909,
+      "RMSE_kW": 0.9654,
+      "MAE_kW": 0.6895,
+      "R2": 0.4373,
+      "dagfout_%": 44.6045
     }
   },
   "bootstrap_v2_vs_LR": {
     "v2: + mengen met gemiddelde dag (w = 0.87) - LR POA (stap 3, trainingsperiode nodig)": {
-      "verschil_pp": -0.2528,
-      "laag_pp": -0.3498,
-      "hoog_pp": -0.1535,
+      "verschil_pp": -0.2396,
+      "laag_pp": -0.3373,
+      "hoog_pp": -0.142,
       "aantoonbaar": true
     }
   },
-  "band_dekking_%": 79.25540514094634,
+  "band_dekking_%": 79.1971206616352,
   "band_per_seizoen_%": {
-    "herfst": 78.57349311870512,
-    "voorjaar": 78.9896590273896,
-    "winter": 79.86996008158,
-    "zomer": 79.28443786868552
+    "herfst": 78.45787847121862,
+    "voorjaar": 79.0560368921185,
+    "winter": 79.82986734533792,
+    "zomer": 79.20661760467306
   },
   "horizon": {
     "1": {

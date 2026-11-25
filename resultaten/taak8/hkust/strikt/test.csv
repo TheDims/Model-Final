@@ -1,0 +1,13 @@
+,nRMSE_%,std_over_dagen_pp,std_over_huizen_pp,training_nodig,verschil_pp,laag_pp,hoog_pp,aantoonbaar,overnemen
+v2 (referentie),16.674815028567924,6.09143021686999,0.6498703282324568,False,,,,,False
+F1: f uit alle eerdere data (compleet verleden),16.510306213637215,6.602183940562704,0.5065356031545857,False,-0.165,-0.509,0.218,False,False
+"S2: elke dag, exponentieel vergeten (halfwaardetijd 14 d)",16.19808131519601,6.063883064365928,0.45115942835620004,False,-0.477,-0.631,-0.316,True,True
+"B1: Bayesiaans (Kalman, q = 0.3 r), elke dag",17.081354833554276,7.166702446486105,0.5023312406790912,False,0.407,-0.146,0.938,False,False
+"F1: f uit 4 weken (= v2, controle)",16.67525630426656,6.091327589548882,0.650736038756702,False,0.0,0.0,0.001,False,False
+S1: f elke dag bijwerken (28 dagen),16.38662981607835,6.060434594273194,0.5276398499792537,False,-0.288,-0.391,-0.193,True,False
+T1: decision tree i.p.v. LR (diepte 5),16.308945833209542,6.619805202330059,0.38788639243117823,True,-0.366,-0.736,0.047,False,False
+T2: tree kiest v2 of gemiddelde dag (diepte 3),16.68838974290385,6.076790657937416,0.6676312004132703,True,0.014,0.006,0.02,True,False
+T3: v2 + tree op de restfout (diepte 3),16.35802780487748,6.35913819562086,0.627779643728897,True,-0.317,-0.437,-0.191,True,True
+F2: LR op alleen v2 (controle),16.64953012183384,6.263334134178767,0.6544676662166663,True,-0.025,-0.068,0.02,False,False
+F2: LR op v2 + KT + gem./std helderheid 7 d (recent),16.578078133008507,6.378746012814212,0.5891813279478215,True,-0.097,-0.195,0.005,False,False
+F2: LR op v2 + KT + gem./std helderheid alle dagen (compleet),16.499945233076602,6.415049018502848,0.574060926717644,True,-0.175,-0.268,-0.083,True,False

@@ -1,0 +1,17 @@
+{
+  "gekozen_op_vouwen": {
+    "T1": "T1: decision tree i.p.v. LR (diepte 5)",
+    "T2": "T2: tree kiest v2 of gemiddelde dag (diepte 3)",
+    "T3": "T3: v2 + tree op de restfout (diepte 3)"
+  },
+  "menggewicht_v2": 1.0,
+  "bayes_r": 0.11807523380982757,
+  "bayes_q_ratio": 0.3,
+  "bayes_validatie": {
+    "0.01": 16.188073853460956,
+    "0.03": 15.999461867702925,
+    "0.1": 15.776040039953754,
+    "0.3": 15.585728190178935
+  },
+  "regel_pp": 0.3
+}
